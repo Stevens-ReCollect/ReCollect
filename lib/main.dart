@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
+import 'package:recollect_app/constants/textSizeConstants.dart';
 
 void main() {
   runApp(const MyApp());
@@ -74,27 +75,28 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: ColorConstants.appBar,
         actions: <Widget>[
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-DropdownButton<String>(
-      value: accountMode,
-      icon: const Icon(Icons.arrow_drop_down),
-      iconSize: 24,
-      iconEnabledColor: ColorConstants.bodyText,
-      elevation: 16,
-      style: const TextStyle(color: ColorConstants.bodyText),
-      onChanged: (String? newValue) {
-        setState(() {
-          accountMode = newValue!;
-        });
-      },
-      items: <String>['Edit Mode', 'Read Only Mode']
-          .map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
-      }).toList(),
-    ),
+          DropdownButton<String>(
+                value: accountMode,
+                icon: const Icon(Icons.arrow_drop_down),
+                iconSize: 24,
+                iconEnabledColor: ColorConstants.bodyText,
+                elevation: 16,
+                style: const TextStyle(color: ColorConstants.bodyText, fontSize: TextSizeConstants.dropDownText),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    accountMode = newValue!;
+                  });
+                },
+                items: <String>['Edit Mode', 'Read Only Mode']
+                    .map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+              ),
               IconButton(
                 icon: Icon(Icons.settings),  //Settings Icon 
                 onPressed: () {  },)
@@ -105,13 +107,12 @@ DropdownButton<String>(
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
-        child:Card(
         child: Column(
    
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text(
-              'New Memories', style: TextStyle(color: ColorConstants.bodyText),
+              'New Memories', style: TextStyle(color: ColorConstants.bodyText, fontSize: TextSizeConstants.h2),
             ),
            Container(
              margin: EdgeInsets.all(5),
@@ -120,13 +121,12 @@ DropdownButton<String>(
              decoration: BoxDecoration(border: Border.all(color: ColorConstants.hintText), borderRadius: BorderRadius.all(Radius.circular(20))),
              child: Column(
                children: <Widget>[
-                 Text('Wedding'),
+                 Text('Wedding', style: TextStyle(fontSize: TextSizeConstants.buttonText),),
                ],
              ) 
            ),
           ],
         ),
-      ),
     ));
   }
 }
