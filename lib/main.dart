@@ -51,6 +51,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
+  var accountMode; //variable for Account Mode
+
   void _incrementCounter() {
     setState(() {
      
@@ -67,14 +69,43 @@ class _MyHomePageState extends State<MyHomePage> {
     // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        // App bar properties
+        // title: Text(widget.title),
         backgroundColor: ColorConstants.appBar,
+        actions: <Widget>[
+          Row(
+            children: <Widget>[
+DropdownButton<String>(
+      value: accountMode,
+      icon: const Icon(Icons.arrow_drop_down),
+      iconSize: 24,
+      iconEnabledColor: ColorConstants.bodyText,
+      elevation: 16,
+      style: const TextStyle(color: ColorConstants.bodyText),
+      onChanged: (String? newValue) {
+        setState(() {
+          accountMode = newValue!;
+        });
+      },
+      items: <String>['Edit Mode', 'Read Only Mode']
+          .map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
+    ),
+              IconButton(
+                icon: Icon(Icons.settings),  //Settings Icon 
+                onPressed: () {  },)
+            ],
+          ),
+        ],
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
+        child:Card(
         child: Column(
    
           mainAxisAlignment: MainAxisAlignment.center,
@@ -82,14 +113,20 @@ class _MyHomePageState extends State<MyHomePage> {
             const Text(
               'New Memories', style: TextStyle(color: ColorConstants.bodyText),
             ),
-           Card(
+           Container(
              margin: EdgeInsets.all(5),
-             shadowColor: Colors.black26,
-             child: Text('Wedding'),
+             width: 341,
+             height: 250,
+             decoration: BoxDecoration(border: Border.all(color: ColorConstants.hintText), borderRadius: BorderRadius.all(Radius.circular(20))),
+             child: Column(
+               children: <Widget>[
+                 Text('Wedding'),
+               ],
+             ) 
            ),
           ],
         ),
       ),
-    );
+    ));
   }
 }
