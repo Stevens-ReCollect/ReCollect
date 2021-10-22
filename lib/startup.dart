@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:recollect_app/constants/colorConstants.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(StartUp());
 
-class MyApp extends StatelessWidget {
+class StartUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -39,12 +40,13 @@ class _StartUpPageState extends State<StartUpPage> {
               height: 68,
               width: 230,
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: ColorConstants.buttonColor,
                 borderRadius: BorderRadius.circular(20),
               ),
               child: TextButton(
                 child: const Text('Sign Up',
-                    style: TextStyle(color: Colors.white, fontSize: 24.0)),
+                    style: TextStyle(
+                        color: ColorConstants.buttonText, fontSize: 24.0)),
                 onPressed: () {},
               ),
             ),
@@ -53,12 +55,13 @@ class _StartUpPageState extends State<StartUpPage> {
               height: 68,
               width: 230,
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: ColorConstants.buttonColor,
                 borderRadius: BorderRadius.circular(20),
               ),
               child: TextButton(
                 child: const Text('Login',
-                    style: TextStyle(color: Colors.white, fontSize: 24.0)),
+                    style: TextStyle(
+                        color: ColorConstants.buttonText, fontSize: 24.0)),
                 onPressed: () {},
               ),
             )
