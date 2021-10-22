@@ -1,4 +1,5 @@
 # recollect_app
+[![Codemagic build status](https://api.codemagic.io/apps/61572d342144453aa8a2fa49/61572d342144453aa8a2fa48/status_badge.svg)](https://codemagic.io/apps/61572d342144453aa8a2fa49/61572d342144453aa8a2fa48/latest_build)
 
 A new Flutter project.
 
