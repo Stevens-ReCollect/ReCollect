@@ -31,7 +31,11 @@ class _StartUpPageState extends State<StartUpPage> {
               child: Center(
                 child: Text(
                   'ReCollect',
-                  style: TextStyle(fontSize: 64.0, fontWeight: FontWeight.w900),
+                  style: TextStyle(
+                    fontSize: 64.0,
+                    fontFamily: 'Roboto',
+                    fontWeight: FontWeight.w900,
+                  ),
                 ),
               ),
             ),
@@ -44,9 +48,15 @@ class _StartUpPageState extends State<StartUpPage> {
                 borderRadius: BorderRadius.circular(20),
               ),
               child: TextButton(
-                child: const Text('Sign Up',
-                    style: TextStyle(
-                        color: ColorConstants.buttonText, fontSize: 24.0)),
+                child: const Text(
+                  'Sign Up',
+                  style: TextStyle(
+                    color: ColorConstants.buttonText,
+                    fontSize: 24.0,
+                    fontFamily: 'Roboto',
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
                 onPressed: () {},
               ),
             ),
@@ -59,9 +69,15 @@ class _StartUpPageState extends State<StartUpPage> {
                 borderRadius: BorderRadius.circular(20),
               ),
               child: TextButton(
-                child: const Text('Login',
-                    style: TextStyle(
-                        color: ColorConstants.buttonText, fontSize: 24.0)),
+                child: const Text(
+                  'Login',
+                  style: TextStyle(
+                    color: ColorConstants.buttonText,
+                    fontSize: 24.0,
+                    fontFamily: 'Roboto',
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
                 onPressed: () {},
               ),
             )
