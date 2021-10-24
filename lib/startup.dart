@@ -13,12 +13,7 @@ class StartUp extends StatelessWidget {
   }
 }
 
-class StartUpPage extends StatefulWidget {
-  @override
-  _StartUpPageState createState() => _StartUpPageState();
-}
-
-class _StartUpPageState extends State<StartUpPage> {
+class StartUpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
