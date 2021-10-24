@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
+import 'package:recollect_app/signup.dart';
 
 void main() => runApp(StartUp());
 
@@ -21,9 +22,9 @@ class StartUpPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            const Padding(
-              padding: EdgeInsets.only(top: 320.0),
-              child: Center(
+            Container(
+              margin: const EdgeInsets.only(top: 320.0),
+              child: const Center(
                 child: Text(
                   'ReCollect',
                   style: TextStyle(
@@ -52,7 +53,12 @@ class StartUpPage extends StatelessWidget {
                     fontWeight: FontWeight.w400,
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SignUpPage()),
+                  );
+                },
               ),
             ),
             Container(
