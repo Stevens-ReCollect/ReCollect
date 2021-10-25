@@ -100,26 +100,30 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
             ),
             Container(
+              margin: const EdgeInsets.only(top: 15.0, left: 45.0),
               height: 68,
               width: 230,
-              margin: const EdgeInsets.only(top: 30.0, left: 45.0),
-              decoration: BoxDecoration(
-                color: ColorConstants.buttonColor,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Center(
-                child: TextButton(
-                  child: const Text(
-                    'Sign Up',
-                    style: TextStyle(
-                      color: ColorConstants.buttonText,
-                      fontSize: 24.0,
-                      fontFamily: 'Roboto',
-                      fontWeight: FontWeight.w400,
+              child: TextButton(
+                child: const Text(
+                  'Login',
+                  style: TextStyle(
+                    fontSize: 24.0,
+                    fontFamily: 'Roboto',
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      ColorConstants.buttonColor),
+                  foregroundColor: MaterialStateProperty.all<Color>(
+                      ColorConstants.buttonText),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
                     ),
                   ),
-                  onPressed: () {},
                 ),
+                onPressed: () {},
               ),
             ),
           ],

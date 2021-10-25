@@ -40,18 +40,24 @@ class StartUpPage extends StatelessWidget {
               margin: const EdgeInsets.only(top: 68.0),
               height: 68,
               width: 230,
-              decoration: BoxDecoration(
-                color: ColorConstants.buttonColor,
-                borderRadius: BorderRadius.circular(20),
-              ),
               child: TextButton(
                 child: const Text(
                   'Sign Up',
                   style: TextStyle(
-                    color: ColorConstants.buttonText,
                     fontSize: 24.0,
                     fontFamily: 'Roboto',
                     fontWeight: FontWeight.w400,
+                  ),
+                ),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      ColorConstants.buttonColor),
+                  foregroundColor: MaterialStateProperty.all<Color>(
+                      ColorConstants.buttonText),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
                   ),
                 ),
                 onPressed: () {
@@ -66,18 +72,24 @@ class StartUpPage extends StatelessWidget {
               margin: const EdgeInsets.only(top: 22.0),
               height: 68,
               width: 230,
-              decoration: BoxDecoration(
-                color: ColorConstants.buttonColor,
-                borderRadius: BorderRadius.circular(20),
-              ),
               child: TextButton(
                 child: const Text(
                   'Login',
                   style: TextStyle(
-                    color: ColorConstants.buttonText,
                     fontSize: 24.0,
                     fontFamily: 'Roboto',
                     fontWeight: FontWeight.w400,
+                  ),
+                ),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      ColorConstants.buttonColor),
+                  foregroundColor: MaterialStateProperty.all<Color>(
+                      ColorConstants.buttonText),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
                   ),
                 ),
                 onPressed: () {
