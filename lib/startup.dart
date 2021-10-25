@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
+import 'package:recollect_app/login.dart';
 import 'package:recollect_app/signup.dart';
 
 void main() => runApp(StartUp());
@@ -79,7 +80,12 @@ class StartUpPage extends StatelessWidget {
                     fontWeight: FontWeight.w400,
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginPage()),
+                  );
+                },
               ),
             )
           ],
