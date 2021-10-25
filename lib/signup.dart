@@ -36,17 +36,29 @@ class _SignUpPageState extends State<SignUpPage> {
             Container(
               height: 44.0,
               width: 285.0,
-              margin: const EdgeInsets.only(top: 15.0, left: 30.0),
+              margin: const EdgeInsets.only(top: 15.0, left: 45.0),
               child: TextButton(
-                child: const Text(
-                  'Have an account? Log in.',
-                  style: TextStyle(
-                    color: ColorConstants.buttonColor,
-                    fontSize: 24.0,
-                    fontFamily: 'Roboto',
-                    fontWeight: FontWeight.w400,
+                child: RichText(
+                  text: const TextSpan(
+                    text: 'Have an account? ',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 24.0,
+                      fontFamily: 'Roboto',
+                      fontWeight: FontWeight.w400,
+                    ),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: 'Log in.',
+                        style: TextStyle(
+                          color: ColorConstants.buttonColor,
+                          fontSize: 24.0,
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.w400,
+                        ),
+                      )
+                    ],
                   ),
-                  textAlign: TextAlign.left,
                 ),
                 onPressed: () {},
               ),
@@ -105,7 +117,7 @@ class _SignUpPageState extends State<SignUpPage> {
               width: 230,
               child: TextButton(
                 child: const Text(
-                  'Login',
+                  'Sign Up',
                   style: TextStyle(
                     fontSize: 24.0,
                     fontFamily: 'Roboto',
