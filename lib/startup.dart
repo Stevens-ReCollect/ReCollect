@@ -74,7 +74,7 @@ class StartUpPage extends StatelessWidget {
               width: 230,
               child: TextButton(
                 child: const Text(
-                  'Login',
+                  'Log In',
                   style: TextStyle(
                     fontSize: 24.0,
                     fontFamily: 'Roboto',

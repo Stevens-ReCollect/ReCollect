@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
+import 'package:recollect_app/signup.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -18,9 +19,19 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           children: <Widget>[
             Container(
+              margin: const EdgeInsets.only(top: 50.0, left: 10.0),
+              alignment: Alignment.centerLeft,
+              child: IconButton(
+                icon: const Icon(Icons.arrow_back_ios_new),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ),
+            Container(
               height: 36.0,
               width: 325.0,
-              margin: const EdgeInsets.only(top: 195.0, left: 25.0),
+              margin: const EdgeInsets.only(top: 50.0, left: 0.0),
               child: const Text(
                 'Log in',
                 style: TextStyle(
@@ -33,7 +44,7 @@ class _LoginPageState extends State<LoginPage> {
             Container(
               height: 44.0,
               width: 325.0,
-              margin: const EdgeInsets.only(top: 15.0, left: 25.0),
+              margin: const EdgeInsets.only(top: 15.0, left: 0.0),
               child: TextButton(
                 child: RichText(
                   text: const TextSpan(
@@ -61,13 +72,18 @@ class _LoginPageState extends State<LoginPage> {
                   padding: EdgeInsets.zero,
                   alignment: Alignment.centerLeft,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SignUpPage()),
+                  );
+                },
               ),
             ),
             Container(
               height: 68.0,
               width: 325.0,
-              margin: const EdgeInsets.only(top: 30.0, left: 25.0),
+              margin: const EdgeInsets.only(top: 30.0, left: 0.0),
               child: const TextField(
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
@@ -79,7 +95,7 @@ class _LoginPageState extends State<LoginPage> {
             Container(
               height: 68.0,
               width: 325.0,
-              margin: const EdgeInsets.only(top: 15.0, left: 25.0),
+              margin: const EdgeInsets.only(top: 15.0, left: 0.0),
               child: const TextField(
                 obscureText: true,
                 decoration: InputDecoration(
@@ -89,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             Container(
-              margin: const EdgeInsets.only(top: 15.0, left: 25.0),
+              margin: const EdgeInsets.only(top: 15.0, left: 0.0),
               height: 68,
               width: 230,
               child: TextButton(
