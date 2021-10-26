@@ -22,8 +22,8 @@ class _SignUpPageState extends State<SignUpPage> {
           children: <Widget>[
             Container(
               height: 36.0,
-              width: 285.0,
-              margin: const EdgeInsets.only(top: 195.0, left: 45.0),
+              width: 325.0,
+              margin: const EdgeInsets.only(top: 195.0, left: 25.0),
               child: const Text(
                 'Sign Up',
                 style: TextStyle(
@@ -35,8 +35,8 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
             Container(
               height: 44.0,
-              width: 285.0,
-              margin: const EdgeInsets.only(top: 15.0, left: 45.0),
+              width: 325.0,
+              margin: const EdgeInsets.only(top: 15.0, left: 25.0),
               child: TextButton(
                 child: RichText(
                   text: const TextSpan(
@@ -60,13 +60,17 @@ class _SignUpPageState extends State<SignUpPage> {
                     ],
                   ),
                 ),
+                style: TextButton.styleFrom(
+                  padding: EdgeInsets.zero,
+                  alignment: Alignment.centerLeft,
+                ),
                 onPressed: () {},
               ),
             ),
             Container(
               height: 68.0,
-              width: 285.0,
-              margin: const EdgeInsets.only(top: 30.0, left: 45.0),
+              width: 325.0,
+              margin: const EdgeInsets.only(top: 30.0, left: 25.0),
               child: const TextField(
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
@@ -77,8 +81,8 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
             Container(
               height: 68.0,
-              width: 285.0,
-              margin: const EdgeInsets.only(top: 15.0, left: 45.0),
+              width: 325.0,
+              margin: const EdgeInsets.only(top: 15.0, left: 25.0),
               child: const TextField(
                 obscureText: true,
                 decoration: InputDecoration(
@@ -89,8 +93,8 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
             Container(
               height: 68.0,
-              width: 285.0,
-              margin: const EdgeInsets.only(top: 15.0, left: 45.0),
+              width: 325.0,
+              margin: const EdgeInsets.only(top: 15.0, left: 25.0),
               child: const TextField(
                 obscureText: true,
                 decoration: InputDecoration(
@@ -101,8 +105,8 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
             Container(
               height: 68.0,
-              width: 285.0,
-              margin: const EdgeInsets.only(top: 15.0, left: 45.0),
+              width: 325.0,
+              margin: const EdgeInsets.only(top: 15.0, left: 25.0),
               child: const TextField(
                 obscureText: true,
                 decoration: InputDecoration(
@@ -112,7 +116,7 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
             ),
             Container(
-              margin: const EdgeInsets.only(top: 15.0, left: 45.0),
+              margin: const EdgeInsets.only(top: 15.0, left: 25.0),
               height: 68,
               width: 230,
               child: TextButton(
