@@ -16,7 +16,106 @@ class _LoginPageState extends State<LoginPage> {
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
-          children: <Widget>[],
+          children: <Widget>[
+            Container(
+              height: 36.0,
+              width: 325.0,
+              margin: const EdgeInsets.only(top: 195.0, left: 25.0),
+              child: const Text(
+                'Log in',
+                style: TextStyle(
+                  fontSize: 30.0,
+                  fontFamily: 'Roboto',
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+            Container(
+              height: 44.0,
+              width: 325.0,
+              margin: const EdgeInsets.only(top: 15.0, left: 25.0),
+              child: TextButton(
+                child: RichText(
+                  text: const TextSpan(
+                    text: 'Don\'t have an account? ',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 22.0,
+                      fontFamily: 'Roboto',
+                      fontWeight: FontWeight.w400,
+                    ),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: 'Sign up.',
+                        style: TextStyle(
+                          color: ColorConstants.buttonColor,
+                          fontSize: 22.0,
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.w400,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                style: TextButton.styleFrom(
+                  padding: EdgeInsets.zero,
+                  alignment: Alignment.centerLeft,
+                ),
+                onPressed: () {},
+              ),
+            ),
+            Container(
+              height: 68.0,
+              width: 325.0,
+              margin: const EdgeInsets.only(top: 30.0, left: 25.0),
+              child: const TextField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Email',
+                  hintText: 'example@example.com',
+                ),
+              ),
+            ),
+            Container(
+              height: 68.0,
+              width: 325.0,
+              margin: const EdgeInsets.only(top: 15.0, left: 25.0),
+              child: const TextField(
+                obscureText: true,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Password',
+                ),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 15.0, left: 25.0),
+              height: 68,
+              width: 230,
+              child: TextButton(
+                child: const Text(
+                  'Log In',
+                  style: TextStyle(
+                    fontSize: 24.0,
+                    fontFamily: 'Roboto',
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      ColorConstants.buttonColor),
+                  foregroundColor: MaterialStateProperty.all<Color>(
+                      ColorConstants.buttonText),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                  ),
+                ),
+                onPressed: () {},
+              ),
+            ),
+          ],
         ),
       ),
     );
