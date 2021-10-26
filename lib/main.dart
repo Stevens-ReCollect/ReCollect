@@ -23,8 +23,9 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
+ 
   const MyHomePage({Key? key, required this.title}) : super(key: key);
-
+ 
   final String title;
 
   @override
@@ -32,55 +33,79 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  
+
   var accountMode = "Edit Mode"; //variable for Account Mode
+
   @override
   void initState() {
     super.initState();
   }
 
+  
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
       appBar: AppBar(
         // App bar properties
-        title: Text(widget.title),
-        backgroundColor: ColorConstants.appBar,
-        actions: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-          DropdownButton<String>(
+        // title: Text(widget.title),
+        centerTitle: true,
+        automaticallyImplyLeading: true,
+        leadingWidth: 300,
+        leading:  DropdownButton<String>(
                 value: accountMode,
                 icon: const Icon(Icons.arrow_drop_down),
                 iconSize: 24,
                 iconEnabledColor: ColorConstants.bodyText,
                 elevation: 16,
+                isExpanded: true,
                 style: const TextStyle(color: ColorConstants.bodyText, fontSize: TextSizeConstants.dropDownText),
-                onChanged: (String? newValue) {
+                onChanged: (newValue) {
                   setState(() {
-                    accountMode = newValue!;
-                    if (accountMode == 'Read Only Mode'){
-                      !ColorConstants.isCaregiver;
-                    } else {
-                      ColorConstants.isCaregiver;
-                    }
+                    accountMode = newValue!;  
+                    ColorConstants.isCaregiver = !ColorConstants.isCaregiver;
                   });
+                    if (newValue == 'Edit Mode') {
+                      OverlayEntry(
+                        builder: (context) => Positioned(
+                          left: MediaQuery.of(context).size.width * 0.2,
+                          top: MediaQuery.of(context).size.height * 0.3,
+                          width: 300,
+                          child: Material(
+                            elevation: 4.0,
+                            child: ListView(
+                              padding: EdgeInsets.zero,
+                              shrinkWrap: true,
+                              children: <Widget>[
+                                Text('Enter the Caregiver pin'),
+                                TextFormField(
+                                
+                                )
+                              ],
+                            ),
+                          ),
+                        )
+                      );
+                    }
                 },
                 items: <String>['Edit Mode', 'Read Only Mode']
                     .map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Text(value),
+                    onTap: (){
+
+                    },
                   );
                 }).toList(),
               ),
-              IconButton(
+         
+        backgroundColor: ColorConstants.appBar,
+        actions: <Widget>[
+        IconButton(
                 icon: Icon(Icons.settings),  //Settings Icon 
-                onPressed: () {  },)
-            ],
-          ),
+                onPressed: () {  },
+                ),
         ],
       ),
       body: Center(

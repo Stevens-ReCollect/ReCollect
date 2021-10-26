@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../main.dart';
 
 class ColorConstants {
   static bool isCaregiver = true;
@@ -11,5 +12,6 @@ class ColorConstants {
   static Color buttonText = Colors.white;
   static Color appBar = isCaregiver ? Color(0xFF00CB5D) : Color(0xFF5498FF);
   static Color unfavoredButton = Color(0x8C303000);
-
+  
+  
   } 
