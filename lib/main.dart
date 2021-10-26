@@ -33,7 +33,11 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   
-  var accountMode; //variable for Account Mode
+  var accountMode = "Edit Mode"; //variable for Account Mode
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +61,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 onChanged: (String? newValue) {
                   setState(() {
                     accountMode = newValue!;
+                    if (accountMode == 'Read Only Mode'){
+                      !ColorConstants.isCaregiver;
+                    } else {
+                      ColorConstants.isCaregiver;
+                    }
                   });
                 },
                 items: <String>['Edit Mode', 'Read Only Mode']
