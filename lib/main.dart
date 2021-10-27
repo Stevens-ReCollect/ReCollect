@@ -63,9 +63,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 onChanged: (newValue) {
                   setState(() {
                     accountMode = newValue!;  
-                    ColorConstants.isCaregiver = !ColorConstants.isCaregiver;
+                    ColorConstants.isCaregiver = !ColorConstants.isCaregiver; //Trying to toggle colors
                   });
-                    if (newValue == 'Edit Mode') {
+                    if (accountMode == 'Edit Mode') { //Attempt at toggle
                       OverlayEntry(
                         builder: (context) => Positioned(
                           left: MediaQuery.of(context).size.width * 0.2,
@@ -79,8 +79,14 @@ class _MyHomePageState extends State<MyHomePage> {
                               children: <Widget>[
                                 Text('Enter the Caregiver pin'),
                                 TextFormField(
-                                
-                                )
+                                obscureText: true,
+                                minLines: 1,
+                              // controller: , TODO: Add controller
+                                ),
+                                ElevatedButton(onPressed: (){
+                                   Navigator.pop(context);
+                                  //TODO: write function for toggling modes
+                                }, child: Text('Submit', style: TextStyle(fontSize: TextSizeConstants.buttonText),))
                               ],
                             ),
                           ),
