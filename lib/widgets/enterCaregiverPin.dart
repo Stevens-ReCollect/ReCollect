@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:overlay_container/overlay_container.dart';
+import 'package:recollect_app/constants/colorConstants.dart';
 
 class EnterPin extends StatefulWidget{
   @override 
@@ -44,7 +45,18 @@ class EnterPinState extends State<EnterPin> {
                     )
                   ],
                 ),
-                child: Text("I render outside the \nwidget hierarchy."),
+                child: Column(
+                children: <Widget> [
+                  Text("Enter pin to continue to Edit Mode"),
+                  TextFormField(
+                    obscureText: true,
+                  ),
+                  ElevatedButton(onPressed: (){
+
+                  }, 
+                  child: Text('Continue'))
+                ]
+                )
               ));
     
   }

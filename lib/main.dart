@@ -40,7 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
-
+    ColorConstants().setCaregiverColors();
     super.initState();
   }
 
@@ -72,7 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
             if (index == 0) { //Attempt at toggle
              ColorConstants.isCaregiver = true;
              EnterPin();
-            } else{
+            } else if (index == 1){
               ColorConstants.isCaregiver = false;
                 }
               },
