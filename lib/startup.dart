@@ -107,9 +107,9 @@ class StartUpPage extends StatelessWidget {
               width: 230,
               child: TextButton(
                 child: const Text(
-                  'test',
+                  'test Create memory (To be removed)',
                   style: TextStyle(
-                    fontSize: 24.0,
+                    fontSize: 10.0,
                     fontFamily: 'Roboto',
                     fontWeight: FontWeight.w400,
                   ),
