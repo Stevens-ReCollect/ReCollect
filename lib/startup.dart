@@ -3,6 +3,7 @@ import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/login.dart';
 import 'package:recollect_app/signup.dart';
 import 'package:recollect_app/creatememory.dart';
+import 'package:recollect_app/addmoment.dart';
 
 void main() => runApp(StartUp());
 
