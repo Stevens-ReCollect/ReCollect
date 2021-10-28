@@ -33,7 +33,7 @@ class _LoginPageState extends State<LoginPage> {
               width: 325.0,
               margin: const EdgeInsets.only(top: 50.0, left: 0.0),
               child: const Text(
-                'Log in',
+                'Log In',
                 style: TextStyle(
                   fontSize: 30.0,
                   fontFamily: 'Roboto',

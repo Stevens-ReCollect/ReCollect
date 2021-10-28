@@ -123,11 +123,20 @@ class _SignUpPageState extends State<SignUpPage> {
               height: 68.0,
               width: 325.0,
               margin: const EdgeInsets.only(top: 15.0, left: 0.0),
-              child: const TextField(
+              child: TextField(
                 obscureText: true,
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                   labelText: 'Caregiver Pin',
+                  suffixIcon: IconButton(
+                    icon: const Icon(Icons.info_outlined),
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) =>
+                              _buildCaregiverPinPopop(context));
+                    },
+                  ),
                 ),
               ),
             ),
@@ -163,4 +172,20 @@ class _SignUpPageState extends State<SignUpPage> {
       ),
     );
   }
+}
+
+Widget _buildCaregiverPinPopop(BuildContext context) {
+  return AlertDialog(
+    content: Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: const <Widget>[
+        SizedBox(
+            width: 300.0,
+            height: 100.0,
+            child: Text(
+                'The Caregiver Pin is the pin you will use to enter back to Edit Mode.')),
+      ],
+    ),
+  );
 }
