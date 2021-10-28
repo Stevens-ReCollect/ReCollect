@@ -1,16 +1,18 @@
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:overlay_container/overlay_container.dart';
 
 class EnterPin extends StatefulWidget{
   @override 
-_EnterPinState createState() => _EnterPinState(); 
+  State<EnterPin> createState() => EnterPinState(); 
 }
+
 
 class EnterPinState extends State<EnterPin> {
   bool _dropdownShown = false;
 
-  void _toggleDropdown() {
+  void _toggleModes() {
     setState(() {
       _dropdownShown = !_dropdownShown;
     });
@@ -36,7 +38,7 @@ class EnterPinState extends State<EnterPin> {
                   color: Colors.white,
                   boxShadow: <BoxShadow>[
                     BoxShadow(
-                      color: Colors.grey[300],
+                      color: Colors.grey,
                       blurRadius: 3,
                       spreadRadius: 6,
                     )

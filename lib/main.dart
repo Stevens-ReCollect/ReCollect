@@ -40,6 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
+
     super.initState();
   }
 
@@ -84,30 +85,50 @@ class _MyHomePageState extends State<MyHomePage> {
         ],),
         ]
       ),
-      body: Center(
+      body: SingleChildScrollView(
+        child: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
         child: Column(
-   
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            const Text(
+            Container(
+            padding: EdgeInsets.all(20),
+            child: const Text(
               'New Memories', style: TextStyle(color: ColorConstants.bodyText, fontSize: TextSizeConstants.h2),
-            ),
-           Container(
-             margin: EdgeInsets.all(5),
-             width: 341,
-             height: 250,
-             decoration: BoxDecoration(border: Border.all(color: ColorConstants.hintText), borderRadius: BorderRadius.all(Radius.circular(20))),
-             child: Column(
+            )),
+           Stack(
+             alignment: Alignment.center,
                children: <Widget>[
-                 Image(image: AssetImage('lib/images/wedding-placeholder.jpg')),
-                 Text('Wedding', style: TextStyle(fontSize: TextSizeConstants.buttonText, fontWeight: FontWeight.w900),),
+                 Container(
+                   width: 340,
+                   height: 250,
+                decoration: new BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(20)),
+                image: new DecorationImage(
+                fit: BoxFit.cover,
+                alignment: Alignment.topLeft, 
+                image: AssetImage('lib/images/wedding-placeholder.jpg'), 
+                ))),
+                Container(
+                alignment: Alignment.bottomLeft,
+                decoration: BoxDecoration(color: Colors.black26, 
+                borderRadius: BorderRadius.all(Radius.circular(20)),),
+                width: 340,
+                height: 250,
+                padding: EdgeInsets.only(left: 20, bottom: 10),
+                 child: Text('Wedding', 
+                 style: TextStyle(color: ColorConstants.buttonText, 
+                  fontSize: TextSizeConstants.buttonText, 
+                  fontWeight: FontWeight.w900), textAlign: TextAlign.left,),
+                )
                ],
              ) 
-           ),
+  
           ],
         ),
-    ));
+    )));
   }
 }
