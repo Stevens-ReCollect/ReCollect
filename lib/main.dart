@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/textSizeConstants.dart';
+import 'package:recollect_app/widgets/enterCaregiverPin.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
 void main() {
   runApp(const MyApp());
@@ -52,67 +54,35 @@ class _MyHomePageState extends State<MyHomePage> {
         centerTitle: true,
         automaticallyImplyLeading: true,
         leadingWidth: 300,
-        leading:  DropdownButton<String>(
-                value: accountMode,
-                icon: const Icon(Icons.arrow_drop_down),
-                iconSize: 24,
-                iconEnabledColor: ColorConstants.bodyText,
-                elevation: 16,
-                isExpanded: true,
-                style: const TextStyle(color: ColorConstants.bodyText, fontSize: TextSizeConstants.dropDownText),
-                onChanged: (newValue) {
-                  setState(() {
-                    accountMode = newValue!;  
-                    ColorConstants.isCaregiver = !ColorConstants.isCaregiver; //Trying to toggle colors
-                  });
-                    if (accountMode == 'Edit Mode') { //Attempt at toggle
-                      OverlayEntry(
-                        builder: (context) => Positioned(
-                          left: MediaQuery.of(context).size.width * 0.2,
-                          top: MediaQuery.of(context).size.height * 0.3,
-                          width: 300,
-                          child: Material(
-                            elevation: 4.0,
-                            child: ListView(
-                              padding: EdgeInsets.zero,
-                              shrinkWrap: true,
-                              children: <Widget>[
-                                Text('Enter the Caregiver pin'),
-                                TextFormField(
-                                obscureText: true,
-                                minLines: 1,
-                              // controller: , TODO: Add controller
-                                ),
-                                ElevatedButton(onPressed: (){
-                                   Navigator.pop(context);
-                                  //TODO: write function for toggling modes
-                                }, child: Text('Submit', style: TextStyle(fontSize: TextSizeConstants.buttonText),))
-                              ],
-                            ),
-                          ),
-                        )
-                      );
-                    }
-                },
-                items: <String>['Edit Mode', 'Read Only Mode']
-                    .map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                    onTap: (){
-
-                    },
-                  );
-                }).toList(),
-              ),
-         
         backgroundColor: ColorConstants.appBar,
         actions: <Widget>[
+          Row(
+            children: <Widget> [
+              ToggleSwitch(
+                minWidth: 100,
+                inactiveBgColor: Colors.white,
+                activeBgColor: [ColorConstants.buttonColor],
+          initialLabelIndex: 0,
+          totalSwitches: 2,
+          labels: ['Edit Mode', 'Story Mode'],
+          onToggle: (index) {
+            print('switched to: $index');
+            // ColorConstants.isCaregiver = !ColorConstants.isCaregiver;
+            if (index == 0) { //Attempt at toggle
+             ColorConstants.isCaregiver = true;
+             EnterPin();
+            } else{
+              ColorConstants.isCaregiver = false;
+                }
+              },
+              
+        ),
         IconButton(
                 icon: Icon(Icons.settings),  //Settings Icon 
                 onPressed: () {  },
                 ),
-        ],
+        ],),
+        ]
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
@@ -131,6 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
              decoration: BoxDecoration(border: Border.all(color: ColorConstants.hintText), borderRadius: BorderRadius.all(Radius.circular(20))),
              child: Column(
                children: <Widget>[
+                 Image(image: AssetImage('lib/images/wedding-placeholder.jpg')),
                  Text('Wedding', style: TextStyle(fontSize: TextSizeConstants.buttonText, fontWeight: FontWeight.w900),),
                ],
              ) 
