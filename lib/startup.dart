@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/login.dart';
 import 'package:recollect_app/signup.dart';
+import 'package:recollect_app/creatememory.dart';
 
 void main() => runApp(StartUp());
 
@@ -96,6 +97,38 @@ class StartUpPage extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => LoginPage()),
+                  );
+                },
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 30.0),
+              height: 68,
+              width: 230,
+              child: TextButton(
+                child: const Text(
+                  'test',
+                  style: TextStyle(
+                    fontSize: 24.0,
+                    fontFamily: 'Roboto',
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      ColorConstants.buttonColor),
+                  foregroundColor: MaterialStateProperty.all<Color>(
+                      ColorConstants.buttonText),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => CreateMemoryPage()),
                   );
                 },
               ),
