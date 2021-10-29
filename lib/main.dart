@@ -36,11 +36,11 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  var accountMode = "Edit Mode"; //variable for Account Mode
-
+  //variable for Account Mode
+  
   @override
   void initState() {
-    ColorConstants().setCaregiverColors();
+    ColorConstants().toggleColors();
     super.initState();
   }
 
@@ -68,15 +68,18 @@ class _MyHomePageState extends State<MyHomePage> {
           labels: ['Edit Mode', 'Story Mode'],
           onToggle: (index) {
             print('switched to: $index');
-            // ColorConstants.isCaregiver = !ColorConstants.isCaregiver;
-            if (index == 0) { //Attempt at toggle
-             ColorConstants.isCaregiver = true;
-             EnterPin();
-            } else if (index == 1){
-              ColorConstants.isCaregiver = false;
-                }
+            ColorConstants().toggleColors();
+            // if (index == 0) { //Attempt at toggle
+            //  isCaregiver = true;
+            // //  EnterPin();
+            // } else{
+            //   isCaregiver = false;
+            //     }
               },
               
+        ),
+        SizedBox(
+          width: 115,
         ),
         IconButton(
                 icon: Icon(Icons.settings),  //Settings Icon 
