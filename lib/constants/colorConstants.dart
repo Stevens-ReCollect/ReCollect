@@ -13,21 +13,19 @@ class ColorConstants {
   static Color unfavoredButton = Color(0x8C303000);
 
  
- var isCaregiver = true;
-  toggleColors() async {  
+//  var isCaregiver = true;
+  toggleColors(int index) {  
     
-    isCaregiver = isCaregiver ? false : true;
-
-    if (isCaregiver == true){
+    // isCaregiver = !isCaregiver;
+    
+    if (index == 0){
       appBar = Color(0xFF00CB5D);
       buttonColor = Color(0xFF308C39);
-      return true;
     } 
     
-    if(isCaregiver == false ){
-      appBar = Color(0xFF30658C);
+    if(index == 1){
+      appBar = Color(0xFF3065FC);
       buttonColor = Color(0xFF30658C);
-      return false;
     }
   }
   

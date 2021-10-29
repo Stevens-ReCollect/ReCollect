@@ -38,9 +38,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   //variable for Account Mode
   
+  var accountMode = 0;
+
   @override
   void initState() {
-    ColorConstants().toggleColors();
+    ColorConstants().toggleColors(accountMode);
     super.initState();
   }
 
@@ -68,7 +70,9 @@ class _MyHomePageState extends State<MyHomePage> {
           labels: ['Edit Mode', 'Story Mode'],
           onToggle: (index) {
             print('switched to: $index');
-            ColorConstants().toggleColors();
+            accountMode = index;
+            ColorConstants().toggleColors(accountMode);
+            print(accountMode);
             // if (index == 0) { //Attempt at toggle
             //  isCaregiver = true;
             // //  EnterPin();
