@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:recollect_app/signup.dart';
 
 void main() {
-  testWidgets('Startup screen loads correctly', (WidgetTester tester) async {
+  testWidgets('Sign Up screen loads correctly', (WidgetTester tester) async {
     // Build the app
     await tester.pumpWidget(SignUpPage());
 
