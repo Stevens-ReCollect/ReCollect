@@ -27,19 +27,43 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(top: 50.0, left: 250.0),
+                  margin: const EdgeInsets.only(top: 50.0, left: 260.0),
                   alignment: Alignment.centerRight,
-                  child: Ink(
-                    decoration: const ShapeDecoration(
-                      color: ColorConstants.buttonColor,
-                      shape: CircleBorder(),
+                  // child: Ink(
+                  //   decoration: const ShapeDecoration(
+                  //     color: ColorConstants.buttonColor,
+                  //     shape: CircleBorder(),
+                  //   ),
+                  // ),
+                  child: PopupMenuButton<String>(
+                    // onSelected: (value) {
+                    //   switch (value) {
+                    //     case AddMomentMenu.photo:
+                    //       Utils.
+                    //   }
+                    // },
+                    child: Container(
+                      height: 40.0,
+                      width: 40.0,
+                      decoration: const ShapeDecoration(
+                        color: ColorConstants.buttonColor,
+                        shape: CircleBorder(),
+                      ),
+                      child: const Icon(Icons.add,
+                          color: ColorConstants.buttonText),
                     ),
-                    child: IconButton(
-                      icon: const Icon(Icons.add),
-                      color: ColorConstants.buttonText,
-                      onPressed: () {},
-                    ),
+                    itemBuilder: (context) => AddMomentMenu.items
+                        .map((item) => PopupMenuItem<String>(
+                              child: Text(item),
+                              value: item,
+                            ))
+                        .toList(),
                   ),
+                  // child: IconButton(
+                  //   icon: const Icon(Icons.add),
+                  //   color: ColorConstants.buttonText,
+                  //   onPressed: () {},
+                  // ),
                 ),
               ],
             ),
