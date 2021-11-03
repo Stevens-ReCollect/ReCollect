@@ -62,3 +62,15 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
     );
   }
 }
+
+class AddMomentMenu {
+  static const items = <String>[
+    photo,
+    video,
+    audio,
+  ];
+
+  static const String photo = 'Add Photo';
+  static const String video = 'Add Video';
+  static const String audio = 'Add Audio';
+}
