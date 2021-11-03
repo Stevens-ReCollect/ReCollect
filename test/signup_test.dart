@@ -9,7 +9,7 @@ void main() {
     await tester.pumpWidget(SignUpPage());
 
     // Verify app title appears
-    expect(find.text('Sign Up'), findsOneWidget);
+    expect(find.text('Sign Up'), findsNWidgets(2));
 
     // Verify Login and Sign Up button appears
     expect(find.byType(TextButton), findsNWidgets(2));
