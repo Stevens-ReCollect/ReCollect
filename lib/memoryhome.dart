@@ -35,7 +35,7 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
                   //     shape: CircleBorder(),
                   //   ),
                   // ),
-                  child: PopupMenuButton<String>(
+                  child: PopupMenuButton<int>(
                     // onSelected: (value) {
                     //   switch (value) {
                     //     case AddMomentMenu.photo:
@@ -52,12 +52,26 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
                       child: const Icon(Icons.add,
                           color: ColorConstants.buttonText),
                     ),
-                    itemBuilder: (context) => AddMomentMenu.items
-                        .map((item) => PopupMenuItem<String>(
-                              child: Text(item),
-                              value: item,
-                            ))
-                        .toList(),
+                    onSelected: (item) => onSelected(context, item),
+                    itemBuilder: (context) => [
+                      const PopupMenuItem<int>(
+                        child: Text('Add Photo'),
+                        value: 0,
+                      ),
+                      const PopupMenuItem<int>(
+                        child: Text('Add Video'),
+                        value: 1,
+                      ),
+                      const PopupMenuItem<int>(
+                        child: Text('Add Audio'),
+                        value: 2,
+                      ),
+                    ],
+                    // .map((item) => PopupMenuItem<String>(
+                    //       child: Text(item),
+                    //       value: item,
+                    //     ))
+                    // .toList(),
                   ),
                   // child: IconButton(
                   //   icon: const Icon(Icons.add),
@@ -97,4 +111,18 @@ class AddMomentMenu {
   static const String photo = 'Add Photo';
   static const String video = 'Add Video';
   static const String audio = 'Add Audio';
+}
+
+void onSelected(BuildContext context, int item) {
+  switch (item) {
+    case 0:
+      print('Clicked Add Photo');
+      break;
+    case 1:
+      print('Clicked Add Video');
+      break;
+    case 2:
+      print('Clicked Add Audio');
+      break;
+  }
 }
