@@ -7,95 +7,81 @@ class MemoryHomePage extends StatefulWidget {
 }
 
 class _MemoryHomePageState extends State<MemoryHomePage> {
+  final List<String> _moments = ['Photo', 'Video', 'Audio'];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Row(
-              children: <Widget>[
-                Container(
-                  margin: const EdgeInsets.only(top: 50.0, left: 10.0),
-                  alignment: Alignment.centerLeft,
-                  child: IconButton(
-                    icon: const Icon(Icons.arrow_back_ios_new),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(top: 50.0, left: 260.0),
-                  alignment: Alignment.centerRight,
-                  // child: Ink(
-                  //   decoration: const ShapeDecoration(
-                  //     color: ColorConstants.buttonColor,
-                  //     shape: CircleBorder(),
-                  //   ),
-                  // ),
-                  child: PopupMenuButton<int>(
-                    // onSelected: (value) {
-                    //   switch (value) {
-                    //     case AddMomentMenu.photo:
-                    //       Utils.
-                    //   }
-                    // },
-                    child: Container(
-                      height: 40.0,
-                      width: 40.0,
-                      decoration: const ShapeDecoration(
-                        color: ColorConstants.buttonColor,
-                        shape: CircleBorder(),
-                      ),
-                      child: const Icon(Icons.add,
-                          color: ColorConstants.buttonText),
-                    ),
-                    onSelected: (item) => onSelected(context, item),
-                    itemBuilder: (context) => [
-                      const PopupMenuItem<int>(
-                        child: Text('Add Photo'),
-                        value: 0,
-                      ),
-                      const PopupMenuItem<int>(
-                        child: Text('Add Video'),
-                        value: 1,
-                      ),
-                      const PopupMenuItem<int>(
-                        child: Text('Add Audio'),
-                        value: 2,
-                      ),
-                    ],
-                    // .map((item) => PopupMenuItem<String>(
-                    //       child: Text(item),
-                    //       value: item,
-                    //     ))
-                    // .toList(),
-                  ),
-                  // child: IconButton(
-                  //   icon: const Icon(Icons.add),
-                  //   color: ColorConstants.buttonText,
-                  //   onPressed: () {},
-                  // ),
-                ),
-              ],
+      appBar: AppBar(
+        foregroundColor: Colors.black,
+        backgroundColor: Colors.white,
+        elevation: 0,
+        actions: <Widget>[
+          PopupMenuButton<int>(
+            child: Container(
+              height: 40.0,
+              width: 40.0,
+              decoration: const ShapeDecoration(
+                color: ColorConstants.buttonColor,
+                shape: CircleBorder(),
+              ),
+              child: const Icon(Icons.add, color: ColorConstants.buttonText),
             ),
-            Container(
-              height: 36.0,
-              width: 325.0,
-              margin: const EdgeInsets.only(top: 50.0, left: 0.0),
-              child: const Text(
-                '{Memory Title Here}',
-                style: TextStyle(
-                  fontSize: 30.0,
-                  fontFamily: 'Roboto',
-                  fontWeight: FontWeight.w700,
+            onSelected: (item) => onSelected(context, item),
+            itemBuilder: (context) => [
+              const PopupMenuItem<int>(
+                child: Text('Add Photo'),
+                value: 0,
+              ),
+              const PopupMenuItem<int>(
+                child: Text('Add Video'),
+                value: 1,
+              ),
+              const PopupMenuItem<int>(
+                child: Text('Add Audio'),
+                value: 2,
+              ),
+            ],
+          )
+        ],
+      ),
+      body: ReorderableListView(
+        header: const Text('{Memory Title}',
+            style: TextStyle(
+              fontFamily: 'Roboto',
+              fontWeight: FontWeight.w700,
+              fontSize: 30.0,
+            )),
+        children: [
+          for (final moment in _moments)
+            Card(
+              key: ValueKey(moment),
+              color: Colors.white,
+              elevation: 0,
+              child: ListTile(
+                title: Text(
+                  moment,
+                  style: const TextStyle(
+                    fontFamily: 'Roboto',
+                    fontSize: 24.0,
+                  ),
                 ),
+                trailing: const Icon(Icons.reorder),
               ),
             ),
-          ],
-        ),
+        ],
+        onReorder: (oldIndex, newIndex) {
+          if (newIndex > oldIndex) {
+            newIndex -= 1;
+          }
+          setState(
+            () {
+              final String moment = _moments[oldIndex];
+              _moments.removeAt(oldIndex);
+              _moments.insert(newIndex, moment);
+            },
+          );
+        },
       ),
     );
   }
