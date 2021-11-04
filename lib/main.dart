@@ -40,14 +40,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
-  //variable for Account Mode
-
-  var accountMode = 0;
-
+ 
   @override
   void initState() {
-    // ColorConstants().toggleColors(accountMode);
+    setState(() {
+      ToggleWidget();
+    
+    });
     super.initState();
   }
 
@@ -95,6 +94,7 @@ class _MyHomePageState extends State<MyHomePage> {
             child: const Text(
               'New Memories', style: TextStyle(color: ColorConstants.bodyText, fontSize: TextSizeConstants.h2),
             )),
+            ToggleWidgetState().createNewMemory(0),
             InkWell(
             onTap: () {
               Navigator.pushNamed(context, RouteConstants.memoryRoute);

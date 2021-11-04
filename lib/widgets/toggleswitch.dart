@@ -1,34 +1,54 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
+import 'package:recollect_app/constants/textSizeConstants.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
-class ToggleWidget extends StatelessWidget {
+class ToggleWidget extends StatefulWidget {
+
+ @override
+  State<ToggleWidget> createState() => ToggleWidgetState();
+}
+class ToggleWidgetState extends State<ToggleWidget> {
+
+createNewMemory(int value){
+  if(value == 0){
+  return ElevatedButton(onPressed:() {}, 
+  style: ElevatedButton.styleFrom(primary: ColorConstants.buttonColor,
+                    textStyle: TextStyle(fontSize: 0.9*TextSizeConstants.buttonText)
+  ),
+  child: Text('Create New Memory'));
+  } else {
+    return SizedBox();
+  }
+}
+
 @override
   Widget build(BuildContext context) {
   
-  return ToggleSwitch(
-                minWidth: 95,
-                inactiveBgColor: Colors.white,
-                activeBgColor: [ColorConstants.buttonColor],
+  return Listener(
+    // onPointerDown: ColorConstants().toggleColors(value),
+    child: ToggleSwitch(
+          minWidth: 95,
+          inactiveBgColor: Colors.white,
+          inactiveFgColor: ColorConstants.bodyText,
+          activeBgColor: [ColorConstants.buttonColor],
+          activeFgColor: ColorConstants.buttonText,
           initialLabelIndex: 0,
           totalSwitches: 2,
           labels: ['Edit Mode', 'Story Mode'],
-          onToggle: (index) {
-            
-            print('switched to: $index');
-            // ColorConstants().toggleColors(index);
-            print(index);
-            if (index == 0) { //Attempt at toggle
-            ColorConstants.appBar = Color(0xFF00CB5D);
-            ColorConstants.buttonColor = Color(0xFF308C39);
-            }  else {
-              ColorConstants.appBar = Color(0xFF3065FC);
-              ColorConstants.buttonColor = Color(0xFF30658C);
-            }
-          },
-              
-        );
+          onToggle: (value) {   
+             setState(() {
+               ColorConstants.toggleColors(value);
+               createNewMemory(value);
+             });
+  
+          },         
+        
+  ));
 
   }
+
+ 
 }
