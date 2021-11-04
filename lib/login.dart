@@ -60,7 +60,7 @@ class _LoginPageState extends State<LoginPage> {
                         TextSpan(
                           text: 'Sign up.',
                           style: TextStyle(
-                            color: ColorConstants.buttonColor,
+                            color: ColorConstants.bodyText,
                             fontSize: 22.0,
                             fontFamily: 'Roboto',
                             fontWeight: FontWeight.w400,
