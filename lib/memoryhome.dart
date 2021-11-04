@@ -58,6 +58,7 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
               key: ValueKey(moment),
               color: Colors.white,
               elevation: 0,
+              margin: const EdgeInsets.all(10.0),
               child: ListTile(
                 title: Text(
                   moment,
