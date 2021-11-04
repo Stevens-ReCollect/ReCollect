@@ -14,19 +14,19 @@ class ColorConstants {
 
  
 //  var isCaregiver = true;
-  toggleColors(int index) {  
+  // toggleColors(int index) {  
     
-    // isCaregiver = !isCaregiver;
+  //   // isCaregiver = !isCaregiver;
     
-    if (index == 0){
-      appBar = Color(0xFF00CB5D);
-      buttonColor = Color(0xFF308C39);
-    } 
+  //   if (index == 0){
+  //     appBar = Color(0xFF00CB5D);
+  //     buttonColor = Color(0xFF308C39);
+  //   } 
     
-    if(index == 1){
-      appBar = Color(0xFF3065FC);
-      buttonColor = Color(0xFF30658C);
-    }
-  }
-  
-  } 
+  //   if(index == 1){
+  //     appBar = Color(0xFF3065FC);
+  //     buttonColor = Color(0xFF30658C);
+  //   }
+  // }
+
+}

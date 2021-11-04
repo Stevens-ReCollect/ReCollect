@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
-import 'package:recollect_app/constants/routeConstants.dart';
 import 'package:recollect_app/constants/textSizeConstants.dart';
-import 'package:recollect_app/memory.dart';
 import 'package:recollect_app/widgets/enterCaregiverPin.dart';
 import 'package:recollect_app/widgets/toggleswitch.dart';
 import 'package:toggle_switch/toggle_switch.dart';
@@ -22,28 +20,19 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(),
-      routes: {
-      RouteConstants.homeRoute: (context) => MyHomePage(),
-      RouteConstants.memoryRoute: (context) => MemoryPage(),
-      },
+      home: MemoryPage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
- 
-
+class MemoryPage extends StatefulWidget {
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<MemoryPage> createState() => _MemoryPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MemoryPageState extends State<MemoryPage> {
 
-  //variable for Account Mode
-
-  var accountMode = 0;
 
   @override
   void initState() {
@@ -55,81 +44,71 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
   MediaQueryData queryData = MediaQuery.of(context);
+  var pixelRatio = queryData.devicePixelRatio; //responsive sizing
   var deviceWidth = queryData.size.width;
   var deviceHeight = queryData.size.height;
     return Scaffold(
       appBar: AppBar(
         // App bar properties
         // title: Text(widget.title),
-        centerTitle: true,
         automaticallyImplyLeading: true,
-        leadingWidth: 300,
         backgroundColor: ColorConstants.appBar,
+        title: Text('Wedding'), //memory title
         actions: <Widget>[
-          Row(
-            children: <Widget> [
-             ToggleWidget(),
-        SizedBox(
-          width: 0.35*deviceWidth,
-        ),
+        
         IconButton(
                 icon: Icon(Icons.settings),  //Settings Icon 
                 onPressed: () {  },
                 ),
-        ],),
         ]
       ),
       body: SingleChildScrollView(
         child: AspectRatio(
-        aspectRatio: 100 / 100,
-        child: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
+        aspectRatio: 100 / 200,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          // mainAxisAlignment: MainAxisAlignment.center,
+          // crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Container(
             padding: EdgeInsets.all(20),
+            width: 0.9*deviceWidth,
             child: const Text(
-              'New Memories', style: TextStyle(color: ColorConstants.bodyText, fontSize: TextSizeConstants.h2),
-            )),
-            InkWell(
-            onTap: () {
-              Navigator.pushNamed(context, RouteConstants.memoryRoute);
-            }, 
-           child: Stack(
+              'This is when you and Grandpa Bobby cut your wedding cake.', style: TextStyle(color: ColorConstants.bodyText, fontSize: TextSizeConstants.bodyText),
+            )), //this is where the description will go
+           Stack(
              alignment: Alignment.center,
                children: <Widget>[
                  Container(
                    width: 0.8*deviceWidth,
-                   height: deviceHeight / 4,
+                   height: deviceHeight / 2.5,
                 decoration: new BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(20)),
+                
                 image: new DecorationImage(
                 fit: BoxFit.cover,
                 alignment: Alignment.topLeft, 
                 image: AssetImage('lib/images/wedding-placeholder.jpg'), 
                 ))),
-                Container(
-                alignment: Alignment.bottomLeft,
-                decoration: BoxDecoration(color: Colors.black26, 
-                borderRadius: BorderRadius.all(Radius.circular(20)),),
-                width: 0.8*deviceWidth,
-                height: deviceHeight / 4,
-                padding: EdgeInsets.only(left: 20, bottom: 10),
-                 child: Text('Wedding', 
-                 style: TextStyle(color: ColorConstants.buttonText, 
-                  fontSize: TextSizeConstants.buttonText, 
-                  fontWeight: FontWeight.w900), textAlign: TextAlign.left,),
-                )
+               ],),
+               SizedBox(height: deviceHeight/25),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                  ElevatedButton(onPressed: (){}, 
+                  child: Text('I remember'),
+                  style: ElevatedButton.styleFrom(primary: ColorConstants.buttonColor,
+                    textStyle: TextStyle(fontSize: 0.9*TextSizeConstants.buttonText)
+                  ),),
+                  SizedBox(width:10),
+                  ElevatedButton(onPressed: (){}, 
+                  child: Text("I don't remember"),
+                  style: ElevatedButton.styleFrom(primary: ColorConstants.unfavoredButton, 
+                    textStyle: TextStyle(fontSize: 0.9*TextSizeConstants.buttonText))
+                  ),
+                ],)
                ],
-             ) 
-            )
-  
-          ],
+             ),
         ),
-    ))));
+    ));
   }
 }
