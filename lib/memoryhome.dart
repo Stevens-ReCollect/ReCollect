@@ -1,4 +1,7 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 
 class MemoryHomePage extends StatefulWidget {
@@ -67,26 +70,37 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
               color: Colors.white,
               elevation: 0,
               margin: const EdgeInsets.all(10.0),
-              child: ListTile(
-                title: Text(
-                  moment,
-                  style: const TextStyle(
-                    fontFamily: 'Roboto',
-                    fontSize: 24.0,
-                  ),
-                ),
-                leading: ClipRRect(
-                  borderRadius: BorderRadius.circular(5.0),
-                  child: Container(
-                    height: 80.0,
-                    width: 80.0,
-                    child: Image.network(
-                      'https://www.brides.com/thmb/1bR5-1Y1y0drTsbS8fhu3gYJxBQ=/1425x0/filters:no_upscale():max_bytes(200000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__brides__public__brides-services__production__2018__12__03__5c057f05648d6b2dd3b5a13a_kristen-and-jonathan-wedding22-fd1d0dc5dfa94482a9c3273b663c4a2d.jpg',
-                      fit: BoxFit.fill,
+              child: Slidable(
+                child: ListTile(
+                  title: Text(
+                    moment,
+                    style: const TextStyle(
+                      fontFamily: 'Roboto',
+                      fontSize: 24.0,
                     ),
                   ),
+                  leading: ClipRRect(
+                    borderRadius: BorderRadius.circular(5.0),
+                    child: Container(
+                      height: 80.0,
+                      width: 80.0,
+                      child: Image.network(
+                        'https://www.brides.com/thmb/1bR5-1Y1y0drTsbS8fhu3gYJxBQ=/1425x0/filters:no_upscale():max_bytes(200000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__brides__public__brides-services__production__2018__12__03__5c057f05648d6b2dd3b5a13a_kristen-and-jonathan-wedding22-fd1d0dc5dfa94482a9c3273b663c4a2d.jpg',
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  ),
+                  trailing: const Icon(Icons.reorder),
                 ),
-                trailing: const Icon(Icons.reorder),
+                actionPane: const SlidableScrollActionPane(),
+                actions: const <Widget>[
+                  IconSlideAction(
+                    caption: 'Delete',
+                    color: Colors.red,
+                    icon: Icons.delete,
+                  )
+                ],
+                actionExtentRatio: 1 / 1,
               ),
             ),
         ],
