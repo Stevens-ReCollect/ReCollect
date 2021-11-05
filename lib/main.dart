@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/routeConstants.dart';
 import 'package:recollect_app/constants/textSizeConstants.dart';
-import 'package:recollect_app/memory.dart';
-import 'package:recollect_app/widgets/enterCaregiverPin.dart';
-import 'package:recollect_app/widgets/toggleswitch.dart';
+import 'package:recollect_app/memoryExample.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 void main() {
@@ -38,7 +36,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
- var accountMode = 0;
+ var accountMode;
 
 createNewMemory(){ //Create New Memory button toggle
 
@@ -50,7 +48,8 @@ createNewMemory(){ //Create New Memory button toggle
                       textStyle: TextStyle(fontSize: 0.9*TextSizeConstants.buttonText)
     ),
     child: Text('Create New Memory')));
-    } else {
+    } 
+    if(accountMode == 1) {
       return SizedBox();
     } 
    
@@ -76,7 +75,7 @@ createNewMemory(){ //Create New Memory button toggle
     actions: <Widget>[
       new ElevatedButton(
         onPressed: () {
-          accountMode = 1;
+          accountMode = 0;
           
           Navigator.of(context).pop();
         },
@@ -114,14 +113,13 @@ createNewMemory(){ //Create New Memory button toggle
     child: ToggleSwitch( //Toggle between modes
           minWidth: 95,
           inactiveBgColor: Colors.white,
-          inactiveFgColor: ColorConstants.bodyText,
           activeBgColor: [ColorConstants.buttonColor],
-          activeFgColor: ColorConstants.buttonText,
           initialLabelIndex: 0,
           totalSwitches: 2,
           labels: ['Edit Mode', 'Story Mode'],
           onToggle: (value) {   
              setState(() {
+               print('switched to: $value');
                ColorConstants.toggleColors(value);
                accountMode = value;
                if (accountMode == 0) {

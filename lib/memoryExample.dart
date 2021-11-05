@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/textSizeConstants.dart';
-import 'package:recollect_app/widgets/enterCaregiverPin.dart';
-import 'package:recollect_app/widgets/toggleswitch.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 void main() {
