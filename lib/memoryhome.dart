@@ -10,47 +10,13 @@ class MemoryHomePage extends StatefulWidget {
 
 class _MemoryHomePageState extends State<MemoryHomePage> {
   final List<String> _moments = ['Photo', 'Video', 'Audio'];
+  // final List<String> _moments = [];
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        foregroundColor: Colors.black,
-        backgroundColor: Colors.white,
-        elevation: 0,
-        actions: <Widget>[
-          Container(
-            margin: const EdgeInsets.only(right: 10.0),
-            child: PopupMenuButton<int>(
-              child: Container(
-                height: 40.0,
-                width: 40.0,
-                decoration: const ShapeDecoration(
-                  color: ColorConstants.buttonColor,
-                  shape: CircleBorder(),
-                ),
-                child: const Icon(Icons.add, color: ColorConstants.buttonText),
-              ),
-              onSelected: (item) => onSelected(context, item),
-              itemBuilder: (context) => [
-                const PopupMenuItem<int>(
-                  child: Text('Add Photo'),
-                  value: 0,
-                ),
-                const PopupMenuItem<int>(
-                  child: Text('Add Video'),
-                  value: 1,
-                ),
-                const PopupMenuItem<int>(
-                  child: Text('Add Audio'),
-                  value: 2,
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-      body: ReorderableListView(
+    Widget body;
+    if (_moments.isNotEmpty) {
+      body = ReorderableListView(
         header: Container(
           margin: const EdgeInsets.all(20.0),
           child: const Text(
@@ -115,8 +81,92 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
             },
           );
         },
-      ),
-    );
+      );
+    } else {
+      body = SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Row(
+              children: [
+                Container(
+                  margin: const EdgeInsets.all(20.0),
+                  child: const Text(
+                    '{Memory Title}',
+                    style: TextStyle(
+                      fontFamily: 'Roboto',
+                      fontWeight: FontWeight.w700,
+                      fontSize: 30.0,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const <Text>[
+                Text(
+                  'No moments',
+                  style: TextStyle(
+                    fontFamily: 'Roboto',
+                    fontWeight: FontWeight.w500,
+                    fontSize: 24.0,
+                  ),
+                ),
+                Text(
+                  'Press “+” to add moments to this memory',
+                  style: TextStyle(
+                    fontFamily: 'Roboto',
+                    fontWeight: FontWeight.w400,
+                    fontSize: 18.0,
+                    color: Colors.black54,
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
+      );
+    }
+    return Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          foregroundColor: Colors.black,
+          backgroundColor: Colors.white,
+          elevation: 0,
+          actions: <Widget>[
+            Container(
+              margin: const EdgeInsets.only(right: 10.0),
+              child: PopupMenuButton<int>(
+                child: Container(
+                  height: 40.0,
+                  width: 40.0,
+                  decoration: const ShapeDecoration(
+                    color: ColorConstants.buttonColor,
+                    shape: CircleBorder(),
+                  ),
+                  child:
+                      const Icon(Icons.add, color: ColorConstants.buttonText),
+                ),
+                onSelected: (item) => onSelected(context, item),
+                itemBuilder: (context) => [
+                  const PopupMenuItem<int>(
+                    child: Text('Add Photo'),
+                    value: 0,
+                  ),
+                  const PopupMenuItem<int>(
+                    child: Text('Add Video'),
+                    value: 1,
+                  ),
+                  const PopupMenuItem<int>(
+                    child: Text('Add Audio'),
+                    value: 2,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        body: body);
   }
 }
 
