@@ -17,41 +17,49 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
         backgroundColor: Colors.white,
         elevation: 0,
         actions: <Widget>[
-          PopupMenuButton<int>(
-            child: Container(
-              height: 40.0,
-              width: 40.0,
-              decoration: const ShapeDecoration(
-                color: ColorConstants.buttonColor,
-                shape: CircleBorder(),
+          Container(
+            margin: const EdgeInsets.only(right: 10.0),
+            child: PopupMenuButton<int>(
+              child: Container(
+                height: 40.0,
+                width: 40.0,
+                decoration: const ShapeDecoration(
+                  color: ColorConstants.buttonColor,
+                  shape: CircleBorder(),
+                ),
+                child: const Icon(Icons.add, color: ColorConstants.buttonText),
               ),
-              child: const Icon(Icons.add, color: ColorConstants.buttonText),
+              onSelected: (item) => onSelected(context, item),
+              itemBuilder: (context) => [
+                const PopupMenuItem<int>(
+                  child: Text('Add Photo'),
+                  value: 0,
+                ),
+                const PopupMenuItem<int>(
+                  child: Text('Add Video'),
+                  value: 1,
+                ),
+                const PopupMenuItem<int>(
+                  child: Text('Add Audio'),
+                  value: 2,
+                ),
+              ],
             ),
-            onSelected: (item) => onSelected(context, item),
-            itemBuilder: (context) => [
-              const PopupMenuItem<int>(
-                child: Text('Add Photo'),
-                value: 0,
-              ),
-              const PopupMenuItem<int>(
-                child: Text('Add Video'),
-                value: 1,
-              ),
-              const PopupMenuItem<int>(
-                child: Text('Add Audio'),
-                value: 2,
-              ),
-            ],
-          )
+          ),
         ],
       ),
       body: ReorderableListView(
-        header: const Text('{Memory Title}',
+        header: Container(
+          margin: const EdgeInsets.all(20.0),
+          child: const Text(
+            '{Memory Title}',
             style: TextStyle(
               fontFamily: 'Roboto',
               fontWeight: FontWeight.w700,
               fontSize: 30.0,
-            )),
+            ),
+          ),
+        ),
         children: [
           for (final moment in _moments)
             Card(
@@ -65,6 +73,17 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
                   style: const TextStyle(
                     fontFamily: 'Roboto',
                     fontSize: 24.0,
+                  ),
+                ),
+                leading: ClipRRect(
+                  borderRadius: BorderRadius.circular(5.0),
+                  child: Container(
+                    height: 80.0,
+                    width: 80.0,
+                    child: Image.network(
+                      'https://www.brides.com/thmb/1bR5-1Y1y0drTsbS8fhu3gYJxBQ=/1425x0/filters:no_upscale():max_bytes(200000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__brides__public__brides-services__production__2018__12__03__5c057f05648d6b2dd3b5a13a_kristen-and-jonathan-wedding22-fd1d0dc5dfa94482a9c3273b663c4a2d.jpg',
+                      fit: BoxFit.fill,
+                    ),
                   ),
                 ),
                 trailing: const Icon(Icons.reorder),
