@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 
 class MemoryHomePage extends StatefulWidget {
