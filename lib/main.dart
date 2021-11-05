@@ -32,21 +32,63 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
- 
-
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+ var accountMode = 0;
+
+createNewMemory(){ //Create New Memory button toggle
+
+    if(accountMode == 0){
+    return Padding(
+      padding: EdgeInsets.only(bottom: 15),
+      child:ElevatedButton(onPressed:() {}, 
+    style: ElevatedButton.styleFrom(primary: ColorConstants.buttonColor,
+                      textStyle: TextStyle(fontSize: 0.9*TextSizeConstants.buttonText)
+    ),
+    child: Text('Create New Memory')));
+    } else {
+      return SizedBox();
+    } 
+   
+}
+
+ caregiverPin(BuildContext context){ //Caregiver Pin pop up
+    return new AlertDialog(
+    title: const Text('Enter Caregiver Pin before entering Edit Mode.'),
+    content: new Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        TextField(
+          obscureText: true,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Enter pin',
+                  hintText: '####',
+                ),
+              ),
+      ],
+    ),
+    actions: <Widget>[
+      new ElevatedButton(
+        onPressed: () {
+          accountMode = 1;
+          
+          Navigator.of(context).pop();
+        },
+        child: const Text('Continue'),
+      ),
+    ],
+  );
+ }
+
  
   @override
   void initState() {
-    setState(() {
-      ToggleWidget();
-    
-    });
     super.initState();
   }
 
@@ -67,7 +109,31 @@ class _MyHomePageState extends State<MyHomePage> {
         actions: <Widget>[
           Row(
             children: <Widget> [
-             ToggleWidget(),
+         Listener(
+    // onPointerDown: ColorConstants().toggleColors(value),
+    child: ToggleSwitch( //Toggle between modes
+          minWidth: 95,
+          inactiveBgColor: Colors.white,
+          inactiveFgColor: ColorConstants.bodyText,
+          activeBgColor: [ColorConstants.buttonColor],
+          activeFgColor: ColorConstants.buttonText,
+          initialLabelIndex: 0,
+          totalSwitches: 2,
+          labels: ['Edit Mode', 'Story Mode'],
+          onToggle: (value) {   
+             setState(() {
+               ColorConstants.toggleColors(value);
+               accountMode = value;
+               if (accountMode == 0) {
+                 showDialog(
+              context: context,
+              builder: (BuildContext context) => caregiverPin(context),
+                 );}
+             });
+  
+          },         
+        
+  )),
         SizedBox(
           width: 0.35*deviceWidth,
         ),
@@ -94,7 +160,7 @@ class _MyHomePageState extends State<MyHomePage> {
             child: const Text(
               'New Memories', style: TextStyle(color: ColorConstants.bodyText, fontSize: TextSizeConstants.h2),
             )),
-            ToggleWidgetState().createNewMemory(0),
+            createNewMemory(),
             InkWell(
             onTap: () {
               Navigator.pushNamed(context, RouteConstants.memoryRoute);

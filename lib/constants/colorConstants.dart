@@ -21,6 +21,5 @@ class ColorConstants {
               ColorConstants.appBar = Color(0xFF3065FC);
               ColorConstants.buttonColor = Color(0xFF30658C);
             }
-    ToggleWidgetState().createNewMemory(value);
 }
 }
