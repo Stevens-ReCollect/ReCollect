@@ -34,11 +34,11 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<MyHomePage> createState() => MyHomePageState();
 }
-
-class _MyHomePageState extends State<MyHomePage> {
- var accountMode;
+ 
+class MyHomePageState extends State<MyHomePage> {
+static late int accountMode = 0;
 
 createSettings(){ 
 if(accountMode == 0){//settings on toggle
@@ -72,7 +72,7 @@ createNewMemory(){ //Create New Memory button toggle
    
 }
 
- caregiverPin(BuildContext context){ //Caregiver Pin pop up
+ static caregiverPin(BuildContext context){ //Caregiver Pin pop up
     return new AlertDialog(
     title: const Text('Enter Caregiver Pin before entering Edit Mode.'),
     content: new Column(
