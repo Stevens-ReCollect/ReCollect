@@ -1,11 +1,74 @@
+
 import 'package:flutter/material.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/textSizeConstants.dart';
-import 'package:toggle_switch/toggle_switch.dart';
 
 void main() {
   runApp(const MyApp());
 }
+
+class MemoryList {
+  final String type;
+  final String asset;
+  final String description;
+
+  MemoryList(this.type, this.asset, this.description);
+ 
+  
+ 
+}
+
+String firstDesc = 'This is when you and Grandpa Bobby cut your wedding cake.';
+MemoryList m  = new MemoryList('photo', 'lib/images/wedding-placeholder.jpg', firstDesc);
+List  myList = [m, ];
+  
+selectType(){
+    if( m.type == 'photo'){
+      return Column(
+              children: <Widget>[
+                Image.asset(m.asset, fit: BoxFit.fill,),
+                
+              ],
+            );
+    } else if( m.type == 'video'){
+      return Column(
+              children: <Widget>[
+                // Find videoplayer package
+                Text(m.description,style: TextStyle(fontSize: 30,color: Colors.white,fontWeight: FontWeight.bold),)
+                
+              ],
+            );
+    } else if( m.type == 'audio'){
+      return Column(
+              children: <Widget>[
+                // Find audioplayer package
+                Text(m.description,style: TextStyle(fontSize: 30,color: Colors.white,fontWeight: FontWeight.bold),)
+                
+              ],
+            );
+    } else {
+      SizedBox();
+    }
+  }
+  
+
+//  createCarousel(){
+//   myList.map((i){
+//          return Container(
+//            child: GestureDetector(
+//             child:Stack(
+//               children: <Widget>[
+//                 selectType(),
+//               ],
+//             ),
+//              onTap: (){
+              
+//              },
+//            ),
+//           );
+//         });
+//   }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -30,7 +93,6 @@ class MemoryPage extends StatefulWidget {
 }
 
 class _MemoryPageState extends State<MemoryPage> {
-
 
   @override
   void initState() {
@@ -70,23 +132,23 @@ class _MemoryPageState extends State<MemoryPage> {
             Container(
             padding: EdgeInsets.all(20),
             width: 0.9*deviceWidth,
-            child: const Text(
-              'This is when you and Grandpa Bobby cut your wedding cake.', style: TextStyle(color: ColorConstants.bodyText, fontSize: TextSizeConstants.bodyText),
-            )), //this is where the description will go
-           Stack(
-             alignment: Alignment.center,
-               children: <Widget>[
-                 Container(
-                   width: 0.8*deviceWidth,
-                   height: deviceHeight / 2.5,
-                decoration: new BoxDecoration(
+            child: Text(m.description, style: TextStyle(color: ColorConstants.bodyText, fontSize: TextSizeConstants.bodyText),
+            )), 
+            //this is where the description will go
+            
+          
+                 selectType(),
+              //    Container(
+              //      width: 0.8*deviceWidth,
+              //      height: deviceHeight / 2.5,
+              //   decoration: new BoxDecoration(
                 
-                image: new DecorationImage(
-                fit: BoxFit.cover,
-                alignment: Alignment.topLeft, 
-                image: AssetImage('lib/images/wedding-placeholder.jpg'), 
-                ))),
-               ],),
+              //   image: new DecorationImage(
+              //   fit: BoxFit.cover,
+              //   alignment: Alignment.topLeft, 
+              //   image: AssetImage('lib/images/wedding-placeholder.jpg'), 
+              //   ))),
+                
                SizedBox(height: deviceHeight/25),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
