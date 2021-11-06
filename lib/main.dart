@@ -91,6 +91,7 @@ createNewMemory(){ //Create New Memory button toggle
     ),
     actions: <Widget>[
       new ElevatedButton(
+        style: ElevatedButton.styleFrom(primary: ColorConstants.buttonColor),
         onPressed: () {
           accountMode = 0;
           
@@ -150,9 +151,9 @@ createNewMemory(){ //Create New Memory button toggle
           },         
         
   )),
-        SizedBox(
-          width: 0.35*deviceWidth,
-        ),
+      //   SizedBox(
+      //    width: 0.38*deviceWidth,
+      //  ),
         createSettings(),
         ],),
         ]
