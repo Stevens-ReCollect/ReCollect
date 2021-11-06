@@ -34,7 +34,6 @@ class _MemoryPageState extends State<MemoryPage> {
 
   @override
   void initState() {
-    // ColorConstants().toggleColors(accountMode);
     super.initState();
   }
 

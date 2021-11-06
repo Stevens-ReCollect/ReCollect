@@ -3,6 +3,7 @@ import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/routeConstants.dart';
 import 'package:recollect_app/constants/textSizeConstants.dart';
 import 'package:recollect_app/memoryExample.dart';
+import 'package:recollect_app/progressReport.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 void main() {
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
       routes: {
       RouteConstants.homeRoute: (context) => MyHomePage(),
       RouteConstants.memoryRoute: (context) => MemoryPage(),
+      RouteConstants.progressRoute: (context) => ProgressReport(),
       },
     );
   }
@@ -37,6 +39,21 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
  var accountMode;
+
+createSettings(){ 
+if(accountMode == 0){//settings on toggle
+ return IconButton(
+                icon: Icon(Icons.settings),  //Settings Icon 
+                onPressed: () {  
+                  Navigator.pushNamed(context, RouteConstants.progressRoute);
+                },
+                );
+  } 
+  if(accountMode == 1){
+  return SizedBox();
+}
+
+}
 
 createNewMemory(){ //Create New Memory button toggle
 
@@ -88,6 +105,7 @@ createNewMemory(){ //Create New Memory button toggle
  
   @override
   void initState() {
+    ColorConstants.toggleColors(accountMode);
     super.initState();
   }
 
@@ -135,10 +153,7 @@ createNewMemory(){ //Create New Memory button toggle
         SizedBox(
           width: 0.35*deviceWidth,
         ),
-        IconButton(
-                icon: Icon(Icons.settings),  //Settings Icon 
-                onPressed: () {  },
-                ),
+        createSettings(),
         ],),
         ]
       ),
