@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/routeConstants.dart';
 import 'package:recollect_app/constants/textSizeConstants.dart';
-import 'package:recollect_app/memoryExample.dart';
+import 'package:recollect_app/memory_example.dart';
 import 'package:recollect_app/progressReport.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 

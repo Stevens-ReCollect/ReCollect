@@ -1,4 +1,6 @@
 
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/textSizeConstants.dart';
@@ -19,7 +21,7 @@ class MemoryList {
 }
 
 String firstDesc = 'This is when you and Grandpa Bobby cut your wedding cake.';
-MemoryList m  = new MemoryList('photo', 'lib/images/wedding-placeholder.jpg', firstDesc);
+MemoryList m  = MemoryList('photo', 'lib/images/wedding-placeholder.jpg', firstDesc);
 List  myList = [m, ];
   
 selectType(){
