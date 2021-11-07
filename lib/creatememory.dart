@@ -77,7 +77,7 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'End Date',
-                  hintText: 'MM/DD/YYY',
+                  hintText: 'MM/DD/YYYY',
                 ),
               ),
             ),
@@ -90,7 +90,7 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Description',
-                  hintText: 'Desciption',
+                  hintText: 'Description',
                   alignLabelWithHint: true,
                 ),
               ),
