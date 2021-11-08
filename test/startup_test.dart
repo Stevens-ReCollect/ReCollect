@@ -12,7 +12,7 @@ void main() {
     expect(find.text('ReCollect'), findsOneWidget);
 
     // Verify buttons appears
-    expect(find.byType(TextButton), findsNWidgets(3));
+    expect(find.byType(TextButton), findsNWidgets(2));
     // Need to test colors are correct
   });
 }
