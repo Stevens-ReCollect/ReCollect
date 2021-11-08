@@ -17,7 +17,8 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return MaterialApp(
+      home: Scaffold(
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Column(
@@ -77,9 +78,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     alignment: Alignment.centerLeft,
                   ),
                   onPressed: () {
-                    Navigator.pushNamed(
-                      context, RouteConstants.loginRoute
-                    );
+                    Navigator.pushNamed(context, RouteConstants.loginRoute);
                   },
                 ),
               ),
@@ -165,16 +164,15 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                   ),
                   onPressed: () {
-                    Navigator.pushNamed(
-                      context, RouteConstants.loginRoute
-                    );
+                    Navigator.pushNamed(context, RouteConstants.loginRoute);
                   },
                 ),
               ),
             ],
           ),
         ),
-      );
+      ),
+    );
   }
 }
 
