@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/signup.dart';
 
-class LoginPage extends StatefulWidget {
+class AddAudioPage extends StatefulWidget {
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _AddAudioPageState createState() => _AddAudioPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
-  String _email = '';
-  String _password = '';
+class _AddAudioPageState extends State<AddAudioPage> {
+  String _description = '';
 
   @override
   Widget build(BuildContext context) {
@@ -29,55 +28,16 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             Container(
-              height: 36.0,
-              width: 325.0,
-              margin: const EdgeInsets.only(top: 50.0, left: 0.0),
-              child: const Text(
-                'Log in',
-                style: TextStyle(
-                  fontSize: 30.0,
-                  fontFamily: 'Roboto',
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ),
-            Container(
-              height: 44.0,
-              width: 325.0,
-              margin: const EdgeInsets.only(top: 15.0, left: 0.0),
-              child: TextButton(
-                child: RichText(
-                  text: const TextSpan(
-                    text: 'Don\'t have an account? ',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 22.0,
-                      fontFamily: 'Roboto',
-                      fontWeight: FontWeight.w400,
-                    ),
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: 'Sign up.',
-                        style: TextStyle(
-                          color: ColorConstants.bodyText,
-                          fontSize: 22.0,
-                          fontFamily: 'Roboto',
-                          fontWeight: FontWeight.w400,
-                        ),
-                      )
-                    ],
+              margin: const EdgeInsets.only(top: 20.0),
+              child: const Center(
+                child: Text(
+                  '{Selected Audio}',
+                  style: TextStyle(
+                    fontSize: 25.0,
+                    fontFamily: 'Roboto',
+                    fontWeight: FontWeight.w900,
                   ),
                 ),
-                style: TextButton.styleFrom(
-                  padding: EdgeInsets.zero,
-                  alignment: Alignment.centerLeft,
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SignUpPage()),
-                  );
-                },
               ),
             ),
             Container(
@@ -86,31 +46,30 @@ class _LoginPageState extends State<LoginPage> {
               margin: const EdgeInsets.only(top: 30.0, left: 0.0),
               child: const TextField(
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Email',
-                  hintText: 'example@example.com',
-                ),
+                    border: OutlineInputBorder(), labelText: 'Title'),
               ),
             ),
             Container(
-              height: 68.0,
+              height: 250.0,
               width: 325.0,
               margin: const EdgeInsets.only(top: 15.0, left: 0.0),
               child: const TextField(
-                obscureText: true,
+                maxLines: 15,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Password',
+                  labelText: 'Description',
+                  hintText: 'Desciption',
+                  alignLabelWithHint: true,
                 ),
               ),
             ),
             Container(
-              margin: const EdgeInsets.only(top: 15.0, left: 0.0),
+              margin: const EdgeInsets.only(top: 250.0, left: 0.0),
               height: 68,
               width: 230,
               child: TextButton(
                 child: const Text(
-                  'Log In',
+                  'Save',
                   style: TextStyle(
                     fontSize: 24.0,
                     fontFamily: 'Roboto',

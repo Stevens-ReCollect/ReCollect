@@ -4,6 +4,9 @@ import 'package:recollect_app/login.dart';
 import 'package:recollect_app/signup.dart';
 import 'package:recollect_app/creatememory.dart';
 import 'package:recollect_app/addmoment.dart';
+import 'package:recollect_app/addphoto.dart';
+import 'package:recollect_app/addvideo.dart';
+import 'package:recollect_app/addaudio.dart';
 
 void main() => runApp(StartUp());
 
@@ -102,38 +105,6 @@ class StartUpPage extends StatelessWidget {
                 },
               ),
             ),
-            Container(
-              margin: const EdgeInsets.only(top: 30.0),
-              height: 68,
-              width: 230,
-              child: TextButton(
-                child: const Text(
-                  'test Create memory (To be removed)',
-                  style: TextStyle(
-                    fontSize: 10.0,
-                    fontFamily: 'Roboto',
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(
-                      ColorConstants.buttonColor),
-                  foregroundColor: MaterialStateProperty.all<Color>(
-                      ColorConstants.buttonText),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => CreateMemoryPage()),
-                  );
-                },
-              ),
-            )
           ],
         ),
       ),
