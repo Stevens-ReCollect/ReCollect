@@ -140,12 +140,11 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
                 child: Container(
                   height: 40.0,
                   width: 40.0,
-                  decoration: const ShapeDecoration(
+                  decoration: ShapeDecoration(
                     color: ColorConstants.buttonColor,
-                    shape: CircleBorder(),
+                    shape: const CircleBorder(),
                   ),
-                  child:
-                      const Icon(Icons.add, color: ColorConstants.buttonText),
+                  child: Icon(Icons.add, color: ColorConstants.buttonText),
                 ),
                 onSelected: (item) => onSelected(context, item),
                 itemBuilder: (context) => [
