@@ -5,10 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/textSizeConstants.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
 class MemoryList {
   final String type;
   final String asset;

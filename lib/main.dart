@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:recollect_app/addmoment.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/routeConstants.dart';
 import 'package:recollect_app/constants/textSizeConstants.dart';
+import 'package:recollect_app/creatememory.dart';
+import 'package:recollect_app/login.dart';
 import 'package:recollect_app/memory_example.dart';
 import 'package:recollect_app/progressReport.dart';
+import 'package:recollect_app/signup.dart';
+import 'package:recollect_app/startup.dart';
 import 'package:toggle_switch/toggle_switch.dart';
-
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(StartUp());
 }
 
 class MyApp extends StatelessWidget {
@@ -31,12 +35,18 @@ class MyApp extends StatelessWidget {
       RouteConstants.homeRoute: (context) => MyHomePage(),
       RouteConstants.memoryRoute: (context) => MemoryPage(),
       RouteConstants.progressRoute: (context) => ProgressReport(),
+      RouteConstants.createMemory: (context) => CreateMemoryPage(),
+      RouteConstants.signupRoute: (context) => SignUpPage(),
+      RouteConstants.loginRoute: (context) => LoginPage(),
+      RouteConstants.addMoment: (context) => AddMomentPage(),
       },
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
+  const MyHomePage({Key? key}) : super(key: key);
+
 
   @override
   State<MyHomePage> createState() => MyHomePageState();
@@ -65,7 +75,9 @@ createNewMemory(){ //Create New Memory button toggle
     if(accountMode == 0){
     return Padding(
       padding: EdgeInsets.only(bottom: 15),
-      child:ElevatedButton(onPressed:() {}, 
+      child:ElevatedButton(onPressed:() {
+        Navigator.pushNamed(context, RouteConstants.createMemory);
+      }, 
     style: ElevatedButton.styleFrom(primary: ColorConstants.buttonColor,
                       textStyle: TextStyle(fontSize: 0.9*TextSizeConstants.buttonText)
     ),
@@ -78,9 +90,9 @@ createNewMemory(){ //Create New Memory button toggle
 }
 
  static caregiverPin(BuildContext context){ //Caregiver Pin pop up
-    return new AlertDialog(
+    return AlertDialog(
     title: const Text('Enter Caregiver Pin before entering Edit Mode.'),
-    content: new Column(
+    content: Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -95,7 +107,7 @@ createNewMemory(){ //Create New Memory button toggle
       ],
     ),
     actions: <Widget>[
-      new ElevatedButton(
+      ElevatedButton(
         style: ElevatedButton.styleFrom(primary: ColorConstants.buttonColor),
         onPressed: () {
           accountMode = 0;
@@ -126,7 +138,7 @@ createNewMemory(){ //Create New Memory button toggle
         // App bar properties
         // title: Text(widget.title),
         centerTitle: true,
-        automaticallyImplyLeading: true,
+        automaticallyImplyLeading: false,
         leadingWidth: 300,
         backgroundColor: ColorConstants.appBar,
         actions: <Widget>[
@@ -190,9 +202,9 @@ createNewMemory(){ //Create New Memory button toggle
                  Container(
                    width: 0.8*deviceWidth,
                    height: deviceHeight / 4,
-                decoration: new BoxDecoration(
+                decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(20)),
-                image: new DecorationImage(
+                image: DecorationImage(
                 fit: BoxFit.cover,
                 alignment: Alignment.topLeft, 
                 image: AssetImage('lib/images/wedding-placeholder.jpg'), 

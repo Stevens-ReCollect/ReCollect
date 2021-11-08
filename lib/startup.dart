@@ -1,6 +1,10 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
+import 'package:recollect_app/constants/routeConstants.dart';
 import 'package:recollect_app/login.dart';
+import 'package:recollect_app/main.dart';
+import 'package:recollect_app/progressReport.dart';
 import 'package:recollect_app/signup.dart';
 import 'package:recollect_app/creatememory.dart';
 import 'package:recollect_app/addmoment.dart';
@@ -8,17 +12,37 @@ import 'package:recollect_app/addphoto.dart';
 import 'package:recollect_app/addvideo.dart';
 import 'package:recollect_app/addaudio.dart';
 
-void main() => runApp(StartUp());
+import 'memory_example.dart';
 
 class StartUp extends StatelessWidget {
+  final Future<FirebaseApp> _fbApp = Firebase.initializeApp();
+  StartUp({Key? key}) : super(key: key);
+
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
+      title: 'ReCollect',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
       home: StartUpPage(),
+      routes: {
+      RouteConstants.homeRoute: (context) => MyHomePage(),
+      RouteConstants.memoryRoute: (context) => MemoryPage(),
+      RouteConstants.progressRoute: (context) => ProgressReport(),
+      RouteConstants.createMemory: (context) => CreateMemoryPage(),
+      RouteConstants.signupRoute: (context) => SignUpPage(),
+      RouteConstants.loginRoute: (context) => LoginPage(),
+      RouteConstants.addMoment: (context) => AddMomentPage(),
+      RouteConstants.addAudio: (context) => AddAudioPage(),
+      RouteConstants.addVideo: (context) => AddVideoPage(),
+      RouteConstants.addPhoto: (context) => AddPhotoPage(),
+      },
     );
   }
 }
+
 
 class StartUpPage extends StatelessWidget {
   @override
@@ -66,10 +90,9 @@ class StartUpPage extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SignUpPage()),
-                  );
+                  Navigator.pushNamed(
+                    context, RouteConstants.signupRoute);
+                
                 },
               ),
             ),
@@ -98,10 +121,8 @@ class StartUpPage extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => LoginPage()),
-                  );
+                  Navigator.pushNamed(
+                    context, RouteConstants.loginRoute);
                 },
               ),
             ),
