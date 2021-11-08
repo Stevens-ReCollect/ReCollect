@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
-import 'package:recollect_app/constants/routeConstants.dart';
+import 'package:recollect_app/memoryhome.dart';
 import 'package:recollect_app/signup.dart';
 import 'package:recollect_app/addmoment.dart';
+
+import 'constants/routeConstants.dart';
 
 class CreateMemoryPage extends StatefulWidget {
   @override
@@ -77,7 +79,7 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'End Date',
-                  hintText: 'MM/DD/YYY',
+                  hintText: 'MM/DD/YYYY',
                 ),
               ),
             ),
@@ -90,7 +92,7 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Description',
-                  hintText: 'Desciption',
+                  hintText: 'Description',
                   alignLabelWithHint: true,
                 ),
               ),
