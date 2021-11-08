@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/routeConstants.dart';
 import 'package:recollect_app/constants/textSizeConstants.dart';
@@ -6,12 +7,16 @@ import 'package:recollect_app/memory_example.dart';
 import 'package:recollect_app/progressReport.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
-void main() {
-  runApp(const MyApp());
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final Future<FirebaseApp> _fbApp = Firebase.initializeApp();
+  MyApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
