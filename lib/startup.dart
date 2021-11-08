@@ -4,6 +4,9 @@ import 'package:recollect_app/login.dart';
 import 'package:recollect_app/signup.dart';
 import 'package:recollect_app/creatememory.dart';
 import 'package:recollect_app/addmoment.dart';
+import 'package:recollect_app/addphoto.dart';
+import 'package:recollect_app/addvideo.dart';
+import 'package:recollect_app/addaudio.dart';
 
 void main() => runApp(StartUp());
 
@@ -129,7 +132,7 @@ class StartUpPage extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => CreateMemoryPage()),
+                    MaterialPageRoute(builder: (context) => AddAudioPage()),
                   );
                 },
               ),
