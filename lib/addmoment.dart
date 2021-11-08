@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
+import 'package:recollect_app/constants/routeConstants.dart';
 import 'package:recollect_app/signup.dart';
 
 class AddMomentPage extends StatefulWidget {
@@ -127,7 +128,9 @@ class _AddMomentPageState extends State<AddMomentPage> {
                     ),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, RouteConstants.memoryHomeRoute);
+                },
               ),
             ),
           ],

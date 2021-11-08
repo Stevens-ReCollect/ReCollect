@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/signup.dart';
 
+import 'constants/routeConstants.dart';
+
 class AddPhotoPage extends StatefulWidget {
   @override
   _AddPhotoPageState createState() => _AddPhotoPageState();
@@ -91,7 +93,9 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
                     ),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, RouteConstants.memoryHomeRoute);
+                },
               ),
             ),
           ],

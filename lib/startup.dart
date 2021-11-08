@@ -4,6 +4,7 @@ import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/routeConstants.dart';
 import 'package:recollect_app/login.dart';
 import 'package:recollect_app/main.dart';
+import 'package:recollect_app/memoryhome.dart';
 import 'package:recollect_app/progressReport.dart';
 import 'package:recollect_app/signup.dart';
 import 'package:recollect_app/creatememory.dart';
@@ -29,7 +30,7 @@ class StartUp extends StatelessWidget {
       home: StartUpPage(),
       routes: {
       RouteConstants.homeRoute: (context) => MyHomePage(),
-      RouteConstants.memoryRoute: (context) => MemoryPage(),
+      RouteConstants.memExRoute: (context) => MemoryPage(),
       RouteConstants.progressRoute: (context) => ProgressReport(),
       RouteConstants.createMemory: (context) => CreateMemoryPage(),
       RouteConstants.signupRoute: (context) => SignUpPage(),
@@ -38,6 +39,7 @@ class StartUp extends StatelessWidget {
       RouteConstants.addAudio: (context) => AddAudioPage(),
       RouteConstants.addVideo: (context) => AddVideoPage(),
       RouteConstants.addPhoto: (context) => AddPhotoPage(),
+      RouteConstants.memoryHomeRoute: (context) => MemoryHomePage(),
       },
     );
   }

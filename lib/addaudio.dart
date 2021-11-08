@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/signup.dart';
 
+import 'constants/routeConstants.dart';
+
 class AddAudioPage extends StatefulWidget {
   @override
   _AddAudioPageState createState() => _AddAudioPageState();
@@ -87,7 +89,9 @@ class _AddAudioPageState extends State<AddAudioPage> {
                     ),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, RouteConstants.memoryHomeRoute);
+                },
               ),
             ),
           ],

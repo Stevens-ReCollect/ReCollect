@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
       home: MyHomePage(),
       routes: {
       RouteConstants.homeRoute: (context) => MyHomePage(),
-      RouteConstants.memoryRoute: (context) => MemoryPage(),
+      RouteConstants.memExRoute: (context) => MemoryPage(),
       RouteConstants.progressRoute: (context) => ProgressReport(),
       RouteConstants.createMemory: (context) => CreateMemoryPage(),
       RouteConstants.signupRoute: (context) => SignUpPage(),
@@ -149,10 +149,10 @@ createNewMemory(){ //Create New Memory button toggle
     child: ToggleSwitch( //Toggle between modes
           minWidth: 95,
           inactiveBgColor: Colors.white,
-          activeBgColor: [ColorConstants.buttonColor],
+          activeBgColor: [ColorConstants.buttonColor], //toggle colors stuck :(
           initialLabelIndex: 0,
           totalSwitches: 2,
-          labels: ['Edit Mode', 'Story Mode'],
+          labels: const ['Edit Mode', 'Story Mode'],
           onToggle: (value) {   
              setState(() {
                print('switched to: $value');
@@ -194,7 +194,7 @@ createNewMemory(){ //Create New Memory button toggle
             createNewMemory(),
             InkWell(
             onTap: () {
-              Navigator.pushNamed(context, RouteConstants.memoryRoute);
+              Navigator.pushNamed(context, RouteConstants.memExRoute);
             }, 
            child: Stack(
              alignment: Alignment.center,
@@ -202,7 +202,7 @@ createNewMemory(){ //Create New Memory button toggle
                  Container(
                    width: 0.8*deviceWidth,
                    height: deviceHeight / 4,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(20)),
                 image: DecorationImage(
                 fit: BoxFit.cover,
@@ -211,11 +211,11 @@ createNewMemory(){ //Create New Memory button toggle
                 ))),
                 Container(
                 alignment: Alignment.bottomLeft,
-                decoration: BoxDecoration(color: Colors.black26, 
+                decoration: const BoxDecoration(color: Colors.black26, 
                 borderRadius: BorderRadius.all(Radius.circular(20)),),
                 width: 0.8*deviceWidth,
                 height: deviceHeight / 4,
-                padding: EdgeInsets.only(left: 20, bottom: 10),
+                padding: const EdgeInsets.only(left: 20, bottom: 10),
                  child: Text('Wedding', 
                  style: TextStyle(color: ColorConstants.buttonText, 
                   fontSize: TextSizeConstants.buttonText, 
