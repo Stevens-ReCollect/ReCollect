@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/signup.dart';
 
+import 'constants/routeConstants.dart';
+
 class AddVideoPage extends StatefulWidget {
   @override
   _AddVideoPageState createState() => _AddVideoPageState();
@@ -78,7 +80,9 @@ class _AddVideoPageState extends State<AddVideoPage> {
                     ),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, RouteConstants.memoryHomeRoute);
+                },
               ),
             ),
           ],

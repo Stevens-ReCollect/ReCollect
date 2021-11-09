@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
+import 'package:recollect_app/constants/routeConstants.dart';
 import 'package:recollect_app/login.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -77,10 +78,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     alignment: Alignment.centerLeft,
                   ),
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => LoginPage()),
-                    );
+                    Navigator.pushNamed(context, RouteConstants.loginRoute);
                   },
                 ),
               ),
@@ -165,7 +163,9 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, RouteConstants.loginRoute);
+                  },
                 ),
               ),
             ],

@@ -4,6 +4,8 @@ import 'package:recollect_app/memoryhome.dart';
 import 'package:recollect_app/signup.dart';
 import 'package:recollect_app/addmoment.dart';
 
+import 'constants/routeConstants.dart';
+
 class CreateMemoryPage extends StatefulWidget {
   @override
   _CreateMemoryPageState createState() => _CreateMemoryPageState();
@@ -120,10 +122,8 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => MemoryHomePage()),
-                  );
+                  Navigator.pushNamed(
+                    context, RouteConstants.addMoment);
                 },
               ),
             ),

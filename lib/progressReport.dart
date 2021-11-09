@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
@@ -13,6 +15,8 @@ class ChartData {
 }
 
 class ProgressReport extends StatefulWidget{
+  const ProgressReport({Key? key}) : super(key: key);
+
   @override
   State<ProgressReport> createState() => ProgressReportState();
   

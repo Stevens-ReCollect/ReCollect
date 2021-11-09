@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
+import 'package:recollect_app/constants/routeConstants.dart';
 
 class MemoryHomePage extends StatefulWidget {
   @override
@@ -185,12 +186,15 @@ void onSelected(BuildContext context, int item) {
   switch (item) {
     case 0:
       print('Clicked Add Photo');
+      Navigator.pushNamed(context, RouteConstants.addPhoto);
       break;
     case 1:
       print('Clicked Add Video');
+      Navigator.pushNamed(context, RouteConstants.addVideo);
       break;
     case 2:
       print('Clicked Add Audio');
+      Navigator.pushNamed(context, RouteConstants.addAudio);
       break;
   }
 }
