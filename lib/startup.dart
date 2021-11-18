@@ -13,6 +13,7 @@ import 'package:recollect_app/addphoto.dart';
 import 'package:recollect_app/addvideo.dart';
 import 'package:recollect_app/addaudio.dart';
 
+import 'constants/textSizeConstants.dart';
 import 'memory_example.dart';
 
 class StartUp extends StatelessWidget {
@@ -49,6 +50,9 @@ class StartUp extends StatelessWidget {
 class StartUpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    MediaQueryData queryData = MediaQuery.of(context);
+  var deviceWidth = queryData.size.width;
+  var deviceHeight = queryData.size.height;
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -56,11 +60,11 @@ class StartUpPage extends StatelessWidget {
           children: <Widget>[
             Container(
               margin: const EdgeInsets.only(top: 320.0),
-              child: const Center(
+              child:  Center(
                 child: Text(
                   'ReCollect',
                   style: TextStyle(
-                    fontSize: 64.0,
+                    fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.h1),
                     fontFamily: 'Roboto',
                     fontWeight: FontWeight.w900,
                   ),
@@ -69,18 +73,19 @@ class StartUpPage extends StatelessWidget {
             ),
             Container(
               margin: const EdgeInsets.only(top: 68.0),
-              height: 68,
-              width: 230,
+              height: 0.075*deviceHeight,
+              width: 0.6*deviceWidth,
               child: TextButton(
-                child: const Text(
+                child: Text(
                   'Sign Up',
                   style: TextStyle(
-                    fontSize: 24.0,
+                    fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText),
                     fontFamily: 'Roboto',
                     fontWeight: FontWeight.w400,
                   ),
                 ),
                 style: ButtonStyle(
+                  padding: MaterialStateProperty.all(EdgeInsets.all(15)),
                   backgroundColor: MaterialStateProperty.all<Color>(
                       ColorConstants.buttonColor),
                   foregroundColor: MaterialStateProperty.all<Color>(
@@ -100,18 +105,19 @@ class StartUpPage extends StatelessWidget {
             ),
             Container(
               margin: const EdgeInsets.only(top: 22.0),
-              height: 68,
-              width: 230,
+              height: 0.075*deviceHeight,
+              width: 0.6*deviceWidth,
               child: TextButton(
-                child: const Text(
+                child: Text(
                   'Log In',
                   style: TextStyle(
-                    fontSize: 24.0,
+                    fontSize:TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText),
                     fontFamily: 'Roboto',
                     fontWeight: FontWeight.w400,
                   ),
                 ),
                 style: ButtonStyle(
+                  padding: MaterialStateProperty.all(EdgeInsets.all(15)),
                   backgroundColor: MaterialStateProperty.all<Color>(
                       ColorConstants.buttonColor),
                   foregroundColor: MaterialStateProperty.all<Color>(

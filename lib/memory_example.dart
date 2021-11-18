@@ -110,11 +110,12 @@ class _MemoryPageState extends State<MemoryPage> {
         // title: Text(widget.title),
         automaticallyImplyLeading: true,
         backgroundColor: ColorConstants.appBar,
-        title: Text('Wedding'), //memory title
+        title: Text('Wedding', style: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.buttonText)),), //memory title
         actions: <Widget>[
         
         IconButton(
-                icon: Icon(Icons.settings),  //Settings Icon 
+                icon: Icon(Icons.settings), 
+                iconSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.buttonText), //Settings Icon 
                 onPressed: () {  },
                 ),
         ]
@@ -123,14 +124,15 @@ class _MemoryPageState extends State<MemoryPage> {
         child: AspectRatio(
         aspectRatio: 100 / 200,
         child: Column(
-          // mainAxisAlignment: MainAxisAlignment.center,
-          // crossAxisAlignment: CrossAxisAlignment.center,
+          
+          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
+            SizedBox(height: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.h2),),
             Container(
             padding: EdgeInsets.all(20),
             width: 0.9*deviceWidth,
-            child: Text(m.description, style: TextStyle(color: ColorConstants.bodyText, fontSize: TextSizeConstants.bodyText),
+            child: Text(m.description, style: TextStyle(color: ColorConstants.bodyText, fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),
             )), 
             //this is where the description will go
             
@@ -153,14 +155,14 @@ class _MemoryPageState extends State<MemoryPage> {
                   children: [
                   ElevatedButton(onPressed: (){}, 
                   child: Text('I remember'),
-                  style: ElevatedButton.styleFrom(primary: ColorConstants.buttonColor,
-                    textStyle: TextStyle(fontSize: 0.9*TextSizeConstants.buttonText)
+                  style: ElevatedButton.styleFrom(padding:EdgeInsets.all(15), primary: ColorConstants.buttonColor,
+                    textStyle: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.buttonText))
                   ),),
-                  SizedBox(width:10),
+                  SizedBox(width:20),
                   ElevatedButton(onPressed: (){}, 
                   child: Text("I don't remember"),
-                  style: ElevatedButton.styleFrom(primary: ColorConstants.unfavoredButton, 
-                    textStyle: TextStyle(fontSize: 0.9*TextSizeConstants.buttonText))
+                  style: ElevatedButton.styleFrom( padding:EdgeInsets.all(15), primary: ColorConstants.unfavoredButton, 
+                    textStyle: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.buttonText)))
                   ),
                 ],)
                ],

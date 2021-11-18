@@ -58,7 +58,8 @@ static late int accountMode = 0;
 createSettings(){ 
 if(accountMode == 0){//settings on toggle
  return IconButton(
-                icon: Icon(Icons.settings),  //Settings Icon 
+                icon: Icon(Icons.settings),  
+                iconSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.buttonText),//Settings Icon 
                 onPressed: () {  
                   Navigator.pushNamed(context, RouteConstants.progressRoute);
                 },
@@ -78,8 +79,8 @@ createNewMemory(){ //Create New Memory button toggle
       child:ElevatedButton(onPressed:() {
         Navigator.pushNamed(context, RouteConstants.createMemory);
       }, 
-    style: ElevatedButton.styleFrom(primary: ColorConstants.buttonColor,
-                      textStyle: TextStyle(fontSize: 0.9*TextSizeConstants.buttonText)
+    style: ElevatedButton.styleFrom(padding: const EdgeInsets.all(15), primary: ColorConstants.buttonColor,
+                      textStyle: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.buttonText))
     ),
     child: Text('Create New Memory')));
     } 
@@ -91,7 +92,8 @@ createNewMemory(){ //Create New Memory button toggle
 
  static caregiverPin(BuildContext context){ //Caregiver Pin pop up
     return AlertDialog(
-    title: const Text('Enter Caregiver Pin before entering Edit Mode.'),
+    title: Text('Enter Caregiver Pin before entering Edit Mode.', 
+    style: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText),)),
     content: Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,20 +103,22 @@ createNewMemory(){ //Create New Memory button toggle
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Enter pin',
+                  labelStyle: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.formField)),
                   hintText: '####',
+                  hintStyle: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.formField)),
                 ),
               ),
       ],
     ),
     actions: <Widget>[
       ElevatedButton(
-        style: ElevatedButton.styleFrom(primary: ColorConstants.buttonColor),
+        style: ElevatedButton.styleFrom(padding: EdgeInsets.all(15), primary: ColorConstants.buttonColor),
         onPressed: () {
           accountMode = 0;
           
           Navigator.of(context).pop();
         },
-        child: const Text('Continue'),
+        child: Text('Continue', style: TextStyle(fontSize: 0.7*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.buttonText))),
       ),
     ],
   );
@@ -147,10 +151,11 @@ createNewMemory(){ //Create New Memory button toggle
          Listener(
     // onPointerDown: ColorConstants().toggleColors(value),
     child: ToggleSwitch( //Toggle between modes
-          minWidth: 95,
+          minWidth: 0.3*deviceWidth,
           inactiveBgColor: Colors.white,
           activeBgColor: [ColorConstants.buttonColor], //toggle colors stuck :(
           initialLabelIndex: 0,
+          fontSize: 0.7*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.buttonText),
           totalSwitches: 2,
           labels: const ['Edit Mode', 'Story Mode'],
           onToggle: (value) {   
@@ -188,8 +193,8 @@ createNewMemory(){ //Create New Memory button toggle
           children: <Widget>[
             Container(
             padding: EdgeInsets.all(20),
-            child: const Text(
-              'New Memories', style: TextStyle(color: ColorConstants.bodyText, fontSize: TextSizeConstants.h2),
+            child: Text(
+              'New Memories', style: TextStyle(color: ColorConstants.bodyText, fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.h2)),
             )),
             createNewMemory(),
             InkWell(
@@ -218,7 +223,7 @@ createNewMemory(){ //Create New Memory button toggle
                 padding: const EdgeInsets.only(left: 20, bottom: 10),
                  child: Text('Wedding', 
                  style: TextStyle(color: ColorConstants.buttonText, 
-                  fontSize: TextSizeConstants.buttonText, 
+                  fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.buttonText), 
                   fontWeight: FontWeight.w900), textAlign: TextAlign.left,),
                 )
                ],
