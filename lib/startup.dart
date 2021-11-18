@@ -8,7 +8,6 @@ import 'package:recollect_app/memoryhome.dart';
 import 'package:recollect_app/progressReport.dart';
 import 'package:recollect_app/signup.dart';
 import 'package:recollect_app/creatememory.dart';
-import 'package:recollect_app/addmoment.dart';
 import 'package:recollect_app/addphoto.dart';
 import 'package:recollect_app/addvideo.dart';
 import 'package:recollect_app/addaudio.dart';
@@ -29,22 +28,20 @@ class StartUp extends StatelessWidget {
       ),
       home: StartUpPage(),
       routes: {
-      RouteConstants.homeRoute: (context) => MyHomePage(),
-      RouteConstants.memExRoute: (context) => MemoryPage(),
-      RouteConstants.progressRoute: (context) => ProgressReport(),
-      RouteConstants.createMemory: (context) => CreateMemoryPage(),
-      RouteConstants.signupRoute: (context) => SignUpPage(),
-      RouteConstants.loginRoute: (context) => LoginPage(),
-      RouteConstants.addMoment: (context) => AddMomentPage(),
-      RouteConstants.addAudio: (context) => AddAudioPage(),
-      RouteConstants.addVideo: (context) => AddVideoPage(),
-      RouteConstants.addPhoto: (context) => AddPhotoPage(),
-      RouteConstants.memoryHomeRoute: (context) => MemoryHomePage(),
+        RouteConstants.homeRoute: (context) => MyHomePage(),
+        RouteConstants.memExRoute: (context) => MemoryPage(),
+        RouteConstants.progressRoute: (context) => ProgressReport(),
+        RouteConstants.createMemory: (context) => CreateMemoryPage(),
+        RouteConstants.signupRoute: (context) => SignUpPage(),
+        RouteConstants.loginRoute: (context) => LoginPage(),
+        RouteConstants.addAudio: (context) => AddAudioPage(),
+        RouteConstants.addVideo: (context) => AddVideoPage(),
+        RouteConstants.addPhoto: (context) => AddPhotoPage(),
+        RouteConstants.memoryHomeRoute: (context) => MemoryHomePage(),
       },
     );
   }
 }
-
 
 class StartUpPage extends StatelessWidget {
   @override
@@ -92,9 +89,7 @@ class StartUpPage extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.pushNamed(
-                    context, RouteConstants.signupRoute);
-                
+                  Navigator.pushNamed(context, RouteConstants.signupRoute);
                 },
               ),
             ),
@@ -123,8 +118,7 @@ class StartUpPage extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.pushNamed(
-                    context, RouteConstants.loginRoute);
+                  Navigator.pushNamed(context, RouteConstants.loginRoute);
                 },
               ),
             ),
