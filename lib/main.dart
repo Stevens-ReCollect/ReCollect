@@ -54,22 +54,7 @@ class MyHomePage extends StatefulWidget {
 
 class MyHomePageState extends State<MyHomePage> {
 static late int accountMode = 0;
-
-createSettings(){ 
-if(accountMode == 0){//settings on toggle
- return IconButton(
-                icon: Icon(Icons.settings),  
-                iconSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.buttonText),//Settings Icon 
-                onPressed: () {  
-                  Navigator.pushNamed(context, RouteConstants.progressRoute);
-                },
-                );
-  } 
-  if(accountMode == 1){
-  return SizedBox();
-}
-
-  createNewMemory() {
+createNewMemory() {
     //Create New Memory button toggle
     if(accountMode == 0){
     return Padding(
@@ -87,7 +72,7 @@ if(accountMode == 0){//settings on toggle
     }
   }
 
-  static caregiverPin(BuildContext context) {
+  caregiverPin(BuildContext context) {
     //Caregiver Pin pop up
     return AlertDialog(
     title: Text('Enter Caregiver Pin before entering Edit Mode.', 
@@ -118,24 +103,12 @@ if(accountMode == 0){//settings on toggle
         },
         child: Text('Continue', style: TextStyle(fontSize: 0.7*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.buttonText))),
 
-      ),
-      actions: <Widget>[
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(primary: ColorConstants.buttonColor),
-          onPressed: () {
-            accountMode = 0;
-
-            Navigator.of(context).pop();
-          },
-          child: const Text('Continue'),
-        ),
-      ],
-    );
+      )]);
   }
 
   @override
   void initState() {
-    ColorConstants.toggleColors(accountMode);
+    toggleColors(accountMode);
     super.initState();
   }
 
@@ -168,7 +141,7 @@ if(accountMode == 0){//settings on toggle
           onToggle: (value) {   
              setState(() {
                print('switched to: $value');
-               ColorConstants.toggleColors(value);
+               toggleColors(value);
                accountMode = value;
                if (accountMode == 0) {
                  showDialog(
@@ -241,4 +214,33 @@ if(accountMode == 0){//settings on toggle
         ),
     ))));
   }
+  
+toggleColors(int value) async{
+ 
+  if (value == 0) { //Attempt at toggle
+            ColorConstants.appBar = const Color(0xFF00CB5D);
+            ColorConstants.buttonColor = const Color(0xFF308C39);
+            }  
+      if (value == 1) {
+              ColorConstants.appBar = const Color(0xFF3065FC);
+              ColorConstants.buttonColor = const Color(0xFF30658C);
+            }
+  
 }
+
+createSettings(){ 
+if(accountMode == 0){//settings on toggle
+ return IconButton(
+                icon: Icon(Icons.settings),  
+                iconSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.buttonText),//Settings Icon 
+                onPressed: () {  
+                  Navigator.pushNamed(context, RouteConstants.progressRoute);
+                },
+                );
+  } 
+  if(accountMode == 1){
+  return SizedBox();
+}
+
+  
+}}
