@@ -38,7 +38,7 @@ class ProgressReportState extends State<ProgressReport>{
         // title: Text(widget.title),
         automaticallyImplyLeading: true,
         backgroundColor: ColorConstants.appBar,
-        title: Text('Progress Report')
+        title: Text('Progress Report', style: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.buttonText)))
       ),
       body: AspectRatio(
         aspectRatio: 100 / 100,
@@ -66,7 +66,7 @@ class ProgressReportState extends State<ProgressReport>{
         Container(width:0.4*deviceWidth,
         child: Text('70% Overall Remembrance Rate', 
                 style: TextStyle(
-                fontSize: TextSizeConstants.formField, 
+                fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.formField), 
                 fontWeight: FontWeight.w800), textAlign: TextAlign.center,),
                 ),
           ]

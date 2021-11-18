@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:recollect_app/addmoment.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/routeConstants.dart';
 import 'package:recollect_app/constants/textSizeConstants.dart';
@@ -38,7 +37,7 @@ class MyApp extends StatelessWidget {
       RouteConstants.createMemory: (context) => CreateMemoryPage(),
       RouteConstants.signupRoute: (context) => SignUpPage(),
       RouteConstants.loginRoute: (context) => LoginPage(),
-      RouteConstants.addMoment: (context) => AddMomentPage(),
+
       },
     );
   }

@@ -8,7 +8,6 @@ import 'package:recollect_app/memoryhome.dart';
 import 'package:recollect_app/progressReport.dart';
 import 'package:recollect_app/signup.dart';
 import 'package:recollect_app/creatememory.dart';
-import 'package:recollect_app/addmoment.dart';
 import 'package:recollect_app/addphoto.dart';
 import 'package:recollect_app/addvideo.dart';
 import 'package:recollect_app/addaudio.dart';
@@ -36,7 +35,6 @@ class StartUp extends StatelessWidget {
       RouteConstants.createMemory: (context) => CreateMemoryPage(),
       RouteConstants.signupRoute: (context) => SignUpPage(),
       RouteConstants.loginRoute: (context) => LoginPage(),
-      RouteConstants.addMoment: (context) => AddMomentPage(),
       RouteConstants.addAudio: (context) => AddAudioPage(),
       RouteConstants.addVideo: (context) => AddVideoPage(),
       RouteConstants.addPhoto: (context) => AddPhotoPage(),

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/memoryhome.dart';
 import 'package:recollect_app/signup.dart';
-import 'package:recollect_app/addmoment.dart';
 
 import 'constants/routeConstants.dart';
+import 'constants/textSizeConstants.dart';
 
 class CreateMemoryPage extends StatefulWidget {
   @override
@@ -19,6 +19,9 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
 
   @override
   Widget build(BuildContext context) {
+    MediaQueryData queryData = MediaQuery.of(context);//responsive sizing
+    var deviceWidth = queryData.size.width;
+    var deviceHeight = queryData.size.height;
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -36,11 +39,11 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
             ),
             Container(
               margin: const EdgeInsets.only(top: 20.0),
-              child: const Center(
+              child: Center(
                 child: Text(
                   'Create a Memory',
                   style: TextStyle(
-                    fontSize: 25.0,
+                    fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.memoryTitle),
                     fontFamily: 'Roboto',
                     fontWeight: FontWeight.w900,
                   ),
@@ -48,69 +51,74 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
               ),
             ),
             Container(
-              height: 68.0,
-              width: 325.0,
+              width: 0.8*deviceWidth,
               margin: const EdgeInsets.only(top: 30.0, left: 0.0),
-              child: const TextField(
+              child: TextField(
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                   labelText: 'Title',
+                  labelStyle: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.formField)),
                   hintText: 'Example: Christmas 2010',
+                  hintStyle: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.formField)),
                 ),
               ),
             ),
             Container(
-              height: 68.0,
-              width: 325.0,
+              width: 0.8*deviceWidth,
               margin: const EdgeInsets.only(top: 15.0, left: 0.0),
-              child: const TextField(
+              child: TextField(
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                   labelText: 'Start Date',
+                  labelStyle: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.formField)),
                   hintText: 'MM/DD/YYY',
+                  hintStyle: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.formField)),
                 ),
               ),
             ),
             Container(
-              height: 68.0,
-              width: 325.0,
+              width: 0.8*deviceWidth,
               margin: const EdgeInsets.only(top: 15.0, left: 0.0),
-              child: const TextField(
+              child: TextField(
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                   labelText: 'End Date',
+                  labelStyle: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.formField)),
                   hintText: 'MM/DD/YYYY',
+                  hintStyle: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.formField)),
                 ),
               ),
             ),
             Container(
-              height: 250.0,
-              width: 325.0,
+              height: 0.4*deviceHeight,
+              width: 0.8*deviceWidth,
               margin: const EdgeInsets.only(top: 15.0, left: 0.0),
-              child: const TextField(
+              child: TextField(
                 maxLines: 15,
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                   labelText: 'Description',
+                  labelStyle: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.formField)),
                   hintText: 'Description',
+                  hintStyle: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.formField)),
                   alignLabelWithHint: true,
                 ),
               ),
             ),
             Container(
               margin: const EdgeInsets.only(top: 30.0, left: 0.0),
-              height: 68,
-              width: 230,
+              width: 0.5*deviceWidth,
               child: TextButton(
-                child: const Text(
+                child: Text(
                   'Next',
                   style: TextStyle(
-                    fontSize: 24.0,
+                    fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.buttonText),
                     fontFamily: 'Roboto',
                     fontWeight: FontWeight.w400,
                   ),
                 ),
                 style: ButtonStyle(
+                  padding: MaterialStateProperty.all(const EdgeInsets.all(10)),
                   backgroundColor: MaterialStateProperty.all<Color>(
                       ColorConstants.buttonColor),
                   foregroundColor: MaterialStateProperty.all<Color>(
@@ -123,7 +131,7 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
                 ),
                 onPressed: () {
                   Navigator.pushNamed(
-                    context, RouteConstants.addMoment);
+                    context, RouteConstants.memoryHomeRoute);
                 },
               ),
             ),

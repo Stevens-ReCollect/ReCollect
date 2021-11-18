@@ -3,6 +3,7 @@ import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/signup.dart';
 
 import 'constants/routeConstants.dart';
+import 'constants/textSizeConstants.dart';
 
 class AddVideoPage extends StatefulWidget {
   @override
@@ -14,6 +15,10 @@ class _AddVideoPageState extends State<AddVideoPage> {
 
   @override
   Widget build(BuildContext context) {
+    MediaQueryData queryData = MediaQuery.of(context);//responsive sizing
+    var deviceWidth = queryData.size.width;
+    var deviceHeight = queryData.size.height;
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -31,11 +36,11 @@ class _AddVideoPageState extends State<AddVideoPage> {
             ),
             Container(
               margin: const EdgeInsets.only(top: 20.0),
-              child: const Center(
+              child: Center(
                 child: Text(
                   '{Selected Video}',
                   style: TextStyle(
-                    fontSize: 25.0,
+                    fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.memoryTitle),
                     fontFamily: 'Roboto',
                     fontWeight: FontWeight.w900,
                   ),
@@ -43,33 +48,36 @@ class _AddVideoPageState extends State<AddVideoPage> {
               ),
             ),
             Container(
-              height: 250.0,
-              width: 325.0,
+              height: 0.4*deviceHeight,
+              width: 0.8*deviceWidth,
               margin: const EdgeInsets.only(top: 15.0, left: 0.0),
-              child: const TextField(
+              child: TextField(
                 maxLines: 15,
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                   labelText: 'Description',
-                  hintText: 'Desciption',
+                  labelStyle: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.formField)),
+                  hintText: 'Description',
+                  hintStyle: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.formField)),
                   alignLabelWithHint: true,
                 ),
               ),
             ),
             Container(
               margin: const EdgeInsets.only(top: 250.0, left: 0.0),
-              height: 68,
-              width: 230,
+              
+              width: 0.4*deviceWidth,
               child: TextButton(
-                child: const Text(
+                child: Text(
                   'Save',
                   style: TextStyle(
-                    fontSize: 24.0,
+                    fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.buttonText),
                     fontFamily: 'Roboto',
                     fontWeight: FontWeight.w400,
                   ),
                 ),
                 style: ButtonStyle(
+                  padding: MaterialStateProperty.all(const EdgeInsets.all(10)),
                   backgroundColor: MaterialStateProperty.all<Color>(
                       ColorConstants.buttonColor),
                   foregroundColor: MaterialStateProperty.all<Color>(
