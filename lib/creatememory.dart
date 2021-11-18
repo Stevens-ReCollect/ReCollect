@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/memoryhome.dart';
 import 'package:recollect_app/signup.dart';
-import 'package:recollect_app/addmoment.dart';
 
 import 'constants/routeConstants.dart';
 
@@ -122,8 +121,7 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.pushNamed(
-                    context, RouteConstants.addMoment);
+                  Navigator.pushNamed(context, RouteConstants.memoryHomeRoute);
                 },
               ),
             ),
