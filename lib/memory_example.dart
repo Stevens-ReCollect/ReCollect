@@ -156,13 +156,13 @@ class _MemoryPageState extends State<MemoryPage> {
                   ElevatedButton(onPressed: (){}, 
                   child: Text('I remember'),
                   style: ElevatedButton.styleFrom(padding:EdgeInsets.all(15), primary: ColorConstants.buttonColor,
-                    textStyle: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.buttonText))
+                    textStyle: TextStyle(fontSize: 0.9*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.buttonText))
                   ),),
-                  SizedBox(width:20),
+                  SizedBox(width:10),
                   ElevatedButton(onPressed: (){}, 
                   child: Text("I don't remember"),
                   style: ElevatedButton.styleFrom( padding:EdgeInsets.all(15), primary: ColorConstants.unfavoredButton, 
-                    textStyle: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.buttonText)))
+                    textStyle: TextStyle(fontSize: 0.9*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.buttonText)))
                   ),
                 ],)
                ],
