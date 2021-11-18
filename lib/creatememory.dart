@@ -132,6 +132,7 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
                 onPressed: () {
                   Navigator.pushNamed(
                     context, RouteConstants.memoryHomeRoute);
+
                 },
               ),
             ),
