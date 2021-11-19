@@ -6,7 +6,13 @@ import 'package:recollect_app/signup.dart';
 void main() {
   testWidgets('Sign Up screen loads correctly', (WidgetTester tester) async {
     // Build the app
-    await tester.pumpWidget(SignUpPage());
+    Widget testWidget = MediaQuery(
+      data: const MediaQueryData(),
+      child: MaterialApp(
+        home: SignUpPage(),
+      ),
+    );
+    await tester.pumpWidget(testWidget);
 
     // Verify app title appears
     expect(find.text('Sign Up'), findsNWidgets(2));
