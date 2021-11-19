@@ -33,17 +33,6 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
                 ),
               ),
               ListTile(
-                leading: ClipRRect(
-                  borderRadius: BorderRadius.circular(5.0),
-                  child: Container(
-                    height: 60,
-                    width: 60,
-                    child: Image.network(
-                      'https://www.brides.com/thmb/1bR5-1Y1y0drTsbS8fhu3gYJxBQ=/1425x0/filters:no_upscale():max_bytes(200000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__brides__public__brides-services__production__2018__12__03__5c057f05648d6b2dd3b5a13a_kristen-and-jonathan-wedding22-fd1d0dc5dfa94482a9c3273b663c4a2d.jpg',
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                ),
                 title: const Text(
                   'Photo Selected',
                   style: TextStyle(
@@ -51,6 +40,7 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
                       fontWeight: FontWeight.w400,
                       fontSize: 18.0),
                 ),
+                // subtitle: Text('Change Photo'),
                 subtitle: TextButton(
                   onPressed: () {},
                   child: const Text(
@@ -61,24 +51,28 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
                         fontSize: 12.0),
                   ),
                   style: TextButton.styleFrom(
+                    minimumSize: Size.zero,
                     padding: EdgeInsets.zero,
-                    alignment: Alignment.topLeft,
+                    alignment: Alignment.centerLeft,
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  ),
+                ),
+                leading: ClipRRect(
+                  borderRadius: BorderRadius.circular(5.0),
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(
+                      minHeight: 60.0,
+                      minWidth: 60.0,
+                      maxHeight: 60.0,
+                      maxWidth: 60.0,
+                    ),
+                    child: Image.network(
+                      'https://www.brides.com/thmb/1bR5-1Y1y0drTsbS8fhu3gYJxBQ=/1425x0/filters:no_upscale():max_bytes(200000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__brides__public__brides-services__production__2018__12__03__5c057f05648d6b2dd3b5a13a_kristen-and-jonathan-wedding22-fd1d0dc5dfa94482a9c3273b663c4a2d.jpg',
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               ),
-              // Container(
-              //   margin: const EdgeInsets.only(top: 20.0),
-              //   child: const Center(
-              //     child: Text(
-              //       '{Selected Photo}',
-              //       style: TextStyle(
-              //         fontSize: 25.0,
-              //         fontFamily: 'Roboto',
-              //         fontWeight: FontWeight.w900,
-              //       ),
-              //     ),
-              //   ),
-              // ),
               Container(
                 height: 115.0,
                 width: 360.0,
