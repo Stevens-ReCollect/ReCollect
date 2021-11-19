@@ -189,6 +189,7 @@ void onSelected(BuildContext context, int item) {
     case 0:
       print('Clicked Add Photo');
       // Navigator.pushNamed(context, RouteConstants.addPhoto);
+      pickImage();
       break;
     case 1:
       print('Clicked Add Video');
@@ -199,4 +200,9 @@ void onSelected(BuildContext context, int item) {
       Navigator.pushNamed(context, RouteConstants.addAudio);
       break;
   }
+}
+
+void pickImage() async {
+  final ImagePicker _picker = ImagePicker();
+  final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
 }
