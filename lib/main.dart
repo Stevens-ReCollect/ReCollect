@@ -108,8 +108,9 @@ createNewMemory() {
 
   @override
   void initState() {
-    toggleColors(accountMode);
-    super.initState();
+      toggleColors(accountMode);
+      super.initState();
+    
   }
 
   @override
@@ -132,15 +133,16 @@ createNewMemory() {
     // onPointerDown: ColorConstants().toggleColors(value),
     child: ToggleSwitch( //Toggle between modes
           minWidth: 0.3*deviceWidth,
+          changeOnTap: true,
           inactiveBgColor: Colors.white,
+          dividerColor: Colors.black,
           activeBgColor: [ColorConstants.buttonColor], //toggle colors stuck :(
-          initialLabelIndex: 0,
+          initialLabelIndex: accountMode,
           fontSize: 0.7*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.buttonText),
           totalSwitches: 2,
           labels: const ['Edit Mode', 'Story Mode'],
           onToggle: (value) {   
-             setState(() {
-               print('switched to: $value');
+              //  print('switched to: $value');
                toggleColors(value);
                accountMode = value;
                if (accountMode == 0) {
@@ -148,7 +150,6 @@ createNewMemory() {
               context: context,
               builder: (BuildContext context) => caregiverPin(context),
                  );}
-             });
   
           },         
         
@@ -215,7 +216,7 @@ createNewMemory() {
     ))));
   }
   
-toggleColors(int value) async{
+toggleColors(int value) {
  
   if (value == 0) { //Attempt at toggle
             ColorConstants.appBar = const Color(0xFF00CB5D);
@@ -225,7 +226,10 @@ toggleColors(int value) async{
               ColorConstants.appBar = const Color(0xFF3065FC);
               ColorConstants.buttonColor = const Color(0xFF30658C);
             }
-  
+          setState(() {
+            
+          });
+
 }
 
 createSettings(){ 
