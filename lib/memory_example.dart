@@ -1,9 +1,12 @@
 
 // ignore_for_file: file_names
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/textSizeConstants.dart';
+import 'package:recollect_app/main.dart';
 
 class MemoryList {
   final String type;
@@ -91,13 +94,25 @@ class MemoryPage extends StatefulWidget {
 }
 
 class _MemoryPageState extends State<MemoryPage> {
+  
+  var accMode = MyHomePageState.accountMode;
+  var _isButtonDisabled;
 
   @override
   void initState() {
+     _isButtonDisabled = false;
     super.initState();
   }
 
-  
+  void _isEditMode() {
+    if (accMode == 0){
+    print('This is Edit Mode');
+    setState(() {
+      _isButtonDisabled = true;
+    });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
   MediaQueryData queryData = MediaQuery.of(context);
@@ -111,14 +126,7 @@ class _MemoryPageState extends State<MemoryPage> {
         automaticallyImplyLeading: true,
         backgroundColor: ColorConstants.appBar,
         title: Text('Wedding', style: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.buttonText)),), //memory title
-        actions: <Widget>[
         
-        IconButton(
-                icon: Icon(Icons.settings), 
-                iconSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.buttonText), //Settings Icon 
-                onPressed: () {  },
-                ),
-        ]
       ),
       body: SingleChildScrollView(
         child: AspectRatio(
@@ -149,19 +157,33 @@ class _MemoryPageState extends State<MemoryPage> {
               //   image: AssetImage('lib/images/wedding-placeholder.jpg'), 
               //   ))),
                 
-               SizedBox(height: deviceHeight/25),
+               SizedBox(height: deviceHeight/30),
+               Text('Do you remember?', style: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),),
+               SizedBox(height: deviceHeight/80),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                  ElevatedButton(onPressed: (){}, 
-                  child: Text('I remember'),
-                  style: ElevatedButton.styleFrom(padding:EdgeInsets.all(15), primary: ColorConstants.buttonColor,
+                  ElevatedButton(onPressed: (){
+                    _isButtonDisabled ? null : _isEditMode; //null will get replaced with function that increments memory data
+                  }, 
+                  child: const Text('Yes'),
+                  style: ElevatedButton.styleFrom(padding:EdgeInsets.all(deviceWidth/40), primary: ColorConstants.buttonColor,
                     textStyle: TextStyle(fontSize: 0.9*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.buttonText))
                   ),),
-                  SizedBox(width:10),
-                  ElevatedButton(onPressed: (){}, 
-                  child: Text("I don't remember"),
-                  style: ElevatedButton.styleFrom( padding:EdgeInsets.all(15), primary: ColorConstants.unfavoredButton, 
+                  SizedBox(width: deviceWidth/40),
+                  ElevatedButton(onPressed: (){
+                    _isButtonDisabled ? null : _isEditMode; //null will get replaced with function that increments memory data
+                  }, 
+                  child: const Text("No"),
+                  style: ElevatedButton.styleFrom( padding:EdgeInsets.all(deviceWidth/40), primary: ColorConstants.unfavoredButton, 
+                    textStyle: TextStyle(fontSize: 0.9*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.buttonText)))
+                  ),
+                  SizedBox(width:deviceWidth/40),
+                  ElevatedButton(onPressed: (){
+                    _isButtonDisabled ? null : _isEditMode; //null will get replaced with function that increments memory data
+                  }, 
+                  child: const Text("Maybe"),
+                  style: ElevatedButton.styleFrom( padding:EdgeInsets.all(deviceWidth/40), primary: ColorConstants.unfavoredButton, 
                     textStyle: TextStyle(fontSize: 0.9*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.buttonText)))
                   ),
                 ],)
