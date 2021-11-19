@@ -90,7 +90,7 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
               ),
             ),
             Container(
-              height: 0.4*deviceHeight,
+              height: 0.3*deviceHeight,
               width: 0.8*deviceWidth,
               margin: const EdgeInsets.only(top: 15.0, left: 0.0),
               child: TextField(
@@ -132,6 +132,7 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
                 onPressed: () {
                   Navigator.pushNamed(
                     context, RouteConstants.memoryHomeRoute);
+
                 },
               ),
             ),

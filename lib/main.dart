@@ -9,6 +9,7 @@ import 'package:recollect_app/memory_example.dart';
 import 'package:recollect_app/progressReport.dart';
 import 'package:recollect_app/signup.dart';
 import 'package:recollect_app/startup.dart';
+import 'package:recollect_app/memoryhome.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 Future<void> main() async {
@@ -31,13 +32,13 @@ class MyApp extends StatelessWidget {
       ),
       home: MyHomePage(),
       routes: {
-      RouteConstants.homeRoute: (context) => MyHomePage(),
-      RouteConstants.memExRoute: (context) => MemoryPage(),
-      RouteConstants.progressRoute: (context) => ProgressReport(),
-      RouteConstants.createMemory: (context) => CreateMemoryPage(),
-      RouteConstants.signupRoute: (context) => SignUpPage(),
-      RouteConstants.loginRoute: (context) => LoginPage(),
-
+        RouteConstants.homeRoute: (context) => MyHomePage(),
+        RouteConstants.memExRoute: (context) => MemoryPage(),
+        RouteConstants.progressRoute: (context) => ProgressReport(),
+        RouteConstants.createMemory: (context) => CreateMemoryPage(),
+        RouteConstants.signupRoute: (context) => SignUpPage(),
+        RouteConstants.loginRoute: (context) => LoginPage(),
+        RouteConstants.memoryHomeRoute: (context) => MemoryHomePage(),
       },
     );
   }
@@ -46,32 +47,15 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
 
-
   @override
   State<MyHomePage> createState() => MyHomePageState();
 }
- 
+
+
 class MyHomePageState extends State<MyHomePage> {
 static late int accountMode = 0;
-
-createSettings(){ 
-if(accountMode == 0){//settings on toggle
- return IconButton(
-                icon: Icon(Icons.settings),  
-                iconSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.buttonText),//Settings Icon 
-                onPressed: () {  
-                  Navigator.pushNamed(context, RouteConstants.progressRoute);
-                },
-                );
-  } 
-  if(accountMode == 1){
-  return SizedBox();
-}
-
-}
-
-createNewMemory(){ //Create New Memory button toggle
-
+createNewMemory() {
+    //Create New Memory button toggle
     if(accountMode == 0){
     return Padding(
       padding: EdgeInsets.only(bottom: 15),
@@ -85,11 +69,11 @@ createNewMemory(){ //Create New Memory button toggle
     } 
     if(accountMode == 1) {
       return SizedBox();
-    } 
-   
-}
+    }
+  }
 
- static caregiverPin(BuildContext context){ //Caregiver Pin pop up
+  caregiverPin(BuildContext context) {
+    //Caregiver Pin pop up
     return AlertDialog(
     title: Text('Enter Caregiver Pin before entering Edit Mode.', 
     style: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText),)),
@@ -118,24 +102,21 @@ createNewMemory(){ //Create New Memory button toggle
           Navigator.of(context).pop();
         },
         child: Text('Continue', style: TextStyle(fontSize: 0.7*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.buttonText))),
-      ),
-    ],
-  );
- }
 
- 
+      )]);
+  }
+
   @override
   void initState() {
-    ColorConstants.toggleColors(accountMode);
+    toggleColors(accountMode);
     super.initState();
   }
 
-  
   @override
   Widget build(BuildContext context) {
-  MediaQueryData queryData = MediaQuery.of(context);
-  var deviceWidth = queryData.size.width;
-  var deviceHeight = queryData.size.height;
+    MediaQueryData queryData = MediaQuery.of(context);
+    var deviceWidth = queryData.size.width;
+    var deviceHeight = queryData.size.height;
     return Scaffold(
       appBar: AppBar(
         // App bar properties
@@ -160,7 +141,7 @@ createNewMemory(){ //Create New Memory button toggle
           onToggle: (value) {   
              setState(() {
                print('switched to: $value');
-               ColorConstants.toggleColors(value);
+               toggleColors(value);
                accountMode = value;
                if (accountMode == 0) {
                  showDialog(
@@ -233,4 +214,33 @@ createNewMemory(){ //Create New Memory button toggle
         ),
     ))));
   }
+  
+toggleColors(int value) async{
+ 
+  if (value == 0) { //Attempt at toggle
+            ColorConstants.appBar = const Color(0xFF00CB5D);
+            ColorConstants.buttonColor = const Color(0xFF308C39);
+            }  
+      if (value == 1) {
+              ColorConstants.appBar = const Color(0xFF3065FC);
+              ColorConstants.buttonColor = const Color(0xFF30658C);
+            }
+  
 }
+
+createSettings(){ 
+if(accountMode == 0){//settings on toggle
+ return IconButton(
+                icon: Icon(Icons.settings),  
+                iconSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.buttonText),//Settings Icon 
+                onPressed: () {  
+                  Navigator.pushNamed(context, RouteConstants.progressRoute);
+                },
+                );
+  } 
+  if(accountMode == 1){
+  return SizedBox();
+}
+
+  
+}}

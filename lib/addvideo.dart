@@ -48,7 +48,7 @@ class _AddVideoPageState extends State<AddVideoPage> {
               ),
             ),
             Container(
-              height: 0.4*deviceHeight,
+              height: 0.3*deviceHeight,
               width: 0.8*deviceWidth,
               margin: const EdgeInsets.only(top: 15.0, left: 0.0),
               child: TextField(
@@ -64,7 +64,7 @@ class _AddVideoPageState extends State<AddVideoPage> {
               ),
             ),
             Container(
-              margin: const EdgeInsets.only(top: 250.0, left: 0.0),
+              margin: const EdgeInsets.only(top: 150.0, left: 0.0),
               
               width: 0.4*deviceWidth,
               child: TextButton(

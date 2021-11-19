@@ -1,6 +1,6 @@
 class RouteConstants {
   static const String homeRoute = '/home';
-  static const String memExRoute = '/memory'; // memory example 
+  static const String memExRoute = '/memory'; // memory example
   static const String progressRoute = '/progress-report';
   static const String signupRoute = '/signup';
   static const String loginRoute = '/login';

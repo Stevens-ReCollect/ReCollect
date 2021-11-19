@@ -39,11 +39,11 @@ class StartUp extends StatelessWidget {
       RouteConstants.addVideo: (context) => AddVideoPage(),
       RouteConstants.addPhoto: (context) => AddPhotoPage(),
       RouteConstants.memoryHomeRoute: (context) => MemoryHomePage(),
+
       },
     );
   }
 }
-
 
 class StartUpPage extends StatelessWidget {
   @override
@@ -95,9 +95,7 @@ class StartUpPage extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.pushNamed(
-                    context, RouteConstants.signupRoute);
-                
+                  Navigator.pushNamed(context, RouteConstants.signupRoute);
                 },
               ),
             ),
@@ -127,8 +125,7 @@ class StartUpPage extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.pushNamed(
-                    context, RouteConstants.loginRoute);
+                  Navigator.pushNamed(context, RouteConstants.loginRoute);
                 },
               ),
             ),
