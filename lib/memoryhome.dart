@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/routeConstants.dart';
+import 'package:image_picker/image_picker.dart';
 
 class MemoryHomePage extends StatefulWidget {
   @override
@@ -16,6 +17,7 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
   @override
   Widget build(BuildContext context) {
     Widget body;
+
     if (_moments.isNotEmpty) {
       body = ReorderableListView(
         header: Container(
@@ -186,7 +188,7 @@ void onSelected(BuildContext context, int item) {
   switch (item) {
     case 0:
       print('Clicked Add Photo');
-      Navigator.pushNamed(context, RouteConstants.addPhoto);
+      // Navigator.pushNamed(context, RouteConstants.addPhoto);
       break;
     case 1:
       print('Clicked Add Video');
