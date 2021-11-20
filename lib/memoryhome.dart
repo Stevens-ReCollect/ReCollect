@@ -1,5 +1,7 @@
 // ignore_for_file: avoid_print
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/routeConstants.dart';
@@ -189,7 +191,8 @@ void onSelected(BuildContext context, int item) {
     case 0:
       print('Clicked Add Photo');
       // Navigator.pushNamed(context, RouteConstants.addPhoto);
-      pickImage();
+      var image = pickImage();
+      Navigator.pushNamed(context, RouteConstants.addPhoto, arguments: image);
       break;
     case 1:
       print('Clicked Add Video');
@@ -202,7 +205,14 @@ void onSelected(BuildContext context, int item) {
   }
 }
 
-void pickImage() async {
+Future pickImage() async {
+  // File _image;
+
   final ImagePicker _picker = ImagePicker();
-  final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+  final image = await _picker.pickImage(source: ImageSource.gallery);
+  if (image == null) {
+    return;
+  }
+
+  return File(image.path);
 }
