@@ -10,16 +10,13 @@ import 'constants/routeConstants.dart';
 // void main() => runApp(AddPhotoPage());
 
 class AddPhotoPage extends StatefulWidget {
-  // final File image;
-
-  // AddPhotoPage(this.image);
-
   @override
   _AddPhotoPageState createState() => _AddPhotoPageState();
 }
 
 class _AddPhotoPageState extends State<AddPhotoPage> {
   String _description = '';
+  File _image = File('');
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +70,7 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
                       maxHeight: 60.0,
                       maxWidth: 60.0,
                     ),
-                    // child: Image.file(widget.image),
+                    // child: Image.file(_image),
                     child: Image.network(
                       'https://www.brides.com/thmb/1bR5-1Y1y0drTsbS8fhu3gYJxBQ=/1425x0/filters:no_upscale():max_bytes(200000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__brides__public__brides-services__production__2018__12__03__5c057f05648d6b2dd3b5a13a_kristen-and-jonathan-wedding22-fd1d0dc5dfa94482a9c3273b663c4a2d.jpg',
                       fit: BoxFit.cover,

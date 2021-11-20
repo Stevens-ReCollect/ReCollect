@@ -3,6 +3,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:recollect_app/addphoto.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/routeConstants.dart';
 import 'package:image_picker/image_picker.dart';
@@ -15,6 +16,46 @@ class MemoryHomePage extends StatefulWidget {
 class _MemoryHomePageState extends State<MemoryHomePage> {
   final List<String> _moments = ['Photo', 'Video', 'Audio'];
   // final List<String> _moments = [];
+  File? imagePath;
+  // Future pickImage() async {
+  //   // File _image;
+
+  //   final ImagePicker _picker = ImagePicker();
+  //   final image = await _picker.pickImage(source: ImageSource.gallery);
+  //   if (image == null) {
+  //     return;
+  //   }
+  //   setState(() {
+  //     imagePath = File(image.path);
+  //   });
+  // }
+
+  // void onSelected(BuildContext context, int item) {
+  //   switch (item) {
+  //     case 0:
+  //       print('Clicked Add Photo');
+  //       // Navigator.pushNamed(context, RouteConstants.addPhoto);
+  //       var imagePath = pickImage();
+  //       Navigator.pushNamed(
+  //         context,
+  //         RouteConstants.addPhoto,
+  //         // arguments: this.imagePath,
+  //       );
+  //       // Navigator.push(
+  //       //     context,
+  //       //     MaterialPageRoute(
+  //       //         builder: (context) => AddPhotoPage(image: imagePath)));
+  //       break;
+  //     case 1:
+  //       print('Clicked Add Video');
+  //       Navigator.pushNamed(context, RouteConstants.addVideo);
+  //       break;
+  //     case 2:
+  //       print('Clicked Add Audio');
+  //       Navigator.pushNamed(context, RouteConstants.addAudio);
+  //       break;
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -133,44 +174,45 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
       );
     }
     return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        foregroundColor: Colors.black,
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          foregroundColor: Colors.black,
-          backgroundColor: Colors.white,
-          elevation: 0,
-          actions: <Widget>[
-            Container(
-              margin: const EdgeInsets.only(right: 10.0),
-              child: PopupMenuButton<int>(
-                child: Container(
-                  height: 40.0,
-                  width: 40.0,
-                  decoration: ShapeDecoration(
-                    color: ColorConstants.buttonColor,
-                    shape: const CircleBorder(),
-                  ),
-                  child: Icon(Icons.add, color: ColorConstants.buttonText),
+        elevation: 0,
+        actions: <Widget>[
+          Container(
+            margin: const EdgeInsets.only(right: 10.0),
+            child: PopupMenuButton<int>(
+              child: Container(
+                height: 40.0,
+                width: 40.0,
+                decoration: ShapeDecoration(
+                  color: ColorConstants.buttonColor,
+                  shape: const CircleBorder(),
                 ),
-                onSelected: (item) => onSelected(context, item),
-                itemBuilder: (context) => [
-                  const PopupMenuItem<int>(
-                    child: Text('Add Photo'),
-                    value: 0,
-                  ),
-                  const PopupMenuItem<int>(
-                    child: Text('Add Video'),
-                    value: 1,
-                  ),
-                  const PopupMenuItem<int>(
-                    child: Text('Add Audio'),
-                    value: 2,
-                  ),
-                ],
+                child: Icon(Icons.add, color: ColorConstants.buttonText),
               ),
+              onSelected: (item) => onSelected(context, item),
+              itemBuilder: (context) => [
+                const PopupMenuItem<int>(
+                  child: Text('Add Photo'),
+                  value: 0,
+                ),
+                const PopupMenuItem<int>(
+                  child: Text('Add Video'),
+                  value: 1,
+                ),
+                const PopupMenuItem<int>(
+                  child: Text('Add Audio'),
+                  value: 2,
+                ),
+              ],
             ),
-          ],
-        ),
-        body: body);
+          ),
+        ],
+      ),
+      body: body,
+    );
   }
 }
 
@@ -190,9 +232,8 @@ void onSelected(BuildContext context, int item) {
   switch (item) {
     case 0:
       print('Clicked Add Photo');
-      // Navigator.pushNamed(context, RouteConstants.addPhoto);
-      var image = pickImage();
-      Navigator.pushNamed(context, RouteConstants.addPhoto, arguments: image);
+      pickImage();
+      Navigator.pushNamed(context, RouteConstants.addPhoto);
       break;
     case 1:
       print('Clicked Add Video');
@@ -206,13 +247,10 @@ void onSelected(BuildContext context, int item) {
 }
 
 Future pickImage() async {
-  // File _image;
-
   final ImagePicker _picker = ImagePicker();
   final image = await _picker.pickImage(source: ImageSource.gallery);
   if (image == null) {
     return;
   }
-
-  return File(image.path);
+  // add File(image.path) to Firebase;
 }
