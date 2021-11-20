@@ -16,46 +16,6 @@ class MemoryHomePage extends StatefulWidget {
 class _MemoryHomePageState extends State<MemoryHomePage> {
   final List<String> _moments = ['Photo', 'Video', 'Audio'];
   // final List<String> _moments = [];
-  File? imagePath;
-  // Future pickImage() async {
-  //   // File _image;
-
-  //   final ImagePicker _picker = ImagePicker();
-  //   final image = await _picker.pickImage(source: ImageSource.gallery);
-  //   if (image == null) {
-  //     return;
-  //   }
-  //   setState(() {
-  //     imagePath = File(image.path);
-  //   });
-  // }
-
-  // void onSelected(BuildContext context, int item) {
-  //   switch (item) {
-  //     case 0:
-  //       print('Clicked Add Photo');
-  //       // Navigator.pushNamed(context, RouteConstants.addPhoto);
-  //       var imagePath = pickImage();
-  //       Navigator.pushNamed(
-  //         context,
-  //         RouteConstants.addPhoto,
-  //         // arguments: this.imagePath,
-  //       );
-  //       // Navigator.push(
-  //       //     context,
-  //       //     MaterialPageRoute(
-  //       //         builder: (context) => AddPhotoPage(image: imagePath)));
-  //       break;
-  //     case 1:
-  //       print('Clicked Add Video');
-  //       Navigator.pushNamed(context, RouteConstants.addVideo);
-  //       break;
-  //     case 2:
-  //       print('Clicked Add Audio');
-  //       Navigator.pushNamed(context, RouteConstants.addAudio);
-  //       break;
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
