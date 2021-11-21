@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/routeConstants.dart';
+import 'package:recollect_app/constants/textSizeConstants.dart';
 import 'package:recollect_app/login.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -17,6 +18,9 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
+     MediaQueryData queryData = MediaQuery.of(context);
+  var deviceWidth = queryData.size.width;
+  var deviceHeight = queryData.size.height;
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Colors.white,
@@ -34,29 +38,29 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
               ),
               Container(
-                height: 36.0,
-                width: 325.0,
+                
+                width: 0.8*deviceWidth,
                 margin: const EdgeInsets.only(top: 50.0, left: 0.0),
-                child: const Text(
+                child: Text(
                   'Sign Up',
                   style: TextStyle(
-                    fontSize: 30.0,
+                    fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.memoryTitle),
                     fontFamily: 'Roboto',
                     fontWeight: FontWeight.w700,
                   ),
                 ),
               ),
               Container(
-                height: 44.0,
-                width: 325.0,
+            
+                width: 0.8*deviceWidth,
                 margin: const EdgeInsets.only(top: 15.0, left: 0.0),
                 child: TextButton(
                   child: RichText(
-                    text: const TextSpan(
+                    text: TextSpan(
                       text: 'Have an account? ',
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: 22.0,
+                        fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText),
                         fontFamily: 'Roboto',
                         fontWeight: FontWeight.w400,
                       ),
@@ -65,7 +69,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           text: 'Log in.',
                           style: TextStyle(
                             color: ColorConstants.bodyText,
-                            fontSize: 22.0,
+                            fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText),
                             fontFamily: 'Roboto',
                             fontWeight: FontWeight.w400,
                           ),
@@ -83,52 +87,58 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
               ),
               Container(
-                height: 68.0,
-                width: 325.0,
+               
+                width: 0.8*deviceWidth,
                 margin: const EdgeInsets.only(top: 30.0, left: 0.0),
-                child: const TextField(
+                child: TextField(
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Email',
+                    labelStyle: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.formField)),
                     hintText: 'example@example.com',
+                    hintStyle: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.formField)),
                   ),
                 ),
               ),
               Container(
-                height: 68.0,
-                width: 325.0,
+                
+                width: 0.8*deviceWidth,
                 margin: const EdgeInsets.only(top: 15.0, left: 0.0),
-                child: const TextField(
+                child: TextField(
                   obscureText: true,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Password',
+                    labelStyle: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.formField)),
                   ),
                 ),
               ),
               Container(
-                height: 68.0,
-                width: 325.0,
+                
+                width: 0.8*deviceWidth,
                 margin: const EdgeInsets.only(top: 15.0, left: 0.0),
-                child: const TextField(
+                child: TextField(
                   obscureText: true,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Confirm Password',
+                    labelStyle: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.formField)),
                   ),
                 ),
               ),
               Container(
-                height: 68.0,
-                width: 325.0,
+                
+                width: 0.8*deviceWidth,
                 margin: const EdgeInsets.only(top: 15.0, left: 0.0),
                 child: TextField(
                   obscureText: true,
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
                     labelText: 'Caregiver Pin',
+                    labelStyle: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.formField)),
                     suffixIcon: IconButton(
                       icon: const Icon(Icons.info_outlined),
+                      iconSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.formField),
                       onPressed: () {
                         showDialog(
                             context: context,
@@ -142,12 +152,12 @@ class _SignUpPageState extends State<SignUpPage> {
               Container(
                 margin: const EdgeInsets.only(top: 15.0, left: 0.0),
                 height: 68,
-                width: 230,
+                width: 0.5*deviceWidth,
                 child: TextButton(
-                  child: const Text(
+                  child: Text(
                     'Sign Up',
                     style: TextStyle(
-                      fontSize: 24.0,
+                      fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.buttonText),
                       fontFamily: 'Roboto',
                       fontWeight: FontWeight.w400,
                     ),
@@ -177,16 +187,18 @@ class _SignUpPageState extends State<SignUpPage> {
 }
 
 Widget _buildCaregiverPinPopop(BuildContext context) {
+    MediaQueryData queryData = MediaQuery.of(context);
+  var deviceWidth = queryData.size.width;
   return AlertDialog(
     content: Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: const <Widget>[
+      children:<Widget>[
         SizedBox(
-            width: 300.0,
-            height: 100.0,
+            width: 0.7*deviceWidth,
+            height: 0.2*deviceWidth,
             child: Text(
-                'The Caregiver Pin is the pin you will use to enter back to Edit Mode.')),
+                'The Caregiver Pin is the pin you will use to enter back to Edit Mode.', style: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),)),
       ],
     ),
   );

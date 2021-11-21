@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/routeConstants.dart';
+import 'package:recollect_app/constants/textSizeConstants.dart';
 import 'package:recollect_app/main.dart';
 import 'package:recollect_app/signup.dart';
 
@@ -15,6 +16,9 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    MediaQueryData queryData = MediaQuery.of(context);
+  var deviceWidth = queryData.size.width;
+  var deviceHeight = queryData.size.height;
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Colors.white,
@@ -32,29 +36,29 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               Container(
-                height: 36.0,
-                width: 325.0,
+               
+                width: 0.8*deviceWidth,
                 margin: const EdgeInsets.only(top: 50.0, left: 0.0),
-                child: const Text(
+                child: Text(
                   'Log In',
                   style: TextStyle(
-                    fontSize: 30.0,
+                    fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.memoryTitle),
                     fontFamily: 'Roboto',
                     fontWeight: FontWeight.w700,
                   ),
                 ),
               ),
               Container(
-                height: 44.0,
-                width: 325.0,
+             
+                width: 0.8*deviceWidth,
                 margin: const EdgeInsets.only(top: 15.0, left: 0.0),
                 child: TextButton(
                   child: RichText(
-                    text: const TextSpan(
+                    text: TextSpan(
                       text: 'Don\'t have an account? ',
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: 22.0,
+                        fontSize:TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText),
                         fontFamily: 'Roboto',
                         fontWeight: FontWeight.w400,
                       ),
@@ -63,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
                           text: 'Sign up.',
                           style: TextStyle(
                             color: ColorConstants.bodyText,
-                            fontSize: 22.0,
+                            fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText),
                             fontFamily: 'Roboto',
                             fontWeight: FontWeight.w400,
                           ),
@@ -81,38 +85,40 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               Container(
-                height: 68.0,
-                width: 325.0,
+                
+                width: 0.8*deviceWidth,
                 margin: const EdgeInsets.only(top: 30.0, left: 0.0),
-                child: const TextField(
+                child: TextField(
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Email',
+                    labelStyle: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.formField)),
                     hintText: 'example@example.com',
+                    hintStyle: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.formField)),
                   ),
                 ),
               ),
               Container(
-                height: 68.0,
-                width: 325.0,
-                margin: const EdgeInsets.only(top: 15.0, left: 0.0),
-                child: const TextField(
+                width: 0.8*deviceWidth,
+                margin: const EdgeInsets.only(top: 15.0),
+                child: TextField(
                   obscureText: true,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Password',
+                    labelStyle: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.formField)),
                   ),
                 ),
               ),
               Container(
-                margin: const EdgeInsets.only(top: 15.0, left: 0.0),
+                margin: const EdgeInsets.all(15.0),
                 height: 68,
-                width: 230,
+                width: 0.5*deviceWidth,
                 child: TextButton(
-                  child: const Text(
+                  child: Text(
                     'Log In',
                     style: TextStyle(
-                      fontSize: 24.0,
+                      fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText),
                       fontFamily: 'Roboto',
                       fontWeight: FontWeight.w400,
                     ),

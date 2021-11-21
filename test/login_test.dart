@@ -6,7 +6,13 @@ import 'package:recollect_app/login.dart';
 void main() {
   testWidgets('Log In screen loads correctly', (WidgetTester tester) async {
     // Build the app
-    await tester.pumpWidget(LoginPage());
+    Widget testWidget = MediaQuery(
+      data: const MediaQueryData(),
+      child: MaterialApp(
+        home: LoginPage(),
+      ),
+    );
+    await tester.pumpWidget(testWidget);
 
     // Verify app title appears
     expect(find.text('Log In'), findsNWidgets(2));
