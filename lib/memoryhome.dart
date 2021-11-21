@@ -8,6 +8,8 @@ import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/routeConstants.dart';
 import 'package:image_picker/image_picker.dart';
 
+import 'constants/textSizeConstants.dart';
+
 class MemoryHomePage extends StatefulWidget {
   @override
   _MemoryHomePageState createState() => _MemoryHomePageState();
@@ -19,18 +21,23 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    MediaQueryData queryData = MediaQuery.of(context);
+    var pixelRatio = queryData.devicePixelRatio; //responsive sizing
+    var deviceWidth = queryData.size.width;
+    var deviceHeight = queryData.size.height;
     Widget body;
 
     if (_moments.isNotEmpty) {
       body = ReorderableListView(
         header: Container(
           margin: const EdgeInsets.all(20.0),
-          child: const Text(
+          child: Text(
             '{Memory Title}',
             style: TextStyle(
               fontFamily: 'Roboto',
               fontWeight: FontWeight.w700,
-              fontSize: 30.0,
+              fontSize: TextSizeConstants.getadaptiveTextSize(
+                  context, TextSizeConstants.memoryTitle),
             ),
           ),
         ),
@@ -40,14 +47,16 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
               key: ValueKey(moment),
               color: Colors.white,
               elevation: 0,
-              margin: const EdgeInsets.all(10.0),
+              margin: EdgeInsets.all(TextSizeConstants.getadaptiveTextSize(
+                  context, TextSizeConstants.dropDownText)),
               // child: Slidable(
               child: ListTile(
                 title: Text(
                   moment,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontFamily: 'Roboto',
-                    fontSize: 24.0,
+                    fontSize: TextSizeConstants.getadaptiveTextSize(
+                        context, TextSizeConstants.bodyText),
                   ),
                 ),
                 leading: ClipRRect(
@@ -61,7 +70,11 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
                     ),
                   ),
                 ),
-                trailing: const Icon(Icons.reorder),
+                trailing: Icon(
+                  Icons.reorder,
+                  size: TextSizeConstants.getadaptiveTextSize(
+                      context, TextSizeConstants.dropDownText),
+                ),
               ),
               //   actionPane: const SlidableScrollActionPane(),
               //   actions: const <Widget>[
@@ -96,12 +109,13 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
               children: [
                 Container(
                   margin: const EdgeInsets.all(20.0),
-                  child: const Text(
+                  child: Text(
                     '{Memory Title}',
                     style: TextStyle(
                       fontFamily: 'Roboto',
                       fontWeight: FontWeight.w700,
-                      fontSize: 30.0,
+                      fontSize: TextSizeConstants.getadaptiveTextSize(
+                          context, TextSizeConstants.memoryTitle),
                     ),
                   ),
                 ),
@@ -109,13 +123,14 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const <Text>[
+              children: <Text>[
                 Text(
                   'No moments',
                   style: TextStyle(
                     fontFamily: 'Roboto',
                     fontWeight: FontWeight.w500,
-                    fontSize: 24.0,
+                    fontSize: TextSizeConstants.getadaptiveTextSize(
+                        context, TextSizeConstants.bodyText),
                   ),
                 ),
                 Text(
@@ -123,7 +138,8 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
                   style: TextStyle(
                     fontFamily: 'Roboto',
                     fontWeight: FontWeight.w400,
-                    fontSize: 18.0,
+                    fontSize: TextSizeConstants.getadaptiveTextSize(
+                        context, TextSizeConstants.formField),
                     color: Colors.black54,
                   ),
                 ),
@@ -144,26 +160,42 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
             margin: const EdgeInsets.only(right: 10.0),
             child: PopupMenuButton<int>(
               child: Container(
-                height: 40.0,
-                width: 40.0,
+                height: 2.0 *
+                    TextSizeConstants.getadaptiveTextSize(
+                        context, TextSizeConstants.dropDownText),
+                width: 2.0 *
+                    TextSizeConstants.getadaptiveTextSize(
+                        context, TextSizeConstants.dropDownText),
                 decoration: ShapeDecoration(
                   color: ColorConstants.buttonColor,
                   shape: const CircleBorder(),
                 ),
-                child: Icon(Icons.add, color: ColorConstants.buttonText),
+                child: Icon(Icons.add,
+                    color: ColorConstants.buttonText,
+                    size: TextSizeConstants.getadaptiveTextSize(
+                        context, TextSizeConstants.dropDownText)),
               ),
               onSelected: (item) => onSelected(context, item),
               itemBuilder: (context) => [
-                const PopupMenuItem<int>(
-                  child: Text('Add Photo'),
+                PopupMenuItem<int>(
+                  child: Text('Add Photo',
+                      style: TextStyle(
+                          fontSize: TextSizeConstants.getadaptiveTextSize(
+                              context, TextSizeConstants.dropDownText))),
                   value: 0,
                 ),
-                const PopupMenuItem<int>(
-                  child: Text('Add Video'),
+                PopupMenuItem<int>(
+                  child: Text('Add Video',
+                      style: TextStyle(
+                          fontSize: TextSizeConstants.getadaptiveTextSize(
+                              context, TextSizeConstants.dropDownText))),
                   value: 1,
                 ),
-                const PopupMenuItem<int>(
-                  child: Text('Add Audio'),
+                PopupMenuItem<int>(
+                  child: Text('Add Audio',
+                      style: TextStyle(
+                          fontSize: TextSizeConstants.getadaptiveTextSize(
+                              context, TextSizeConstants.dropDownText))),
                   value: 2,
                 ),
               ],

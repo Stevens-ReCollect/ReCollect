@@ -1,9 +1,12 @@
 
 // ignore_for_file: file_names
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/textSizeConstants.dart';
+import 'package:recollect_app/main.dart';
 
 class MemoryList {
   final String type;
@@ -91,13 +94,25 @@ class MemoryPage extends StatefulWidget {
 }
 
 class _MemoryPageState extends State<MemoryPage> {
+  
+  var accMode = MyHomePageState.accountMode;
+  var _isButtonDisabled;
 
   @override
   void initState() {
+     _isButtonDisabled = false;
     super.initState();
   }
 
-  
+  void _isEditMode() {
+    if (accMode == 0){
+    print('This is Edit Mode');
+    setState(() {
+      _isButtonDisabled = true;
+    });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
   MediaQueryData queryData = MediaQuery.of(context);
@@ -110,27 +125,22 @@ class _MemoryPageState extends State<MemoryPage> {
         // title: Text(widget.title),
         automaticallyImplyLeading: true,
         backgroundColor: ColorConstants.appBar,
-        title: Text('Wedding'), //memory title
-        actions: <Widget>[
+        title: Text('Wedding', style: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.buttonText)),), //memory title
         
-        IconButton(
-                icon: Icon(Icons.settings),  //Settings Icon 
-                onPressed: () {  },
-                ),
-        ]
       ),
       body: SingleChildScrollView(
         child: AspectRatio(
         aspectRatio: 100 / 200,
         child: Column(
-          // mainAxisAlignment: MainAxisAlignment.center,
-          // crossAxisAlignment: CrossAxisAlignment.center,
+          
+          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
+            SizedBox(height: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.h2),),
             Container(
             padding: EdgeInsets.all(20),
             width: 0.9*deviceWidth,
-            child: Text(m.description, style: TextStyle(color: ColorConstants.bodyText, fontSize: TextSizeConstants.bodyText),
+            child: Text(m.description, style: TextStyle(color: ColorConstants.bodyText, fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),
             )), 
             //this is where the description will go
             
@@ -147,20 +157,34 @@ class _MemoryPageState extends State<MemoryPage> {
               //   image: AssetImage('lib/images/wedding-placeholder.jpg'), 
               //   ))),
                 
-               SizedBox(height: deviceHeight/25),
+               SizedBox(height: deviceHeight/30),
+               Text('Do you remember?', style: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),),
+               SizedBox(height: deviceHeight/80),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                  ElevatedButton(onPressed: (){}, 
-                  child: Text('I remember'),
-                  style: ElevatedButton.styleFrom(primary: ColorConstants.buttonColor,
-                    textStyle: TextStyle(fontSize: 0.9*TextSizeConstants.buttonText)
+                  ElevatedButton(onPressed: (){
+                    _isButtonDisabled ? null : _isEditMode; //null will get replaced with function that increments memory data
+                  }, 
+                  child: const Text('Yes'),
+                  style: ElevatedButton.styleFrom(padding:EdgeInsets.all(deviceWidth/40), primary: ColorConstants.buttonColor,
+                    textStyle: TextStyle(fontSize: 0.9*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.buttonText))
                   ),),
-                  SizedBox(width:10),
-                  ElevatedButton(onPressed: (){}, 
-                  child: Text("I don't remember"),
-                  style: ElevatedButton.styleFrom(primary: ColorConstants.unfavoredButton, 
-                    textStyle: TextStyle(fontSize: 0.9*TextSizeConstants.buttonText))
+                  SizedBox(width: deviceWidth/40),
+                  ElevatedButton(onPressed: (){
+                    _isButtonDisabled ? null : _isEditMode; //null will get replaced with function that increments memory data
+                  }, 
+                  child: const Text("No"),
+                  style: ElevatedButton.styleFrom( padding:EdgeInsets.all(deviceWidth/40), primary: ColorConstants.unfavoredButton, 
+                    textStyle: TextStyle(fontSize: 0.9*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.buttonText)))
+                  ),
+                  SizedBox(width:deviceWidth/40),
+                  ElevatedButton(onPressed: (){
+                    _isButtonDisabled ? null : _isEditMode; //null will get replaced with function that increments memory data
+                  }, 
+                  child: const Text("Maybe"),
+                  style: ElevatedButton.styleFrom( padding:EdgeInsets.all(deviceWidth/40), primary: ColorConstants.unfavoredButton, 
+                    textStyle: TextStyle(fontSize: 0.9*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.buttonText)))
                   ),
                 ],)
                ],

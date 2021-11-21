@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
+import 'package:recollect_app/constants/textSizeConstants.dart';
 import 'package:recollect_app/signup.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -20,6 +21,9 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
 
   @override
   Widget build(BuildContext context) {
+    MediaQueryData queryData = MediaQuery.of(context); //responsive sizing
+    var deviceWidth = queryData.size.width;
+    var deviceHeight = queryData.size.height;
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Colors.white,
@@ -79,8 +83,8 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
                 ),
               ),
               Container(
-                height: 115.0,
-                width: 360.0,
+                height: 0.3 * deviceHeight,
+                width: 0.8 * deviceWidth,
                 margin: const EdgeInsets.only(top: 15.0, left: 0.0),
                 child: const TextField(
                   maxLines: 15,
@@ -107,8 +111,7 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
               ),
               Container(
                 margin: const EdgeInsets.only(top: 250.0, left: 0.0),
-                height: 68,
-                width: 230,
+                width: 0.4 * deviceWidth,
                 child: TextButton(
                   child: const Text(
                     'Save',
