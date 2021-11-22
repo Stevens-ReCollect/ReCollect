@@ -9,8 +9,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 
 import 'constants/routeConstants.dart';
 
-// void main() => runApp(AddPhotoPage());
-
 class AddPhotoPage extends StatefulWidget {
   @override
   _AddPhotoPageState createState() => _AddPhotoPageState();
@@ -50,7 +48,6 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
                       fontWeight: FontWeight.w400,
                       fontSize: 18.0),
                 ),
-                // subtitle: Text('Change Photo'),
                 subtitle: TextButton(
                   onPressed: () {},
                   child: const Text(
