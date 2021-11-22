@@ -229,6 +229,7 @@ void onSelected(BuildContext context, int item) {
       break;
     case 1:
       print('Clicked Add Video');
+      pickVideo();
       Navigator.pushNamed(context, RouteConstants.addVideo);
       break;
     case 2:
@@ -244,5 +245,14 @@ Future pickImage() async {
   if (image == null) {
     return;
   }
-  // add File(image.path) to Firebase;
+  // need to add code to add File(image.path) to Firebase
+}
+
+Future pickVideo() async {
+  final ImagePicker _picker = ImagePicker();
+  final image = await _picker.pickVideo(source: ImageSource.gallery);
+  if (image == null) {
+    return;
+  }
+  // need to add code to add File(image.path) to Firebase
 }
