@@ -22,7 +22,7 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  final Future<FirebaseApp> _fbApp = Firebase.initializeApp();
+  // final Future<FirebaseApp> _fbApp = Firebase.initializeApp();
   MyApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: AuthenticationWrapper(),
+      home: const AuthenticationWrapper(),
       routes: {
         RouteConstants.homeRoute: (context) => MyHomePage(),
         RouteConstants.memExRoute: (context) => MemoryPage(),
@@ -63,8 +63,10 @@ class AuthenticationWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     final firebaseUser = context.watch<User>();
 
+    // Navigator.pushNamed(context, RouteConstants.signupRoute);
+    // ignore: unnecessary_null_comparison
     if(firebaseUser != null) {
-      return MyHomePage();
+      return const MyHomePage();
     }
     return LoginPage();
   }

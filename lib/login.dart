@@ -15,8 +15,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final TextEditingController email = new TextEditingController();
-  final TextEditingController password = new TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController password = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -93,6 +93,7 @@ class _LoginPageState extends State<LoginPage> {
                 width: 0.8 * deviceWidth,
                 margin: const EdgeInsets.only(top: 30.0, left: 0.0),
                 child: TextField(
+                  controller: email,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Email',
@@ -110,6 +111,7 @@ class _LoginPageState extends State<LoginPage> {
                 width: 0.8 * deviceWidth,
                 margin: const EdgeInsets.only(top: 15.0),
                 child: TextField(
+                  controller: password,
                   obscureText: true,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
@@ -147,8 +149,8 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   onPressed: () {
                     context.read<AuthenticationService>().signIn(
-                        email: email.text.trim(),
-                        password: password.text.trim());
+                        email: email.text,
+                        password: password.text);
                   },
                 ),
               ),
