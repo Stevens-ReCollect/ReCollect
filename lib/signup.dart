@@ -1,5 +1,8 @@
 import 'dart:ui';
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
+import 'package:recollect_app/firebase/authentication_service.dart';
 import 'package:flutter/material.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/routeConstants.dart';
@@ -18,9 +21,9 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-     MediaQueryData queryData = MediaQuery.of(context);
-  var deviceWidth = queryData.size.width;
-  var deviceHeight = queryData.size.height;
+    MediaQueryData queryData = MediaQuery.of(context);
+    var deviceWidth = queryData.size.width;
+    var deviceHeight = queryData.size.height;
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Colors.white,
@@ -38,21 +41,20 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
               ),
               Container(
-                
-                width: 0.8*deviceWidth,
+                width: 0.8 * deviceWidth,
                 margin: const EdgeInsets.only(top: 50.0, left: 0.0),
                 child: Text(
                   'Sign Up',
                   style: TextStyle(
-                    fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.memoryTitle),
+                    fontSize: TextSizeConstants.getadaptiveTextSize(
+                        context, TextSizeConstants.memoryTitle),
                     fontFamily: 'Roboto',
                     fontWeight: FontWeight.w700,
                   ),
                 ),
               ),
               Container(
-            
-                width: 0.8*deviceWidth,
+                width: 0.8 * deviceWidth,
                 margin: const EdgeInsets.only(top: 15.0, left: 0.0),
                 child: TextButton(
                   child: RichText(
@@ -60,7 +62,8 @@ class _SignUpPageState extends State<SignUpPage> {
                       text: 'Have an account? ',
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText),
+                        fontSize: TextSizeConstants.getadaptiveTextSize(
+                            context, TextSizeConstants.bodyText),
                         fontFamily: 'Roboto',
                         fontWeight: FontWeight.w400,
                       ),
@@ -69,7 +72,8 @@ class _SignUpPageState extends State<SignUpPage> {
                           text: 'Log in.',
                           style: TextStyle(
                             color: ColorConstants.bodyText,
-                            fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText),
+                            fontSize: TextSizeConstants.getadaptiveTextSize(
+                                context, TextSizeConstants.bodyText),
                             fontFamily: 'Roboto',
                             fontWeight: FontWeight.w400,
                           ),
@@ -87,58 +91,65 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
               ),
               Container(
-               
-                width: 0.8*deviceWidth,
+                width: 0.8 * deviceWidth,
                 margin: const EdgeInsets.only(top: 30.0, left: 0.0),
                 child: TextField(
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Email',
-                    labelStyle: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.formField)),
+                    labelStyle: TextStyle(
+                        fontSize: TextSizeConstants.getadaptiveTextSize(
+                            context, TextSizeConstants.formField)),
                     hintText: 'example@example.com',
-                    hintStyle: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.formField)),
+                    hintStyle: TextStyle(
+                        fontSize: TextSizeConstants.getadaptiveTextSize(
+                            context, TextSizeConstants.formField)),
                   ),
                 ),
               ),
               Container(
-                
-                width: 0.8*deviceWidth,
+                width: 0.8 * deviceWidth,
                 margin: const EdgeInsets.only(top: 15.0, left: 0.0),
                 child: TextField(
                   obscureText: true,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Password',
-                    labelStyle: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.formField)),
+                    labelStyle: TextStyle(
+                        fontSize: TextSizeConstants.getadaptiveTextSize(
+                            context, TextSizeConstants.formField)),
                   ),
                 ),
               ),
               Container(
-                
-                width: 0.8*deviceWidth,
+                width: 0.8 * deviceWidth,
                 margin: const EdgeInsets.only(top: 15.0, left: 0.0),
                 child: TextField(
                   obscureText: true,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Confirm Password',
-                    labelStyle: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.formField)),
+                    labelStyle: TextStyle(
+                        fontSize: TextSizeConstants.getadaptiveTextSize(
+                            context, TextSizeConstants.formField)),
                   ),
                 ),
               ),
               Container(
-                
-                width: 0.8*deviceWidth,
+                width: 0.8 * deviceWidth,
                 margin: const EdgeInsets.only(top: 15.0, left: 0.0),
                 child: TextField(
                   obscureText: true,
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
                     labelText: 'Caregiver Pin',
-                    labelStyle: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.formField)),
+                    labelStyle: TextStyle(
+                        fontSize: TextSizeConstants.getadaptiveTextSize(
+                            context, TextSizeConstants.formField)),
                     suffixIcon: IconButton(
                       icon: const Icon(Icons.info_outlined),
-                      iconSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.formField),
+                      iconSize: TextSizeConstants.getadaptiveTextSize(
+                          context, TextSizeConstants.formField),
                       onPressed: () {
                         showDialog(
                             context: context,
@@ -152,12 +163,13 @@ class _SignUpPageState extends State<SignUpPage> {
               Container(
                 margin: const EdgeInsets.only(top: 15.0, left: 0.0),
                 height: 68,
-                width: 0.5*deviceWidth,
+                width: 0.5 * deviceWidth,
                 child: TextButton(
                   child: Text(
                     'Sign Up',
                     style: TextStyle(
-                      fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.buttonText),
+                      fontSize: TextSizeConstants.getadaptiveTextSize(
+                          context, TextSizeConstants.buttonText),
                       fontFamily: 'Roboto',
                       fontWeight: FontWeight.w400,
                     ),
@@ -187,18 +199,22 @@ class _SignUpPageState extends State<SignUpPage> {
 }
 
 Widget _buildCaregiverPinPopop(BuildContext context) {
-    MediaQueryData queryData = MediaQuery.of(context);
+  MediaQueryData queryData = MediaQuery.of(context);
   var deviceWidth = queryData.size.width;
   return AlertDialog(
     content: Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
-      children:<Widget>[
+      children: <Widget>[
         SizedBox(
-            width: 0.7*deviceWidth,
-            height: 0.2*deviceWidth,
+            width: 0.7 * deviceWidth,
+            height: 0.2 * deviceWidth,
             child: Text(
-                'The Caregiver Pin is the pin you will use to enter back to Edit Mode.', style: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),)),
+              'The Caregiver Pin is the pin you will use to enter back to Edit Mode.',
+              style: TextStyle(
+                  fontSize: TextSizeConstants.getadaptiveTextSize(
+                      context, TextSizeConstants.bodyText)),
+            )),
       ],
     ),
   );
