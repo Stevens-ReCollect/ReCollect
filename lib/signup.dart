@@ -15,8 +15,8 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  String _email = '';
-  String _password = '';
+  TextEditingController _email = TextEditingController();
+  TextEditingController _password = TextEditingController();
   int _caregiverpin = 0;
 
   @override
@@ -94,6 +94,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 width: 0.8 * deviceWidth,
                 margin: const EdgeInsets.only(top: 30.0, left: 0.0),
                 child: TextField(
+                  controller: _email,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Email',
@@ -112,6 +113,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 margin: const EdgeInsets.only(top: 15.0, left: 0.0),
                 child: TextField(
                   obscureText: true,
+                  controller: _password,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Password',
@@ -126,6 +128,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 margin: const EdgeInsets.only(top: 15.0, left: 0.0),
                 child: TextField(
                   obscureText: true,
+                  controller: _password,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Confirm Password',
@@ -185,8 +188,15 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                     ),
                   ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, RouteConstants.loginRoute);
+                  onPressed: () async {
+                    final result =
+                        await context.read<AuthenticationService>().signUp(
+                              email: _email.text.trim(),
+                              password: _password.text.trim(),
+                            );
+                    if (result == "Signed Up") {
+                      Navigator.popUntil(context, ModalRoute.withName('/auth'));
+                    }
                   },
                 ),
               ),

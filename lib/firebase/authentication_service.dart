@@ -5,25 +5,48 @@ class AuthenticationService {
 
   AuthenticationService(this._firebaseAuth);
 
+  get user => _firebaseAuth.currentUser;
+
   Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
 
-  Future<String> signIn({required String email, required String password}) async {
+  //SIGN IN METHOD
+  Future signIn({required String email, required String password}) async {
     try {
       await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
-      return "Signed In";
+      return null;
     } on FirebaseAuthException catch (ex) {
       return ex.message.toString();
     }
   }
 
-  Future<String> signUp({required String email, required String password}) async {
+  //SIGN UP METHOD
+  Future signUp({required String email, required String password}) async {
     try {
       await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
       return "Signed Up";
     } on FirebaseAuthException catch (ex) {
       return ex.message.toString();
+    }
+  }
+
+  //SIGN OUT METHOD
+  Future signOut() async {
+    try {
+      await _firebaseAuth.signOut();
+      return "Signed Out";
+    } on FirebaseAuthException catch (ex) {
+      return ex.message;
+    }
+  }
+
+  //GET USER METHOD
+  User? getUser() {
+    try {
+      return _firebaseAuth.currentUser;
+    } on FirebaseAuthException {
+      return null;
     }
   }
 }

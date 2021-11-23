@@ -15,8 +15,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  TextEditingController email = TextEditingController();
-  TextEditingController password = TextEditingController();
+  TextEditingController _email = TextEditingController();
+  TextEditingController _password = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +93,7 @@ class _LoginPageState extends State<LoginPage> {
                 width: 0.8 * deviceWidth,
                 margin: const EdgeInsets.only(top: 30.0, left: 0.0),
                 child: TextField(
-                  controller: email,
+                  controller: _email,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Email',
@@ -111,7 +111,7 @@ class _LoginPageState extends State<LoginPage> {
                 width: 0.8 * deviceWidth,
                 margin: const EdgeInsets.only(top: 15.0),
                 child: TextField(
-                  controller: password,
+                  controller: _password,
                   obscureText: true,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
@@ -127,32 +127,34 @@ class _LoginPageState extends State<LoginPage> {
                 height: 68,
                 width: 0.5 * deviceWidth,
                 child: TextButton(
-                  child: Text(
-                    'Log In',
-                    style: TextStyle(
-                      fontSize: TextSizeConstants.getadaptiveTextSize(
-                          context, TextSizeConstants.bodyText),
-                      fontFamily: 'Roboto',
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        ColorConstants.buttonColor),
-                    foregroundColor: MaterialStateProperty.all<Color>(
-                        ColorConstants.buttonText),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
+                    child: Text(
+                      'Log In',
+                      style: TextStyle(
+                        fontSize: TextSizeConstants.getadaptiveTextSize(
+                            context, TextSizeConstants.bodyText),
+                        fontFamily: 'Roboto',
+                        fontWeight: FontWeight.w400,
                       ),
                     ),
-                  ),
-                  onPressed: () {
-                    context.read<AuthenticationService>().signIn(
-                        email: email.text,
-                        password: password.text);
-                  },
-                ),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          ColorConstants.buttonColor),
+                      foregroundColor: MaterialStateProperty.all<Color>(
+                          ColorConstants.buttonText),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                      ),
+                    ),
+                    onPressed: () {
+                      context
+                          .read<AuthenticationService>()
+                          .signIn(
+                            email: _email.text.trim(),
+                            password: _password.text.trim(),
+                          );
+                    }),
               ),
             ],
           ),

@@ -34,41 +34,43 @@ class MyApp extends StatelessWidget {
           create: (_) => AuthenticationService(FirebaseAuth.instance),
         ),
         StreamProvider(
-          create: (context) => context.read<AuthenticationService>().authStateChanges,
-          initialData: null
-        ),
-      ], 
+          create: (context) =>
+              context.read<AuthenticationService>().authStateChanges,
+          initialData: null,
+        )
+      ],
       child: MaterialApp(
-      title: 'ReCollect', 
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+        title: 'ReCollect',
+        theme: ThemeData(
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+          primarySwatch: Colors.blue,
+        ),
+        home: MyHomePage(),
+        routes: {
+          '/auth': (context) => AuthenticationWrapper(),
+          RouteConstants.homeRoute: (context) => MyHomePage(),
+          RouteConstants.memExRoute: (context) => MemoryPage(),
+          RouteConstants.progressRoute: (context) => ProgressReport(),
+          RouteConstants.createMemory: (context) => CreateMemoryPage(),
+          RouteConstants.signupRoute: (context) => SignUpPage(),
+          RouteConstants.loginRoute: (context) => LoginPage(),
+          RouteConstants.memoryHomeRoute: (context) => MemoryHomePage(),
+        },
       ),
-      home: const AuthenticationWrapper(),
-      routes: {
-        RouteConstants.homeRoute: (context) => MyHomePage(),
-        RouteConstants.memExRoute: (context) => MemoryPage(),
-        RouteConstants.progressRoute: (context) => ProgressReport(),
-        RouteConstants.createMemory: (context) => CreateMemoryPage(),
-        RouteConstants.signupRoute: (context) => SignUpPage(),
-        RouteConstants.loginRoute: (context) => LoginPage(),
-        RouteConstants.memoryHomeRoute: (context) => MemoryHomePage(),
-      },
-    ),);
+    );
   }
 }
 
 class AuthenticationWrapper extends StatelessWidget {
-  const AuthenticationWrapper({ Key? key }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final firebaseUser = context.watch<User>();
+    final _firebaseUser = context.watch<User>();
 
-    // Navigator.pushNamed(context, RouteConstants.signupRoute);
-    // ignore: unnecessary_null_comparison
-    if(firebaseUser != null) {
-      return const MyHomePage();
+    if (_firebaseUser != null) {
+      return MyHomePage();
+    } else {
+      return LoginPage();
     }
-    return LoginPage();
   }
 }
 
