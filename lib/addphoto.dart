@@ -21,11 +21,11 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
 
   Future pickImage() async {
     try {
-      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (image == null) {
+      final file = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (file == null) {
         return;
       }
-      final imageTemp = File(image.path);
+      final imageTemp = File(file.path);
       setState(() {
         this.image = imageTemp;
       });
