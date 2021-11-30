@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/textSizeConstants.dart';
 import 'package:recollect_app/signup.dart';
@@ -9,8 +10,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 
 import 'constants/routeConstants.dart';
 
-// void main() => runApp(AddPhotoPage());
-
 class AddPhotoPage extends StatefulWidget {
   @override
   _AddPhotoPageState createState() => _AddPhotoPageState();
@@ -18,8 +17,28 @@ class AddPhotoPage extends StatefulWidget {
 
 class _AddPhotoPageState extends State<AddPhotoPage> {
   String _description = '';
-  String _image =
-      ('https://www.brides.com/thmb/1bR5-1Y1y0drTsbS8fhu3gYJxBQ=/1425x0/filters:no_upscale():max_bytes(200000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__brides__public__brides-services__production__2018__12__03__5c057f05648d6b2dd3b5a13a_kristen-and-jonathan-wedding22-fd1d0dc5dfa94482a9c3273b663c4a2d.jpg');
+  File? image;
+
+  Future pickImage() async {
+    try {
+      final file = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (file == null) {
+        return;
+      }
+      final imageTemp = File(file.path);
+      setState(() {
+        this.image = imageTemp;
+      });
+    } on PlatformException catch (e) {
+      print('Failed to pick image $e');
+    }
+  }
+
+  @override
+  void initState() {
+    pickImage();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,9 +69,10 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
                       fontWeight: FontWeight.w400,
                       fontSize: 18.0),
                 ),
-                // subtitle: Text('Change Photo'),
                 subtitle: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    pickImage();
+                  },
                   child: const Text(
                     'Change Photo',
                     style: TextStyle(
@@ -76,13 +96,14 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
                       maxHeight: 60.0,
                       maxWidth: 60.0,
                     ),
-                    // child: Image.file(_image),
-                    child: CachedNetworkImage(
-                      imageUrl: "http://via.placeholder.com/150x150",
-                      placeholder: (context, url) =>
-                          CircularProgressIndicator(),
-                      errorWidget: (context, url, error) => Icon(Icons.error),
-                    ),
+                    child: image != null
+                        ? Image.file(
+                            image!,
+                            width: 60.0,
+                            height: 60.0,
+                            fit: BoxFit.cover,
+                          )
+                        : const FlutterLogo(size: 60.0),
                   ),
                 ),
               ),
