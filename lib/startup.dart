@@ -11,6 +11,8 @@ import 'package:recollect_app/creatememory.dart';
 import 'package:recollect_app/addphoto.dart';
 import 'package:recollect_app/addvideo.dart';
 import 'package:recollect_app/addaudio.dart';
+import 'package:recollect_app/navigation.dart';
+import 'package:recollect_app/settings.dart';
 
 import 'constants/textSizeConstants.dart';
 import 'memory_example.dart';
@@ -29,17 +31,18 @@ class StartUp extends StatelessWidget {
       ),
       home: StartUpPage(),
       routes: {
-      RouteConstants.homeRoute: (context) => MyHomePage(),
-      RouteConstants.memExRoute: (context) => MemoryPage(),
-      RouteConstants.progressRoute: (context) => ProgressReport(),
-      RouteConstants.createMemory: (context) => CreateMemoryPage(),
-      RouteConstants.signupRoute: (context) => SignUpPage(),
-      RouteConstants.loginRoute: (context) => LoginPage(),
-      RouteConstants.addAudio: (context) => AddAudioPage(),
-      RouteConstants.addVideo: (context) => AddVideoPage(),
-      RouteConstants.addPhoto: (context) => AddPhotoPage(),
-      RouteConstants.memoryHomeRoute: (context) => MemoryHomePage(),
-
+        RouteConstants.homeRoute: (context) => MyHomePage(),
+        RouteConstants.memExRoute: (context) => MemoryPage(),
+        RouteConstants.progressRoute: (context) => ProgressReport(),
+        RouteConstants.createMemory: (context) => CreateMemoryPage(),
+        RouteConstants.signupRoute: (context) => SignUpPage(),
+        RouteConstants.loginRoute: (context) => LoginPage(),
+        RouteConstants.addAudio: (context) => AddAudioPage(),
+        RouteConstants.addVideo: (context) => AddVideoPage(),
+        RouteConstants.addPhoto: (context) => AddPhotoPage(),
+        RouteConstants.memoryHomeRoute: (context) => MemoryHomePage(),
+        RouteConstants.navigationRoute: (context) => Navigate(),
+        RouteConstants.settingsRoute: (context) => SettingsPage(),
       },
     );
   }
@@ -49,8 +52,8 @@ class StartUpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     MediaQueryData queryData = MediaQuery.of(context);
-  var deviceWidth = queryData.size.width;
-  var deviceHeight = queryData.size.height;
+    var deviceWidth = queryData.size.width;
+    var deviceHeight = queryData.size.height;
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -58,11 +61,12 @@ class StartUpPage extends StatelessWidget {
           children: <Widget>[
             Container(
               margin: const EdgeInsets.only(top: 320.0),
-              child:  Center(
+              child: Center(
                 child: Text(
                   'ReCollect',
                   style: TextStyle(
-                    fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.h1),
+                    fontSize: TextSizeConstants.getadaptiveTextSize(
+                        context, TextSizeConstants.h1),
                     fontFamily: 'Roboto',
                     fontWeight: FontWeight.w900,
                   ),
@@ -71,13 +75,14 @@ class StartUpPage extends StatelessWidget {
             ),
             Container(
               margin: const EdgeInsets.only(top: 68.0),
-              height: 0.075*deviceHeight,
-              width: 0.6*deviceWidth,
+              height: 0.075 * deviceHeight,
+              width: 0.6 * deviceWidth,
               child: TextButton(
                 child: Text(
                   'Sign Up',
                   style: TextStyle(
-                    fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText),
+                    fontSize: TextSizeConstants.getadaptiveTextSize(
+                        context, TextSizeConstants.bodyText),
                     fontFamily: 'Roboto',
                     fontWeight: FontWeight.w400,
                   ),
@@ -101,13 +106,14 @@ class StartUpPage extends StatelessWidget {
             ),
             Container(
               margin: const EdgeInsets.only(top: 22.0),
-              height: 0.075*deviceHeight,
-              width: 0.6*deviceWidth,
+              height: 0.075 * deviceHeight,
+              width: 0.6 * deviceWidth,
               child: TextButton(
                 child: Text(
                   'Log In',
                   style: TextStyle(
-                    fontSize:TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText),
+                    fontSize: TextSizeConstants.getadaptiveTextSize(
+                        context, TextSizeConstants.bodyText),
                     fontFamily: 'Roboto',
                     fontWeight: FontWeight.w400,
                   ),
