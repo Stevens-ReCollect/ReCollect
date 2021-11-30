@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:recollect_app/addaudio.dart';
+import 'package:recollect_app/addphoto.dart';
+import 'package:recollect_app/addvideo.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/routeConstants.dart';
 import 'package:recollect_app/constants/textSizeConstants.dart';
@@ -40,6 +43,9 @@ class MyApp extends StatelessWidget {
         RouteConstants.createMemory: (context) => CreateMemoryPage(),
         RouteConstants.signupRoute: (context) => SignUpPage(),
         RouteConstants.loginRoute: (context) => LoginPage(),
+        RouteConstants.addAudio: (context) => AddAudioPage(),
+        RouteConstants.addVideo: (context) => AddVideoPage(),
+        RouteConstants.addPhoto: (context) => AddPhotoPage(),
         RouteConstants.memoryHomeRoute: (context) => MemoryHomePage(),
         RouteConstants.navigationRoute: (context) => Navigate(),
         RouteConstants.settingsRoute: (context) => SettingsPage(),

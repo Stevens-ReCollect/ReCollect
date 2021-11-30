@@ -3,6 +3,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:recollect_app/addphoto.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/routeConstants.dart';
@@ -18,6 +19,25 @@ class MemoryHomePage extends StatefulWidget {
 class _MemoryHomePageState extends State<MemoryHomePage> {
   final List<String> _moments = ['Photo', 'Video', 'Audio'];
   // final List<String> _moments = [];
+
+  // Future pickImage() async {
+  //   try {
+  //     final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+  //     if (image == null) {
+  //       return;
+  //     }
+  //     final imageTemp = File(image.path);
+  //     setState(() {
+  //       this.file = imageTemp;
+  //     });
+  //     // Navigator.pushNamed(context, RouteConstants.addPhoto);
+  //     Navigator.push(context,
+  //         MaterialPageRoute(builder: (context) => AddPhotoPage(image: file)));
+  //   } on PlatformException catch (e) {
+  //     print('Failed to pick image $e');
+  //   }
+  //   // need to add code to add File(image.path) to Firebase
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -170,25 +190,33 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
                   color: ColorConstants.buttonColor,
                   shape: const CircleBorder(),
                 ),
-                child: Icon(Icons.add,
-                    color: ColorConstants.buttonText,
-                    size: TextSizeConstants.getadaptiveTextSize(
-                        context, TextSizeConstants.dropDownText)),
+                child: Icon(
+                  Icons.add,
+                  color: ColorConstants.buttonText,
+                  size: TextSizeConstants.getadaptiveTextSize(
+                      context, TextSizeConstants.dropDownText),
+                ),
               ),
               onSelected: (item) => onSelected(context, item),
               itemBuilder: (context) => [
                 PopupMenuItem<int>(
-                  child: Text('Add Photo',
-                      style: TextStyle(
-                          fontSize: TextSizeConstants.getadaptiveTextSize(
-                              context, TextSizeConstants.dropDownText))),
+                  child: Text(
+                    'Add Photo',
+                    style: TextStyle(
+                      fontSize: TextSizeConstants.getadaptiveTextSize(
+                          context, TextSizeConstants.dropDownText),
+                    ),
+                  ),
                   value: 0,
                 ),
                 PopupMenuItem<int>(
-                  child: Text('Add Video',
-                      style: TextStyle(
-                          fontSize: TextSizeConstants.getadaptiveTextSize(
-                              context, TextSizeConstants.dropDownText))),
+                  child: Text(
+                    'Add Video',
+                    style: TextStyle(
+                      fontSize: TextSizeConstants.getadaptiveTextSize(
+                          context, TextSizeConstants.dropDownText),
+                    ),
+                  ),
                   value: 1,
                 ),
                 PopupMenuItem<int>(
@@ -224,7 +252,6 @@ void onSelected(BuildContext context, int item) {
   switch (item) {
     case 0:
       print('Clicked Add Photo');
-      pickImage();
       Navigator.pushNamed(context, RouteConstants.addPhoto);
       break;
     case 1:
@@ -238,11 +265,11 @@ void onSelected(BuildContext context, int item) {
   }
 }
 
-Future pickImage() async {
-  final ImagePicker _picker = ImagePicker();
-  final image = await _picker.pickImage(source: ImageSource.gallery);
-  if (image == null) {
-    return;
-  }
-  // add File(image.path) to Firebase;
-}
+// Future pickVideo() async {
+//   final ImagePicker _picker = ImagePicker();
+//   final image = await _picker.pickVideo(source: ImageSource.gallery);
+//   if (image == null) {
+//     return;
+//   }
+//   // need to add code to add File(image.path) to Firebase
+// }
