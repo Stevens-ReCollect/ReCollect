@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/textSizeConstants.dart';
 import 'package:recollect_app/signup.dart';
@@ -16,8 +17,28 @@ class AddVideoPage extends StatefulWidget {
 
 class _AddVideoPageState extends State<AddVideoPage> {
   String _description = '';
-  String _image =
-      ('https://www.brides.com/thmb/1bR5-1Y1y0drTsbS8fhu3gYJxBQ=/1425x0/filters:no_upscale():max_bytes(200000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__brides__public__brides-services__production__2018__12__03__5c057f05648d6b2dd3b5a13a_kristen-and-jonathan-wedding22-fd1d0dc5dfa94482a9c3273b663c4a2d.jpg');
+  File? video;
+
+  @override
+  void initState() {
+    pickVideo();
+    super.initState();
+  }
+
+  Future pickVideo() async {
+    try {
+      final file = await ImagePicker().pickVideo(source: ImageSource.gallery);
+      if (file == null) {
+        return;
+      }
+      final videoTemp = File(file.path);
+      setState(() {
+        this.video = videoTemp;
+      });
+    } on PlatformException catch (e) {
+      print('Failed to pick image $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +70,9 @@ class _AddVideoPageState extends State<AddVideoPage> {
                       fontSize: 18.0),
                 ),
                 subtitle: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    pickVideo();
+                  },
                   child: const Text(
                     'Change Video',
                     style: TextStyle(
@@ -73,13 +96,21 @@ class _AddVideoPageState extends State<AddVideoPage> {
                       maxHeight: 60.0,
                       maxWidth: 60.0,
                     ),
+                    child: video != null
+                        ? Image.file(
+                            video!,
+                            width: 60.0,
+                            height: 60.0,
+                            fit: BoxFit.cover,
+                          )
+                        : const FlutterLogo(size: 60.0),
                     // child: Image.file(_image),
-                    child: CachedNetworkImage(
-                      imageUrl: "http://via.placeholder.com/150x150",
-                      placeholder: (context, url) =>
-                          CircularProgressIndicator(),
-                      errorWidget: (context, url, error) => Icon(Icons.error),
-                    ),
+                    // child: CachedNetworkImage(
+                    //   imageUrl: "http://via.placeholder.com/150x150",
+                    //   placeholder: (context, url) =>
+                    //       CircularProgressIndicator(),
+                    //   errorWidget: (context, url, error) => Icon(Icons.error),
+                    // ),
                   ),
                 ),
               ),
