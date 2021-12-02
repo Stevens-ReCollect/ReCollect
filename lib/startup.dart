@@ -11,6 +11,8 @@ import 'package:recollect_app/creatememory.dart';
 import 'package:recollect_app/addphoto.dart';
 import 'package:recollect_app/addvideo.dart';
 import 'package:recollect_app/addaudio.dart';
+import 'package:recollect_app/navigation.dart';
+import 'package:recollect_app/settings.dart';
 
 import 'constants/textSizeConstants.dart';
 import 'memory_example.dart';
@@ -39,6 +41,8 @@ class StartUp extends StatelessWidget {
         RouteConstants.addVideo: (context) => AddVideoPage(),
         RouteConstants.addPhoto: (context) => AddPhotoPage(),
         RouteConstants.memoryHomeRoute: (context) => MemoryHomePage(),
+        RouteConstants.navigationRoute: (context) => Navigate(),
+        RouteConstants.settingsRoute: (context) => SettingsPage(),
       },
     );
   }

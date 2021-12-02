@@ -9,4 +9,6 @@ class RouteConstants {
   static const String addPhoto = '/add-photo';
   static const String addAudio = '/add-audio';
   static const String memoryHomeRoute = '/memory-home';
+  static const String navigationRoute = '/navigation';
+  static const String settingsRoute = '/settings';
 }

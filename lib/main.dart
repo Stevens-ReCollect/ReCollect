@@ -14,6 +14,8 @@ import 'package:recollect_app/signup.dart';
 import 'package:recollect_app/startup.dart';
 import 'package:recollect_app/memoryhome.dart';
 import 'package:toggle_switch/toggle_switch.dart';
+import 'package:recollect_app/navigation.dart';
+import 'package:recollect_app/settings.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -45,6 +47,8 @@ class MyApp extends StatelessWidget {
         RouteConstants.addVideo: (context) => AddVideoPage(),
         RouteConstants.addPhoto: (context) => AddPhotoPage(),
         RouteConstants.memoryHomeRoute: (context) => MemoryHomePage(),
+        RouteConstants.navigationRoute: (context) => Navigate(),
+        RouteConstants.settingsRoute: (context) => SettingsPage(),
       },
     );
   }
