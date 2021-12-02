@@ -9,18 +9,14 @@ import 'package:recollect_app/constants/textSizeConstants.dart';
 import 'package:recollect_app/main.dart';
 import 'package:recollect_app/signup.dart';
 
-class LoginPage extends StatefulWidget {
-  @override
-  _LoginPageState createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
+class LoginPage extends StatelessWidget {
   TextEditingController _email = TextEditingController();
   TextEditingController _password = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     MediaQueryData queryData = MediaQuery.of(context);
+
     var deviceWidth = queryData.size.width;
     var deviceHeight = queryData.size.height;
     return MaterialApp(
@@ -126,7 +122,7 @@ class _LoginPageState extends State<LoginPage> {
                 margin: const EdgeInsets.all(15.0),
                 height: 68,
                 width: 0.5 * deviceWidth,
-                child: TextButton(
+                child: ElevatedButton(
                     child: Text(
                       'Log In',
                       style: TextStyle(
@@ -148,12 +144,10 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     onPressed: () {
-                      context
-                          .read<AuthenticationService>()
-                          .signIn(
-                            email: _email.text.trim(),
-                            password: _password.text.trim(),
-                          );
+                      context.read<AuthenticationService>().signIn(
+                          email: _email.text.trim(),
+                          password: _password.text.trim(),
+                      ); 
                     }),
               ),
             ],

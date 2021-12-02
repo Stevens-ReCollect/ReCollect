@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:recollect_app/firebase/authentication_service.dart';
@@ -34,9 +36,9 @@ class MyApp extends StatelessWidget {
           create: (_) => AuthenticationService(FirebaseAuth.instance),
         ),
         StreamProvider(
-          create: (context) =>
+          create: (context) => 
               context.read<AuthenticationService>().authStateChanges,
-          initialData: null,
+          initialData: null
         )
       ],
       child: MaterialApp(
@@ -45,7 +47,7 @@ class MyApp extends StatelessWidget {
           visualDensity: VisualDensity.adaptivePlatformDensity,
           primarySwatch: Colors.blue,
         ),
-        home: MyHomePage(),
+        home: AuthenticationWrapper(),
         routes: {
           '/auth': (context) => AuthenticationWrapper(),
           RouteConstants.homeRoute: (context) => MyHomePage(),
@@ -64,13 +66,23 @@ class MyApp extends StatelessWidget {
 class AuthenticationWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final _firebaseUser = context.watch<User>();
+    final _firebaseUser = Provider.of<AuthenticationService>(context);
 
-    if (_firebaseUser != null) {
-      return MyHomePage();
-    } else {
-      return LoginPage();
-    }
+    return StreamBuilder<User?>(
+      stream: _firebaseUser.user,
+      builder: (_, AsyncSnapshot<User?> snapshot) {
+        if (snapshot.connectionState == ConnectionState.active) {
+          final User? user = snapshot.data;
+          return user == null ? LoginPage() : MyHomePage();
+        } else {
+          return Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
+      },
+    );
   }
 }
 
