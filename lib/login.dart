@@ -148,14 +148,16 @@ class LoginPage extends StatelessWidget {
                       //     email: _email.text.trim(),
                       //     password: _password.text.trim(),
                       // );
-                      final result = await FirebaseAuth.instance
-                          .signInWithEmailAndPassword(
-                        email: _email.text,
-                        password: _password.text,
-                      );
+
+                      // final result = await FirebaseAuth.instance
+                      //     .signInWithEmailAndPassword(
+                      //   email: _email.text,
+                      //   password: _password.text,
+                      // );
+
+                      final result = await AuthenticationService()
+                          .signIn(email: _email.text, password: _password.text);
                       if (result != null) {
-                        // Navigator.popUntil(
-                        //     context, ModalRoute.withName('/login'));
                         Navigator.pushNamed(context, RouteConstants.homeRoute);
                       }
                       // AuthenticationService.getUser()
