@@ -189,19 +189,21 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                   ),
                   onPressed: () async {
-                    final result =
-                        // await context.read<AuthenticationService>().signUp(
-                        //       email: _email.text.trim(),
-                        //       password: _password.text.trim(),
-                        //   );
-                        await FirebaseAuth.instance
-                            .createUserWithEmailAndPassword(
-                      email: _email.text,
-                      password: _password.text,
-                    );
+                    // final result =
+                    // await context.read<AuthenticationService>().signUp(
+                    //       email: _email.text.trim(),
+                    //       password: _password.text.trim(),
+                    //   );
+                    //     await FirebaseAuth.instance
+                    //         .createUserWithEmailAndPassword(
+                    //   email: _email.text,
+                    //   password: _password.text,
+                    // );
+                    final result = AuthenticationService()
+                        .signUp(email: _email.text, password: _password.text);
+
                     if (result != null) {
-                      Navigator.popUntil(
-                          context, ModalRoute.withName('/login'));
+                      Navigator.pushNamed(context, RouteConstants.homeRoute);
                     }
                   },
                 ),

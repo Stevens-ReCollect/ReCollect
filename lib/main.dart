@@ -30,35 +30,37 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        Provider<AuthenticationService>(
-          create: (_) => AuthenticationService(FirebaseAuth.instance),
-        ),
-        StreamProvider(
-          create: (context) => 
-              context.read<AuthenticationService>().authStateChanges,
-          initialData: null
-        )
-      ],
-      child: MaterialApp(
-        title: 'ReCollect',
-        theme: ThemeData(
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-          primarySwatch: Colors.blue,
-        ),
-        home: AuthenticationWrapper(),
-        routes: {
-          '/auth': (context) => AuthenticationWrapper(),
-          RouteConstants.homeRoute: (context) => MyHomePage(),
-          RouteConstants.memExRoute: (context) => MemoryPage(),
-          RouteConstants.progressRoute: (context) => ProgressReport(),
-          RouteConstants.createMemory: (context) => CreateMemoryPage(),
-          RouteConstants.signupRoute: (context) => SignUpPage(),
-          RouteConstants.loginRoute: (context) => LoginPage(),
-          RouteConstants.memoryHomeRoute: (context) => MemoryHomePage(),
-        },
+    return
+        // MultiProvider(
+        //   providers: [
+        //     Provider<AuthenticationService>(
+        //       create: (_) => AuthenticationService(FirebaseAuth.instance),
+        //     ),
+        //     StreamProvider(
+        //       create: (context) =>
+        //           context.read<AuthenticationService>().authStateChanges,
+        //       initialData: null
+        //     )
+        //   ],
+        // child:
+        MaterialApp(
+      title: 'ReCollect',
+      theme: ThemeData(
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        primarySwatch: Colors.blue,
       ),
+      home: AuthenticationWrapper(),
+      routes: {
+        '/auth': (context) => AuthenticationWrapper(),
+        RouteConstants.homeRoute: (context) => MyHomePage(),
+        RouteConstants.memExRoute: (context) => MemoryPage(),
+        RouteConstants.progressRoute: (context) => ProgressReport(),
+        RouteConstants.createMemory: (context) => CreateMemoryPage(),
+        RouteConstants.signupRoute: (context) => SignUpPage(),
+        RouteConstants.loginRoute: (context) => LoginPage(),
+        RouteConstants.memoryHomeRoute: (context) => MemoryHomePage(),
+      },
+      // ),
     );
   }
 }
