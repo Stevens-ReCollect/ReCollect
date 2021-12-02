@@ -25,7 +25,12 @@ class NavigateState extends State<Navigate> {
         bottomNavigationBar: BottomNavigationBar(
           selectedItemColor: ColorConstants.buttonColor,
           unselectedItemColor: ColorConstants.buttonColor,
-          iconSize: 25,
+          selectedFontSize: 0.8*TextSizeConstants.getadaptiveTextSize(
+                  context, TextSizeConstants.bodyText),
+          unselectedFontSize: 0.7*TextSizeConstants.getadaptiveTextSize(
+                  context, TextSizeConstants.bodyText),
+          iconSize: TextSizeConstants.getadaptiveTextSize(
+                  context, TextSizeConstants.bodyText),
           onTap: (index) => setState(() => currentIndex = index),
           currentIndex: currentIndex,
           //onTap: (index) => setState(() => currentIndex = index),
