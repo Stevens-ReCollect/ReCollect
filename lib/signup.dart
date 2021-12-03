@@ -15,9 +15,9 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  TextEditingController _email = TextEditingController();
-  TextEditingController _password = TextEditingController();
-  int _caregiverpin = 0;
+  final TextEditingController _email = TextEditingController();
+  final TextEditingController _password = TextEditingController();
+  final TextEditingController _caregiverPin = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -142,6 +142,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 width: 0.8 * deviceWidth,
                 margin: const EdgeInsets.only(top: 15.0, left: 0.0),
                 child: TextField(
+                  controller: _caregiverPin,
                   obscureText: true,
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
@@ -199,8 +200,10 @@ class _SignUpPageState extends State<SignUpPage> {
                     //   email: _email.text,
                     //   password: _password.text,
                     // );
-                    final result = AuthenticationService()
-                        .signUp(email: _email.text, password: _password.text);
+                    final result = AuthenticationService().signUp(
+                        email: _email.text,
+                        password: _password.text,
+                        caregiverPin: _caregiverPin.text);
 
                     if (result != null) {
                       Navigator.pushNamed(context, RouteConstants.homeRoute);
