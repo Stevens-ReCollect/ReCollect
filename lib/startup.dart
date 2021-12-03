@@ -27,8 +27,9 @@ class StartUp extends StatelessWidget {
     return MaterialApp(
       title: 'ReCollect',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.green,
       ),
+      highContrastTheme: ThemeData(primaryColor: Colors.black),
       home: StartUpPage(),
       routes: {
         RouteConstants.homeRoute: (context) => MyHomePage(),

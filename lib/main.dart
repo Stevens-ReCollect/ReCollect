@@ -67,7 +67,6 @@ class MyHomePageState extends State<MyHomePage> {
   late bool highContrast = SettingsPageState().isHighContrast;
 
 toggleColors(int value) {//Attempt at toggle
-     if(highContrast == false){ 
      if (value == 0) {
         ColorConstants.appBar = const Color(0xFF00CB5D);
         ColorConstants.buttonColor = const Color(0xFF308C39);
@@ -75,9 +74,6 @@ toggleColors(int value) {//Attempt at toggle
         ColorConstants.appBar = const Color(0xFF3065FC);
         ColorConstants.buttonColor = const Color(0xFF30658C);
         }
-     } else{
-       SettingsPageState().checkIfHighContrast();
-     }
     setState(() {
       });
   }
@@ -155,7 +151,6 @@ toggleColors(int value) {//Attempt at toggle
   @override
   void initState() {
     toggleColors(accountMode);
-    SettingsPageState().checkIfHighContrast();
     super.initState();
   }
 

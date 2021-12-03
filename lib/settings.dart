@@ -14,16 +14,7 @@ class SettingsPage extends StatefulWidget {
 }
 
 class SettingsPageState extends State<SettingsPage> {
-  bool isHighContrast = false;
-
-  checkIfHighContrast(){
-      if (isHighContrast == true){
-              ColorConstants.appBar = const Color(0xFF000000);
-              ColorConstants.buttonColor = const Color(0xFF222222);
-        } 
-        setState(() {
-        });
-    }
+  late bool isHighContrast = false;
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +32,21 @@ class SettingsPageState extends State<SettingsPage> {
       body: SettingsList(
         contentPadding: const EdgeInsets.all(10),
         sections: [
+          SettingsSection(
+            titlePadding: const EdgeInsets.all(10),
+            subtitlePadding: const EdgeInsets.all(10),
+            title: 'Account Settings',
+            titleTextStyle: TextStyle(fontSize: 0.7*TextSizeConstants.getadaptiveTextSize(
+                  context, TextSizeConstants.bodyText),),
+            tiles: [
+              SettingsTile(
+                title: 'Change Password',
+                titleTextStyle: TextStyle(fontSize: 0.7*TextSizeConstants.getadaptiveTextSize(
+                  context, TextSizeConstants.bodyText),),
+                leading: Icon(Icons.language),
+                onPressed: (BuildContext context) {},
+              ),]),
+
           SettingsSection(
             titlePadding: const EdgeInsets.all(10),
             subtitlePadding: const EdgeInsets.all(10),
@@ -67,11 +73,25 @@ class SettingsPageState extends State<SettingsPage> {
                 switchValue: isHighContrast,
                 onToggle: (bool value) {
                   isHighContrast = value;
-                  checkIfHighContrast();
+                  if(isHighContrast == true){
+                    //TODO: Figure way to send to settings on operating system
+                  }
+                  // setState(() {
+                    
+                  // });
                 },
               ),
+              SettingsTile(
+                title: 'Text Size Adjustment',
+                titleTextStyle: TextStyle(fontSize: 0.7*TextSizeConstants.getadaptiveTextSize(
+                  context, TextSizeConstants.bodyText),),
+                leading: Icon(Icons.text_fields),
+                onPressed: (BuildContext context) {},
+              ),
+
             ],
           ),
+           
         ],
       ));
        
