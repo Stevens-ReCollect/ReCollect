@@ -24,6 +24,26 @@ class FirestoreService {
         .catchError((error) => print("Failed to add user: $error"));
   }
 
+  List getUserMemories() {
+    User? currentUser = AuthenticationService().getUser();
+    if (currentUser == null) {
+      throw Exception('currentUser is null');
+    }
+    CollectionReference memories = _firestore.collection('memories');
+    List _memories = [];
+    memories
+        .where('user_email', isEqualTo: currentUser.email)
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        _memories.add(doc["title"]);
+      });
+      print(_memories);
+      return _memories;
+    }).catchError((error) => print("Failed to obtain user's memories: $error"));
+    return _memories;
+  }
+
   Future<void> addNewMemory(
       {required String title,
       required String startDate,

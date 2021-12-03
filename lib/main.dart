@@ -12,6 +12,7 @@ import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/routeConstants.dart';
 import 'package:recollect_app/constants/textSizeConstants.dart';
 import 'package:recollect_app/creatememory.dart';
+import 'package:recollect_app/firebase/firestore_service.dart';
 import 'package:recollect_app/login.dart';
 import 'package:recollect_app/memory_example.dart';
 import 'package:recollect_app/progressReport.dart';
@@ -106,6 +107,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class MyHomePageState extends State<MyHomePage> {
+  final List _memories = FirestoreService().getUserMemories();
+
   static late int accountMode = 0;
   createNewMemory() {
     //Create New Memory button toggle
@@ -179,6 +182,7 @@ class MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     toggleColors(accountMode);
+    // print(_memories);
     super.initState();
   }
 
