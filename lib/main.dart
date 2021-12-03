@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:recollect_app/addaudio.dart';
@@ -63,6 +64,25 @@ class MyHomePage extends StatefulWidget {
 
 class MyHomePageState extends State<MyHomePage> {
   static late int accountMode = 0;
+  late bool highContrast = SettingsPageState().isHighContrast;
+
+toggleColors(int value) {//Attempt at toggle
+     if(highContrast == false){ 
+     if (value == 0) {
+        ColorConstants.appBar = const Color(0xFF00CB5D);
+        ColorConstants.buttonColor = const Color(0xFF308C39);
+        } else if (value == 1) {
+        ColorConstants.appBar = const Color(0xFF3065FC);
+        ColorConstants.buttonColor = const Color(0xFF30658C);
+        }
+     } else{
+       SettingsPageState().checkIfHighContrast();
+     }
+    setState(() {
+      });
+  }
+
+
   createNewMemory() {
     //Create New Memory button toggle
     if (accountMode == 0) {
@@ -135,6 +155,7 @@ class MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     toggleColors(accountMode);
+    SettingsPageState().checkIfHighContrast();
     super.initState();
   }
 
@@ -262,18 +283,6 @@ class MyHomePageState extends State<MyHomePage> {
                 ))));
   }
 
-  toggleColors(int value) {
-    if (value == 0) {
-      //Attempt at toggle
-      ColorConstants.appBar = const Color(0xFF00CB5D);
-      ColorConstants.buttonColor = const Color(0xFF308C39);
-    }
-    if (value == 1) {
-      ColorConstants.appBar = const Color(0xFF3065FC);
-      ColorConstants.buttonColor = const Color(0xFF30658C);
-    }
-    setState(() {});
-  }
 
   createSettings() {
     if (accountMode == 0) {
