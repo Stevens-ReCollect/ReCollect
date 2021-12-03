@@ -122,13 +122,14 @@ class LoginPage extends StatelessWidget {
                 height: 68,
                 width: 0.5 * deviceWidth,
                 child: TextButton(
-                  child: Text(
-                    'Log In',
-                    style: TextStyle(
-                      fontSize: TextSizeConstants.getadaptiveTextSize(
-                          context, TextSizeConstants.bodyText),
-                      fontFamily: 'Roboto',
-                      fontWeight: FontWeight.w400,
+                    child: Text(
+                      'Log In',
+                      style: TextStyle(
+                        fontSize: TextSizeConstants.getadaptiveTextSize(
+                            context, TextSizeConstants.bodyText),
+                        fontFamily: 'Roboto',
+                        fontWeight: FontWeight.w400,
+                      ),
                     ),
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(
