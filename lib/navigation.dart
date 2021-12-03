@@ -25,7 +25,12 @@ class NavigateState extends State<Navigate> {
         bottomNavigationBar: BottomNavigationBar(
           selectedItemColor: ColorConstants.buttonColor,
           unselectedItemColor: ColorConstants.buttonColor,
-          iconSize: 25,
+          selectedFontSize: 0.7*TextSizeConstants.getadaptiveTextSize(
+                  context, TextSizeConstants.bodyText),
+          unselectedFontSize: 0.6*TextSizeConstants.getadaptiveTextSize(
+                  context, TextSizeConstants.bodyText),
+          iconSize: TextSizeConstants.getadaptiveTextSize(
+                  context, TextSizeConstants.bodyText),
           onTap: (index) => setState(() => currentIndex = index),
           currentIndex: currentIndex,
           //onTap: (index) => setState(() => currentIndex = index),
@@ -35,7 +40,7 @@ class NavigateState extends State<Navigate> {
               label: 'Home',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.chat),
+              icon: Icon(Icons.poll),
               label: 'Progress Report',
             ),
             BottomNavigationBarItem(

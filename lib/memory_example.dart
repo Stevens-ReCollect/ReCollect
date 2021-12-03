@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/textSizeConstants.dart';
 import 'package:recollect_app/main.dart';
+import 'package:recollect_app/widgets/memoryslider.dart';
 
 class MemoryList {
   final String type;
@@ -143,9 +144,15 @@ class _MemoryPageState extends State<MemoryPage> {
             child: Text(m.description, style: TextStyle(color: ColorConstants.bodyText, fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),
             )), 
             //this is where the description will go
-            
+            Container(
+              width: 0.8*deviceWidth,
+              height:0.5*deviceHeight,
+            child: const Center(
+              child:MemorySlider(),
+              )
+            ),
           
-                 selectType(),
+                //  selectType(),
               //    Container(
               //      width: 0.8*deviceWidth,
               //      height: deviceHeight / 2.5,
