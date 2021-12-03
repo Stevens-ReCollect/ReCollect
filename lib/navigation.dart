@@ -40,7 +40,7 @@ class NavigateState extends State<Navigate> {
               label: 'Home',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.chat),
+              icon: Icon(Icons.poll),
               label: 'Progress Report',
             ),
             BottomNavigationBarItem(
