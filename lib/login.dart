@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
+import 'package:recollect_app/firebase/authentication_service.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/routeConstants.dart';
 import 'package:recollect_app/constants/textSizeConstants.dart';
 import 'package:recollect_app/main.dart';
 import 'package:recollect_app/signup.dart';
 
-class LoginPage extends StatefulWidget {
-  @override
-  _LoginPageState createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
-  String _email = '';
-  String _password = '';
+class LoginPage extends StatelessWidget {
+  TextEditingController _email = TextEditingController();
+  TextEditingController _password = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -89,6 +88,7 @@ class _LoginPageState extends State<LoginPage> {
                 width: 0.8 * deviceWidth,
                 margin: const EdgeInsets.only(top: 30.0, left: 0.0),
                 child: TextField(
+                  controller: _email,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Email',
@@ -106,6 +106,7 @@ class _LoginPageState extends State<LoginPage> {
                 width: 0.8 * deviceWidth,
                 margin: const EdgeInsets.only(top: 15.0),
                 child: TextField(
+                  controller: _password,
                   obscureText: true,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
@@ -121,31 +122,45 @@ class _LoginPageState extends State<LoginPage> {
                 height: 68,
                 width: 0.5 * deviceWidth,
                 child: TextButton(
-                  child: Text(
-                    'Log In',
-                    style: TextStyle(
-                      fontSize: TextSizeConstants.getadaptiveTextSize(
-                          context, TextSizeConstants.bodyText),
-                      fontFamily: 'Roboto',
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        ColorConstants.buttonColor),
-                    foregroundColor: MaterialStateProperty.all<Color>(
-                        ColorConstants.buttonText),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
+                    child: Text(
+                      'Log In',
+                      style: TextStyle(
+                        fontSize: TextSizeConstants.getadaptiveTextSize(
+                            context, TextSizeConstants.bodyText),
+                        fontFamily: 'Roboto',
+                        fontWeight: FontWeight.w400,
                       ),
                     ),
-                  ),
-                  onPressed: () {
-                    Navigator.pushNamed(
-                        context, RouteConstants.navigationRoute);
-                  },
-                ),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          ColorConstants.buttonColor),
+                      foregroundColor: MaterialStateProperty.all<Color>(
+                          ColorConstants.buttonText),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                      ),
+                    ),
+                    onPressed: () async {
+                      // context.read<AuthenticationService>().signIn(
+                      //     email: _email.text.trim(),
+                      //     password: _password.text.trim(),
+                      // );
+
+                      // final result = await FirebaseAuth.instance
+                      //     .signInWithEmailAndPassword(
+                      //   email: _email.text,
+                      //   password: _password.text,
+                      // );
+
+                      final result = await AuthenticationService()
+                          .signIn(email: _email.text, password: _password.text);
+                      if (result != null) {
+                        Navigator.pushNamed(context, RouteConstants.homeRoute);
+                      }
+                      // AuthenticationService.getUser()
+                    }),
               ),
             ],
           ),
