@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/memoryhome.dart';
 import 'package:recollect_app/signup.dart';
-
+import 'package:recollect_app/progressReport.dart';
+import 'package:recollect_app/main.dart';
 import 'constants/routeConstants.dart';
 import 'constants/textSizeConstants.dart';
 
@@ -19,7 +20,7 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
 
   @override
   Widget build(BuildContext context) {
-    MediaQueryData queryData = MediaQuery.of(context);//responsive sizing
+    MediaQueryData queryData = MediaQuery.of(context); //responsive sizing
     var deviceWidth = queryData.size.width;
     var deviceHeight = queryData.size.height;
     return Scaffold(
@@ -43,7 +44,8 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
                 child: Text(
                   'Create a Memory',
                   style: TextStyle(
-                    fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.memoryTitle),
+                    fontSize: TextSizeConstants.getadaptiveTextSize(
+                        context, TextSizeConstants.memoryTitle),
                     fontFamily: 'Roboto',
                     fontWeight: FontWeight.w900,
                   ),
@@ -51,68 +53,85 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
               ),
             ),
             Container(
-              width: 0.8*deviceWidth,
+              width: 0.8 * deviceWidth,
               margin: const EdgeInsets.only(top: 30.0, left: 0.0),
               child: TextField(
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(),
                   labelText: 'Title',
-                  labelStyle: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.formField)),
+                  labelStyle: TextStyle(
+                      fontSize: TextSizeConstants.getadaptiveTextSize(
+                          context, TextSizeConstants.formField)),
                   hintText: 'Example: Christmas 2010',
-                  hintStyle: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.formField)),
+                  hintStyle: TextStyle(
+                      fontSize: TextSizeConstants.getadaptiveTextSize(
+                          context, TextSizeConstants.formField)),
                 ),
               ),
             ),
             Container(
-              width: 0.8*deviceWidth,
+              width: 0.8 * deviceWidth,
               margin: const EdgeInsets.only(top: 15.0, left: 0.0),
               child: TextField(
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(),
                   labelText: 'Start Date',
-                  labelStyle: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.formField)),
+                  labelStyle: TextStyle(
+                      fontSize: TextSizeConstants.getadaptiveTextSize(
+                          context, TextSizeConstants.formField)),
                   hintText: 'MM/DD/YYY',
-                  hintStyle: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.formField)),
+                  hintStyle: TextStyle(
+                      fontSize: TextSizeConstants.getadaptiveTextSize(
+                          context, TextSizeConstants.formField)),
                 ),
               ),
             ),
             Container(
-              width: 0.8*deviceWidth,
+              width: 0.8 * deviceWidth,
               margin: const EdgeInsets.only(top: 15.0, left: 0.0),
               child: TextField(
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(),
                   labelText: 'End Date',
-                  labelStyle: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.formField)),
+                  labelStyle: TextStyle(
+                      fontSize: TextSizeConstants.getadaptiveTextSize(
+                          context, TextSizeConstants.formField)),
                   hintText: 'MM/DD/YYYY',
-                  hintStyle: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.formField)),
+                  hintStyle: TextStyle(
+                      fontSize: TextSizeConstants.getadaptiveTextSize(
+                          context, TextSizeConstants.formField)),
                 ),
               ),
             ),
             Container(
-              height: 0.3*deviceHeight,
-              width: 0.8*deviceWidth,
+              height: 0.3 * deviceHeight,
+              width: 0.8 * deviceWidth,
               margin: const EdgeInsets.only(top: 15.0, left: 0.0),
               child: TextField(
                 maxLines: 15,
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(),
                   labelText: 'Description',
-                  labelStyle: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.formField)),
+                  labelStyle: TextStyle(
+                      fontSize: TextSizeConstants.getadaptiveTextSize(
+                          context, TextSizeConstants.formField)),
                   hintText: 'Description',
-                  hintStyle: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.formField)),
+                  hintStyle: TextStyle(
+                      fontSize: TextSizeConstants.getadaptiveTextSize(
+                          context, TextSizeConstants.formField)),
                   alignLabelWithHint: true,
                 ),
               ),
             ),
             Container(
-              margin: const EdgeInsets.only(top: 30.0, left: 0.0),
-              width: 0.5*deviceWidth,
+              margin: const EdgeInsets.only(top: 10.0, left: 0.0),
+              width: 0.5 * deviceWidth,
               child: TextButton(
                 child: Text(
                   'Next',
                   style: TextStyle(
-                    fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.buttonText),
+                    fontSize: TextSizeConstants.getadaptiveTextSize(
+                        context, TextSizeConstants.buttonText),
                     fontFamily: 'Roboto',
                     fontWeight: FontWeight.w400,
                   ),
@@ -130,9 +149,7 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.pushNamed(
-                    context, RouteConstants.memoryHomeRoute);
-
+                  Navigator.pushNamed(context, RouteConstants.memoryHomeRoute);
                 },
               ),
             ),

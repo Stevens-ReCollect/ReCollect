@@ -5,6 +5,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:recollect_app/firebase/authentication_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
+import 'package:recollect_app/addaudio.dart';
+import 'package:recollect_app/addphoto.dart';
+import 'package:recollect_app/addvideo.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/routeConstants.dart';
 import 'package:recollect_app/constants/textSizeConstants.dart';
@@ -16,6 +19,8 @@ import 'package:recollect_app/signup.dart';
 import 'package:recollect_app/startup.dart';
 import 'package:recollect_app/memoryhome.dart';
 import 'package:toggle_switch/toggle_switch.dart';
+import 'package:recollect_app/navigation.dart';
+import 'package:recollect_app/settings.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -58,7 +63,12 @@ class MyApp extends StatelessWidget {
         RouteConstants.createMemory: (context) => CreateMemoryPage(),
         RouteConstants.signupRoute: (context) => SignUpPage(),
         RouteConstants.loginRoute: (context) => LoginPage(),
+        RouteConstants.addAudio: (context) => AddAudioPage(),
+        RouteConstants.addVideo: (context) => AddVideoPage(),
+        RouteConstants.addPhoto: (context) => AddPhotoPage(),
         RouteConstants.memoryHomeRoute: (context) => MemoryHomePage(),
+        RouteConstants.navigationRoute: (context) => Navigate(),
+        RouteConstants.settingsRoute: (context) => SettingsPage(),
       },
       // ),
     );

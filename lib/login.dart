@@ -16,7 +16,6 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     MediaQueryData queryData = MediaQuery.of(context);
-
     var deviceWidth = queryData.size.width;
     var deviceHeight = queryData.size.height;
     return MaterialApp(
@@ -122,15 +121,14 @@ class LoginPage extends StatelessWidget {
                 margin: const EdgeInsets.all(15.0),
                 height: 68,
                 width: 0.5 * deviceWidth,
-                child: ElevatedButton(
-                    child: Text(
-                      'Log In',
-                      style: TextStyle(
-                        fontSize: TextSizeConstants.getadaptiveTextSize(
-                            context, TextSizeConstants.bodyText),
-                        fontFamily: 'Roboto',
-                        fontWeight: FontWeight.w400,
-                      ),
+                child: TextButton(
+                  child: Text(
+                    'Log In',
+                    style: TextStyle(
+                      fontSize: TextSizeConstants.getadaptiveTextSize(
+                          context, TextSizeConstants.bodyText),
+                      fontFamily: 'Roboto',
+                      fontWeight: FontWeight.w400,
                     ),
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(

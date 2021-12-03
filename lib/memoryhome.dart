@@ -1,8 +1,13 @@
 // ignore_for_file: avoid_print
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:recollect_app/addphoto.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/routeConstants.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'constants/textSizeConstants.dart';
 
@@ -15,6 +20,25 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
   final List<String> _moments = ['Photo', 'Video', 'Audio'];
   // final List<String> _moments = [];
 
+  // Future pickImage() async {
+  //   try {
+  //     final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+  //     if (image == null) {
+  //       return;
+  //     }
+  //     final imageTemp = File(image.path);
+  //     setState(() {
+  //       this.file = imageTemp;
+  //     });
+  //     // Navigator.pushNamed(context, RouteConstants.addPhoto);
+  //     Navigator.push(context,
+  //         MaterialPageRoute(builder: (context) => AddPhotoPage(image: file)));
+  //   } on PlatformException catch (e) {
+  //     print('Failed to pick image $e');
+  //   }
+  //   // need to add code to add File(image.path) to Firebase
+  // }
+
   @override
   Widget build(BuildContext context) {
     MediaQueryData queryData = MediaQuery.of(context);
@@ -22,6 +46,7 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
     var deviceWidth = queryData.size.width;
     var deviceHeight = queryData.size.height;
     Widget body;
+
     if (_moments.isNotEmpty) {
       body = ReorderableListView(
         header: Container(
@@ -31,7 +56,8 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
             style: TextStyle(
               fontFamily: 'Roboto',
               fontWeight: FontWeight.w700,
-              fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.memoryTitle),
+              fontSize: TextSizeConstants.getadaptiveTextSize(
+                  context, TextSizeConstants.memoryTitle),
             ),
           ),
         ),
@@ -41,14 +67,16 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
               key: ValueKey(moment),
               color: Colors.white,
               elevation: 0,
-              margin: EdgeInsets.all(TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.dropDownText)),
+              margin: EdgeInsets.all(TextSizeConstants.getadaptiveTextSize(
+                  context, TextSizeConstants.dropDownText)),
               // child: Slidable(
               child: ListTile(
                 title: Text(
                   moment,
                   style: TextStyle(
                     fontFamily: 'Roboto',
-                    fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText),
+                    fontSize: TextSizeConstants.getadaptiveTextSize(
+                        context, TextSizeConstants.bodyText),
                   ),
                 ),
                 leading: ClipRRect(
@@ -62,7 +90,11 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
                     ),
                   ),
                 ),
-                trailing: Icon(Icons.reorder, size: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.dropDownText),),
+                trailing: Icon(
+                  Icons.reorder,
+                  size: TextSizeConstants.getadaptiveTextSize(
+                      context, TextSizeConstants.dropDownText),
+                ),
               ),
               //   actionPane: const SlidableScrollActionPane(),
               //   actions: const <Widget>[
@@ -102,7 +134,8 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
                     style: TextStyle(
                       fontFamily: 'Roboto',
                       fontWeight: FontWeight.w700,
-                      fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.memoryTitle),
+                      fontSize: TextSizeConstants.getadaptiveTextSize(
+                          context, TextSizeConstants.memoryTitle),
                     ),
                   ),
                 ),
@@ -116,7 +149,8 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
                   style: TextStyle(
                     fontFamily: 'Roboto',
                     fontWeight: FontWeight.w500,
-                    fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText),
+                    fontSize: TextSizeConstants.getadaptiveTextSize(
+                        context, TextSizeConstants.bodyText),
                   ),
                 ),
                 Text(
@@ -124,7 +158,8 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
                   style: TextStyle(
                     fontFamily: 'Roboto',
                     fontWeight: FontWeight.w400,
-                    fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.formField),
+                    fontSize: TextSizeConstants.getadaptiveTextSize(
+                        context, TextSizeConstants.formField),
                     color: Colors.black54,
                   ),
                 ),
@@ -135,44 +170,69 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
       );
     }
     return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        foregroundColor: Colors.black,
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          foregroundColor: Colors.black,
-          backgroundColor: Colors.white,
-          elevation: 0,
-          actions: <Widget>[
-            Container(
-              margin: const EdgeInsets.only(right: 10.0),
-              child: PopupMenuButton<int>(
-                child: Container(
-                  height: 2.0*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.dropDownText),
-                  width: 2.0*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.dropDownText),
-                  decoration: ShapeDecoration(
-                    color: ColorConstants.buttonColor,
-                    shape: const CircleBorder(),
-                  ),
-                  child: Icon(Icons.add, color: ColorConstants.buttonText, size: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.dropDownText)),
+        elevation: 0,
+        actions: <Widget>[
+          Container(
+            margin: const EdgeInsets.only(right: 10.0),
+            child: PopupMenuButton<int>(
+              child: Container(
+                height: 2.0 *
+                    TextSizeConstants.getadaptiveTextSize(
+                        context, TextSizeConstants.dropDownText),
+                width: 2.0 *
+                    TextSizeConstants.getadaptiveTextSize(
+                        context, TextSizeConstants.dropDownText),
+                decoration: ShapeDecoration(
+                  color: ColorConstants.buttonColor,
+                  shape: const CircleBorder(),
                 ),
-                onSelected: (item) => onSelected(context, item),
-                itemBuilder: (context) => [
-                  PopupMenuItem<int>(
-                    child: Text('Add Photo', style: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.dropDownText))),
-                    value: 0,
-                  ),
-                  PopupMenuItem<int>(
-                    child: Text('Add Video', style: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.dropDownText))),
-                    value: 1,
-                  ),
-                  PopupMenuItem<int>(
-                    child: Text('Add Audio', style: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.dropDownText))),
-                    value: 2,
-                  ),
-                ],
+                child: Icon(
+                  Icons.add,
+                  color: ColorConstants.buttonText,
+                  size: TextSizeConstants.getadaptiveTextSize(
+                      context, TextSizeConstants.dropDownText),
+                ),
               ),
+              onSelected: (item) => onSelected(context, item),
+              itemBuilder: (context) => [
+                PopupMenuItem<int>(
+                  child: Text(
+                    'Add Photo',
+                    style: TextStyle(
+                      fontSize: TextSizeConstants.getadaptiveTextSize(
+                          context, TextSizeConstants.dropDownText),
+                    ),
+                  ),
+                  value: 0,
+                ),
+                PopupMenuItem<int>(
+                  child: Text(
+                    'Add Video',
+                    style: TextStyle(
+                      fontSize: TextSizeConstants.getadaptiveTextSize(
+                          context, TextSizeConstants.dropDownText),
+                    ),
+                  ),
+                  value: 1,
+                ),
+                PopupMenuItem<int>(
+                  child: Text('Add Audio',
+                      style: TextStyle(
+                          fontSize: TextSizeConstants.getadaptiveTextSize(
+                              context, TextSizeConstants.dropDownText))),
+                  value: 2,
+                ),
+              ],
             ),
-          ],
-        ),
-        body: body);
+          ),
+        ],
+      ),
+      body: body,
+    );
   }
 }
 
@@ -204,3 +264,12 @@ void onSelected(BuildContext context, int item) {
       break;
   }
 }
+
+// Future pickVideo() async {
+//   final ImagePicker _picker = ImagePicker();
+//   final image = await _picker.pickVideo(source: ImageSource.gallery);
+//   if (image == null) {
+//     return;
+//   }
+//   // need to add code to add File(image.path) to Firebase
+// }
