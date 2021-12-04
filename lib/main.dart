@@ -133,8 +133,7 @@ class MyHomePageState extends State<MyHomePage> {
         }
 
         return Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.center,
+
           children: snapshot.data!.docs.map((DocumentSnapshot document) {
             Map<String, dynamic> data =
                 document.data()! as Map<String, dynamic>;
@@ -317,7 +316,7 @@ class MyHomePageState extends State<MyHomePage> {
           ]),
       body: SingleChildScrollView(
         child: AspectRatio(
-          aspectRatio: deviceWidth/(0.7*deviceHeight),
+          aspectRatio: deviceWidth/(deviceHeight),
           child: Center(
             // Center is a layout widget. It takes a single child and positions it
             // in the middle of the parent.
@@ -338,7 +337,7 @@ class MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
                 createNewMemory(),
-                Expanded(child: userMemories())
+                Expanded(child: userMemories()),
                 // for (final memory in userMemories()) memory,
                 // printMemories(),
                 // for (final memory in this._memories) Text(memory['title']),
