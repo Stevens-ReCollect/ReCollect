@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:recollect_app/firebase/authentication_service.dart';
@@ -100,14 +101,87 @@ class AuthenticationWrapper extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+  MyHomePage({Key? key}) : super(key: key);
 
   @override
   State<MyHomePage> createState() => MyHomePageState();
 }
 
 class MyHomePageState extends State<MyHomePage> {
-  final List _memories = FirestoreService().getUserMemories();
+  // final List _memories = FirestoreService().getUserMemories();
+
+  userMemories() {
+    MediaQueryData queryData = MediaQuery.of(context);
+    var deviceWidth = queryData.size.width;
+    var deviceHeight = queryData.size.height;
+    User? currentUser = AuthenticationService().getUser();
+    if (currentUser == null) {
+      throw Exception('currentUser is null');
+    }
+    final Stream<QuerySnapshot> _memoryStream = FirebaseFirestore.instance
+        .collection('memories')
+        .where("user_email", isEqualTo: currentUser.email)
+        .snapshots();
+    return StreamBuilder<QuerySnapshot>(
+      stream: _memoryStream,
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return Text('Something went wrong');
+        }
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Text('Loading...');
+        }
+
+        return Column(
+          children: snapshot.data!.docs.map((DocumentSnapshot document) {
+            Map<String, dynamic> data =
+                document.data()! as Map<String, dynamic>;
+            // return Text(data['title']);
+            return InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, RouteConstants.memExRoute);
+              },
+              child: Stack(
+                alignment: Alignment.center,
+                children: <Widget>[
+                  Container(
+                      width: 0.8 * deviceWidth,
+                      height: deviceHeight / 4,
+                      decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            alignment: Alignment.topLeft,
+                            image: AssetImage(
+                                'lib/images/wedding-placeholder.jpg'),
+                          ))),
+                  Container(
+                    alignment: Alignment.bottomLeft,
+                    decoration: const BoxDecoration(
+                      color: Colors.black26,
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    ),
+                    width: 0.8 * deviceWidth,
+                    height: deviceHeight / 4,
+                    padding: const EdgeInsets.only(left: 20, bottom: 10),
+                    child: Text(
+                      data['title'],
+                      style: TextStyle(
+                          color: ColorConstants.buttonText,
+                          fontSize: TextSizeConstants.getadaptiveTextSize(
+                              context, TextSizeConstants.buttonText),
+                          fontWeight: FontWeight.w900),
+                      textAlign: TextAlign.left,
+                    ),
+                  )
+                ],
+              ),
+            );
+          }).toList(),
+        );
+      },
+    );
+  }
 
   static late int accountMode = 0;
   createNewMemory() {
@@ -182,7 +256,6 @@ class MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     toggleColors(accountMode);
-    // print(_memories);
     super.initState();
   }
 
@@ -192,122 +265,127 @@ class MyHomePageState extends State<MyHomePage> {
     var deviceWidth = queryData.size.width;
     var deviceHeight = queryData.size.height;
     return Scaffold(
-        appBar: AppBar(
-            // App bar properties
-            // title: Text(widget.title),
-            centerTitle: true,
-            automaticallyImplyLeading: false,
-            leadingWidth: 300,
-            backgroundColor: ColorConstants.appBar,
-            actions: <Widget>[
-              Row(
-                children: <Widget>[
-                  Listener(
-                      // onPointerDown: ColorConstants().toggleColors(value),
-                      child: ToggleSwitch(
-                    //Toggle between modes
-                    minWidth: 0.3 * deviceWidth,
-                    changeOnTap: true,
-                    inactiveBgColor: Colors.white,
-                    dividerColor: Colors.black,
-                    activeBgColor: [
-                      ColorConstants.buttonColor
-                    ], //toggle colors stuck :(
-                    initialLabelIndex: accountMode,
-                    fontSize: 0.7 *
-                        TextSizeConstants.getadaptiveTextSize(
-                            context, TextSizeConstants.buttonText),
-                    totalSwitches: 2,
-                    labels: const ['Edit Mode', 'Story Mode'],
-                    onToggle: (value) {
-                      //  print('switched to: $value');
-                      toggleColors(value);
-                      accountMode = value;
-                      if (accountMode == 0) {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) =>
-                              caregiverPin(context),
-                        );
-                      }
-                    },
-                  )),
-                  //   SizedBox(
-                  //    width: 0.38*deviceWidth,
-                  //  ),
-                  createSettings(),
-                ],
-              ),
-            ]),
-        body: SingleChildScrollView(
-            child: AspectRatio(
-                aspectRatio: 100 / 100,
-                child: Center(
-                  // Center is a layout widget. It takes a single child and positions it
-                  // in the middle of the parent.
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Container(
-                          padding: EdgeInsets.all(20),
-                          child: Text(
-                            'New Memories',
-                            style: TextStyle(
-                                color: ColorConstants.bodyText,
-                                fontSize: TextSizeConstants.getadaptiveTextSize(
-                                    context, TextSizeConstants.h2)),
-                          )),
-                      createNewMemory(),
-                      InkWell(
-                          onTap: () {
-                            Navigator.pushNamed(
-                                context, RouteConstants.memExRoute);
-                          },
-                          child: Stack(
-                            alignment: Alignment.center,
-                            children: <Widget>[
-                              Container(
-                                  width: 0.8 * deviceWidth,
-                                  height: deviceHeight / 4,
-                                  decoration: const BoxDecoration(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(20)),
-                                      image: DecorationImage(
-                                        fit: BoxFit.cover,
-                                        alignment: Alignment.topLeft,
-                                        image: AssetImage(
-                                            'lib/images/wedding-placeholder.jpg'),
-                                      ))),
-                              Container(
-                                alignment: Alignment.bottomLeft,
-                                decoration: const BoxDecoration(
-                                  color: Colors.black26,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20)),
-                                ),
-                                width: 0.8 * deviceWidth,
-                                height: deviceHeight / 4,
-                                padding:
-                                    const EdgeInsets.only(left: 20, bottom: 10),
-                                child: Text(
-                                  'Wedding',
-                                  style: TextStyle(
-                                      color: ColorConstants.buttonText,
-                                      fontSize:
-                                          TextSizeConstants.getadaptiveTextSize(
-                                              context,
-                                              TextSizeConstants.buttonText),
-                                      fontWeight: FontWeight.w900),
-                                  textAlign: TextAlign.left,
-                                ),
-                              )
-                            ],
-                          ))
-                    ],
+      appBar: AppBar(
+          // App bar properties
+          // title: Text(widget.title),
+          centerTitle: true,
+          automaticallyImplyLeading: false,
+          leadingWidth: 300,
+          backgroundColor: ColorConstants.appBar,
+          actions: <Widget>[
+            Row(
+              children: <Widget>[
+                Listener(
+                    // onPointerDown: ColorConstants().toggleColors(value),
+                    child: ToggleSwitch(
+                  //Toggle between modes
+                  minWidth: 0.3 * deviceWidth,
+                  changeOnTap: true,
+                  inactiveBgColor: Colors.white,
+                  dividerColor: Colors.black,
+                  activeBgColor: [
+                    ColorConstants.buttonColor
+                  ], //toggle colors stuck :(
+                  initialLabelIndex: accountMode,
+                  fontSize: 0.7 *
+                      TextSizeConstants.getadaptiveTextSize(
+                          context, TextSizeConstants.buttonText),
+                  totalSwitches: 2,
+                  labels: const ['Edit Mode', 'Story Mode'],
+                  onToggle: (value) {
+                    //  print('switched to: $value');
+                    toggleColors(value);
+                    accountMode = value;
+                    if (accountMode == 0) {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) =>
+                            caregiverPin(context),
+                      );
+                    }
+                  },
+                )),
+                //   SizedBox(
+                //    width: 0.38*deviceWidth,
+                //  ),
+                createSettings(),
+              ],
+            ),
+          ]),
+      body: SingleChildScrollView(
+        child: AspectRatio(
+          aspectRatio: 100 / 100,
+          child: Center(
+            // Center is a layout widget. It takes a single child and positions it
+            // in the middle of the parent.
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.all(20),
+                  child: Text(
+                    'New Memories',
+                    style: TextStyle(
+                      color: ColorConstants.bodyText,
+                      fontSize: TextSizeConstants.getadaptiveTextSize(
+                          context, TextSizeConstants.h2),
+                    ),
                   ),
-                ))));
+                ),
+                createNewMemory(),
+                // printMemories(),
+                // for (final memory in this._memories) Text(memory['title']),
+                userMemories(),
+                // for (final memory in _memories) Text(memory),
+                // InkWell(
+                //   onTap: () {
+                //     Navigator.pushNamed(context, RouteConstants.memExRoute);
+                //   },
+                //   child: Stack(
+                //     alignment: Alignment.center,
+                //     children: <Widget>[
+                //       Container(
+                //           width: 0.8 * deviceWidth,
+                //           height: deviceHeight / 4,
+                //           decoration: const BoxDecoration(
+                //               borderRadius:
+                //                   BorderRadius.all(Radius.circular(20)),
+                //               image: DecorationImage(
+                //                 fit: BoxFit.cover,
+                //                 alignment: Alignment.topLeft,
+                //                 image: AssetImage(
+                //                     'lib/images/wedding-placeholder.jpg'),
+                //               ))),
+                //       Container(
+                //         alignment: Alignment.bottomLeft,
+                //         decoration: const BoxDecoration(
+                //           color: Colors.black26,
+                //           borderRadius: BorderRadius.all(Radius.circular(20)),
+                //         ),
+                //         width: 0.8 * deviceWidth,
+                //         height: deviceHeight / 4,
+                //         padding: const EdgeInsets.only(left: 20, bottom: 10),
+                //         child: Text(
+                //           'Wedding',
+                //           style: TextStyle(
+                //               color: ColorConstants.buttonText,
+                //               fontSize: TextSizeConstants.getadaptiveTextSize(
+                //                   context, TextSizeConstants.buttonText),
+                //               fontWeight: FontWeight.w900),
+                //           textAlign: TextAlign.left,
+                //         ),
+                //       )
+                //     ],
+                //   ),
+                // ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   toggleColors(int value) {
