@@ -133,6 +133,8 @@ class MyHomePageState extends State<MyHomePage> {
         }
 
         return Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: snapshot.data!.docs.map((DocumentSnapshot document) {
             Map<String, dynamic> data =
                 document.data()! as Map<String, dynamic>;
@@ -173,11 +175,12 @@ class MyHomePageState extends State<MyHomePage> {
                           fontWeight: FontWeight.w900),
                       textAlign: TextAlign.left,
                     ),
-                  )
+                  ),
                 ],
               ),
             );
           }).toList(),
+          
         );
       },
     );
@@ -314,7 +317,7 @@ class MyHomePageState extends State<MyHomePage> {
           ]),
       body: SingleChildScrollView(
         child: AspectRatio(
-          aspectRatio: 100 / 100,
+          aspectRatio: deviceWidth/(0.7*deviceHeight),
           child: Center(
             // Center is a layout widget. It takes a single child and positions it
             // in the middle of the parent.
