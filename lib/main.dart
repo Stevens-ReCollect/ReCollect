@@ -335,9 +335,11 @@ class MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
                 createNewMemory(),
+                Expanded(child: userMemories())
+                // for (final memory in userMemories()) memory,
                 // printMemories(),
                 // for (final memory in this._memories) Text(memory['title']),
-                userMemories(),
+                // userMemories(),
                 // for (final memory in _memories) Text(memory),
                 // InkWell(
                 //   onTap: () {
