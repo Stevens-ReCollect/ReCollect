@@ -132,7 +132,7 @@ class MyHomePageState extends State<MyHomePage> {
           return Text('Loading...');
         }
 
-        return Column(
+        return ListView(
           children: snapshot.data!.docs.map((DocumentSnapshot document) {
             Map<String, dynamic> data =
                 document.data()! as Map<String, dynamic>;
