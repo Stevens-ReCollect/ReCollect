@@ -72,17 +72,21 @@ class FirestoreService {
       required File? file,
       String? description}) async {
     User? currentUser = AuthenticationService().getUser();
-    String fileUrl = 'temporary';
+    String fileURL = 'temporary';
     if (currentUser == null) {
       throw Exception('currentUser is null');
     }
 
     //Upload file to Storage
     if (file != null) {
-      uploadFile(file: file, user: currentUser.email, memory: memoryId);
+      // fileUrl =
+      //     uploadFile(file: file, user: currentUser.email, memory: memoryId)
+      //         .toString();
+      uploadFile(file: file, user: currentUser.email, memory: memoryId)
+          .then((url) => fileURL = url);
     }
 
-    Future.delayed(const Duration(milliseconds: 10000));
+    await Future.delayed(const Duration(seconds: 3));
 
     //Add to Firestore
     CollectionReference moments = _firestore.collection('moments');
@@ -90,7 +94,7 @@ class FirestoreService {
       'user_email': currentUser.email,
       'type': type,
       'descripton': description,
-      'file_path': fileUrl,
+      'file_path': fileURL,
       'memory_id': memoryId
     }).then((value) {
       print("Moment added");
@@ -98,18 +102,15 @@ class FirestoreService {
     }).catchError((error) => print("Failed to add new moment: $error"));
   }
 
-  uploadFile(
+  Future<String> uploadFile(
       {required File file,
       required String? user,
       required String memory}) async {
-    String url = 'loser';
-    // UploadTask task = _storage.ref(user! + '/' + memory).putFile(file);
-    Reference reference = _storage.ref().child('$user/$memory');
+    String fileURL = 'loser';
+    Reference reference = _storage.ref().child(user! + "/" + memory + "/");
     UploadTask uploadTask = reference.putFile(file);
-    uploadTask.whenComplete(() {
-      url = reference.getDownloadURL().toString();
-    }).catchError((error) => print("Failed to upload file: $error"));
-    // (await task).ref.getDownloadURL().then((value) => {url = value});
-    return url;
+    fileURL = await reference.getDownloadURL();
+    print("File URL: $fileURL");
+    return fileURL;
   }
 }
