@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:recollect_app/addphoto.dart';
+import 'package:recollect_app/addvideo.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/routeConstants.dart';
 import 'package:image_picker/image_picker.dart';
@@ -55,7 +56,12 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
         break;
       case 1:
         print('Clicked Add Video');
-        Navigator.pushNamed(context, RouteConstants.addVideo);
+        // Navigator.pushNamed(context, RouteConstants.addVideo);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    AddVideoPage(memoryData: widget.memoryData)));
         break;
       case 2:
         print('Clicked Add Audio');
@@ -121,16 +127,6 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
                       context, TextSizeConstants.dropDownText),
                 ),
               ),
-              //   actionPane: const SlidableScrollActionPane(),
-              //   actions: const <Widget>[
-              //     IconSlideAction(
-              //       caption: 'Delete',
-              //       color: Colors.red,
-              //       icon: Icons.delete,
-              //     )
-              //   ],
-              //   actionExtentRatio: 1 / 1,
-              // ),
             ),
         ],
         onReorder: (oldIndex, newIndex) {
@@ -272,34 +268,3 @@ class AddMomentMenu {
   static const String video = 'Add Video';
   static const String audio = 'Add Audio';
 }
-
-// void onSelected(BuildContext context, int item) {
-//   switch (item) {
-//     case 0:
-//       print('Clicked Add Photo');
-//       // Navigator.pushNamed(context, RouteConstants.addPhoto);
-//       Navigator.push(
-//           context,
-//           MaterialPageRoute(
-//               builder: (context) =>
-//                   AddPhotoPage(memoryData: widget.memoryData)));
-//       break;
-//     case 1:
-//       print('Clicked Add Video');
-//       Navigator.pushNamed(context, RouteConstants.addVideo);
-//       break;
-//     case 2:
-//       print('Clicked Add Audio');
-//       Navigator.pushNamed(context, RouteConstants.addAudio);
-//       break;
-//   }
-// }
-
-// Future pickVideo() async {
-//   final ImagePicker _picker = ImagePicker();
-//   final image = await _picker.pickVideo(source: ImageSource.gallery);
-//   if (image == null) {
-//     return;
-//   }
-//   // need to add code to add File(image.path) to Firebase
-// }
