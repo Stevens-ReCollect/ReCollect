@@ -145,7 +145,8 @@ class MyHomePageState extends State<MyHomePage> {
               child: Stack(
                 alignment: Alignment.center,
                 children: <Widget>[
-                  Container(
+                  Padding(padding: EdgeInsets.all(10),
+                  child: Container(
                       width: 0.8 * deviceWidth,
                       height: deviceHeight / 4,
                       decoration: const BoxDecoration(
@@ -155,7 +156,7 @@ class MyHomePageState extends State<MyHomePage> {
                             alignment: Alignment.topLeft,
                             image: AssetImage(
                                 'lib/images/wedding-placeholder.jpg'),
-                          ))),
+                          )))),
                   Container(
                     alignment: Alignment.bottomLeft,
                     decoration: const BoxDecoration(
