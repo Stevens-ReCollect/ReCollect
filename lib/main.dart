@@ -109,6 +109,7 @@ class MyHomePage extends StatefulWidget {
 
 class MyHomePageState extends State<MyHomePage> {
   // final List _memories = FirestoreService().getUserMemories();
+  static late int accountMode = 0;
 
   userMemories() {
     MediaQueryData queryData = MediaQuery.of(context);
@@ -133,60 +134,68 @@ class MyHomePageState extends State<MyHomePage> {
         }
 
         return Column(
-
-          children: snapshot.data!.docs.map((DocumentSnapshot document) {
-            Map<String, dynamic> data =
-                document.data()! as Map<String, dynamic>;
-            // return Text(data['title']);
-            return InkWell(
-              onTap: () {
-                Navigator.pushNamed(context, RouteConstants.memExRoute);
-              },
-              child: Stack(
-                alignment: Alignment.center,
-                children: <Widget>[
-                  Padding(padding: EdgeInsets.all(10),
-                  child: Container(
-                      width: 0.8 * deviceWidth,
-                      height: deviceHeight / 4,
-                      decoration: const BoxDecoration(
+          children: snapshot.data!.docs.map(
+            (DocumentSnapshot document) {
+              Map<String, dynamic> data =
+                  document.data()! as Map<String, dynamic>;
+              // return Text(data['title']);
+              return InkWell(
+                onTap: () {
+                  if (accountMode == 0) {
+                    Navigator.pushNamed(
+                        context, RouteConstants.memoryHomeRoute);
+                  } else {
+                    Navigator.pushNamed(context, RouteConstants.memExRoute);
+                  }
+                },
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Container(
+                        width: 0.8 * deviceWidth,
+                        height: deviceHeight / 4,
+                        decoration: const BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(20)),
                           image: DecorationImage(
                             fit: BoxFit.cover,
                             alignment: Alignment.topLeft,
                             image: AssetImage(
                                 'lib/images/wedding-placeholder.jpg'),
-                          )))),
-                  Container(
-                    alignment: Alignment.bottomLeft,
-                    decoration: const BoxDecoration(
-                      color: Colors.black26,
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                          ),
+                        ),
+                      ),
                     ),
-                    width: 0.8 * deviceWidth,
-                    height: deviceHeight / 4,
-                    padding: const EdgeInsets.only(left: 20, bottom: 10),
-                    child: Text(
-                      data['title'],
-                      style: TextStyle(
-                          color: ColorConstants.buttonText,
-                          fontSize: TextSizeConstants.getadaptiveTextSize(
-                              context, TextSizeConstants.buttonText),
-                          fontWeight: FontWeight.w900),
-                      textAlign: TextAlign.left,
+                    Container(
+                      alignment: Alignment.bottomLeft,
+                      decoration: const BoxDecoration(
+                        color: Colors.black26,
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                      ),
+                      width: 0.8 * deviceWidth,
+                      height: deviceHeight / 4,
+                      padding: const EdgeInsets.only(left: 20, bottom: 10),
+                      child: Text(
+                        data['title'],
+                        style: TextStyle(
+                            color: ColorConstants.buttonText,
+                            fontSize: TextSizeConstants.getadaptiveTextSize(
+                                context, TextSizeConstants.buttonText),
+                            fontWeight: FontWeight.w900),
+                        textAlign: TextAlign.left,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            );
-          }).toList(),
-          
+                  ],
+                ),
+              );
+            },
+          ).toList(),
         );
       },
     );
   }
 
-  static late int accountMode = 0;
   createNewMemory() {
     //Create New Memory button toggle
     if (accountMode == 0) {
@@ -316,74 +325,76 @@ class MyHomePageState extends State<MyHomePage> {
             ),
           ]),
       body: SingleChildScrollView(
-      child: Center(
-        child: Column(
+        child: Center(
+          child: Column(
             // Center is a layout widget. It takes a single child and positions it
             // in the middle of the parent.
 
-              children: <Widget>[
-                Container(
-                  padding: EdgeInsets.all(20),
-                  child: Text(
-                    'New Memories',
-                    style: TextStyle(
-                      color: ColorConstants.bodyText,
-                      fontSize: TextSizeConstants.getadaptiveTextSize(
-                          context, TextSizeConstants.h2),
-                    ),
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.all(20),
+                child: Text(
+                  'New Memories',
+                  style: TextStyle(
+                    color: ColorConstants.bodyText,
+                    fontSize: TextSizeConstants.getadaptiveTextSize(
+                        context, TextSizeConstants.h2),
                   ),
                 ),
-                createNewMemory(),
-                userMemories(),
-                // for (final memory in userMemories()) memory,
-                // printMemories(),
-                // for (final memory in this._memories) Text(memory['title']),
-                // userMemories(),
-                // for (final memory in _memories) Text(memory),
-                // InkWell(
-                //   onTap: () {
-                //     Navigator.pushNamed(context, RouteConstants.memExRoute);
-                //   },
-                //   child: Stack(
-                //     alignment: Alignment.center,
-                //     children: <Widget>[
-                //       Container(
-                //           width: 0.8 * deviceWidth,
-                //           height: deviceHeight / 4,
-                //           decoration: const BoxDecoration(
-                //               borderRadius:
-                //                   BorderRadius.all(Radius.circular(20)),
-                //               image: DecorationImage(
-                //                 fit: BoxFit.cover,
-                //                 alignment: Alignment.topLeft,
-                //                 image: AssetImage(
-                //                     'lib/images/wedding-placeholder.jpg'),
-                //               ))),
-                //       Container(
-                //         alignment: Alignment.bottomLeft,
-                //         decoration: const BoxDecoration(
-                //           color: Colors.black26,
-                //           borderRadius: BorderRadius.all(Radius.circular(20)),
-                //         ),
-                //         width: 0.8 * deviceWidth,
-                //         height: deviceHeight / 4,
-                //         padding: const EdgeInsets.only(left: 20, bottom: 10),
-                //         child: Text(
-                //           'Wedding',
-                //           style: TextStyle(
-                //               color: ColorConstants.buttonText,
-                //               fontSize: TextSizeConstants.getadaptiveTextSize(
-                //                   context, TextSizeConstants.buttonText),
-                //               fontWeight: FontWeight.w900),
-                //           textAlign: TextAlign.left,
-                //         ),
-                //       )
-                //     ],
-                //   ),
-                // ),
-              ],
-            ),
-          )));
+              ),
+              createNewMemory(),
+              userMemories(),
+              // for (final memory in userMemories()) memory,
+              // printMemories(),
+              // for (final memory in this._memories) Text(memory['title']),
+              // userMemories(),
+              // for (final memory in _memories) Text(memory),
+              // InkWell(
+              //   onTap: () {
+              //     Navigator.pushNamed(context, RouteConstants.memExRoute);
+              //   },
+              //   child: Stack(
+              //     alignment: Alignment.center,
+              //     children: <Widget>[
+              //       Container(
+              //           width: 0.8 * deviceWidth,
+              //           height: deviceHeight / 4,
+              //           decoration: const BoxDecoration(
+              //               borderRadius:
+              //                   BorderRadius.all(Radius.circular(20)),
+              //               image: DecorationImage(
+              //                 fit: BoxFit.cover,
+              //                 alignment: Alignment.topLeft,
+              //                 image: AssetImage(
+              //                     'lib/images/wedding-placeholder.jpg'),
+              //               ))),
+              //       Container(
+              //         alignment: Alignment.bottomLeft,
+              //         decoration: const BoxDecoration(
+              //           color: Colors.black26,
+              //           borderRadius: BorderRadius.all(Radius.circular(20)),
+              //         ),
+              //         width: 0.8 * deviceWidth,
+              //         height: deviceHeight / 4,
+              //         padding: const EdgeInsets.only(left: 20, bottom: 10),
+              //         child: Text(
+              //           'Wedding',
+              //           style: TextStyle(
+              //               color: ColorConstants.buttonText,
+              //               fontSize: TextSizeConstants.getadaptiveTextSize(
+              //                   context, TextSizeConstants.buttonText),
+              //               fontWeight: FontWeight.w900),
+              //           textAlign: TextAlign.left,
+              //         ),
+              //       )
+              //     ],
+              //   ),
+              // ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   toggleColors(int value) {
