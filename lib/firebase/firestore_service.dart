@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -79,10 +80,7 @@ class FirestoreService {
 
     //Upload file to Storage
     if (file != null) {
-      // fileUrl =
-      //     uploadFile(file: file, user: currentUser.email, memory: memoryId)
-      //         .toString();
-      uploadFile(file: file, user: currentUser.email, memory: memoryId)
+      await uploadFile(file: file, user: currentUser.email, memory: memoryId)
           .then((url) => fileURL = url);
     }
 
@@ -90,16 +88,20 @@ class FirestoreService {
 
     //Add to Firestore
     CollectionReference moments = _firestore.collection('moments');
-    return moments.add({
+    DocumentReference documentReference = moments.doc("loser");
+    await moments.add({
       'user_email': currentUser.email,
       'type': type,
       'descripton': description,
       'file_path': fileURL,
       'memory_id': memoryId
     }).then((value) {
-      print("Moment added");
+      documentReference = value;
+      print("Moment added: $documentReference");
       addId(moments);
     }).catchError((error) => print("Failed to add new moment: $error"));
+
+    print("Document Reference: $documentReference");
   }
 
   Future<String> uploadFile(
@@ -107,8 +109,10 @@ class FirestoreService {
       required String? user,
       required String memory}) async {
     String fileURL = 'loser';
-    Reference reference = _storage.ref().child(user! + "/" + memory + "/");
+    int randomNumber = new Random().nextInt(100000000);
+    Reference reference = _storage.ref(user! + "/" + memory + "/the-image3");
     UploadTask uploadTask = reference.putFile(file);
+    await Future.delayed(const Duration(seconds: 3));
     fileURL = await reference.getDownloadURL();
     print("File URL: $fileURL");
     return fileURL;

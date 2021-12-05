@@ -162,9 +162,10 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
                       ),
                     ),
                   ),
-                  onPressed: () {
+                  onPressed: () async {
+                    print("Clicked");
                     if (image != null) {
-                      FirestoreService().addNewMoment(
+                      await FirestoreService().addNewMoment(
                           memoryId: widget.memoryData['docId'],
                           type: 'Photo',
                           file: image,
