@@ -315,15 +315,11 @@ class MyHomePageState extends State<MyHomePage> {
             ),
           ]),
       body: SingleChildScrollView(
-        child: AspectRatio(
-          aspectRatio: deviceWidth/(deviceHeight),
-          child: Center(
+      child: Center(
+        child: Column(
             // Center is a layout widget. It takes a single child and positions it
             // in the middle of the parent.
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
+
               children: <Widget>[
                 Container(
                   padding: EdgeInsets.all(20),
@@ -337,7 +333,7 @@ class MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
                 createNewMemory(),
-                Expanded(child: userMemories()),
+                userMemories(),
                 // for (final memory in userMemories()) memory,
                 // printMemories(),
                 // for (final memory in this._memories) Text(memory['title']),
@@ -386,10 +382,7 @@ class MyHomePageState extends State<MyHomePage> {
                 // ),
               ],
             ),
-          ),
-        ),
-      ),
-    );
+          )));
   }
 
   toggleColors(int value) {
