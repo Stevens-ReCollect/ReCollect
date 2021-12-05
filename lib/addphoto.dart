@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/textSizeConstants.dart';
+import 'package:recollect_app/firebase/firestore_service.dart';
 import 'package:recollect_app/signup.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -11,6 +12,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'constants/routeConstants.dart';
 
 class AddPhotoPage extends StatefulWidget {
+  const AddPhotoPage({this.memoryData});
+  final memoryData;
+
   @override
   _AddPhotoPageState createState() => _AddPhotoPageState();
 }
@@ -159,8 +163,16 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
                     ),
                   ),
                   onPressed: () {
-                    Navigator.pushNamed(
-                        context, RouteConstants.memoryHomeRoute);
+                    if (image != null) {
+                      FirestoreService().addNewMoment(
+                          memoryId: widget.memoryData['docId'],
+                          type: 'Photo',
+                          file: image,
+                          description: _description.text);
+                    }
+                    // Navigator.pushNamed(
+                    //     context, RouteConstants.memoryHomeRoute);
+                    Navigator.pop(context);
                   },
                 ),
               ),

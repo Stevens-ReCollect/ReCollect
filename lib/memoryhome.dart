@@ -42,6 +42,28 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
   //   // need to add code to add File(image.path) to Firebase
   // }
 
+  void onSelected(BuildContext context, int item) {
+    switch (item) {
+      case 0:
+        print('Clicked Add Photo');
+        // Navigator.pushNamed(context, RouteConstants.addPhoto);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    AddPhotoPage(memoryData: widget.memoryData)));
+        break;
+      case 1:
+        print('Clicked Add Video');
+        Navigator.pushNamed(context, RouteConstants.addVideo);
+        break;
+      case 2:
+        print('Clicked Add Audio');
+        Navigator.pushNamed(context, RouteConstants.addAudio);
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     MediaQueryData queryData = MediaQuery.of(context);
@@ -251,22 +273,27 @@ class AddMomentMenu {
   static const String audio = 'Add Audio';
 }
 
-void onSelected(BuildContext context, int item) {
-  switch (item) {
-    case 0:
-      print('Clicked Add Photo');
-      Navigator.pushNamed(context, RouteConstants.addPhoto);
-      break;
-    case 1:
-      print('Clicked Add Video');
-      Navigator.pushNamed(context, RouteConstants.addVideo);
-      break;
-    case 2:
-      print('Clicked Add Audio');
-      Navigator.pushNamed(context, RouteConstants.addAudio);
-      break;
-  }
-}
+// void onSelected(BuildContext context, int item) {
+//   switch (item) {
+//     case 0:
+//       print('Clicked Add Photo');
+//       // Navigator.pushNamed(context, RouteConstants.addPhoto);
+//       Navigator.push(
+//           context,
+//           MaterialPageRoute(
+//               builder: (context) =>
+//                   AddPhotoPage(memoryData: widget.memoryData)));
+//       break;
+//     case 1:
+//       print('Clicked Add Video');
+//       Navigator.pushNamed(context, RouteConstants.addVideo);
+//       break;
+//     case 2:
+//       print('Clicked Add Audio');
+//       Navigator.pushNamed(context, RouteConstants.addAudio);
+//       break;
+//   }
+// }
 
 // Future pickVideo() async {
 //   final ImagePicker _picker = ImagePicker();

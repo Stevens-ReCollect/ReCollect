@@ -67,7 +67,7 @@ class MyApp extends StatelessWidget {
         RouteConstants.loginRoute: (context) => LoginPage(),
         RouteConstants.addAudio: (context) => AddAudioPage(),
         RouteConstants.addVideo: (context) => AddVideoPage(),
-        RouteConstants.addPhoto: (context) => AddPhotoPage(),
+        // RouteConstants.addPhoto: (context) => AddPhotoPage(),
         // RouteConstants.memoryHomeRoute: (context) => MemoryHomePage(),
         RouteConstants.navigationRoute: (context) => Navigate(),
         RouteConstants.settingsRoute: (context) => SettingsPage(),
