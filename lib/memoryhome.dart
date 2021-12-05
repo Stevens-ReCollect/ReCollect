@@ -12,6 +12,9 @@ import 'package:image_picker/image_picker.dart';
 import 'constants/textSizeConstants.dart';
 
 class MemoryHomePage extends StatefulWidget {
+  const MemoryHomePage({required this.memoryData});
+  final memoryData;
+
   @override
   _MemoryHomePageState createState() => _MemoryHomePageState();
 }
@@ -52,7 +55,7 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
         header: Container(
           margin: const EdgeInsets.all(20.0),
           child: Text(
-            '{Memory Title}',
+            widget.memoryData['title'],
             style: TextStyle(
               fontFamily: 'Roboto',
               fontWeight: FontWeight.w700,

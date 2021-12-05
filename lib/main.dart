@@ -68,7 +68,7 @@ class MyApp extends StatelessWidget {
         RouteConstants.addAudio: (context) => AddAudioPage(),
         RouteConstants.addVideo: (context) => AddVideoPage(),
         RouteConstants.addPhoto: (context) => AddPhotoPage(),
-        RouteConstants.memoryHomeRoute: (context) => MemoryHomePage(),
+        // RouteConstants.memoryHomeRoute: (context) => MemoryHomePage(),
         RouteConstants.navigationRoute: (context) => Navigate(),
         RouteConstants.settingsRoute: (context) => SettingsPage(),
       },
@@ -142,8 +142,13 @@ class MyHomePageState extends State<MyHomePage> {
               return InkWell(
                 onTap: () {
                   if (accountMode == 0) {
-                    Navigator.pushNamed(
-                        context, RouteConstants.memoryHomeRoute);
+                    // Navigator.pushNamed(
+                    //     context, RouteConstants.memoryHomeRoute);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                MemoryHomePage(memoryData: data)));
                   } else {
                     Navigator.pushNamed(context, RouteConstants.memExRoute);
                   }
