@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
+import 'package:recollect_app/firebase/firestore_service.dart';
 import 'package:recollect_app/memoryhome.dart';
 import 'package:recollect_app/signup.dart';
 import 'package:recollect_app/progressReport.dart';
@@ -13,10 +14,10 @@ class CreateMemoryPage extends StatefulWidget {
 }
 
 class _CreateMemoryPageState extends State<CreateMemoryPage> {
-  String _title = '';
-  String _startDate = '';
-  String _endDate = '';
-  String _description = '';
+  final TextEditingController _title = TextEditingController();
+  final TextEditingController _startDate = TextEditingController();
+  final TextEditingController _endDate = TextEditingController();
+  final TextEditingController _description = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +57,7 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
               width: 0.8 * deviceWidth,
               margin: const EdgeInsets.only(top: 30.0, left: 0.0),
               child: TextField(
+                controller: _title,
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(),
                   labelText: 'Title',
@@ -73,6 +75,7 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
               width: 0.8 * deviceWidth,
               margin: const EdgeInsets.only(top: 15.0, left: 0.0),
               child: TextField(
+                controller: _startDate,
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(),
                   labelText: 'Start Date',
@@ -90,6 +93,7 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
               width: 0.8 * deviceWidth,
               margin: const EdgeInsets.only(top: 15.0, left: 0.0),
               child: TextField(
+                controller: _endDate,
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(),
                   labelText: 'End Date',
@@ -108,6 +112,7 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
               width: 0.8 * deviceWidth,
               margin: const EdgeInsets.only(top: 15.0, left: 0.0),
               child: TextField(
+                controller: _description,
                 maxLines: 15,
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(),
@@ -148,8 +153,17 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
                     ),
                   ),
                 ),
-                onPressed: () {
-                  Navigator.pushNamed(context, RouteConstants.memoryHomeRoute);
+                onPressed: () async {
+                  final result = FirestoreService().addNewMemory(
+                      title: _title.text,
+                      startDate: _startDate.text,
+                      endDate: _endDate.text,
+                      description: _description.text);
+
+                  if (result != null) {
+                    Navigator.pushNamed(
+                        context, RouteConstants.memoryHomeRoute);
+                  }
                 },
               ),
             ),
