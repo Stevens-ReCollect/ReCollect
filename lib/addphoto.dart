@@ -16,7 +16,7 @@ class AddPhotoPage extends StatefulWidget {
 }
 
 class _AddPhotoPageState extends State<AddPhotoPage> {
-  String _description = '';
+  final TextEditingController _description = TextEditingController();
   File? image;
 
   Future pickImage() async {
@@ -111,9 +111,10 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
                 height: 0.3 * deviceHeight,
                 width: 0.8 * deviceWidth,
                 margin: const EdgeInsets.only(top: 15.0, left: 0.0),
-                child: const TextField(
+                child: TextField(
+                  controller: _description,
                   maxLines: 15,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Description',
                     hintText: 'Desciption',
