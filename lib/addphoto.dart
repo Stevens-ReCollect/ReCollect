@@ -22,6 +22,7 @@ class AddPhotoPage extends StatefulWidget {
 class _AddPhotoPageState extends State<AddPhotoPage> {
   final TextEditingController _description = TextEditingController();
   File? image;
+  bool _loading = false;
 
   Future pickImage() async {
     try {
@@ -35,6 +36,14 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
       });
     } on PlatformException catch (e) {
       print('Failed to pick image $e');
+    }
+  }
+
+  loading() {
+    if (_loading) {
+      return CircularProgressIndicator();
+    } else {
+      return SizedBox();
     }
   }
 
@@ -139,6 +148,7 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
                   ),
                 ),
               ),
+              loading(),
               Container(
                 margin: const EdgeInsets.only(top: 250.0, left: 0.0),
                 width: 0.4 * deviceWidth,
@@ -163,6 +173,9 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
                     ),
                   ),
                   onPressed: () async {
+                    setState(() {
+                      _loading = true;
+                    });
                     print("Clicked");
                     if (image != null) {
                       await FirestoreService().addNewMoment(
