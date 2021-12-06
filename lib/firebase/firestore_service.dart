@@ -116,8 +116,8 @@ class FirestoreService {
       required String moment}) async {
     String fileURL = '';
     Reference reference = _storage.ref(user! + "/" + memory + "/" + moment);
-    UploadTask uploadTask = reference.putFile(file);
-    await Future.delayed(const Duration(seconds: 2));
+    await reference.putFile(file);
+    // await Future.delayed(const Duration(seconds: 5));
     fileURL = await reference.getDownloadURL();
     print("File URL: $fileURL");
     return fileURL;
