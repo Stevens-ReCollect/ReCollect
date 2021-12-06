@@ -80,12 +80,13 @@ class FirestoreService {
 
     //Add to Firestore
     CollectionReference moments = _firestore.collection('moments');
-    DocumentReference documentReference = moments.doc("loser");
+    DocumentReference documentReference = moments.doc("null");
     await moments.add({
       'user_email': currentUser.email,
       'type': type,
       'descripton': description,
-      'memory_id': memoryId
+      'memory_id': memoryId,
+      'file_path': '',
     }).then((value) {
       documentReference = value;
       print("Moment added: $documentReference");
