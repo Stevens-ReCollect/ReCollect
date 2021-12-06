@@ -52,39 +52,44 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
             (DocumentSnapshot document) {
               Map<String, dynamic> data =
                   document.data()! as Map<String, dynamic>;
-              return Card(
-                color: Colors.white,
-                elevation: 0,
-                margin: EdgeInsets.all(TextSizeConstants.getadaptiveTextSize(
-                    context, TextSizeConstants.dropDownText)),
-                // child: Slidable(
-                child: ListTile(
-                  title: Text(
-                    data['type'],
-                    style: TextStyle(
-                      fontFamily: 'Roboto',
-                      fontSize: TextSizeConstants.getadaptiveTextSize(
-                          context, TextSizeConstants.bodyText),
-                    ),
-                  ),
-                  leading: ClipRRect(
-                    borderRadius: BorderRadius.circular(5.0),
-                    child: Container(
-                      height: 80.0,
-                      width: 80.0,
-                      child: Image.network(
-                        data['file_path'],
-                        fit: BoxFit.fill,
+              print("Print data: $data");
+              if (data.isEmpty) {
+                return Text("Hello");
+              } else {
+                return Card(
+                  color: Colors.white,
+                  elevation: 0,
+                  margin: EdgeInsets.all(TextSizeConstants.getadaptiveTextSize(
+                      context, TextSizeConstants.dropDownText)),
+                  // child: Slidable(
+                  child: ListTile(
+                    title: Text(
+                      data['type'],
+                      style: TextStyle(
+                        fontFamily: 'Roboto',
+                        fontSize: TextSizeConstants.getadaptiveTextSize(
+                            context, TextSizeConstants.bodyText),
                       ),
                     ),
+                    leading: ClipRRect(
+                      borderRadius: BorderRadius.circular(5.0),
+                      child: Container(
+                        height: 80.0,
+                        width: 80.0,
+                        child: Image.network(
+                          data['file_path'],
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                    ),
+                    trailing: Icon(
+                      Icons.edit,
+                      size: TextSizeConstants.getadaptiveTextSize(
+                          context, TextSizeConstants.dropDownText),
+                    ),
                   ),
-                  trailing: Icon(
-                    Icons.edit,
-                    size: TextSizeConstants.getadaptiveTextSize(
-                        context, TextSizeConstants.dropDownText),
-                  ),
-                ),
-              );
+                );
+              }
             },
           ).toList(),
         );
