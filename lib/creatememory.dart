@@ -161,8 +161,10 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
                       description: _description.text);
 
                   if (result != null) {
-                    Navigator.pushNamed(
-                        context, RouteConstants.memoryHomeRoute);
+                    // Navigator.pushNamed(
+                    //     context, RouteConstants.memoryHomeRoute);
+                    // Navigator.push(context, MaterialPageRoute(builder: (context) => MemoryHomePage(memoryData: memoryData))))
+                    Navigator.pop(context);
                   }
                 },
               ),
