@@ -16,7 +16,7 @@ class AuthenticationService {
     try {
       await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
-      return getUser();
+      return user;
     } on FirebaseAuthException catch (ex) {
       return ex.message.toString();
     }
@@ -32,7 +32,7 @@ class AuthenticationService {
           email: email, password: password);
       await FirestoreService()
           .addNewUser(email: email, caregiverPin: caregiverPin);
-      return getUser();
+      return user;
     } on FirebaseAuthException catch (ex) {
       return ex.message.toString();
     }
