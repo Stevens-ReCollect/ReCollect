@@ -2,8 +2,8 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:recollect_app/constants/colorConstants.dart';
-import 'package:recollect_app/constants/textSizeConstants.dart';
+import 'package:recollect_app/constants/color_constants.dart';
+import 'package:recollect_app/constants/text_size_constants.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 

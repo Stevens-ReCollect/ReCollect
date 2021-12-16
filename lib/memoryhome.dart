@@ -5,11 +5,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:recollect_app/addphoto.dart';
-import 'package:recollect_app/constants/colorConstants.dart';
-import 'package:recollect_app/constants/routeConstants.dart';
+import 'package:recollect_app/constants/color_constants.dart';
+import 'package:recollect_app/constants/route_constants.dart';
 import 'package:image_picker/image_picker.dart';
 
-import 'constants/textSizeConstants.dart';
+import 'constants/text_size_constants.dart';
 
 class MemoryHomePage extends StatefulWidget {
   @override

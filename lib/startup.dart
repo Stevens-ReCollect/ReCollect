@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:recollect_app/constants/colorConstants.dart';
-import 'package:recollect_app/constants/routeConstants.dart';
+import 'package:recollect_app/constants/color_constants.dart';
+import 'package:recollect_app/constants/route_constants.dart';
 import 'package:recollect_app/login.dart';
 import 'package:recollect_app/main.dart';
 import 'package:recollect_app/memoryhome.dart';
@@ -14,7 +14,7 @@ import 'package:recollect_app/addaudio.dart';
 import 'package:recollect_app/navigation.dart';
 import 'package:recollect_app/settings.dart';
 
-import 'constants/textSizeConstants.dart';
+import 'constants/text_size_constants.dart';
 import 'memory_example.dart';
 
 class StartUp extends StatelessWidget {

@@ -2,13 +2,13 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:recollect_app/constants/colorConstants.dart';
-import 'package:recollect_app/constants/textSizeConstants.dart';
+import 'package:recollect_app/constants/color_constants.dart';
+import 'package:recollect_app/constants/text_size_constants.dart';
 import 'package:recollect_app/signup.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
-import 'constants/routeConstants.dart';
+import 'constants/route_constants.dart';
 
 class AddVideoPage extends StatefulWidget {
   @override

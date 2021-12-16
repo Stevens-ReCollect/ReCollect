@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:recollect_app/constants/colorConstants.dart';
+import 'package:recollect_app/constants/color_constants.dart';
 import 'package:recollect_app/signup.dart';
 
-import 'constants/routeConstants.dart';
-import 'constants/textSizeConstants.dart';
+import 'constants/route_constants.dart';
+import 'constants/text_size_constants.dart';
 
 class AddAudioPage extends StatefulWidget {
   @override
