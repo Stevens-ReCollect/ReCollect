@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:recollect_app/constants/color_constants.dart';
 import 'package:recollect_app/constants/text_size_constants.dart';
+import 'package:recollect_app/firebase/firestore_service.dart';
 import 'package:recollect_app/signup.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -11,13 +12,17 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'constants/route_constants.dart';
 
 class AddPhotoPage extends StatefulWidget {
+  const AddPhotoPage({this.memoryData});
+  final memoryData;
+
   @override
   _AddPhotoPageState createState() => _AddPhotoPageState();
 }
 
 class _AddPhotoPageState extends State<AddPhotoPage> {
-  String _description = '';
+  final TextEditingController _description = TextEditingController();
   File? image;
+  bool _loading = false;
 
   Future pickImage() async {
     try {
@@ -31,6 +36,14 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
       });
     } on PlatformException catch (e) {
       print('Failed to pick image $e');
+    }
+  }
+
+  loading() {
+    if (_loading) {
+      return CircularProgressIndicator();
+    } else {
+      return SizedBox();
     }
   }
 
@@ -111,9 +124,10 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
                 height: 0.3 * deviceHeight,
                 width: 0.8 * deviceWidth,
                 margin: const EdgeInsets.only(top: 15.0, left: 0.0),
-                child: const TextField(
+                child: TextField(
+                  controller: _description,
                   maxLines: 15,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Description',
                     hintText: 'Desciption',
@@ -134,6 +148,7 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
                   ),
                 ),
               ),
+              loading(),
               Container(
                 margin: const EdgeInsets.only(top: 250.0, left: 0.0),
                 width: 0.4 * deviceWidth,
@@ -157,9 +172,21 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
                       ),
                     ),
                   ),
-                  onPressed: () {
-                    Navigator.pushNamed(
-                        context, RouteConstants.memoryHomeRoute);
+                  onPressed: () async {
+                    setState(() {
+                      _loading = true;
+                    });
+                    print("Clicked Saved");
+                    if (image != null) {
+                      await FirestoreService().addNewMoment(
+                          memoryId: widget.memoryData['doc_id'],
+                          type: 'Photo',
+                          file: image,
+                          description: _description.text);
+                    }
+                    // Navigator.pushNamed(
+                    //     context, RouteConstants.memoryHomeRoute);
+                    Navigator.pop(context);
                   },
                 ),
               ),

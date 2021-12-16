@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:recollect_app/constants/color_constants.dart';
 import 'package:recollect_app/constants/text_size_constants.dart';
+import 'package:recollect_app/firebase/firestore_service.dart';
 import 'package:recollect_app/signup.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -11,18 +12,29 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'constants/route_constants.dart';
 
 class AddVideoPage extends StatefulWidget {
+  const AddVideoPage({this.memoryData});
+  final memoryData;
   @override
   _AddVideoPageState createState() => _AddVideoPageState();
 }
 
 class _AddVideoPageState extends State<AddVideoPage> {
-  String _description = '';
+  final TextEditingController _description = TextEditingController();
   File? video;
+  bool _loading = false;
 
   @override
   void initState() {
     pickVideo();
     super.initState();
+  }
+
+  loading() {
+    if (_loading) {
+      return CircularProgressIndicator();
+    } else {
+      return SizedBox();
+    }
   }
 
   Future pickVideo() async {
@@ -118,9 +130,10 @@ class _AddVideoPageState extends State<AddVideoPage> {
                 height: 0.3 * deviceHeight,
                 width: 0.8 * deviceWidth,
                 margin: const EdgeInsets.only(top: 15.0, left: 0.0),
-                child: const TextField(
+                child: TextField(
+                  controller: _description,
                   maxLines: 15,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Description',
                     hintText: 'Desciption',
@@ -128,6 +141,7 @@ class _AddVideoPageState extends State<AddVideoPage> {
                   ),
                 ),
               ),
+              loading(),
               Container(
                 margin: const EdgeInsets.only(top: 250.0, left: 0.0),
                 width: 0.4 * deviceWidth,
@@ -151,9 +165,21 @@ class _AddVideoPageState extends State<AddVideoPage> {
                       ),
                     ),
                   ),
-                  onPressed: () {
-                    Navigator.pushNamed(
-                        context, RouteConstants.memoryHomeRoute);
+                  onPressed: () async {
+                    setState(() {
+                      _loading = true;
+                    });
+                    print("Clicked Saved");
+                    if (video != null) {
+                      await FirestoreService().addNewMoment(
+                          memoryId: widget.memoryData['doc_id'],
+                          type: 'Video',
+                          file: video,
+                          description: _description.text);
+                    }
+                    // Navigator.pushNamed(
+                    //     context, RouteConstants.memoryHomeRoute);
+                    Navigator.pop(context);
                   },
                 ),
               ),
