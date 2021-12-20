@@ -6,8 +6,8 @@ import 'package:recollect_app/addphoto.dart';
 void main() {
   testWidgets('Add Photo screen loads correctly', (WidgetTester tester) async {
     // Build the app
-    Widget testWidget = MediaQuery(
-      data: const MediaQueryData(),
+    Widget testWidget = const MediaQuery(
+      data: MediaQueryData(),
       child: MaterialApp(
         home: AddPhotoPage(),
       ),
