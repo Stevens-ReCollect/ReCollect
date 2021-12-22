@@ -52,7 +52,7 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
             (DocumentSnapshot document) {
               Map<String, dynamic> data =
                   document.data()! as Map<String, dynamic>;
-              print("Print data: $data");
+              // print("Print data: $data");
               if (data.isEmpty) {
                 return Text("Hello");
               } else {
@@ -82,10 +82,18 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
                         ),
                       ),
                     ),
-                    trailing: Icon(
-                      Icons.edit,
-                      size: TextSizeConstants.getadaptiveTextSize(
-                          context, TextSizeConstants.dropDownText),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        IconButton(
+                          onPressed: () {},
+                          icon: const Icon(Icons.edit),
+                        ),
+                        IconButton(
+                          onPressed: () {},
+                          icon: const Icon(Icons.delete),
+                        )
+                      ],
                     ),
                   ),
                 );
