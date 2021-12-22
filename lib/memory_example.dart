@@ -53,6 +53,40 @@ selectType(){
     }
   }
   
+  var _buttonController; // alerts the correct dialog
+  var affirmation; // affirming message
+
+  Widget _affirmingResponse(BuildContext context){
+  if(_buttonController == "Yes"){
+      affirmation = "Great job! Amazing progress.";
+  } else if(_buttonController == "Maybe"){
+      affirmation = "All progress is good progress! Swipe through to see if more moments will help.";
+  } else {
+      affirmation = "It's okay! We can always come back to this moment.";
+  }
+    return AlertDialog(
+        title: Text(affirmation,
+            style: TextStyle(
+              fontSize: TextSizeConstants.getadaptiveTextSize(
+                  context, TextSizeConstants.bodyText),
+            )),
+        actions: <Widget>[
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.all(15),
+                primary: ColorConstants.buttonColor),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text('Continue',
+                style: TextStyle(
+                    fontSize: 0.7 *
+                        TextSizeConstants.getadaptiveTextSize(
+                            context, TextSizeConstants.buttonText))),
+          )
+        ]);
+
+  }
 
 //  createCarousel(){
 //   myList.map((i){
@@ -170,8 +204,11 @@ class _MemoryPageState extends State<MemoryPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                  ElevatedButton(onPressed: (){
-                    _isButtonDisabled ? null : _isEditMode; //null will get replaced with function that increments memory data
+                  ElevatedButton(
+                    onPressed: (){
+                    _isButtonDisabled ? null : _isEditMode;
+                     //null will get replaced with function that increments memory data
+                     _buttonController = "Yes";
                   }, 
                   child: const Text('Yes'),
                   style: ElevatedButton.styleFrom(padding:EdgeInsets.all(deviceWidth/40), primary: ColorConstants.buttonColor,
@@ -180,6 +217,7 @@ class _MemoryPageState extends State<MemoryPage> {
                   SizedBox(width: deviceWidth/40),
                   ElevatedButton(onPressed: (){
                     _isButtonDisabled ? null : _isEditMode; //null will get replaced with function that increments memory data
+                  _buttonController = "No";
                   }, 
                   child: const Text("No"),
                   style: ElevatedButton.styleFrom( padding:EdgeInsets.all(deviceWidth/40), primary: ColorConstants.unfavoredButton, 
@@ -188,6 +226,7 @@ class _MemoryPageState extends State<MemoryPage> {
                   SizedBox(width:deviceWidth/40),
                   ElevatedButton(onPressed: (){
                     _isButtonDisabled ? null : _isEditMode; //null will get replaced with function that increments memory data
+                  _buttonController = "Maybe";
                   }, 
                   child: const Text("Maybe"),
                   style: ElevatedButton.styleFrom( padding:EdgeInsets.all(deviceWidth/40), primary: ColorConstants.unfavoredButton, 
