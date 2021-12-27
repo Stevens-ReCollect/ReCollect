@@ -16,15 +16,7 @@ class MemoryList {
 
   MemoryList(this.type, this.asset, this.description);
  
-  
- 
-}
-
-String firstDesc = 'This is when you and Grandpa Bobby cut your wedding cake.';
-MemoryList m  = MemoryList('photo', 'lib/images/wedding-placeholder.jpg', firstDesc);
-List  myList = [m, ];
-  
-selectType(){
+  selectType(){
     if( m.type == 'photo'){
       return Column(
               children: <Widget>[
@@ -52,6 +44,14 @@ selectType(){
       SizedBox();
     }
   }
+ 
+}
+
+String firstDesc = 'This is when you and Grandpa Bobby cut your wedding cake.';
+MemoryList m  = MemoryList('photo', 'lib/images/wedding-placeholder.jpg', firstDesc);
+List  myList = [m, ];
+  
+
   
  late String _buttonController; // alerts the correct dialog
  late String affirmTitle;
