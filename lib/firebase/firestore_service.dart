@@ -84,7 +84,7 @@ class FirestoreService {
     await moments.add({
       'user_email': currentUser.email,
       'type': type,
-      'descripton': description,
+      'description': description,
       'memory_id': memoryId,
       'file_path': '',
     }).then((value) {

@@ -11,6 +11,7 @@ import 'package:recollect_app/addvideo.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/routeConstants.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:recollect_app/editphoto.dart';
 import 'package:recollect_app/firebase/authentication_service.dart';
 
 import 'constants/textSizeConstants.dart';
@@ -86,7 +87,14 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => EditPhotoPage(
+                                          momentData: data,
+                                        )));
+                          },
                           icon: const Icon(Icons.edit),
                         ),
                         IconButton(
