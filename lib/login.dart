@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:recollect_app/constants/color_constants.dart';
-import 'package:recollect_app/constants/route_constants.dart';
-import 'package:recollect_app/constants/text_size_constants.dart';
+import 'package:recollect_app/constants/colorConstants.dart';
+import 'package:recollect_app/constants/routeConstants.dart';
+import 'package:recollect_app/constants/textSizeConstants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';

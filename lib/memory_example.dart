@@ -4,8 +4,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:recollect_app/constants/color_constants.dart';
-import 'package:recollect_app/constants/text_size_constants.dart';
+import 'package:recollect_app/constants/colorConstants.dart';
+import 'package:recollect_app/constants/textSizeConstants.dart';
 import 'package:recollect_app/main.dart';
 import 'package:recollect_app/widgets/memoryslider.dart';
 

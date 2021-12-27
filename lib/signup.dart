@@ -4,9 +4,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'package:recollect_app/firebase/authentication_service.dart';
 import 'package:flutter/material.dart';
-import 'package:recollect_app/constants/color_constants.dart';
-import 'package:recollect_app/constants/route_constants.dart';
-import 'package:recollect_app/constants/text_size_constants.dart';
+import 'package:recollect_app/constants/colorConstants.dart';
+import 'package:recollect_app/constants/routeConstants.dart';
+import 'package:recollect_app/constants/textSizeConstants.dart';
 import 'package:recollect_app/login.dart';
 
 class SignUpPage extends StatefulWidget {

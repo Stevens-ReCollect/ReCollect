@@ -8,13 +8,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:recollect_app/addphoto.dart';
 
-import 'package:recollect_app/constants/color_constants.dart';
-import 'package:recollect_app/constants/route_constants.dart';
+import 'package:recollect_app/constants/colorConstants.dart';
+import 'package:recollect_app/constants/routeConstants.dart';
 import 'package:recollect_app/addvideo.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:recollect_app/firebase/authentication_service.dart';
 
-import 'constants/text_size_constants.dart';
+import 'constants/textSizeConstants.dart';
 
 class MemoryHomePage extends StatefulWidget {
   const MemoryHomePage({required this.memoryData});
