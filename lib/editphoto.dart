@@ -198,15 +198,15 @@ class _EditPhotoPageState extends State<EditPhotoPage> {
                     });
                     print("Clicked Saved");
                     //CHANGE THIS TO UPDATE
-                    // if (image != null) {
-                    //   await FirestoreService().addNewMoment(
-                    //       memoryId: widget.memoryData['doc_id'],
-                    //       type: 'Photo',
-                    //       file: image,
-                    //       description: _description.text);
-                    // }
-                    // Navigator.pushNamed(
-                    //     context, RouteConstants.memoryHomeRoute);
+                    if (_image != null) {
+                      await FirestoreService().editMoment(
+                          memoryId: widget.momentData['memory_id'],
+                          momentId: widget.momentData['doc_id'],
+                          file: _image,
+                          description: _description.text);
+                    }
+                    Navigator.pushNamed(
+                        context, RouteConstants.memoryHomeRoute);
                     Navigator.pop(context);
                   },
                 ),

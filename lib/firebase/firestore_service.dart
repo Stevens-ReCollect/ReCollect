@@ -93,8 +93,6 @@ class FirestoreService {
       addId(moments);
     }).catchError((error) => print("Failed to add new moment: $error"));
 
-    // print("Document Reference: $documentReference");
-
     //Upload file to Storage
     if (file != null) {
       await uploadFile(
@@ -105,9 +103,43 @@ class FirestoreService {
           .then((url) => fileURL = url);
     }
 
-    // await Future.delayed(const Duration(seconds: 3));
-
     return documentReference.update({'file_path': fileURL});
+  }
+
+  Future<void> editMoment(
+      {required String memoryId,
+      required String momentId,
+      File? file,
+      String? description}) async {
+    CollectionReference moments = _firestore.collection('moments');
+    User? currentUser = AuthenticationService().getUser();
+    if (currentUser == null) {
+      throw Exception('currentUser is null');
+    }
+    String newUrl = "";
+
+    if (file != null) {
+      await uploadFile(
+              file: file,
+              user: currentUser.email,
+              memory: memoryId,
+              moment: momentId)
+          .then((url) => newUrl = url);
+    }
+
+    if (newUrl != "") {
+      moments
+          .doc(momentId)
+          .update({'file_path': newUrl})
+          .then((value) => print("Moment Updated"))
+          .catchError((error) => print("Failed to update moment $error"));
+    }
+
+    return moments
+        .doc(momentId)
+        .update({'description': description})
+        .then((value) => print("Moment Updated"))
+        .catchError((error) => print("Failed to update moment $error"));
   }
 
   Future<String> uploadFile(
