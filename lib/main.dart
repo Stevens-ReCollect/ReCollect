@@ -377,7 +377,7 @@ class MyHomePageState extends State<MyHomePage> {
         iconSize: TextSizeConstants.getadaptiveTextSize(
             context, TextSizeConstants.buttonText), //Settings Icon
         onPressed: () {
-          Navigator.pushNamed(context, RouteConstants.progressRoute);
+          Navigator.pushNamed(context, RouteConstants.settingsRoute);
         },
       );
     }
