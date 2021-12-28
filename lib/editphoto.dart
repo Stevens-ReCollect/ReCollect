@@ -71,20 +71,32 @@ class _EditPhotoPageState extends State<EditPhotoPage> {
     var deviceHeight = queryData.size.height;
     return MaterialApp(
       home: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
+          elevation: 0,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios_new),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          title: const Text("Edit Photo"),
+        ),
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              Container(
-                margin: const EdgeInsets.only(top: 50.0, left: 10.0),
-                alignment: Alignment.centerLeft,
-                child: IconButton(
-                  icon: const Icon(Icons.arrow_back_ios_new),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ),
+              // Container(
+              //   margin: const EdgeInsets.only(top: 50.0, left: 10.0),
+              //   alignment: Alignment.centerLeft,
+              //   child: IconButton(
+              //     icon: const Icon(Icons.arrow_back_ios_new),
+              //     onPressed: () {
+              //       Navigator.pop(context);
+              //     },
+              //   ),
+              // ),
               ListTile(
                 title: const Text(
                   'Photo Selected',
