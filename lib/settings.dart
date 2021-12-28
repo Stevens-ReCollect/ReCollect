@@ -7,16 +7,15 @@ import 'package:settings_ui/settings_ui.dart';
 // ignore: use_key_in_widget_constructors
 class SettingsPage extends StatefulWidget {
   @override
-  _SettingsPageState createState() => _SettingsPageState();
+  SettingsPageState createState() => SettingsPageState();
 }
 
-class _SettingsPageState extends State<SettingsPage> {
+class SettingsPageState extends State<SettingsPage> {
   var isHighContrast = false;
   @override
   Widget build(BuildContext context) {
     MediaQueryData queryData = MediaQuery.of(context);
     var deviceWidth = queryData.size.width;
-    var deviceHeight = queryData.size.height;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -25,6 +24,8 @@ class _SettingsPageState extends State<SettingsPage> {
         automaticallyImplyLeading: true,
         ),
       body: Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           Container(
             width: deviceWidth,
@@ -33,27 +34,24 @@ class _SettingsPageState extends State<SettingsPage> {
                   context, TextSizeConstants.bodyText), fontWeight: FontWeight.w700))),
             Container(
             width: deviceWidth,
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(10),
             color: ColorConstants.formField,
-            child:InkWell(
+            child: Row(
+            children:<Widget>[
+            IconButton(
+              icon:const Icon(Icons.lock_outline), 
+              onPressed: () {
+                 },),
+            InkWell(
               child:Text('Change Password', style: TextStyle(fontSize: 0.7*TextSizeConstants.getadaptiveTextSize(
                   context, TextSizeConstants.bodyText))),
               onTap: (){},
-            )),
+            )])),
             Container(
             width: deviceWidth,
             padding: const EdgeInsets.all(10),
             child:Text('Assessibility', style: TextStyle(fontSize: 0.7*TextSizeConstants.getadaptiveTextSize(
                   context, TextSizeConstants.bodyText), fontWeight: FontWeight.w700))),
-            Container(
-            width: deviceWidth,
-            padding: const EdgeInsets.all(20),
-            color: ColorConstants.formField,
-            child:InkWell(
-              child:Text('Language', style: TextStyle(fontSize: 0.7*TextSizeConstants.getadaptiveTextSize(
-                  context, TextSizeConstants.bodyText))),
-              onTap: (){},
-            )),
             Container(
             width: deviceWidth,
             padding: const EdgeInsets.all(20),
@@ -65,36 +63,53 @@ class _SettingsPageState extends State<SettingsPage> {
             )),
             Container(
             width: deviceWidth,
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(10),
             color: ColorConstants.formField,
-            child: InkWell(
-              child:Text('High Contrast', style: TextStyle(fontSize: 0.7*TextSizeConstants.getadaptiveTextSize(
-                  context, TextSizeConstants.bodyText))),
-              onTap: (){},
-            )),
+            child: Row(
+            children:<Widget>[
+              IconButton(
+                icon:const Icon(Icons.color_lens), 
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const TextAdjustPage()));
+                },),
+              InkWell(
+                child:Text('High Contrast', style: TextStyle(fontSize: 0.7*TextSizeConstants.getadaptiveTextSize(
+                    context, TextSizeConstants.bodyText))),
+                onTap: (){},
+              )])),
             Container(
             width: deviceWidth,
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(10),
             color: ColorConstants.formField,
             child: Row(
             children:<Widget>[
             IconButton(
               icon:const Icon(Icons.text_fields), 
-              onPressed: () {  },),
+              onPressed: () {
+                 Navigator.push(context, MaterialPageRoute(builder: (context) => const TextAdjustPage()));
+               },),
             InkResponse(
               child:Text('Text Size Adjustment', style: TextStyle(fontSize: 0.7*TextSizeConstants.getadaptiveTextSize(
                   context, TextSizeConstants.bodyText))),
-              onTap: () {}
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const TextAdjustPage()));
+              }
             )])),
             Container(
             width: deviceWidth,
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(10),
             color: ColorConstants.formField,
-            child:InkWell(
-              child:Text('Log Out', style: TextStyle(fontSize: 0.7*TextSizeConstants.getadaptiveTextSize(
-                  context, TextSizeConstants.bodyText))),
-              onTap: (){},
-            )),
+            child: Row(
+            children:<Widget>[
+              IconButton(
+                icon:const Icon(Icons.logout), 
+                onPressed: () {
+                  },),
+              InkWell(
+                child:Text('Log Out', style: TextStyle(fontSize: 0.7*TextSizeConstants.getadaptiveTextSize(
+                    context, TextSizeConstants.bodyText))),
+                onTap: (){},
+            )])),
         ]));
         //   SettingsSection(
         //     titlePadding: const EdgeInsets.all(10),
