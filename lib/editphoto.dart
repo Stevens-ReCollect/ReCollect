@@ -21,10 +21,19 @@ class EditPhotoPage extends StatefulWidget {
 
 class _EditPhotoPageState extends State<EditPhotoPage> {
   // I NEED TO FIND A WAY TO EXISITNG PHOTO AND DESCRIPTION TO SCREEN
-  final TextEditingController _description =
-      TextEditingController(text: "The description");
-  File? image;
+  TextEditingController _description = TextEditingController(text: "");
+  File? _image;
   bool _loading = false;
+
+  Future setFields() async {
+    try {
+      // _image = File(widget.momentData['file_path']);
+      _description =
+          TextEditingController(text: widget.momentData['description']);
+    } on PlatformException catch (e) {
+      print("Failed to get image: $e");
+    }
+  }
 
   Future pickImage() async {
     try {
@@ -34,7 +43,7 @@ class _EditPhotoPageState extends State<EditPhotoPage> {
       }
       final imageTemp = File(file.path);
       setState(() {
-        this.image = imageTemp;
+        this._image = imageTemp;
       });
     } on PlatformException catch (e) {
       print('Failed to pick image $e');
@@ -51,6 +60,7 @@ class _EditPhotoPageState extends State<EditPhotoPage> {
 
   @override
   void initState() {
+    setFields();
     super.initState();
   }
 
@@ -110,14 +120,23 @@ class _EditPhotoPageState extends State<EditPhotoPage> {
                       maxHeight: 60.0,
                       maxWidth: 60.0,
                     ),
-                    child: image != null
-                        ? Image.file(
-                            image!,
-                            width: 60.0,
-                            height: 60.0,
-                            fit: BoxFit.cover,
+                    // child: Image.network(
+                    //   widget.momentData['file_path'],
+                    //   fit: BoxFit.fill,
+                    // ),
+                    // child: Image.file(
+                    //   _image!,
+                    //   fit: BoxFit.fill,
+                    // ),
+                    child: _image == null
+                        ? Image.network(
+                            widget.momentData['file_path'],
+                            fit: BoxFit.fill,
                           )
-                        : const FlutterLogo(size: 60.0),
+                        : Image.file(
+                            _image!,
+                            fit: BoxFit.fill,
+                          ),
                   ),
                 ),
               ),
