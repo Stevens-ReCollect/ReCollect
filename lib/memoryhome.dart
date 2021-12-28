@@ -17,7 +17,7 @@ import 'package:recollect_app/firebase/authentication_service.dart';
 import 'constants/textSizeConstants.dart';
 
 class MemoryHomePage extends StatefulWidget {
-  const MemoryHomePage({required this.memoryData});
+  const MemoryHomePage({this.memoryData});
   final memoryData;
 
   @override

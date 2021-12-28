@@ -205,8 +205,8 @@ class _EditPhotoPageState extends State<EditPhotoPage> {
                           file: _image,
                           description: _description.text);
                     }
-                    Navigator.pushNamed(
-                        context, RouteConstants.memoryHomeRoute);
+                    // Navigator.pushNamed(
+                    //     context, RouteConstants.memoryHomeRoute);
                     Navigator.pop(context);
                   },
                 ),
