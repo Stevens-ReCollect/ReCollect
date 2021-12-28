@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'constants/routeConstants.dart';
 import 'constants/textSizeConstants.dart';
-import 'package:settings_ui/settings_ui.dart';
 
 // ignore: use_key_in_widget_constructors
 class SettingsPage extends StatefulWidget {
