@@ -106,13 +106,15 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
                   onPressed: () {
                     pickImage();
                   },
-                  child: const Text(
-                    'Change Photo',
-                    style: TextStyle(
-                        fontFamily: 'Roboto',
-                        fontWeight: FontWeight.w400,
-                        fontSize: 12.0),
-                  ),
+                  child: image != null
+                      ? const Text(
+                          'Change Photo',
+                          style: TextStyle(
+                              fontFamily: 'Roboto',
+                              fontWeight: FontWeight.w400,
+                              fontSize: 12.0),
+                        )
+                      : const Text("Add Photo"),
                   style: TextButton.styleFrom(
                     minimumSize: Size.zero,
                     padding: EdgeInsets.zero,
