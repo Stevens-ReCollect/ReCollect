@@ -18,7 +18,7 @@ class SettingsPageState extends State<SettingsPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text("Settings"),
+        title: Text("Settings", style: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.buttonText))),
         backgroundColor: ColorConstants.appBar,
         automaticallyImplyLeading: true,
         ),
@@ -53,13 +53,22 @@ class SettingsPageState extends State<SettingsPage> {
                   context, TextSizeConstants.bodyText), fontWeight: FontWeight.w700))),
             Container(
             width: deviceWidth,
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(10),
             color: ColorConstants.formField,
-            child:InkWell(
+            child:Row(
+            children:<Widget>[
+              IconButton(
+                icon:const Icon(Icons.grade), 
+                onPressed: () {
+                  Navigator.pushNamed(context, RouteConstants.progressRoute);
+                },), 
+            InkWell(
               child:Text('Progress Report', style: TextStyle(fontSize: 0.7*TextSizeConstants.getadaptiveTextSize(
                   context, TextSizeConstants.bodyText))),
-              onTap: (){},
-            )),
+              onTap: (){
+                Navigator.pushNamed(context, RouteConstants.progressRoute);
+              },
+            )])),
             Container(
             width: deviceWidth,
             padding: const EdgeInsets.all(10),
