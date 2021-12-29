@@ -206,7 +206,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         caregiverPin: _caregiverPin.text);
 
                     if (result != null) {
-                      Navigator.pushNamed(context, RouteConstants.homeRoute);
+                      Navigator.pushNamed(context, RouteConstants.loginRoute);
                     }
                   },
                 ),
