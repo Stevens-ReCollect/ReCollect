@@ -11,12 +11,13 @@ import 'package:recollect_app/addvideo.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/routeConstants.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:recollect_app/editphoto.dart';
 import 'package:recollect_app/firebase/authentication_service.dart';
 
 import 'constants/textSizeConstants.dart';
 
 class MemoryHomePage extends StatefulWidget {
-  const MemoryHomePage({required this.memoryData});
+  const MemoryHomePage({this.memoryData});
   final memoryData;
 
   @override
@@ -52,7 +53,7 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
             (DocumentSnapshot document) {
               Map<String, dynamic> data =
                   document.data()! as Map<String, dynamic>;
-              print("Print data: $data");
+              // print("Print data: $data");
               if (data.isEmpty) {
                 return Text("Hello");
               } else {
@@ -82,10 +83,25 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
                         ),
                       ),
                     ),
-                    trailing: Icon(
-                      Icons.edit,
-                      size: TextSizeConstants.getadaptiveTextSize(
-                          context, TextSizeConstants.dropDownText),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => EditPhotoPage(
+                                          momentData: data,
+                                        )));
+                          },
+                          icon: const Icon(Icons.edit),
+                        ),
+                        IconButton(
+                          onPressed: () {},
+                          icon: const Icon(Icons.delete),
+                        )
+                      ],
                     ),
                   ),
                 );

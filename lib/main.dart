@@ -68,7 +68,7 @@ class MyApp extends StatelessWidget {
         RouteConstants.addAudio: (context) => AddAudioPage(),
         RouteConstants.addVideo: (context) => AddVideoPage(),
         // RouteConstants.addPhoto: (context) => AddPhotoPage(),
-        // RouteConstants.memoryHomeRoute: (context) => MemoryHomePage(),
+        RouteConstants.memoryHomeRoute: (context) => MemoryHomePage(),
         RouteConstants.navigationRoute: (context) => Navigate(),
         RouteConstants.settingsRoute: (context) => SettingsPage(),
       },
@@ -377,7 +377,7 @@ class MyHomePageState extends State<MyHomePage> {
         iconSize: TextSizeConstants.getadaptiveTextSize(
             context, TextSizeConstants.buttonText), //Settings Icon
         onPressed: () {
-          Navigator.pushNamed(context, RouteConstants.progressRoute);
+          Navigator.pushNamed(context, RouteConstants.settingsRoute);
         },
       );
     }

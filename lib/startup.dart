@@ -40,7 +40,7 @@ class StartUp extends StatelessWidget {
         RouteConstants.addAudio: (context) => AddAudioPage(),
         RouteConstants.addVideo: (context) => AddVideoPage(),
         // RouteConstants.addPhoto: (context) => AddPhotoPage(),
-        // RouteConstants.memoryHomeRoute: (context) => MemoryHomePage(),
+        RouteConstants.memoryHomeRoute: (context) => MemoryHomePage(),
         RouteConstants.navigationRoute: (context) => Navigate(),
         RouteConstants.settingsRoute: (context) => SettingsPage(),
       },
