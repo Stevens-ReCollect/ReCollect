@@ -98,7 +98,12 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
                           icon: const Icon(Icons.edit),
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) =>
+                                    deleteConfirmation());
+                          },
                           icon: const Icon(Icons.delete),
                         )
                       ],
@@ -138,6 +143,21 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
         Navigator.pushNamed(context, RouteConstants.addAudio);
         break;
     }
+  }
+
+  Widget deleteConfirmation() {
+    return AlertDialog(
+      content: const Text("Are you sure you want to delete this moment?"),
+      actions: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(onPressed: () {}, child: const Text("Yes")),
+            ElevatedButton(onPressed: () {}, child: const Text("Cancel"))
+          ],
+        )
+      ],
+    );
   }
 
   @override
