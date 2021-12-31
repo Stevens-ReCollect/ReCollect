@@ -161,6 +161,12 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
                 await FirestoreService()
                     .deleteMoment(momentId: momentId, memoryId: memoryId);
                 Navigator.pop(context);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                      content: const Text("Successfully deleted moment"),
+                      backgroundColor: ColorConstants.buttonColor,
+                      duration: const Duration(seconds: 2)),
+                );
               },
               child: const Text("Yes"),
               style: ButtonStyle(
