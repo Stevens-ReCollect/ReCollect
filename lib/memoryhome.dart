@@ -13,6 +13,7 @@ import 'package:recollect_app/constants/routeConstants.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:recollect_app/editphoto.dart';
 import 'package:recollect_app/firebase/authentication_service.dart';
+import 'package:recollect_app/firebase/firestore_service.dart';
 
 import 'constants/textSizeConstants.dart';
 
@@ -89,11 +90,13 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
                         IconButton(
                           onPressed: () {
                             Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => EditPhotoPage(
-                                          momentData: data,
-                                        )));
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => EditPhotoPage(
+                                  momentData: data,
+                                ),
+                              ),
+                            );
                           },
                           icon: const Icon(Icons.edit),
                         ),
@@ -102,7 +105,8 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
                             showDialog(
                                 context: context,
                                 builder: (BuildContext context) =>
-                                    deleteConfirmation());
+                                    deleteConfirmation(
+                                        data['doc_id'], data['memory_id']));
                           },
                           icon: const Icon(Icons.delete),
                         )
@@ -145,7 +149,7 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
     }
   }
 
-  Widget deleteConfirmation() {
+  Widget deleteConfirmation(String momentId, String memoryId) {
     return AlertDialog(
       content: const Text("Are you sure you want to delete this moment?"),
       actions: [
@@ -153,7 +157,11 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             TextButton(
-              onPressed: () {},
+              onPressed: () async {
+                await FirestoreService()
+                    .deleteMoment(momentId: momentId, memoryId: memoryId);
+                Navigator.pop(context);
+              },
               child: const Text("Yes"),
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(
