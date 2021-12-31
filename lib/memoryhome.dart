@@ -150,10 +150,40 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
       content: const Text("Are you sure you want to delete this moment?"),
       actions: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            ElevatedButton(onPressed: () {}, child: const Text("Yes")),
-            ElevatedButton(onPressed: () {}, child: const Text("Cancel"))
+            TextButton(
+              onPressed: () {},
+              child: const Text("Yes"),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(
+                    ColorConstants.buttonColor),
+                foregroundColor:
+                    MaterialStateProperty.all<Color>(ColorConstants.buttonText),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                ),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text("Cancel"),
+              style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.all<Color>(ColorConstants.formField),
+                foregroundColor:
+                    MaterialStateProperty.all<Color>(ColorConstants.bodyText),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                ),
+              ),
+            )
           ],
         )
       ],
