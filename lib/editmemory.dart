@@ -267,7 +267,7 @@ class _EditMemoryPageState extends State<EditMemoryPage> {
                       thumbnail: image,
                       memoryId: widget.memoryData['doc_id']);
 
-                  Navigator.pop(context);
+                  Navigator.pop(context, true);
                 },
               ),
             ),

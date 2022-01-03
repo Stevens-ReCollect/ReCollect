@@ -89,7 +89,7 @@ class FirestoreService {
       String? startDate,
       String? endDate,
       String? description,
-      File? thumbnail}) {
+      File? thumbnail}) async {
     CollectionReference memories = _firestore.collection('memories');
     User? currentUser = AuthenticationService().getUser();
     if (currentUser == null) {
@@ -98,16 +98,16 @@ class FirestoreService {
     String newUrl = "";
 
     if (thumbnail != null) {
-      uploadFile(
+      await uploadFile(
               file: thumbnail,
               user: currentUser.email,
               memory: memoryId,
-              moment: "momentId")
+              moment: "thumbnail")
           .then((url) => newUrl = url);
     }
 
     if (newUrl != "") {
-      memories
+      await memories
           .doc(memoryId)
           .update({'file_path': newUrl})
           .then((value) => print("Memory Updated"))
@@ -120,7 +120,7 @@ class FirestoreService {
           'title': title,
           'start_date': startDate,
           'end_date': endDate,
-          'description': description
+          'description': description,
         })
         .then((value) => print("Memory Updated"))
         .catchError((error) => print("Failed to update memory: $error"));
@@ -202,7 +202,7 @@ class FirestoreService {
   }
 
   Future<void> deleteMoment(
-      {required String momentId, required String memoryId}) {
+      {required String momentId, required String memoryId}) async {
     CollectionReference moments = _firestore.collection('moments');
     User? currentUser = AuthenticationService().getUser();
     if (currentUser == null) {
