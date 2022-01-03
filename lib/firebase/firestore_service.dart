@@ -126,6 +126,27 @@ class FirestoreService {
         .catchError((error) => print("Failed to update memory: $error"));
   }
 
+  Future<void> deleteMemory({required String memoryId}) async {
+    User? currentUser = AuthenticationService().getUser();
+    if (currentUser == null) {
+      throw Exception('currentUser is null');
+    }
+    CollectionReference memories = _firestore.collection('memories');
+    CollectionReference moments = _firestore.collection('moments');
+    deleteMoment(momentId: "thumbnail", memoryId: memoryId);
+    moments.where('memory_id', isEqualTo: memoryId).get().then(
+        (QuerySnapshot querySnapshot) => querySnapshot.docs.forEach((doc) {
+              if (doc.data() != null) {
+                deleteMoment(momentId: doc.id, memoryId: memoryId);
+              }
+            }));
+    return memories
+        .doc(memoryId)
+        .delete()
+        .then((value) => print("Memory Deleted"))
+        .catchError((error) => print("Failed to delete memory: $error"));
+  }
+
   Future<void> addNewMoment(
       {required String memoryId,
       required String type,
