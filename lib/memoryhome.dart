@@ -308,15 +308,19 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
           children: <Widget>[
             Row(
               children: [
-                Container(
-                  margin: const EdgeInsets.all(20.0),
-                  child: Text(
-                    widget.memoryData['title'],
-                    style: TextStyle(
-                      fontFamily: 'Roboto',
-                      fontWeight: FontWeight.w700,
-                      fontSize: TextSizeConstants.getadaptiveTextSize(
-                          context, TextSizeConstants.memoryTitle),
+                Flexible(
+                  fit: FlexFit.tight,
+                  flex: 1,
+                  child: Container(
+                    margin: const EdgeInsets.all(20.0),
+                    child: Text(
+                      widget.memoryData['title'],
+                      style: TextStyle(
+                        fontFamily: 'Roboto',
+                        fontWeight: FontWeight.w700,
+                        fontSize: TextSizeConstants.getadaptiveTextSize(
+                            context, TextSizeConstants.memoryTitle),
+                      ),
                     ),
                   ),
                 ),

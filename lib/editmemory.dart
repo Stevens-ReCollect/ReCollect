@@ -235,7 +235,7 @@ class _EditMemoryPageState extends State<EditMemoryPage> {
               width: 0.5 * deviceWidth,
               child: TextButton(
                 child: Text(
-                  'Next',
+                  'Save',
                   style: TextStyle(
                     fontSize: TextSizeConstants.getadaptiveTextSize(
                         context, TextSizeConstants.buttonText),
@@ -259,7 +259,7 @@ class _EditMemoryPageState extends State<EditMemoryPage> {
                   setState(() {
                     _loading = true;
                   });
-                  final result = FirestoreService().editMemory(
+                  await FirestoreService().editMemory(
                       title: _title.text,
                       startDate: _startDate.text,
                       endDate: _endDate.text,
@@ -267,12 +267,7 @@ class _EditMemoryPageState extends State<EditMemoryPage> {
                       thumbnail: image,
                       memoryId: widget.memoryData['doc_id']);
 
-                  if (result != null) {
-                    // Navigator.pushNamed(
-                    //     context, RouteConstants.memoryHomeRoute);
-                    // Navigator.push(context, MaterialPageRoute(builder: (context) => MemoryHomePage(memoryData: memoryData))))
-                    Navigator.pop(context);
-                  }
+                  Navigator.pop(context);
                 },
               ),
             ),
