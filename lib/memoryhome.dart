@@ -11,6 +11,7 @@ import 'package:recollect_app/addvideo.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/routeConstants.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:recollect_app/editmemory.dart';
 import 'package:recollect_app/editphoto.dart';
 import 'package:recollect_app/firebase/authentication_service.dart';
 import 'package:recollect_app/firebase/firestore_service.dart';
@@ -26,9 +27,6 @@ class MemoryHomePage extends StatefulWidget {
 }
 
 class _MemoryHomePageState extends State<MemoryHomePage> {
-  final List<String> _moments = ['Photo', 'Video', 'Audio'];
-  // final List<String> _moments = [];
-
   userMoments() {
     MediaQueryData queryData = MediaQuery.of(context);
     var pixelRatio = queryData.devicePixelRatio; //responsive sizing
@@ -322,6 +320,22 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
                     ),
                   ),
                 ),
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            EditMemoryPage(memoryData: widget.memoryData),
+                      ),
+                    );
+                  },
+                  icon: const Icon(Icons.edit),
+                ),
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.delete),
+                )
               ],
             ),
             content(),

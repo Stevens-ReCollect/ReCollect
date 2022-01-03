@@ -12,19 +12,34 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
-class CreateMemoryPage extends StatefulWidget {
+class EditMemoryPage extends StatefulWidget {
+  const EditMemoryPage({this.memoryData});
+  final memoryData;
+
   @override
-  _CreateMemoryPageState createState() => _CreateMemoryPageState();
+  _EditMemoryPageState createState() => _EditMemoryPageState();
 }
 
-class _CreateMemoryPageState extends State<CreateMemoryPage> {
-  final TextEditingController _title = TextEditingController();
-  final TextEditingController _startDate = TextEditingController();
-  final TextEditingController _endDate = TextEditingController();
-  final TextEditingController _description = TextEditingController();
+class _EditMemoryPageState extends State<EditMemoryPage> {
+  TextEditingController _title = TextEditingController(text: "");
+  TextEditingController _startDate = TextEditingController(text: "");
+  TextEditingController _endDate = TextEditingController(text: "");
+  TextEditingController _description = TextEditingController(text: "");
 
   File? image;
   bool _loading = false;
+
+  Future setFields() async {
+    try {
+      _title = TextEditingController(text: widget.memoryData['title']);
+      _startDate = TextEditingController(text: widget.memoryData['start_date']);
+      _endDate = TextEditingController(text: widget.memoryData['end_date']);
+      _description =
+          TextEditingController(text: widget.memoryData['description']);
+    } on PlatformException catch (e) {
+      print("Failed to get image: $e");
+    }
+  }
 
   Future pickImage() async {
     try {
@@ -49,11 +64,11 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
     }
   }
 
-  // @override
-  // void initState() {
-  //   pickImage();
-  //   super.initState();
-  // }
+  @override
+  void initState() {
+    setFields();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -241,12 +256,16 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
                   ),
                 ),
                 onPressed: () async {
-                  final result = FirestoreService().addNewMemory(
+                  setState(() {
+                    _loading = true;
+                  });
+                  final result = FirestoreService().editMemory(
                       title: _title.text,
                       startDate: _startDate.text,
                       endDate: _endDate.text,
                       description: _description.text,
-                      file: image);
+                      thumbnail: image,
+                      memoryId: widget.memoryData['doc_id']);
 
                   if (result != null) {
                     // Navigator.pushNamed(

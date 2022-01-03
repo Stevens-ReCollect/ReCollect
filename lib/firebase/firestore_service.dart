@@ -83,6 +83,49 @@ class FirestoreService {
     return documentReference.update({'file_path': fileURL});
   }
 
+  Future<void> editMemory(
+      {required String memoryId,
+      String? title,
+      String? startDate,
+      String? endDate,
+      String? description,
+      File? thumbnail}) {
+    CollectionReference memories = _firestore.collection('memories');
+    User? currentUser = AuthenticationService().getUser();
+    if (currentUser == null) {
+      throw Exception('currentUser is null');
+    }
+    String newUrl = "";
+
+    if (thumbnail != null) {
+      uploadFile(
+              file: thumbnail,
+              user: currentUser.email,
+              memory: memoryId,
+              moment: "momentId")
+          .then((url) => newUrl = url);
+    }
+
+    if (newUrl != "") {
+      memories
+          .doc(memoryId)
+          .update({'file_path': newUrl})
+          .then((value) => print("Memory Updated"))
+          .catchError((error) => print("Failed to update memory $error"));
+    }
+
+    return memories
+        .doc(memoryId)
+        .update({
+          'title': title,
+          'start_date': startDate,
+          'end_date': endDate,
+          'description': description
+        })
+        .then((value) => print("Memory Updated"))
+        .catchError((error) => print("Failed to update memory: $error"));
+  }
+
   Future<void> addNewMoment(
       {required String memoryId,
       required String type,
