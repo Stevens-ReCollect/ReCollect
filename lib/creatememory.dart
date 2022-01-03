@@ -7,8 +7,15 @@ import 'package:recollect_app/progressReport.dart';
 import 'package:recollect_app/main.dart';
 import 'constants/routeConstants.dart';
 import 'constants/textSizeConstants.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
+import 'package:flutter/services.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class CreateMemoryPage extends StatefulWidget {
+  const CreateMemoryPage({this.memoryData});
+  final memoryData;
+
   @override
   _CreateMemoryPageState createState() => _CreateMemoryPageState();
 }
@@ -18,6 +25,38 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
   final TextEditingController _startDate = TextEditingController();
   final TextEditingController _endDate = TextEditingController();
   final TextEditingController _description = TextEditingController();
+
+  File? image;
+  bool _loading = false;
+
+  Future pickImage() async {
+    try {
+      final file = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (file == null) {
+        return;
+      }
+      final imageTemp = File(file.path);
+      setState(() {
+        this.image = imageTemp;
+      });
+    } on PlatformException catch (e) {
+      print('Failed to pick image $e');
+    }
+  }
+
+  loading() {
+    if (_loading) {
+      return CircularProgressIndicator();
+    } else {
+      return SizedBox();
+    }
+  }
+
+  // @override
+  // void initState() {
+  //   pickImage();
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -54,8 +93,59 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
               ),
             ),
             Container(
+              margin: const EdgeInsets.only(top: 20.0, left: 30.0),
+              child: ListTile(
+                title: const Text(
+                  'Cover Photo',
+                  style: TextStyle(
+                      fontFamily: 'Roboto',
+                      fontWeight: FontWeight.w400,
+                      fontSize: 18.0),
+                ),
+                subtitle: TextButton(
+                  onPressed: () {
+                    pickImage();
+                  },
+                  child: image != null
+                      ? const Text(
+                          'Change Photo',
+                          style: TextStyle(
+                              fontFamily: 'Roboto',
+                              fontWeight: FontWeight.w400,
+                              fontSize: 12.0),
+                        )
+                      : const Text("Add Photo"),
+                  style: TextButton.styleFrom(
+                    minimumSize: Size.zero,
+                    padding: EdgeInsets.zero,
+                    alignment: Alignment.centerLeft,
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  ),
+                ),
+                leading: ClipRRect(
+                  borderRadius: BorderRadius.circular(5.0),
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(
+                      minHeight: 60.0,
+                      minWidth: 60.0,
+                      maxHeight: 60.0,
+                      maxWidth: 60.0,
+                    ),
+                    child: image != null
+                        ? Image.file(
+                            image!,
+                            width: 60.0,
+                            height: 60.0,
+                            fit: BoxFit.cover,
+                          )
+                        : const FlutterLogo(size: 60.0),
+                  ),
+                ),
+              ),
+            ),
+            Container(
               width: 0.8 * deviceWidth,
-              margin: const EdgeInsets.only(top: 30.0, left: 0.0),
+              margin: const EdgeInsets.only(top: 15.0, left: 0.0),
               child: TextField(
                 controller: _title,
                 decoration: InputDecoration(
@@ -158,7 +248,8 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
                       title: _title.text,
                       startDate: _startDate.text,
                       endDate: _endDate.text,
-                      description: _description.text);
+                      description: _description.text,
+                      file: image);
 
                   if (result != null) {
                     // Navigator.pushNamed(

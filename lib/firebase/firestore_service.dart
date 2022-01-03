@@ -48,23 +48,39 @@ class FirestoreService {
   Future<void> addNewMemory(
       {required String title,
       required String startDate,
+      required File? file,
       String? endDate,
       String? description}) async {
     User? currentUser = AuthenticationService().getUser();
+    String fileURL = 'temporary';
     if (currentUser == null) {
       throw Exception('currentUser is null');
     }
     CollectionReference memories = _firestore.collection('memories');
-    return memories.add({
+    DocumentReference documentReference = memories.doc("null");
+    await memories.add({
       'user_email': currentUser.email,
       'title': title,
       'start_date': startDate,
       'end_date': endDate,
       'description': description,
+      'file_path': '',
     }).then((value) {
+      documentReference = value;
       print("Memory Added");
       addId(memories);
     }).catchError((error) => print("Failed to add memory: $error"));
+
+    //Upload file to Storage
+    if (file != null) {
+      await uploadThumbnail(
+              file: file, user: currentUser.email, memory: documentReference.id)
+          .then((url) => fileURL = url);
+    }
+
+    // await Future.delayed(const Duration(seconds: 3));
+
+    return documentReference.update({'file_path': fileURL});
   }
 
   Future<void> addNewMoment(
@@ -168,6 +184,20 @@ class FirestoreService {
       required String moment}) async {
     String fileURL = '';
     Reference reference = _storage.ref(user! + "/" + memory + "/" + moment);
+    await reference.putFile(file);
+    // await Future.delayed(const Duration(seconds: 5));
+    fileURL = await reference.getDownloadURL();
+    print("File URL: $fileURL");
+    return fileURL;
+  }
+
+  Future<String> uploadThumbnail(
+      {required File file,
+      required String? user,
+      required String memory}) async {
+    String fileURL = '';
+    Reference reference =
+        _storage.ref(user! + "/" + memory + "/" + "thumbnail");
     await reference.putFile(file);
     // await Future.delayed(const Duration(seconds: 5));
     fileURL = await reference.getDownloadURL();
