@@ -317,7 +317,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-
   glob:
     dependency: transitive
     description:
@@ -325,7 +324,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.2"
-
   html:
     dependency: transitive
     description:
@@ -639,7 +637,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
-
   video_player:
     dependency: "direct main"
     description:
@@ -661,7 +658,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.5"
-
   watcher:
     dependency: transitive
     description:
@@ -669,7 +665,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
-
   win32:
     dependency: transitive
     description:
