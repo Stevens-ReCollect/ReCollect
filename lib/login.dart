@@ -157,7 +157,8 @@ class LoginPage extends StatelessWidget {
                       final result = await AuthenticationService()
                           .signIn(email: _email.text, password: _password.text);
                       if (result != null) {
-                        Navigator.pushNamed(context, RouteConstants.homeRoute);
+                        Navigator.pushNamed(
+                            context, RouteConstants.navigationRoute);
                       }
                       // AuthenticationService.getUser()
                     }),
