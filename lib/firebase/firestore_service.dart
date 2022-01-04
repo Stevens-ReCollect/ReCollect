@@ -142,6 +142,25 @@ class FirestoreService {
         .catchError((error) => print("Failed to update moment $error"));
   }
 
+  Future<void> deleteMoment(
+      {required String momentId, required String memoryId}) {
+    CollectionReference moments = _firestore.collection('moments');
+    User? currentUser = AuthenticationService().getUser();
+    if (currentUser == null) {
+      throw Exception('currentUser is null');
+    }
+    _storage
+        .ref(currentUser.email! + "/" + memoryId + "/" + momentId)
+        .delete()
+        .then((value) => print("Moment file deleted"))
+        .catchError((error) => print("Failed to delete moment file: $error"));
+    return moments
+        .doc(momentId)
+        .delete()
+        .then((value) => print("Moment Deleted"))
+        .catchError((error) => print("Failed to delete moment: $error"));
+  }
+
   Future<String> uploadFile(
       {required File file,
       required String? user,

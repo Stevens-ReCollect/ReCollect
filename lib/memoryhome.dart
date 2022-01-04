@@ -13,6 +13,7 @@ import 'package:recollect_app/constants/routeConstants.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:recollect_app/editphoto.dart';
 import 'package:recollect_app/firebase/authentication_service.dart';
+import 'package:recollect_app/firebase/firestore_service.dart';
 
 import 'constants/textSizeConstants.dart';
 
@@ -89,16 +90,24 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
                         IconButton(
                           onPressed: () {
                             Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => EditPhotoPage(
-                                          momentData: data,
-                                        )));
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => EditPhotoPage(
+                                  momentData: data,
+                                ),
+                              ),
+                            );
                           },
                           icon: const Icon(Icons.edit),
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) =>
+                                    deleteConfirmation(
+                                        data['doc_id'], data['memory_id']));
+                          },
                           icon: const Icon(Icons.delete),
                         )
                       ],
@@ -138,6 +147,61 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
         Navigator.pushNamed(context, RouteConstants.addAudio);
         break;
     }
+  }
+
+  Widget deleteConfirmation(String momentId, String memoryId) {
+    return AlertDialog(
+      content: const Text("Are you sure you want to delete this moment?"),
+      actions: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            TextButton(
+              onPressed: () async {
+                await FirestoreService()
+                    .deleteMoment(momentId: momentId, memoryId: memoryId);
+                Navigator.pop(context);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                      content: const Text("Successfully deleted moment"),
+                      backgroundColor: ColorConstants.buttonColor,
+                      duration: const Duration(seconds: 2)),
+                );
+              },
+              child: const Text("Yes"),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(
+                    ColorConstants.buttonColor),
+                foregroundColor:
+                    MaterialStateProperty.all<Color>(ColorConstants.buttonText),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                ),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text("Cancel"),
+              style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.all<Color>(ColorConstants.formField),
+                foregroundColor:
+                    MaterialStateProperty.all<Color>(ColorConstants.bodyText),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                ),
+              ),
+            )
+          ],
+        )
+      ],
+    );
   }
 
   @override
