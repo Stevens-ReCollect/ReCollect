@@ -101,10 +101,10 @@ class MemorySliderState extends State<MemorySlider> {
   
       );
   }
-  @override
-  void dispose() {
-    super.dispose();
-    _videoController.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   super.dispose();
+  //   _videoController.dispose();
+  // }
 
 }
