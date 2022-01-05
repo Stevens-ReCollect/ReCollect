@@ -166,7 +166,7 @@ class MyHomePageState extends State<MyHomePage> {
                           image: DecorationImage(
                             fit: BoxFit.cover,
                             alignment: Alignment.center,
-                            image: AssetImage('lib/images/SamplePhoto.jpg'),
+                            image: AssetImage('lib/images/FallLeaves.jpg'),
                           ),
                         ),
                       ),
