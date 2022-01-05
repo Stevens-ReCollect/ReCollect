@@ -11,6 +11,7 @@ import 'package:recollect_app/addvideo.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/routeConstants.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:recollect_app/editmemory.dart';
 import 'package:recollect_app/editphoto.dart';
 import 'package:recollect_app/firebase/authentication_service.dart';
 import 'package:recollect_app/firebase/firestore_service.dart';
@@ -26,9 +27,6 @@ class MemoryHomePage extends StatefulWidget {
 }
 
 class _MemoryHomePageState extends State<MemoryHomePage> {
-  final List<String> _moments = ['Photo', 'Video', 'Audio'];
-  // final List<String> _moments = [];
-
   userMoments() {
     MediaQueryData queryData = MediaQuery.of(context);
     var pixelRatio = queryData.devicePixelRatio; //responsive sizing
@@ -105,7 +103,7 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
                             showDialog(
                                 context: context,
                                 builder: (BuildContext context) =>
-                                    deleteConfirmation(
+                                    momentDeleteConfirmation(
                                         data['doc_id'], data['memory_id']));
                           },
                           icon: const Icon(Icons.delete),
@@ -149,7 +147,7 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
     }
   }
 
-  Widget deleteConfirmation(String momentId, String memoryId) {
+  Widget momentDeleteConfirmation(String momentId, String memoryId) {
     return AlertDialog(
       content: const Text("Are you sure you want to delete this moment?"),
       actions: [
@@ -164,6 +162,61 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                       content: const Text("Successfully deleted moment"),
+                      backgroundColor: ColorConstants.buttonColor,
+                      duration: const Duration(seconds: 2)),
+                );
+              },
+              child: const Text("Yes"),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(
+                    ColorConstants.buttonColor),
+                foregroundColor:
+                    MaterialStateProperty.all<Color>(ColorConstants.buttonText),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                ),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text("Cancel"),
+              style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.all<Color>(ColorConstants.formField),
+                foregroundColor:
+                    MaterialStateProperty.all<Color>(ColorConstants.bodyText),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                ),
+              ),
+            )
+          ],
+        )
+      ],
+    );
+  }
+
+  Widget memoryDeleteConfirmation(String memoryId) {
+    return AlertDialog(
+      content: const Text(
+          "Are you sure you want to delete this memory?\n\nNOTE: you will lose all data and media in this memory!"),
+      actions: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            TextButton(
+              onPressed: () async {
+                await FirestoreService().deleteMemory(memoryId: memoryId);
+                Navigator.popUntil(context, ModalRoute.withName('/home'));
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                      content: const Text("Successfully deleted memory"),
                       backgroundColor: ColorConstants.buttonColor,
                       duration: const Duration(seconds: 2)),
                 );
@@ -310,18 +363,44 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
           children: <Widget>[
             Row(
               children: [
-                Container(
-                  margin: const EdgeInsets.all(20.0),
-                  child: Text(
-                    widget.memoryData['title'],
-                    style: TextStyle(
-                      fontFamily: 'Roboto',
-                      fontWeight: FontWeight.w700,
-                      fontSize: TextSizeConstants.getadaptiveTextSize(
-                          context, TextSizeConstants.memoryTitle),
+                Flexible(
+                  fit: FlexFit.tight,
+                  flex: 1,
+                  child: Container(
+                    margin: const EdgeInsets.all(20.0),
+                    child: Text(
+                      widget.memoryData['title'],
+                      style: TextStyle(
+                        fontFamily: 'Roboto',
+                        fontWeight: FontWeight.w700,
+                        fontSize: TextSizeConstants.getadaptiveTextSize(
+                            context, TextSizeConstants.memoryTitle),
+                      ),
                     ),
                   ),
                 ),
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            EditMemoryPage(memoryData: widget.memoryData),
+                      ),
+                    );
+                  },
+                  icon: const Icon(Icons.edit),
+                ),
+                IconButton(
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) =>
+                            memoryDeleteConfirmation(
+                                widget.memoryData['doc_id']));
+                  },
+                  icon: const Icon(Icons.delete),
+                )
               ],
             ),
             content(),
