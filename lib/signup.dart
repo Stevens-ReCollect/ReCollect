@@ -17,7 +17,9 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
+  final TextEditingController _confirmPassword = TextEditingController();
   final TextEditingController _caregiverPin = TextEditingController();
+  String signUpResult = "";
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +94,19 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
               Container(
                 width: 0.8 * deviceWidth,
-                margin: const EdgeInsets.only(top: 30.0, left: 0.0),
+                margin: const EdgeInsets.only(top: 10.0, left: 0.0),
+                child: Text(
+                  signUpResult,
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontSize: TextSizeConstants.getadaptiveTextSize(
+                        context, TextSizeConstants.hint),
+                  ),
+                ),
+              ),
+              Container(
+                width: 0.8 * deviceWidth,
+                margin: const EdgeInsets.only(top: 15.0, left: 0.0),
                 child: TextField(
                   controller: _email,
                   decoration: InputDecoration(
@@ -128,7 +142,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 margin: const EdgeInsets.only(top: 15.0, left: 0.0),
                 child: TextField(
                   obscureText: true,
-                  controller: _password,
+                  controller: _confirmPassword,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Confirm Password',
@@ -200,12 +214,19 @@ class _SignUpPageState extends State<SignUpPage> {
                     //   email: _email.text,
                     //   password: _password.text,
                     // );
-                    final result = AuthenticationService().signUp(
-                        email: _email.text,
-                        password: _password.text,
-                        caregiverPin: _caregiverPin.text);
-
-                    if (result != null) {
+                    await AuthenticationService()
+                        .signUp(
+                            email: _email.text,
+                            password: _password.text,
+                            confirmPassword: _confirmPassword.text,
+                            caregiverPin: _caregiverPin.text)
+                        .then((String result) {
+                      setState(() {
+                        signUpResult = result;
+                      });
+                    });
+                    print(signUpResult);
+                    if (signUpResult == "Success") {
                       Navigator.pushNamed(context, RouteConstants.loginRoute);
                     }
                   },

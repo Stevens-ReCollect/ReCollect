@@ -23,16 +23,23 @@ class AuthenticationService {
   }
 
   //SIGN UP METHOD
-  Future signUp(
+  Future<String> signUp(
       {required String email,
       required String password,
+      required String confirmPassword,
       required String caregiverPin}) async {
     try {
+      if (password != confirmPassword) {
+        return "Passwords do not match.";
+      }
+      if (caregiverPin.length != 4) {
+        return "Caregiver Pin must be a 4 digit code.";
+      }
       await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
       await FirestoreService()
           .addNewUser(email: email, caregiverPin: caregiverPin);
-      return getUser();
+      return "Success";
     } on FirebaseAuthException catch (ex) {
       return ex.message.toString();
     }
