@@ -249,14 +249,15 @@ Widget _buildCaregiverPinPopop(BuildContext context) {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         SizedBox(
-            width: 0.7 * deviceWidth,
-            height: 0.2 * deviceWidth,
-            child: Text(
-              'The Caregiver Pin is the pin you will use to enter back to Edit Mode.',
-              style: TextStyle(
-                  fontSize: TextSizeConstants.getadaptiveTextSize(
-                      context, TextSizeConstants.bodyText)),
-            )),
+          width: 0.7 * deviceWidth,
+          height: 0.2 * deviceWidth,
+          child: Text(
+            'The Caregiver Pin is the pin you will use to enter back to Edit Mode.',
+            style: TextStyle(
+                fontSize: TextSizeConstants.getadaptiveTextSize(
+                    context, TextSizeConstants.hint)),
+          ),
+        ),
       ],
     ),
   );

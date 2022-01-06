@@ -28,11 +28,12 @@ class AuthenticationService {
       required String password,
       required String confirmPassword,
       required String caregiverPin}) async {
+    RegExp fourDigitCode = RegExp(r"(^\d{4}$)");
     try {
       if (password != confirmPassword) {
         return "Passwords do not match.";
       }
-      if (caregiverPin.length != 4) {
+      if (!fourDigitCode.hasMatch(caregiverPin)) {
         return "Caregiver Pin must be a 4 digit code.";
       }
       await _firebaseAuth.createUserWithEmailAndPassword(
