@@ -167,7 +167,7 @@ class MyHomePageState extends State<MyHomePage> {
                             fit: BoxFit.cover,
                             alignment: Alignment.topLeft,
                             image: AssetImage(
-                                'lib/images/wedding-placeholder.jpg'),
+                                'lib/assets/wedding-placeholder.jpg'),
                           ),
                         ),
                       ),

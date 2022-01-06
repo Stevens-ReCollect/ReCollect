@@ -89,7 +89,7 @@ Widget selectType(BuildContext context){
                       audioPlayer.play(asset);
                       print('playing now');
                   },
-                  icon: Icon(Icons.pause, color: ColorConstants.buttonColor)),
+                  icon: Icon(Icons.play_arrow, color: ColorConstants.buttonColor)),
                 
                  IconButton(
                   hoverColor: ColorConstants.appBar,
@@ -99,7 +99,7 @@ Widget selectType(BuildContext context){
                       audioPlayer.pause();
                       print('paused');
                   },
-                  icon: Icon(Icons.play_arrow, color: ColorConstants.buttonColor))
+                  icon: Icon(Icons.pause, color: ColorConstants.buttonColor))
                 ],
                 )),
                 
@@ -113,31 +113,40 @@ Widget selectType(BuildContext context){
 var _videoController;
 // List <Widget> myList = [m1, m2, m3];
 class MemorySliderState extends State<MemorySlider> {
-   
+   var _current;
 
-  // List memoryAssets = ['lib/images/wedding-placeholder.jpg', 'lib/images/wedding-placeholder2.jpg', _videoController];
-  // List <String> memoryDescripts = ['Hi', 'You and Bobby cutting the cake'];
+   @override
+  void initState() {
+    // TODO: implement initState
+    _current = 1;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    var m1  = MemoryList('photo', 'lib/images/wedding-placeholder.jpg', '','This is when you and Grandpa Bobby fed each other the cake.');
-    var m2  = MemoryList('photo', 'lib/images/wedding-placeholder2.jpg', '', 'This is when you and Grandpa Bobby cut your wedding cake.');
+    var m1  = MemoryList('photo', 'lib/assets/wedding-placeholder.jpg', '','This is when you and Grandpa Bobby fed each other the cake.');
+    var m2  = MemoryList('photo', 'lib/assets/wedding-placeholder2.jpg', '', 'This is when you and Grandpa Bobby cut your wedding cake.');
     var m3  = MemoryList('video', 'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4', '', 'This is a placeholder of a bee.');
-    var m4  = MemoryList('audio', 'lib/images/birdsflying.mp3', 'Birds Flying','This is a placeholder an audio of birds flying.');
+    var m4  = MemoryList('audio', 'lib/assets/birdsflying.mp3', 'Birds Flying','This is a placeholder an audio of birds flying.');
 
     final List<Widget> memList = [m1.selectType(context), m2.selectType(context), m3.selectType(context), m4.selectType(context)] ;
-    // int _current = 0;
-    // final CarouselController _controller = CarouselController();
 
     MediaQueryData queryData = MediaQuery.of(context);
     var deviceWidth = queryData.size.width;
     var deviceHeight = queryData.size.height;
     return Scaffold(
-      body: CarouselSlider(
+      body: 
+      Column(
+        children: [
+        CarouselSlider(
         options: CarouselOptions(
           aspectRatio: 1/1,
           viewportFraction: 1,
-        ),
+          onPageChanged:(index, reason) {
+                  setState(() {
+                    _current = index + 1;
+                  });
+                }),
         items: memList
             .map((item) => Container(
                   child: item,
@@ -145,8 +154,10 @@ class MemorySliderState extends State<MemorySlider> {
                   color: Colors.blueGrey[50],
                 ))
             .toList()),
+            Text((_current.toString()+ "/" + memList.length.toString()),
+            style: TextStyle(fontSize:0.7*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText))),
 
-         );
+  ]));
   }
   // @override
   // void dispose() {

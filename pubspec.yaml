@@ -82,9 +82,9 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:  
-    - lib/images/wedding-placeholder.jpg
-    - lib/images/wedding-placeholder2.jpg
-    - lib/images/birdsflying.mp3
+    - lib/assets/wedding-placeholder.jpg
+    - lib/assets/wedding-placeholder2.jpg
+    - lib/assets/birdsflying.mp3
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
