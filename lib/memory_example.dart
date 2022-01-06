@@ -139,7 +139,8 @@ class _MemoryPageState extends State<MemoryPage> {
         child: Column(
           
           crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             SizedBox(height: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.h2),),
             // Container(
@@ -151,9 +152,9 @@ class _MemoryPageState extends State<MemoryPage> {
             Container(
               width: 0.8*deviceWidth,
               height:0.5*deviceHeight,
-            child: const Center(
-              child:MemorySlider(),
-              )
+            
+              child:const Center(child: MemorySlider()),
+              
             ),
                SizedBox(height: deviceHeight/50),
                Text('Do you remember?', style: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),),

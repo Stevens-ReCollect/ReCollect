@@ -46,6 +46,7 @@ dependencies:
   syncfusion_flutter_charts: ^19.3.48
   carousel_slider: ^4.0.0
   video_player: ^2.2.10
+  audioplayers: ^0.20.1
   # overlay_container: ^0.0.5+1
 
 
@@ -83,6 +84,7 @@ flutter:
   assets:  
     - lib/images/wedding-placeholder.jpg
     - lib/images/wedding-placeholder2.jpg
+    - lib/images/birdsflying.mp3
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
