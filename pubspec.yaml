@@ -83,6 +83,8 @@ flutter:
   assets:  
     - lib/images/wedding-placeholder.jpg
     - lib/images/wedding-placeholder2.jpg
+    - lib/images/FallLeaves.jpg
+    - lib/images/Bird.jpg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
