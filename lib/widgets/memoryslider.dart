@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
@@ -78,7 +77,7 @@ Widget selectType(BuildContext context){
                 child:Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                  Container(
+                  SizedBox(
                     width:0.4*MediaQuery.of(context).size.width,
                     child: Text(title, style: TextStyle(fontSize:0.7*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText))),
                   ),
@@ -134,9 +133,6 @@ class MemorySliderState extends State<MemorySlider> {
     //and return the moments
     final List<Widget> memList = [m1.selectType(context), m2.selectType(context), m3.selectType(context), m4.selectType(context)] ;
 
-    MediaQueryData queryData = MediaQuery.of(context);
-    var deviceWidth = queryData.size.width;
-    var deviceHeight = queryData.size.height;
     return Scaffold(
       body: 
       Stack(
