@@ -150,13 +150,13 @@ class _MemoryPageState extends State<MemoryPage> {
             // )), 
             //this is where the description will go
             Container(
-              width: 0.8*deviceWidth,
-              height:0.5*deviceHeight,
+              width: 0.7*deviceWidth,
+              height:0.6*deviceHeight,
             
               child:const Center(child: MemorySlider()),
               
             ),
-               SizedBox(height: deviceHeight/50),
+              //  SizedBox(height: deviceHeight/50),
                Text('Do you remember?', style: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),),
                SizedBox(height: deviceHeight/80),
                 Row(

@@ -13,14 +13,13 @@ class MemorySlider extends StatefulWidget{
 
 }
 
-//TODO: Figure out how to make list of assets 
-
 class MemoryList{
-  String type;
-  String asset;
-  String title;
-  String description;
+  String type; //file type
+  String asset; //link or data call to the file
+  String title; //title for audio files
+  String description; //description 
   MemoryList(this.type, this.asset,  this.title, this.description);
+  //These parameters can be changed to best reflect the firebase or vice versa
 
 Widget selectType(BuildContext context){
   if(type == 'photo'){
@@ -64,7 +63,6 @@ Widget selectType(BuildContext context){
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                // Find audioplayer package
                Text(description, style: TextStyle(color: ColorConstants.bodyText, fontSize: 0.8*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),),
               const SizedBox(height: 30),
               Container(
@@ -111,24 +109,26 @@ Widget selectType(BuildContext context){
 }
 
 var _videoController;
-// List <Widget> myList = [m1, m2, m3];
 class MemorySliderState extends State<MemorySlider> {
    var _current;
 
    @override
   void initState() {
-    // TODO: implement initState
     _current = 1;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    //Sample moments (will be deleted) that contain file type, link to asset, title (for audio), and description
+    
     var m1  = MemoryList('photo', 'lib/assets/wedding-placeholder.jpg', '','This is when you and Grandpa Bobby fed each other the cake.');
     var m2  = MemoryList('photo', 'lib/assets/wedding-placeholder2.jpg', '', 'This is when you and Grandpa Bobby cut your wedding cake.');
     var m3  = MemoryList('video', 'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4', '', 'This is a placeholder of a bee.');
     var m4  = MemoryList('audio', 'lib/assets/birdsflying.mp3', 'Birds Flying','This is a placeholder an audio of birds flying.');
 
+    //This list would contain the data calls from firebase, could use a function to make the calls
+    //and return the moments
     final List<Widget> memList = [m1.selectType(context), m2.selectType(context), m3.selectType(context), m4.selectType(context)] ;
 
     MediaQueryData queryData = MediaQuery.of(context);
@@ -136,7 +136,8 @@ class MemorySliderState extends State<MemorySlider> {
     var deviceHeight = queryData.size.height;
     return Scaffold(
       body: 
-      Column(
+      Stack(
+        alignment: AlignmentDirectional.bottomCenter,
         children: [
         CarouselSlider(
         options: CarouselOptions(
@@ -150,12 +151,25 @@ class MemorySliderState extends State<MemorySlider> {
         items: memList
             .map((item) => Container(
                   child: item,
-                  padding: const EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(25),
                   color: Colors.blueGrey[50],
                 ))
             .toList()),
             Text((_current.toString()+ "/" + memList.length.toString()),
-            style: TextStyle(fontSize:0.7*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText))),
+            style: TextStyle(fontSize:0.7*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.buttonText), 
+            color: ColorConstants.bodyText,
+            shadows: const <Shadow>[
+            Shadow(
+              offset: Offset(1.0, 1.0),
+              blurRadius: 8.0,
+              color: Color.fromARGB(0, 0, 0, 255),
+            ),
+            Shadow(
+              offset: Offset(3.0, 3.0),
+              blurRadius: 8.0,
+              color: Color.fromARGB(0, 0, 0, 255),
+            ),
+          ],)),
 
   ]));
   }
