@@ -27,7 +27,8 @@ Widget selectType(BuildContext context){
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                Text(description, style: TextStyle(color: ColorConstants.bodyText, fontSize: 0.8*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),),
+                const SizedBox(height:10),
+                Text(description, style: TextStyle(color: ColorConstants.bodyText, fontSize: 0.7*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),),
                 AspectRatio(aspectRatio: 5/4,
                 child:Image.asset(asset, fit: BoxFit.cover,),
                 )
@@ -40,7 +41,8 @@ Widget selectType(BuildContext context){
         mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 // Find videoplayer package
-                Text(description, style: TextStyle(color: ColorConstants.bodyText, fontSize: 0.8*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),),
+                const SizedBox(height:10),
+                Text(description, style: TextStyle(color: ColorConstants.bodyText, fontSize: 0.7*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),),
                 Stack(
                   children: <Widget>[
                 AspectRatio(aspectRatio: 5/4,
@@ -63,7 +65,8 @@ Widget selectType(BuildContext context){
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-               Text(description, style: TextStyle(color: ColorConstants.bodyText, fontSize: 0.8*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),),
+                const SizedBox(height:10),
+               Text(description, style: TextStyle(color: ColorConstants.bodyText, fontSize: 0.7*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),),
               const SizedBox(height: 30),
               Container(
                 width:0.8*MediaQuery.of(context).size.width,
@@ -137,7 +140,8 @@ class MemorySliderState extends State<MemorySlider> {
     return Scaffold(
       body: 
       Stack(
-        alignment: AlignmentDirectional.bottomCenter,
+        alignment: AlignmentDirectional.topCenter,
+        fit: StackFit.passthrough,
         children: [
         CarouselSlider(
         options: CarouselOptions(
@@ -151,25 +155,14 @@ class MemorySliderState extends State<MemorySlider> {
         items: memList
             .map((item) => Container(
                   child: item,
-                  padding: const EdgeInsets.all(25),
+                  padding: const EdgeInsets.all(10),
                   color: Colors.blueGrey[50],
                 ))
             .toList()),
             Text((_current.toString()+ "/" + memList.length.toString()),
-            style: TextStyle(fontSize:0.7*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.buttonText), 
-            color: ColorConstants.bodyText,
-            shadows: const <Shadow>[
-            Shadow(
-              offset: Offset(1.0, 1.0),
-              blurRadius: 8.0,
-              color: Color.fromARGB(0, 0, 0, 255),
-            ),
-            Shadow(
-              offset: Offset(3.0, 3.0),
-              blurRadius: 8.0,
-              color: Color.fromARGB(0, 0, 0, 255),
-            ),
-          ],)),
+            style: TextStyle(fontSize:0.6*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText), 
+            color: ColorConstants.buttonColor, backgroundColor: Colors.blueGrey[50],
+            )),
 
   ]));
   }

@@ -150,7 +150,7 @@ class _MemoryPageState extends State<MemoryPage> {
             // )), 
             //this is where the description will go
             Container(
-              width: 0.7*deviceWidth,
+              width: 0.8*deviceWidth,
               height:0.6*deviceHeight,
             
               child:const Center(child: MemorySlider()),
