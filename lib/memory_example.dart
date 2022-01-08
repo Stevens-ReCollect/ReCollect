@@ -8,49 +8,8 @@ import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/textSizeConstants.dart';
 import 'package:recollect_app/main.dart';
 import 'package:recollect_app/widgets/memoryslider.dart';
+import 'package:video_player/video_player.dart';
 
-class MemoryList {
-  final String type;
-  final String asset;
-  final String description;
-
-  MemoryList(this.type, this.asset, this.description);
- 
-  selectType(){
-    if( m.type == 'photo'){
-      return Column(
-              children: <Widget>[
-                Image.asset(m.asset, fit: BoxFit.fill,),
-                
-              ],
-            );
-    } else if( m.type == 'video'){
-      return Column(
-              children: <Widget>[
-                // Find videoplayer package
-                Text(m.description,style: TextStyle(fontSize: 30,color: Colors.white,fontWeight: FontWeight.bold),)
-                
-              ],
-            );
-    } else if( m.type == 'audio'){
-      return Column(
-              children: <Widget>[
-                // Find audioplayer package
-                Text(m.description,style: TextStyle(fontSize: 30,color: Colors.white,fontWeight: FontWeight.bold),)
-                
-              ],
-            );
-    } else {
-      SizedBox();
-    }
-  }
- 
-}
-
-String firstDesc = 'This is when you and Grandpa Bobby cut your wedding cake.';
-MemoryList m  = MemoryList('photo', 'lib/images/wedding-placeholder.jpg', firstDesc);
-List  myList = [m, ];
-  
 
   
  late String _buttonController; // alerts the correct dialog
@@ -183,11 +142,11 @@ class _MemoryPageState extends State<MemoryPage> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             SizedBox(height: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.h2),),
-            Container(
-            padding: EdgeInsets.all(20),
-            width: 0.9*deviceWidth,
-            child: Text(m.description, style: TextStyle(color: ColorConstants.bodyText, fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),
-            )), 
+            // Container(
+            // padding: EdgeInsets.all(20),
+            // width: 0.9*deviceWidth,
+            // child: Text("This is when you and Grandpa Bobby cut your wedding cake.", style: TextStyle(color: ColorConstants.bodyText, fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),
+            // )), 
             //this is where the description will go
             Container(
               width: 0.8*deviceWidth,
@@ -196,20 +155,7 @@ class _MemoryPageState extends State<MemoryPage> {
               child:MemorySlider(),
               )
             ),
-          
-                //  selectType(),
-              //    Container(
-              //      width: 0.8*deviceWidth,
-              //      height: deviceHeight / 2.5,
-              //   decoration: new BoxDecoration(
-                
-              //   image: new DecorationImage(
-              //   fit: BoxFit.cover,
-              //   alignment: Alignment.topLeft, 
-              //   image: AssetImage('lib/images/wedding-placeholder.jpg'), 
-              //   ))),
-                
-               SizedBox(height: deviceHeight/30),
+               SizedBox(height: deviceHeight/50),
                Text('Do you remember?', style: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),),
                SizedBox(height: deviceHeight/80),
                 Row(

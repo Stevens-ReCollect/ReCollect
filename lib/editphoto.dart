@@ -20,14 +20,12 @@ class EditPhotoPage extends StatefulWidget {
 }
 
 class _EditPhotoPageState extends State<EditPhotoPage> {
-  // I NEED TO FIND A WAY TO EXISITNG PHOTO AND DESCRIPTION TO SCREEN
   TextEditingController _description = TextEditingController(text: "");
   File? _image;
   bool _loading = false;
 
   Future setFields() async {
     try {
-      // _image = File(widget.momentData['file_path']);
       _description =
           TextEditingController(text: widget.momentData['description']);
     } on PlatformException catch (e) {
@@ -87,16 +85,6 @@ class _EditPhotoPageState extends State<EditPhotoPage> {
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              // Container(
-              //   margin: const EdgeInsets.only(top: 50.0, left: 10.0),
-              //   alignment: Alignment.centerLeft,
-              //   child: IconButton(
-              //     icon: const Icon(Icons.arrow_back_ios_new),
-              //     onPressed: () {
-              //       Navigator.pop(context);
-              //     },
-              //   ),
-              // ),
               ListTile(
                 title: const Text(
                   'Photo Selected',
@@ -132,14 +120,6 @@ class _EditPhotoPageState extends State<EditPhotoPage> {
                       maxHeight: 60.0,
                       maxWidth: 60.0,
                     ),
-                    // child: Image.network(
-                    //   widget.momentData['file_path'],
-                    //   fit: BoxFit.fill,
-                    // ),
-                    // child: Image.file(
-                    //   _image!,
-                    //   fit: BoxFit.fill,
-                    // ),
                     child: _image == null
                         ? Image.network(
                             widget.momentData['file_path'],
@@ -209,7 +189,6 @@ class _EditPhotoPageState extends State<EditPhotoPage> {
                       _loading = true;
                     });
                     print("Clicked Saved");
-                    //CHANGE THIS TO UPDATE
                     if (_image != null) {
                       await FirestoreService().editMoment(
                           memoryId: widget.momentData['memory_id'],
@@ -217,8 +196,6 @@ class _EditPhotoPageState extends State<EditPhotoPage> {
                           file: _image,
                           description: _description.text);
                     }
-                    // Navigator.pushNamed(
-                    //     context, RouteConstants.memoryHomeRoute);
                     Navigator.pop(context);
                   },
                 ),
