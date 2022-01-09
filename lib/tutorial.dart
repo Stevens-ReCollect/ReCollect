@@ -13,11 +13,11 @@ class Tutorial extends StatefulWidget{
 class TutorialState extends State<Tutorial>{
   int step = 0;
   List stepTitle = ['Getting Started', 'Sharing', 'Secure', 'Accessible', 'Community'];
-  List stepDesc = ['Sign up with a caregiver pin to access your settings.',
-  'Upload memories via pictures, videos, and audio by tapping Create New Memory.',
-  'Toggle between Edit and Story modes using the toggle switch on the top right. Edit mode gives access to the settings and creating memories while story mode shows only existing memories for no tampering.',
-  'Use our accessibility tools such as text-to-speech and high contrast by enabling them in your system’s settings.',
-  'As an admin, add other caregivers to contribute more memories through our settings.'];
+  List stepDesc = ["Sign up with a caregiver pin to access your settings.",
+  "Upload memories via pictures, videos, and audio by tapping Create New Memory.",
+  "Toggle between Edit and Story modes using the toggle switch on the top right. Edit mode gives access to the settings and creating memories while story mode shows only existing memories for no tampering.",
+  "Use our accessibility tools such as text-to-speech and high contrast by enabling them in your system's settings.",
+  "As an admin, add other caregivers to contribute more memories through our settings."];
 
   @override
   Widget build(BuildContext context) {
