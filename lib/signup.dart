@@ -212,6 +212,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         final result = AuthenticationService().signUp(
                             email: _email.text,
                             password: _password.text,
+                            confirmPassword: _password.text,
                             caregiverPin: _caregiverPin.text);
 
                         // ignore: unrelated_type_equality_checks
