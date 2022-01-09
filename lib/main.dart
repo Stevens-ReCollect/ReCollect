@@ -21,6 +21,7 @@ import 'package:recollect_app/memoryhome.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:recollect_app/navigation.dart';
 import 'package:recollect_app/settings.dart';
+import 'package:recollect_app/tutorial.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -69,6 +70,7 @@ class MyApp extends StatelessWidget {
         RouteConstants.memoryHomeRoute: (context) => MemoryHomePage(),
         RouteConstants.navigationRoute: (context) => Navigate(),
         RouteConstants.settingsRoute: (context) => SettingsPage(),
+        RouteConstants.tutorialRoute: (context) => Tutorial(),
       },
       // ),
     );

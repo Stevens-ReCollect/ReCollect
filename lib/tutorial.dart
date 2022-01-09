@@ -12,12 +12,13 @@ class Tutorial extends StatefulWidget{
 
 class TutorialState extends State<Tutorial>{
   int step = 0;
-  List stepTitle = ['Getting Started', 'Sharing', 'Secure', 'Accessible', 'Community'];
-  List stepDesc = ["Sign up with a caregiver pin to access your settings.",
-  "Upload memories via pictures, videos, and audio by tapping Create New Memory.",
-  "Toggle between Edit and Story modes using the toggle switch on the top right. Edit mode gives access to the settings and creating memories while story mode shows only existing memories for no tampering.",
-  "Use our accessibility tools such as text-to-speech and high contrast by enabling them in your system's settings.",
-  "As an admin, add other caregivers to contribute more memories through our settings."];
+  List stepTitle = ['Sharing', 'Edit Mode', 'Story Mode', 'Accessibility', 'View Progress'];
+  List stepDesc = [ "Upload memories via pictures, videos, and audio by tapping Create New Memory in the home page.",
+  "Toggle between Edit and Story modes using the toggle switch on the top right. To access Edit mode, you must type in your Caregiver Pin, which gives access to the settings and creating memories.",
+  "When in story mode, the application blocks users from editing their account and just allows for users to view memories for easy access.",
+  "Use our accessibility tools such as text-to-speech and high contrast by enabling them in your system's settings in the top right corner of the home page.",
+  "To view the progress of your loved one, go to the settings in edit mode and you will find it there!",
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +49,7 @@ class TutorialState extends State<Tutorial>{
           step++;
            
           if(step == stepTitle.length){
-            Navigator.pushNamed(context, RouteConstants.signupRoute);
+            Navigator.pushNamed(context, RouteConstants.homeRoute);
             step = 0;
           }
         });

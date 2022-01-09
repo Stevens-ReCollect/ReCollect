@@ -44,6 +44,7 @@ class StartUp extends StatelessWidget {
         RouteConstants.memoryHomeRoute: (context) => MemoryHomePage(),
         RouteConstants.navigationRoute: (context) => Navigate(),
         RouteConstants.settingsRoute: (context) => SettingsPage(),
+        RouteConstants.tutorialRoute: (context) => Tutorial(),
       },
     );
   }
