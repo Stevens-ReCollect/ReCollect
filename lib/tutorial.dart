@@ -28,12 +28,35 @@ class TutorialState extends State<Tutorial>{
     var deviceWidth = queryData.size.width;
     var deviceHeight = queryData.size.height;
 
+    _nextButton(){
+      var buttonLabel = "Next";
+      if(step == 4){
+        buttonLabel = "Get Started";
+      } else{
+        buttonLabel = "Next";
+      }
+      return ElevatedButton(
+        style: ElevatedButton.styleFrom(maximumSize: Size.fromWidth(0.5*deviceWidth), primary: ColorConstants.buttonColor, padding: EdgeInsets.all(20), 
+        alignment: Alignment.center,
+        textStyle: TextStyle(fontSize: 0.7*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.buttonText))),
+        onPressed:(){
+        setState(() {
+          step++;
+           
+          if(step == stepTitle.length){
+            Navigator.pushNamed(context, RouteConstants.homeRoute);
+            step = 0;
+          }
+        });
+      }, child:Text(buttonLabel));
+    }
+
     _backButton(){
     if(step > 0){
     return ElevatedButton(
-        style: ElevatedButton.styleFrom(maximumSize: Size.fromWidth(0.5*deviceWidth), primary: ColorConstants.buttonColor, padding: EdgeInsets.all(20), 
+        style: ElevatedButton.styleFrom(maximumSize: Size.fromWidth(0.5*deviceWidth), primary: ColorConstants.hintText, padding: EdgeInsets.all(20), 
         alignment: Alignment.center,
-        textStyle: TextStyle(fontSize: 0.9*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.buttonText))),
+        textStyle: TextStyle(fontSize: 0.7*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.buttonText))),
         onPressed:(){
         setState(() {
           step--; 
@@ -52,35 +75,24 @@ class TutorialState extends State<Tutorial>{
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>
-      [Text(((step+1).toString() +"/"+ stepTitle.length.toString()), style: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(
-                  context, TextSizeConstants.memoryTitle))),
+      [
       SizedBox(height: 0.05*deviceHeight),
       Text(stepTitle[step], style: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(
-                  context, TextSizeConstants.memoryTitle))),
-      SizedBox(height: 0.05*deviceHeight),
-      Text(stepDesc[step], style: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(
+                  context, TextSizeConstants.bodyText))),
+      SizedBox(height: 0.04*deviceHeight),
+      Text(stepDesc[step], style: TextStyle(fontSize: 0.7*TextSizeConstants.getadaptiveTextSize(
                   context, TextSizeConstants.bodyText))),
       SizedBox(height: 0.05*deviceHeight),
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.max,
         children: [
-      _backButton(),
+          _backButton(),
+          SizedBox( width: 0.05*deviceWidth),
+      Text(((step+1).toString() +"/"+ stepTitle.length.toString()), style: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(
+                  context, TextSizeConstants.bodyText))),
       SizedBox( width: 0.05*deviceWidth),
-      ElevatedButton(
-        style: ElevatedButton.styleFrom(maximumSize: Size.fromWidth(0.5*deviceWidth), primary: ColorConstants.buttonColor, padding: EdgeInsets.all(20), 
-        alignment: Alignment.center,
-        textStyle: TextStyle(fontSize: 0.9*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.buttonText))),
-        onPressed:(){
-        setState(() {
-          step++;
-           
-          if(step == stepTitle.length){
-            Navigator.pushNamed(context, RouteConstants.homeRoute);
-            step = 0;
-          }
-        });
-      }, child: const Text('Next')),
+      _nextButton(),
       
       ])],
       ),
