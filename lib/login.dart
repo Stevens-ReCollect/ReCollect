@@ -8,6 +8,7 @@ import 'package:recollect_app/constants/routeConstants.dart';
 import 'package:recollect_app/constants/textSizeConstants.dart';
 import 'package:recollect_app/main.dart';
 import 'package:recollect_app/signup.dart';
+import 'package:recollect_app/tutorial.dart';
 
 class LoginPage extends StatelessWidget {
   TextEditingController _email = TextEditingController();

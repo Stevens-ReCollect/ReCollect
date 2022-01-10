@@ -20,11 +20,29 @@ class TutorialState extends State<Tutorial>{
   "To view the progress of your loved one, go to the settings in edit mode and you will find it there!",
   ];
 
+  
+
   @override
   Widget build(BuildContext context) {
     MediaQueryData queryData = MediaQuery.of(context);
     var deviceWidth = queryData.size.width;
     var deviceHeight = queryData.size.height;
+
+    _backButton(){
+    if(step > 0){
+    return ElevatedButton(
+        style: ElevatedButton.styleFrom(maximumSize: Size.fromWidth(0.5*deviceWidth), primary: ColorConstants.buttonColor, padding: EdgeInsets.all(20), 
+        alignment: Alignment.center,
+        textStyle: TextStyle(fontSize: 0.9*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.buttonText))),
+        onPressed:(){
+        setState(() {
+          step--; 
+        });
+      }, child: const Text('Back'));
+    } else{
+      return const SizedBox();
+    }
+  }
 
     return Scaffold(
       body: Center(
@@ -34,12 +52,21 @@ class TutorialState extends State<Tutorial>{
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>
-      [Text(stepTitle[step], style: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(
+      [Text(((step+1).toString() +"/"+ stepTitle.length.toString()), style: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(
+                  context, TextSizeConstants.memoryTitle))),
+      SizedBox(height: 0.05*deviceHeight),
+      Text(stepTitle[step], style: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(
                   context, TextSizeConstants.memoryTitle))),
       SizedBox(height: 0.05*deviceHeight),
       Text(stepDesc[step], style: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(
                   context, TextSizeConstants.bodyText))),
       SizedBox(height: 0.05*deviceHeight),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+      _backButton(),
+      SizedBox( width: 0.05*deviceWidth),
       ElevatedButton(
         style: ElevatedButton.styleFrom(maximumSize: Size.fromWidth(0.5*deviceWidth), primary: ColorConstants.buttonColor, padding: EdgeInsets.all(20), 
         alignment: Alignment.center,
@@ -53,7 +80,9 @@ class TutorialState extends State<Tutorial>{
             step = 0;
           }
         });
-      }, child: const Text('Next'))],
+      }, child: const Text('Next')),
+      
+      ])],
       ),
       ),
       ));

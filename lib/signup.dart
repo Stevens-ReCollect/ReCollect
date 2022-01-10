@@ -205,8 +205,9 @@ class _SignUpPageState extends State<SignUpPage> {
                         password: _password.text,
                         caregiverPin: _caregiverPin.text);
 
+                    // ignore: unnecessary_null_comparison
                     if (result != null) {
-                      Navigator.pushNamed(context, RouteConstants.homeRoute);
+                      Navigator.pushNamed(context, RouteConstants.loginRoute);
                     }
                   },
                 ),

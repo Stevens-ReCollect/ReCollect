@@ -138,36 +138,6 @@ class StartUpPage extends StatelessWidget {
               ),
               
             ),
-            Container(
-              margin: const EdgeInsets.only(top: 22.0),
-              height: 0.075 * deviceHeight,
-              width: 0.6 * deviceWidth,
-              child: TextButton(
-                child: Text(
-                  'Getting Started',
-                  style: TextStyle(
-                    fontSize: TextSizeConstants.getadaptiveTextSize(
-                        context, TextSizeConstants.bodyText),
-                    fontFamily: 'Roboto',
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                style: ButtonStyle(
-                  padding: MaterialStateProperty.all(EdgeInsets.all(15)),
-                  backgroundColor: MaterialStateProperty.all<Color>(
-                      ColorConstants.buttonColor),
-                  foregroundColor: MaterialStateProperty.all<Color>(
-                      ColorConstants.buttonText),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => Tutorial()));
-                },
-              )),
           ],
         ),
       ),
