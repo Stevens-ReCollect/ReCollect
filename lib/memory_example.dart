@@ -8,51 +8,55 @@ import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/textSizeConstants.dart';
 import 'package:recollect_app/main.dart';
 import 'package:recollect_app/widgets/memoryslider.dart';
+import 'package:video_player/video_player.dart';
 
-class MemoryList {
-  final String type;
-  final String asset;
-  final String description;
 
-  MemoryList(this.type, this.asset, this.description);
- 
   
- 
-}
+ late String _buttonController; // alerts the correct dialog
+ late String affirmTitle;
+ late String affirmation; // affirming message
 
-String firstDesc = 'This is when you and Grandpa Bobby cut your wedding cake.';
-MemoryList m  = MemoryList('photo', 'lib/images/wedding-placeholder.jpg', firstDesc);
-List  myList = [m, ];
-  
-selectType(){
-    if( m.type == 'photo'){
-      return Column(
-              children: <Widget>[
-                Image.asset(m.asset, fit: BoxFit.fill,),
-                
-              ],
-            );
-    } else if( m.type == 'video'){
-      return Column(
-              children: <Widget>[
-                // Find videoplayer package
-                Text(m.description,style: TextStyle(fontSize: 30,color: Colors.white,fontWeight: FontWeight.bold),)
-                
-              ],
-            );
-    } else if( m.type == 'audio'){
-      return Column(
-              children: <Widget>[
-                // Find audioplayer package
-                Text(m.description,style: TextStyle(fontSize: 30,color: Colors.white,fontWeight: FontWeight.bold),)
-                
-              ],
-            );
-    } else {
-      SizedBox();
-    }
+  Widget _affirmingResponse(BuildContext context){
+  if(_buttonController == "Yes"){
+      affirmTitle = "Great job!";
+      affirmation = "Amazing progress.";
+  } else if(_buttonController == "Maybe"){
+      affirmTitle = "All progress is good progress!";
+      affirmation = "Swipe through to see if more moments will help.";
+  } else {
+      affirmTitle ="It's okay!";
+      affirmation = "We can always come back to this moment.";
   }
-  
+    return AlertDialog(
+        title: Text(affirmTitle,
+            style: TextStyle(
+              fontSize: TextSizeConstants.getadaptiveTextSize(
+                  context, TextSizeConstants.bodyText),
+            ), textAlign: TextAlign.center,),
+        content: Text(affirmation,
+            style: TextStyle(
+              fontSize: 0.8*TextSizeConstants.getadaptiveTextSize(
+                  context, TextSizeConstants.bodyText),
+            ), textAlign: TextAlign.left,),
+        contentPadding: EdgeInsets.all(TextSizeConstants.getadaptiveTextSize(
+                  context, TextSizeConstants.bodyText)),
+        actions: <Widget>[
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.all(15),
+                primary: ColorConstants.buttonColor),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text('Okay',
+                style: TextStyle(
+                    fontSize: 
+                        0.7*TextSizeConstants.getadaptiveTextSize(
+                            context, TextSizeConstants.buttonText))),
+          )
+        ]);
+
+  }
 
 //  createCarousel(){
 //   myList.map((i){
@@ -138,11 +142,11 @@ class _MemoryPageState extends State<MemoryPage> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             SizedBox(height: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.h2),),
-            Container(
-            padding: EdgeInsets.all(20),
-            width: 0.9*deviceWidth,
-            child: Text(m.description, style: TextStyle(color: ColorConstants.bodyText, fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),
-            )), 
+            // Container(
+            // padding: EdgeInsets.all(20),
+            // width: 0.9*deviceWidth,
+            // child: Text("This is when you and Grandpa Bobby cut your wedding cake.", style: TextStyle(color: ColorConstants.bodyText, fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),
+            // )), 
             //this is where the description will go
             Container(
               width: 0.8*deviceWidth,
@@ -151,27 +155,21 @@ class _MemoryPageState extends State<MemoryPage> {
               child:MemorySlider(),
               )
             ),
-          
-                //  selectType(),
-              //    Container(
-              //      width: 0.8*deviceWidth,
-              //      height: deviceHeight / 2.5,
-              //   decoration: new BoxDecoration(
-                
-              //   image: new DecorationImage(
-              //   fit: BoxFit.cover,
-              //   alignment: Alignment.topLeft, 
-              //   image: AssetImage('lib/images/wedding-placeholder.jpg'), 
-              //   ))),
-                
-               SizedBox(height: deviceHeight/30),
+               SizedBox(height: deviceHeight/50),
                Text('Do you remember?', style: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),),
                SizedBox(height: deviceHeight/80),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                  ElevatedButton(onPressed: (){
-                    _isButtonDisabled ? null : _isEditMode; //null will get replaced with function that increments memory data
+                  ElevatedButton(
+                    onPressed: (){
+                    _isButtonDisabled ? null : _isEditMode;
+                     //null will get replaced with function that increments memory data
+                     _buttonController = "Yes";
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) => _affirmingResponse(context)
+                        );
                   }, 
                   child: const Text('Yes'),
                   style: ElevatedButton.styleFrom(padding:EdgeInsets.all(deviceWidth/40), primary: ColorConstants.buttonColor,
@@ -180,6 +178,11 @@ class _MemoryPageState extends State<MemoryPage> {
                   SizedBox(width: deviceWidth/40),
                   ElevatedButton(onPressed: (){
                     _isButtonDisabled ? null : _isEditMode; //null will get replaced with function that increments memory data
+                  _buttonController = "No";
+                 showDialog(
+                        context: context,
+                        builder: (BuildContext context) => _affirmingResponse(context)
+                        );
                   }, 
                   child: const Text("No"),
                   style: ElevatedButton.styleFrom( padding:EdgeInsets.all(deviceWidth/40), primary: ColorConstants.unfavoredButton, 
@@ -188,6 +191,11 @@ class _MemoryPageState extends State<MemoryPage> {
                   SizedBox(width:deviceWidth/40),
                   ElevatedButton(onPressed: (){
                     _isButtonDisabled ? null : _isEditMode; //null will get replaced with function that increments memory data
+                  _buttonController = "Maybe";
+                   showDialog(
+                        context: context,
+                        builder: (BuildContext context) => _affirmingResponse(context)
+                        );
                   }, 
                   child: const Text("Maybe"),
                   style: ElevatedButton.styleFrom( padding:EdgeInsets.all(deviceWidth/40), primary: ColorConstants.unfavoredButton, 

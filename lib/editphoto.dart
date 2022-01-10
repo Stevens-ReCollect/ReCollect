@@ -11,18 +11,27 @@ import 'package:cached_network_image/cached_network_image.dart';
 
 import 'constants/routeConstants.dart';
 
-class AddPhotoPage extends StatefulWidget {
-  const AddPhotoPage({this.memoryData});
-  final memoryData;
+class EditPhotoPage extends StatefulWidget {
+  EditPhotoPage({required this.momentData});
+  final momentData;
 
   @override
-  _AddPhotoPageState createState() => _AddPhotoPageState();
+  _EditPhotoPageState createState() => _EditPhotoPageState();
 }
 
-class _AddPhotoPageState extends State<AddPhotoPage> {
-  final TextEditingController _description = TextEditingController();
-  File? image;
+class _EditPhotoPageState extends State<EditPhotoPage> {
+  TextEditingController _description = TextEditingController(text: "");
+  File? _image;
   bool _loading = false;
+
+  Future setFields() async {
+    try {
+      _description =
+          TextEditingController(text: widget.momentData['description']);
+    } on PlatformException catch (e) {
+      print("Failed to get image: $e");
+    }
+  }
 
   Future pickImage() async {
     try {
@@ -32,7 +41,7 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
       }
       final imageTemp = File(file.path);
       setState(() {
-        this.image = imageTemp;
+        this._image = imageTemp;
       });
     } on PlatformException catch (e) {
       print('Failed to pick image $e');
@@ -49,7 +58,7 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
 
   @override
   void initState() {
-    pickImage();
+    setFields();
     super.initState();
   }
 
@@ -60,20 +69,22 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
     var deviceHeight = queryData.size.height;
     return MaterialApp(
       home: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
+          elevation: 0,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios_new),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          title: const Text("Edit Photo"),
+        ),
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              Container(
-                margin: const EdgeInsets.only(top: 50.0, left: 10.0),
-                alignment: Alignment.centerLeft,
-                child: IconButton(
-                  icon: const Icon(Icons.arrow_back_ios_new),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ),
               ListTile(
                 title: const Text(
                   'Photo Selected',
@@ -109,14 +120,15 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
                       maxHeight: 60.0,
                       maxWidth: 60.0,
                     ),
-                    child: image != null
-                        ? Image.file(
-                            image!,
-                            width: 60.0,
-                            height: 60.0,
-                            fit: BoxFit.cover,
+                    child: _image == null
+                        ? Image.network(
+                            widget.momentData['file_path'],
+                            fit: BoxFit.fill,
                           )
-                        : const FlutterLogo(size: 60.0),
+                        : Image.file(
+                            _image!,
+                            fit: BoxFit.fill,
+                          ),
                   ),
                 ),
               ),
@@ -177,15 +189,13 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
                       _loading = true;
                     });
                     print("Clicked Saved");
-                    if (image != null) {
-                      await FirestoreService().addNewMoment(
-                          memoryId: widget.memoryData['doc_id'],
-                          type: 'Photo',
-                          file: image,
+                    if (_image != null) {
+                      await FirestoreService().editMoment(
+                          memoryId: widget.momentData['memory_id'],
+                          momentId: widget.momentData['doc_id'],
+                          file: _image,
                           description: _description.text);
                     }
-                    // Navigator.pushNamed(
-                    //     context, RouteConstants.memoryHomeRoute);
                     Navigator.pop(context);
                   },
                 ),

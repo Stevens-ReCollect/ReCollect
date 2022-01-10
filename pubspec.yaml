@@ -32,6 +32,7 @@ dependencies:
   firebase_core: ^1.8.0 # connects project to firebase core
   firebase_auth: ^3.1.4
   cloud_firestore: ^2.5.4
+  firebase_storage: ^10.2.0
   image_picker: ^0.8.4+4
   cached_network_image: ^3.1.0+1
 
@@ -44,6 +45,7 @@ dependencies:
   provider: ^6.0.0
   syncfusion_flutter_charts: ^19.3.48
   carousel_slider: ^4.0.0
+  video_player: ^2.2.10
   # overlay_container: ^0.0.5+1
 
 
@@ -57,6 +59,7 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^1.0.0
+  dart_code_metrics: ^4.8.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -80,6 +83,8 @@ flutter:
   assets:  
     - lib/images/wedding-placeholder.jpg
     - lib/images/wedding-placeholder2.jpg
+    - lib/images/FallLeaves.jpg
+    - lib/images/Bird.jpg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -36,7 +36,7 @@ class ProgressReportState extends State<ProgressReport>{
       appBar: AppBar(
         // App bar properties
         // title: Text(widget.title),
-        automaticallyImplyLeading: false,
+        automaticallyImplyLeading: true,
         backgroundColor: ColorConstants.appBar,
         title: Text('Progress Report', style: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.buttonText)))
       ),
