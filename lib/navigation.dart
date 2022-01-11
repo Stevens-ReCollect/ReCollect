@@ -2,12 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:recollect_app/progressReport.dart';
 import 'package:recollect_app/main.dart';
 import 'package:recollect_app/settings.dart';
+import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
-
-// class Navigate extends StatefulWidget {
-//   @override
-//   State<Navigate> createState() => NavigateState();
-// }
 
 class Navigate extends StatelessWidget {
   @override
@@ -43,51 +39,10 @@ class Navigate extends StatelessWidget {
         duration: Duration(milliseconds: 200),
       ),
       navBarStyle:
-          NavBarStyle.style1, // Choose the nav bar style with this property.
+          NavBarStyle.style3, // Choose the nav bar style with this property.
     );
   }
 }
-
-// class NavigateState extends State<Navigate> {
-//   int currentIndex = 0;
-//   final screens = [MyHomePage(), ProgressReport(), SettingsPage()];
-//   @override
-//   Widget build(BuildContext context) => Scaffold(
-//         body: IndexedStack(
-//           index: currentIndex,
-//           children: screens,
-//         ),
-//         bottomNavigationBar: BottomNavigationBar(
-//           selectedItemColor: ColorConstants.buttonColor,
-//           unselectedItemColor: ColorConstants.buttonColor,
-//           selectedFontSize: 0.6 *
-//               TextSizeConstants.getadaptiveTextSize(
-//                   context, TextSizeConstants.bodyText),
-//           unselectedFontSize: 0.5 *
-//               TextSizeConstants.getadaptiveTextSize(
-//                   context, TextSizeConstants.bodyText),
-//           iconSize: TextSizeConstants.getadaptiveTextSize(
-//               context, TextSizeConstants.bodyText),
-//           onTap: (index) => setState(() => currentIndex = index),
-//           currentIndex: currentIndex,
-//           //onTap: (index) => setState(() => currentIndex = index),
-//           items: [
-//             BottomNavigationBarItem(
-//               icon: Icon(Icons.home),
-//               label: 'Home',
-//             ),
-//             BottomNavigationBarItem(
-//               icon: Icon(Icons.poll),
-//               label: 'Progress Report',
-//             ),
-//             BottomNavigationBarItem(
-//               icon: Icon(Icons.settings),
-//               label: 'Settings',
-//             ),
-//           ],
-//         ),
-//       );
-// }
 
 PersistentTabController _controller = PersistentTabController(initialIndex: 0);
 
@@ -98,16 +53,19 @@ List<Widget> _buildScreens() {
 List<PersistentBottomNavBarItem> _navBarsItems() {
   return [
     PersistentBottomNavBarItem(
-      icon: const Icon(Icons.photo_library),
-      title: ("Memories"),
-    ),
+        icon: const Icon(Icons.photo_library),
+        title: ("Memories"),
+        inactiveColorPrimary: ColorConstants.unfavoredButton,
+        activeColorPrimary: ColorConstants.buttonColor),
     PersistentBottomNavBarItem(
-      icon: const Icon(Icons.poll),
-      title: ("Progress Report"),
-    ),
+        icon: const Icon(Icons.poll),
+        title: ("Progress Report"),
+        inactiveColorPrimary: ColorConstants.unfavoredButton,
+        activeColorPrimary: ColorConstants.buttonColor),
     PersistentBottomNavBarItem(
-      icon: const Icon(Icons.settings),
-      title: ("Settings"),
-    ),
+        icon: const Icon(Icons.settings),
+        title: ("Settings"),
+        inactiveColorPrimary: ColorConstants.unfavoredButton,
+        activeColorPrimary: ColorConstants.buttonColor),
   ];
 }

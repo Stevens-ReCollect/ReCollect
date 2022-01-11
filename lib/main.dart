@@ -150,7 +150,8 @@ class MyHomePageState extends State<MyHomePage> {
                             builder: (context) =>
                                 MemoryHomePage(memoryData: data)));
                   } else {
-                    Navigator.pushNamed(context, RouteConstants.memExRoute);
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => MemoryPage()));
                   }
                 },
                 child: Stack(
@@ -205,7 +206,8 @@ class MyHomePageState extends State<MyHomePage> {
                             builder: (context) =>
                                 MemoryHomePage(memoryData: data)));
                   } else {
-                    Navigator.pushNamed(context, RouteConstants.memExRoute);
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => MemoryPage()));
                   }
                 },
                 child: Stack(
@@ -262,7 +264,10 @@ class MyHomePageState extends State<MyHomePage> {
           padding: EdgeInsets.only(bottom: 15),
           child: ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, RouteConstants.createMemory);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => CreateMemoryPage()));
               },
               style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.all(15),
@@ -431,7 +436,8 @@ class MyHomePageState extends State<MyHomePage> {
         iconSize: TextSizeConstants.getadaptiveTextSize(
             context, TextSizeConstants.buttonText), //Settings Icon
         onPressed: () {
-          Navigator.pushNamed(context, RouteConstants.settingsRoute);
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => SettingsPage()));
         },
       );
     }
