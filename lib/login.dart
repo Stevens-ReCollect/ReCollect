@@ -9,9 +9,15 @@ import 'package:recollect_app/constants/textSizeConstants.dart';
 import 'package:recollect_app/main.dart';
 import 'package:recollect_app/signup.dart';
 
-class LoginPage extends StatelessWidget {
+class LogInPage extends StatefulWidget {
+  @override
+  _LogInPageState createState() => _LogInPageState();
+}
+
+class _LogInPageState extends State<LogInPage> {
   TextEditingController _email = TextEditingController();
   TextEditingController _password = TextEditingController();
+  String logInResult = "";
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +92,19 @@ class LoginPage extends StatelessWidget {
               ),
               Container(
                 width: 0.8 * deviceWidth,
-                margin: const EdgeInsets.only(top: 30.0, left: 0.0),
+                margin: const EdgeInsets.only(top: 10.0, left: 0.0),
+                child: Text(
+                  logInResult,
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontSize: TextSizeConstants.getadaptiveTextSize(
+                        context, TextSizeConstants.hint),
+                  ),
+                ),
+              ),
+              Container(
+                width: 0.8 * deviceWidth,
+                margin: const EdgeInsets.only(top: 15.0, left: 0.0),
                 child: TextField(
                   controller: _email,
                   decoration: InputDecoration(
@@ -154,11 +172,18 @@ class LoginPage extends StatelessWidget {
                       //   password: _password.text,
                       // );
 
-                      final result = await AuthenticationService()
-                          .signIn(email: _email.text, password: _password.text);
-                      if (result != null) {
+                      await AuthenticationService()
+                          .signIn(email: _email.text, password: _password.text)
+                          .then((String result) {
+                        setState(() {
+                          logInResult = result;
+                        });
+                      });
+                      print(logInResult);
+                      if (logInResult == "Success") {
                         Navigator.pushNamed(context, RouteConstants.homeRoute);
                       }
+
                       // AuthenticationService.getUser()
                     }),
               ),

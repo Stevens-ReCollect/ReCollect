@@ -9,7 +9,7 @@ void main() {
     Widget testWidget = MediaQuery(
       data: const MediaQueryData(),
       child: MaterialApp(
-        home: LoginPage(),
+        home: LogInPage(),
       ),
     );
     await tester.pumpWidget(testWidget);

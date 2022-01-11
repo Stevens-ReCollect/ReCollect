@@ -12,11 +12,12 @@ class AuthenticationService {
   Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
 
   //SIGN IN METHOD
-  Future signIn({required String email, required String password}) async {
+  Future<String> signIn(
+      {required String email, required String password}) async {
     try {
       await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
-      return getUser();
+      return "Success";
     } on FirebaseAuthException catch (ex) {
       return ex.message.toString();
     }
