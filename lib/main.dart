@@ -165,6 +165,7 @@ class MyHomePageState extends State<MyHomePage> {
                           borderRadius: BorderRadius.all(Radius.circular(20)),
                           image: DecorationImage(
                             fit: BoxFit.cover,
+
                             alignment: Alignment.center,
                             image: AssetImage('lib/images/FallLeaves.jpg'),
                           ),
