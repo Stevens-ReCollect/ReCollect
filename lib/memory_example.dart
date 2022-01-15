@@ -1,14 +1,11 @@
 
 // ignore_for_file: file_names
 
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/textSizeConstants.dart';
 import 'package:recollect_app/main.dart';
 import 'package:recollect_app/widgets/memoryslider.dart';
-import 'package:video_player/video_player.dart';
 
 
   
@@ -43,7 +40,7 @@ import 'package:video_player/video_player.dart';
         actions: <Widget>[
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.all(15),
+                padding: const EdgeInsets.all(15),
                 primary: ColorConstants.buttonColor),
             onPressed: () {
               Navigator.of(context).pop();
@@ -58,22 +55,7 @@ import 'package:video_player/video_player.dart';
 
   }
 
-//  createCarousel(){
-//   myList.map((i){
-//          return Container(
-//            child: GestureDetector(
-//             child:Stack(
-//               children: <Widget>[
-//                 selectType(),
-//               ],
-//             ),
-//              onTap: (){
-              
-//              },
-//            ),
-//           );
-//         });
-//   }
+
 
 
 class MyApp extends StatelessWidget {
@@ -121,7 +103,7 @@ class _MemoryPageState extends State<MemoryPage> {
   @override
   Widget build(BuildContext context) {
   MediaQueryData queryData = MediaQuery.of(context);
-  var pixelRatio = queryData.devicePixelRatio; //responsive sizing
+//responsive sizing
   var deviceWidth = queryData.size.width;
   var deviceHeight = queryData.size.height;
     return Scaffold(
@@ -139,7 +121,8 @@ class _MemoryPageState extends State<MemoryPage> {
         child: Column(
           
           crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             SizedBox(height: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.h2),),
             // Container(
@@ -148,14 +131,14 @@ class _MemoryPageState extends State<MemoryPage> {
             // child: Text("This is when you and Grandpa Bobby cut your wedding cake.", style: TextStyle(color: ColorConstants.bodyText, fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),
             // )), 
             //this is where the description will go
-            Container(
+            SizedBox(
               width: 0.8*deviceWidth,
-              height:0.5*deviceHeight,
-            child: const Center(
-              child:MemorySlider(),
-              )
+              height:0.6*deviceHeight,
+            
+              child:const Center(child: MemorySlider()),
+              
             ),
-               SizedBox(height: deviceHeight/50),
+              //  SizedBox(height: deviceHeight/50),
                Text('Do you remember?', style: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),),
                SizedBox(height: deviceHeight/80),
                 Row(
