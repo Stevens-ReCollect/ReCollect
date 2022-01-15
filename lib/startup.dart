@@ -13,6 +13,7 @@ import 'package:recollect_app/addvideo.dart';
 import 'package:recollect_app/addaudio.dart';
 import 'package:recollect_app/navigation.dart';
 import 'package:recollect_app/settings.dart';
+import 'package:recollect_app/tutorial.dart';
 
 import 'constants/textSizeConstants.dart';
 import 'memory_example.dart';
@@ -43,6 +44,7 @@ class StartUp extends StatelessWidget {
         RouteConstants.memoryHomeRoute: (context) => MemoryHomePage(),
         RouteConstants.navigationRoute: (context) => Navigate(),
         RouteConstants.settingsRoute: (context) => SettingsPage(),
+        RouteConstants.tutorialRoute: (context) => Tutorial(),
       },
     );
   }
@@ -134,6 +136,7 @@ class StartUpPage extends StatelessWidget {
                   Navigator.pushNamed(context, RouteConstants.loginRoute);
                 },
               ),
+              
             ),
           ],
         ),

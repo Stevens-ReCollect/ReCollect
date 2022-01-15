@@ -76,7 +76,7 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
               ),
             ),
             Container(
-              margin: const EdgeInsets.only(top: 20.0),
+              margin: const EdgeInsets.only(top: 0.0),
               child: Center(
                 child: Text(
                   'Create a Memory',
@@ -195,7 +195,7 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
               ),
             ),
             Container(
-              height: 0.3 * deviceHeight,
+              height: 0.23 * deviceHeight,
               width: 0.8 * deviceWidth,
               margin: const EdgeInsets.only(top: 15.0, left: 0.0),
               child: TextField(

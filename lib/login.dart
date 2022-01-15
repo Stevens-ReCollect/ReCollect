@@ -8,6 +8,7 @@ import 'package:recollect_app/constants/routeConstants.dart';
 import 'package:recollect_app/constants/textSizeConstants.dart';
 import 'package:recollect_app/main.dart';
 import 'package:recollect_app/signup.dart';
+import 'package:recollect_app/tutorial.dart';
 
 class LogInPage extends StatefulWidget {
   @override
@@ -161,16 +162,6 @@ class _LogInPageState extends State<LogInPage> {
                       ),
                     ),
                     onPressed: () async {
-                      // context.read<AuthenticationService>().signIn(
-                      //     email: _email.text.trim(),
-                      //     password: _password.text.trim(),
-                      // );
-
-                      // final result = await FirebaseAuth.instance
-                      //     .signInWithEmailAndPassword(
-                      //   email: _email.text,
-                      //   password: _password.text,
-                      // );
 
                       await AuthenticationService()
                           .signIn(email: _email.text, password: _password.text)
@@ -184,7 +175,6 @@ class _LogInPageState extends State<LogInPage> {
                         Navigator.pushNamed(context, RouteConstants.homeRoute);
                       }
 
-                      // AuthenticationService.getUser()
                     }),
               ),
             ],
