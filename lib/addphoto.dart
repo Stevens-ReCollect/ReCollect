@@ -150,7 +150,7 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
               ),
               loading(),
               Container(
-                margin: const EdgeInsets.only(top: 250.0, left: 0.0),
+                margin: const EdgeInsets.only(top: 210.0, left: 0.0),
                 width: 0.4 * deviceWidth,
                 child: TextButton(
                   child: const Text(
