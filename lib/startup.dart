@@ -37,7 +37,7 @@ class StartUp extends StatelessWidget {
         RouteConstants.progressRoute: (context) => ProgressReport(),
         RouteConstants.createMemory: (context) => CreateMemoryPage(),
         RouteConstants.signupRoute: (context) => SignUpPage(),
-        RouteConstants.loginRoute: (context) => LoginPage(),
+        RouteConstants.loginRoute: (context) => LogInPage(),
         RouteConstants.addAudio: (context) => AddAudioPage(),
         RouteConstants.addVideo: (context) => AddVideoPage(),
         // RouteConstants.addPhoto: (context) => AddPhotoPage(),

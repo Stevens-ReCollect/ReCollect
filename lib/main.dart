@@ -65,7 +65,7 @@ class MyApp extends StatelessWidget {
         RouteConstants.progressRoute: (context) => ProgressReport(),
         RouteConstants.createMemory: (context) => CreateMemoryPage(),
         RouteConstants.signupRoute: (context) => SignUpPage(),
-        RouteConstants.loginRoute: (context) => LoginPage(),
+        RouteConstants.loginRoute: (context) => LogInPage(),
         RouteConstants.addAudio: (context) => AddAudioPage(),
         RouteConstants.addVideo: (context) => AddVideoPage(),
         // RouteConstants.addPhoto: (context) => AddPhotoPage(),
@@ -89,7 +89,7 @@ class AuthenticationWrapper extends StatelessWidget {
       builder: (_, AsyncSnapshot<User?> snapshot) {
         if (snapshot.connectionState == ConnectionState.active) {
           final User? user = snapshot.data;
-          return user == null ? LoginPage() : MyHomePage();
+          return user == null ? LogInPage() : MyHomePage();
         } else {
           return Scaffold(
             body: Center(
