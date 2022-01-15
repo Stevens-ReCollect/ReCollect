@@ -8,6 +8,7 @@ import 'package:recollect_app/constants/routeConstants.dart';
 import 'package:recollect_app/constants/textSizeConstants.dart';
 import 'package:recollect_app/main.dart';
 import 'package:recollect_app/signup.dart';
+import 'package:recollect_app/tutorial.dart';
 
 class LoginPage extends StatelessWidget {
   TextEditingController _email = TextEditingController();
@@ -157,8 +158,7 @@ class LoginPage extends StatelessWidget {
                       final result = await AuthenticationService()
                           .signIn(email: _email.text, password: _password.text);
                       if (result != null) {
-                        Navigator.pushNamed(
-                            context, RouteConstants.navigationRoute);
+                        Navigator.pushNamed(context, RouteConstants.tutorialRoute);
                       }
                       // AuthenticationService.getUser()
                     }),
