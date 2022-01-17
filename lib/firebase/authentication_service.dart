@@ -33,7 +33,7 @@ class AuthenticationService {
       await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
       await FirestoreService()
-          .addNewUser(email: email, caregiverPin: caregiverPin);
+          .addNewUser(email: email, caregiverPin: caregiverPin, counter: 0);
       return "Success";
     } on FirebaseAuthException catch (ex) {
       return ex.message.toString();
