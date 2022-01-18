@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
+import 'package:recollect_app/startup.dart';
 import 'constants/routeConstants.dart';
 import 'constants/textSizeConstants.dart';
 import 'package:recollect_app/progressReport.dart';
+import 'package:recollect_app/firebase/authentication_service.dart';
 
 // ignore: use_key_in_widget_constructors
 class SettingsPage extends StatefulWidget {
@@ -12,6 +14,7 @@ class SettingsPage extends StatefulWidget {
 
 class SettingsPageState extends State<SettingsPage> {
   var isHighContrast = false;
+  String logOutResult = "";
   @override
   Widget build(BuildContext context) {
     MediaQueryData queryData = MediaQuery.of(context);
@@ -160,7 +163,22 @@ class SettingsPageState extends State<SettingsPage> {
                               fontSize: 0.7 *
                                   TextSizeConstants.getadaptiveTextSize(
                                       context, TextSizeConstants.bodyText))),
-                      onTap: () {},
+                      onTap: () async {
+                        await AuthenticationService()
+                            .signOut()
+                            .then((String result) {
+                          setState(() {
+                            logOutResult = result;
+                          });
+                        });
+                        print(logOutResult);
+                        if (logOutResult == "Signed Out") {
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                  builder: (context) => StartUpPage()),
+                              (route) => false);
+                        }
+                      },
                     )
                   ])),
             ]));

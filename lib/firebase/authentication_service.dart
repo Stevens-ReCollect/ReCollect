@@ -80,12 +80,12 @@ class AuthenticationService {
   }
 
   //SIGN OUT METHOD
-  Future signOut() async {
+  Future<String> signOut() async {
     try {
       await _firebaseAuth.signOut();
       return "Signed Out";
     } on FirebaseAuthException catch (ex) {
-      return ex.message;
+      return ex.message.toString();
     }
   }
 
