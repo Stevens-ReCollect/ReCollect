@@ -334,6 +334,9 @@ class MyHomePageState extends State<MyHomePage> {
                 accountMode = 0;
 
                 Navigator.of(context).pop();
+                _pin.clear();
+              } else {
+                _pin.clear();
               }
             },
             child: Text('Continue',
