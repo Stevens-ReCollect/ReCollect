@@ -162,7 +162,6 @@ class _LogInPageState extends State<LogInPage> {
                       ),
                     ),
                     onPressed: () async {
-
                       await AuthenticationService()
                           .signIn(email: _email.text, password: _password.text)
                           .then((String result) {
@@ -172,9 +171,9 @@ class _LogInPageState extends State<LogInPage> {
                       });
                       print(logInResult);
                       if (logInResult == "Success") {
-                        Navigator.pushNamed(context, RouteConstants.homeRoute);
+                        Navigator.pushNamed(
+                            context, RouteConstants.navigationRoute);
                       }
-
                     }),
               ),
             ],

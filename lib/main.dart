@@ -391,6 +391,7 @@ class MyHomePageState extends State<MyHomePage> {
                     if (accountMode == 0) {
                       showDialog(
                         context: context,
+                        barrierDismissible: false,
                         builder: (BuildContext context) =>
                             caregiverPin(context),
                       );
