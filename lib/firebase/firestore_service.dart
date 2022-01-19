@@ -10,6 +10,8 @@ class FirestoreService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseStorage _storage = FirebaseStorage.instance;
 
+  var correctPin;
+
   Future<void> addId(CollectionReference collection) async {
     User? currentUser = AuthenticationService().getUser();
     if (currentUser == null) {
@@ -267,5 +269,22 @@ class FirestoreService {
     fileURL = await reference.getDownloadURL();
     print("File URL: $fileURL");
     return fileURL;
+  }
+
+  Future<String> checkPin({required String pin}) async {
+    CollectionReference users = _firestore.collection('users');
+    User? currentUser = AuthenticationService().getUser();
+    await users
+        .where('user_email', isEqualTo: currentUser!.email)
+        .get()
+        .then((QuerySnapshot querySnapshot) => {
+              querySnapshot.docs.forEach((doc) => {
+                    if (doc.data() != null) {correctPin = doc['caregiver_pin']}
+                  })
+            });
+    if (correctPin == pin) {
+      return "Success";
+    }
+    return "fail";
   }
 }
