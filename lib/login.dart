@@ -191,7 +191,7 @@ class _LogInPageState extends State<LogInPage> {
                           await FirestoreService().editCounter(
                               email: _email.text, password: _password.text);
                         } else {
-                          Navigator.pushNamed(context, RouteConstants.homeRoute);
+                          Navigator.pushNamed(context, RouteConstants.navigationRoute);
                         }
                       }
                     }),

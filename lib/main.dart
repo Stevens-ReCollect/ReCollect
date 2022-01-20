@@ -99,6 +99,9 @@ class MyHomePage extends StatefulWidget {
 class MyHomePageState extends State<MyHomePage> {
   // final List _memories = FirestoreService().getUserMemories();
   static late int accountMode = 0;
+  TextEditingController _pin = TextEditingController();
+
+  String pinResult = "";
 
   userMemories() {
     MediaQueryData queryData = MediaQuery.of(context);
@@ -155,7 +158,6 @@ class MyHomePageState extends State<MyHomePage> {
                           borderRadius: BorderRadius.all(Radius.circular(20)),
                           image: DecorationImage(
                             fit: BoxFit.cover,
-
                             alignment: Alignment.center,
                             image: AssetImage('lib/images/FallLeaves.jpg'),
                           ),
@@ -285,6 +287,7 @@ class MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             TextField(
+              controller: _pin,
               obscureText: true,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
@@ -305,10 +308,23 @@ class MyHomePageState extends State<MyHomePage> {
             style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.all(15),
                 primary: ColorConstants.buttonColor),
-            onPressed: () {
-              accountMode = 0;
+            onPressed: () async {
+              await FirestoreService()
+                  .checkPin(pin: _pin.text)
+                  .then((String result) {
+                setState(() {
+                  pinResult = result;
+                });
+              });
+              //print(pinResult);
+              if (pinResult == "Success") {
+                accountMode = 0;
 
-              Navigator.of(context).pop();
+                Navigator.of(context).pop();
+                _pin.clear();
+              } else {
+                _pin.clear();
+              }
             },
             child: Text('Continue',
                 style: TextStyle(
@@ -365,6 +381,7 @@ class MyHomePageState extends State<MyHomePage> {
                     if (accountMode == 0) {
                       showDialog(
                         context: context,
+                        barrierDismissible: false,
                         builder: (BuildContext context) =>
                             caregiverPin(context),
                       );
