@@ -30,8 +30,66 @@ class FirestoreService {
             });
   }
 
+  // add a Counter for users that are signing in
+  Future<void> editCounter(
+      {required String email, required String password}) async {
+    CollectionReference users = _firestore.collection('users');
+    User? currentUser = AuthenticationService().getUser();
+    if (currentUser == null) {
+      throw Exception('currentUser is null');
+    }
+    return users
+        .where('user_email', isEqualTo: currentUser.email)
+        .get()
+        .then((QuerySnapshot querySnapshot) => {
+              querySnapshot.docs.forEach((doc) => {
+                    if (doc.data() != null)
+                      {
+                        users.doc(doc.id).update({'counter': 1})
+                      }
+                  })
+            });
+/*
+    return memories
+        .doc(memoryId)
+        .update({
+          'title': title,
+          'start_date': startDate,
+          'end_date': endDate,
+          'description': description,
+        })
+        .then((value) => print("Memory Updated"))
+        .catchError((error) => print("Failed to update memory: $error")); */
+  }
+
+  // get the current Counter number for a user
+  Future<int> getCounter(
+      {required String email, required String password}) async {
+    CollectionReference users = _firestore.collection('users');
+    User? currentUser = AuthenticationService().getUser();
+    int counter = 0;
+    if (currentUser == null) {
+      throw Exception('currentUser is null');
+    }
+    await users
+        .where('user_email', isEqualTo: currentUser.email)
+        .get()
+        .then((QuerySnapshot querySnapshot) => {
+              querySnapshot.docs.forEach((doc) => {
+                    if (doc.data() != null)
+                      {
+                        counter = doc['counter']
+                        // users.doc(doc.id).get('counter'})
+                      }
+                  })
+            });
+    return counter;
+  }
+
   Future<void> addNewUser(
-      {required String email, required String caregiverPin}) async {
+      {required String email,
+      required String caregiverPin,
+      required int counter}) async {
     CollectionReference users = _firestore.collection('users');
     User? currentUser = AuthenticationService().getUser();
     if (currentUser == null) {
@@ -41,6 +99,7 @@ class FirestoreService {
       'user_email': email,
       'admin_user_email': email,
       'caregiver_pin': caregiverPin,
+      'counter': 0,
     }).then((value) {
       print("User Added");
       addId(users);

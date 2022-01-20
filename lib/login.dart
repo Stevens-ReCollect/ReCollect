@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -6,6 +7,7 @@ import 'package:recollect_app/firebase/authentication_service.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/routeConstants.dart';
 import 'package:recollect_app/constants/textSizeConstants.dart';
+import 'package:recollect_app/firebase/firestore_service.dart';
 import 'package:recollect_app/main.dart';
 import 'package:recollect_app/signup.dart';
 import 'package:recollect_app/tutorial.dart';
@@ -18,7 +20,9 @@ class LogInPage extends StatefulWidget {
 class _LogInPageState extends State<LogInPage> {
   TextEditingController _email = TextEditingController();
   TextEditingController _password = TextEditingController();
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
   String logInResult = "";
+  int counterResult = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -169,10 +173,26 @@ class _LogInPageState extends State<LogInPage> {
                           logInResult = result;
                         });
                       });
+
                       print(logInResult);
                       if (logInResult == "Success") {
-                        Navigator.pushNamed(
-                            context, RouteConstants.navigationRoute);
+                        await FirestoreService()
+                            .getCounter(
+                                email: _email.text, password: _password.text)
+                            .then((int counter) {
+                          setState(() {
+                            counterResult = counter;
+                          });
+                        });
+                        // print(counterResult);
+
+                        if (counterResult == 0) {
+                          Navigator.pushNamed(context, RouteConstants.tutorialRoute);
+                          await FirestoreService().editCounter(
+                              email: _email.text, password: _password.text);
+                        } else {
+                          Navigator.pushNamed(context, RouteConstants.navigationRoute);
+                        }
                       }
                     }),
               ),
