@@ -50,7 +50,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.example.recollect_app" // never change this since firebase is added
+        applicationId "com.recollect.recollect_app" // never change this since firebase is added
         minSdkVersion 21
         targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()
