@@ -77,7 +77,7 @@ class StartUpPage extends StatelessWidget {
             ),
             Container(
               margin: const EdgeInsets.only(top: 68.0),
-              height: 0.075 * deviceHeight,
+              height: 2.5 * TextSizeConstants.bodyText,
               width: 0.6 * deviceWidth,
               child: TextButton(
                 child: Text(
@@ -90,7 +90,6 @@ class StartUpPage extends StatelessWidget {
                   ),
                 ),
                 style: ButtonStyle(
-                  padding: MaterialStateProperty.all(EdgeInsets.all(15)),
                   backgroundColor: MaterialStateProperty.all<Color>(
                       ColorConstants.buttonColor),
                   foregroundColor: MaterialStateProperty.all<Color>(
@@ -108,7 +107,7 @@ class StartUpPage extends StatelessWidget {
             ),
             Container(
               margin: const EdgeInsets.only(top: 22.0),
-              height: 0.075 * deviceHeight,
+              height: 2.5 * TextSizeConstants.bodyText,
               width: 0.6 * deviceWidth,
               child: TextButton(
                 child: Text(
@@ -121,7 +120,6 @@ class StartUpPage extends StatelessWidget {
                   ),
                 ),
                 style: ButtonStyle(
-                  padding: MaterialStateProperty.all(EdgeInsets.all(15)),
                   backgroundColor: MaterialStateProperty.all<Color>(
                       ColorConstants.buttonColor),
                   foregroundColor: MaterialStateProperty.all<Color>(
@@ -136,7 +134,6 @@ class StartUpPage extends StatelessWidget {
                   Navigator.pushNamed(context, RouteConstants.loginRoute);
                 },
               ),
-              
             ),
           ],
         ),
