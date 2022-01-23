@@ -48,6 +48,7 @@ dependencies:
   persistent_bottom_nav_bar: ^4.0.2
   video_player: ^2.2.10
   audioplayers: ^0.20.1
+  open_settings: ^2.0.2
 
   # overlay_container: ^0.0.5+1
 

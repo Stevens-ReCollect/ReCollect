@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/startup.dart';
-import 'constants/routeConstants.dart';
+import 'package:open_settings/open_settings.dart';
 import 'constants/textSizeConstants.dart';
 import 'package:recollect_app/progressReport.dart';
 import 'package:recollect_app/firebase/authentication_service.dart';
@@ -45,7 +45,7 @@ class SettingsPageState extends State<SettingsPage> {
               Container(
                   width: deviceWidth,
                   padding: const EdgeInsets.all(10),
-                  color: ColorConstants.formField,
+                  color: const Color(0xFFEEEEEE),
                   child: Row(children: <Widget>[
                     IconButton(
                       icon: const Icon(Icons.lock_outline),
@@ -72,7 +72,7 @@ class SettingsPageState extends State<SettingsPage> {
               Container(
                   width: deviceWidth,
                   padding: const EdgeInsets.all(10),
-                  color: ColorConstants.formField,
+                  color: const Color(0xFFEEEEEE),
                   child: Row(children: <Widget>[
                     IconButton(
                       icon: const Icon(Icons.grade),
@@ -100,15 +100,16 @@ class SettingsPageState extends State<SettingsPage> {
               Container(
                   width: deviceWidth,
                   padding: const EdgeInsets.all(10),
-                  color: ColorConstants.formField,
+                  color: const Color(0xFFEEEEEE),
                   child: Row(children: <Widget>[
                     IconButton(
                       icon: const Icon(Icons.color_lens),
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const TextAdjustPage()));
+                        OpenSettings.openAccessibilitySetting();
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => const TextAdjustPage()));
                       },
                     ),
                     InkWell(
@@ -117,21 +118,20 @@ class SettingsPageState extends State<SettingsPage> {
                               fontSize: 0.7 *
                                   TextSizeConstants.getadaptiveTextSize(
                                       context, TextSizeConstants.bodyText))),
-                      onTap: () {},
+                      onTap: () {
+                       OpenSettings.openAccessibilitySetting();
+                      },
                     )
                   ])),
               Container(
                   width: deviceWidth,
                   padding: const EdgeInsets.all(10),
-                  color: ColorConstants.formField,
+                  color: const Color(0xFFEEEEEE),
                   child: Row(children: <Widget>[
                     IconButton(
                       icon: const Icon(Icons.text_fields),
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const TextAdjustPage()));
+                        OpenSettings.openAccessibilitySetting(); //Display settings should have text size adjustments
                       },
                     ),
                     InkResponse(
@@ -141,17 +141,14 @@ class SettingsPageState extends State<SettingsPage> {
                                     TextSizeConstants.getadaptiveTextSize(
                                         context, TextSizeConstants.bodyText))),
                         onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const TextAdjustPage()));
+                          OpenSettings.openAccessibilitySetting();
+                        
                         })
                   ])),
               Container(
                   width: deviceWidth,
                   padding: const EdgeInsets.all(10),
-                  color: ColorConstants.formField,
+                  color: const Color(0xFFEEEEEE),
                   child: Row(children: <Widget>[
                     IconButton(
                       icon: const Icon(Icons.logout),
@@ -182,73 +179,7 @@ class SettingsPageState extends State<SettingsPage> {
                     )
                   ])),
             ]));
-    //   SettingsSection(
-    //     titlePadding: const EdgeInsets.all(10),
-    //     subtitlePadding: const EdgeInsets.all(10),
-    //     title: 'Accessibility',
-    //     titleTextStyle: TextStyle(fontSize: 0.7*TextSizeConstants.getadaptiveTextSize(
-    //           context, TextSizeConstants.bodyText),),
-    //     tiles: [
-    //       SettingsTile(
-    //         title: 'Language',
-    //         titleTextStyle: TextStyle(fontSize: 0.7*TextSizeConstants.getadaptiveTextSize(
-    //           context, TextSizeConstants.bodyText),),
-    //         subtitle: 'English',
-    //         subtitleTextStyle: TextStyle(fontSize: 0.6*TextSizeConstants.getadaptiveTextSize(
-    //           context, TextSizeConstants.bodyText),),
-    //         leading: const Icon(Icons.language),
-    //         onPressed: (BuildContext context) {},
-    //       ),
-    //       SettingsTile(
-    //         title: 'Progress Report',
-    //         titleTextStyle: TextStyle(fontSize: 0.7*TextSizeConstants.getadaptiveTextSize(
-    //           context, TextSizeConstants.bodyText),),
-    //         subtitle: "View your loved one's progress",
-    //         subtitleTextStyle: TextStyle(fontSize: 0.6*TextSizeConstants.getadaptiveTextSize(
-    //           context, TextSizeConstants.bodyText),),
-    //         leading: const Icon(Icons.grade),
-    //         onPressed: (BuildContext context) {
-    //           Navigator.pushNamed(context, RouteConstants.progressRoute);
-    //         },
-    //       ),
-    //       SettingsTile.switchTile(
-    //         title: 'High Contrast',
-    //         switchActiveColor: ColorConstants.appBar,
-    //         titleTextStyle: TextStyle(fontSize: 0.7*TextSizeConstants.getadaptiveTextSize(
-    //           context, TextSizeConstants.bodyText),),
-    //         leading: const Icon(Icons.color_lens),
-    //         switchValue: isHighContrast,
-    //         onToggle: (bool value) {
-    //           isHighContrast = value;
-    //           if(isHighContrast == true){
-    //             //TODO: Figure way to send to settings on operating system
-    //           }
-    //           // setState(() {
-
-    //           // });
-    //         },
-    //       ),
-    //       SettingsTile(
-    //         title: 'Text Size Adjustment',
-    //         titleTextStyle: TextStyle(fontSize: 0.7*TextSizeConstants.getadaptiveTextSize(
-    //           context, TextSizeConstants.bodyText),),
-    //         leading: const Icon(Icons.text_fields),
-    //         onPressed: (BuildContext context) {
-    //           Navigator.push(context, MaterialPageRoute(builder: (context) => const TextAdjustPage()));
-    //         },
-    //       ),
-    //       SettingsTile(
-    //         title: 'Log out',
-    //         titleTextStyle: TextStyle(fontSize: 0.7*TextSizeConstants.getadaptiveTextSize(
-    //           context, TextSizeConstants.bodyText),),
-    //         leading: const Icon(Icons.logout),
-    //         onPressed: (BuildContext context) {
-
-    //         },
-    //       ),
-    //     ],
-    //   ),
-    // ]));
+ 
   }
 }
 
