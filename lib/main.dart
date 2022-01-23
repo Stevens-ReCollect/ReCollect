@@ -40,6 +40,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'ReCollect',
+      highContrastTheme: ThemeData(
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        primaryColor: Colors.black,
+        
+      ),
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
         primarySwatch: Colors.blue,
