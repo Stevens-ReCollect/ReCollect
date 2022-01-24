@@ -138,7 +138,7 @@ class _MemoryPageState extends State<MemoryPage> {
               child:const Center(child: MemorySlider()),
               
             ),
-              //  SizedBox(height: deviceHeight/50),
+              SizedBox(height: deviceHeight/80),
                Text('Do you remember?', style: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),),
                SizedBox(height: deviceHeight/80),
                 Row(
@@ -158,7 +158,7 @@ class _MemoryPageState extends State<MemoryPage> {
                   style: ElevatedButton.styleFrom(padding:EdgeInsets.all(deviceWidth/40), primary: ColorConstants.buttonColor,
                     textStyle: TextStyle(fontSize: 0.9*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.buttonText))
                   ),),
-                  SizedBox(width: deviceWidth/40),
+                  SizedBox(width: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),
                   ElevatedButton(onPressed: (){
                     _isButtonDisabled ? null : _isEditMode; //null will get replaced with function that increments memory data
                   _buttonController = "No";
@@ -171,7 +171,7 @@ class _MemoryPageState extends State<MemoryPage> {
                   style: ElevatedButton.styleFrom( padding:EdgeInsets.all(deviceWidth/40), primary: ColorConstants.unfavoredButton, 
                     textStyle: TextStyle(fontSize: 0.9*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.buttonText)))
                   ),
-                  SizedBox(width:deviceWidth/40),
+                  SizedBox(width:TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),
                   ElevatedButton(onPressed: (){
                     _isButtonDisabled ? null : _isEditMode; //null will get replaced with function that increments memory data
                   _buttonController = "Maybe";

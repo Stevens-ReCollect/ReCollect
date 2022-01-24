@@ -26,8 +26,8 @@ Widget selectType(BuildContext context){
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                const SizedBox(height:10),
-                Text(description, style: TextStyle(color: ColorConstants.bodyText, fontSize: 0.7*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),),
+                SizedBox(height:0.4*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),
+                Text(description, style: TextStyle(color: ColorConstants.bodyText, fontSize: 0.9*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),),
                 AspectRatio(aspectRatio: 5/4,
                 child:Image.asset(asset, fit: BoxFit.cover,),
                 )
@@ -40,8 +40,8 @@ Widget selectType(BuildContext context){
         mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 // Find videoplayer package
-                const SizedBox(height:10),
-                Text(description, style: TextStyle(color: ColorConstants.bodyText, fontSize: 0.7*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),),
+                SizedBox(height:0.4*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),
+                Text(description, style: TextStyle(color: ColorConstants.bodyText, fontSize: 0.9*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),),
                 Stack(
                   children: <Widget>[
                 AspectRatio(aspectRatio: 5/4,
@@ -64,9 +64,9 @@ Widget selectType(BuildContext context){
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                const SizedBox(height:10),
-               Text(description, style: TextStyle(color: ColorConstants.bodyText, fontSize: 0.7*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),),
-              const SizedBox(height: 30),
+                SizedBox(height:0.4*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),
+               Text(description, style: TextStyle(color: ColorConstants.bodyText, fontSize: 0.9*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),),
+              SizedBox(height:0.4*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),
               Container(
                 width:0.8*MediaQuery.of(context).size.width,
                 padding: const EdgeInsets.all(10),
@@ -156,7 +156,7 @@ class MemorySliderState extends State<MemorySlider> {
                 ))
             .toList()),
             Text((_current.toString()+ "/" + memList.length.toString()),
-            style: TextStyle(fontSize:0.6*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText), 
+            style: TextStyle(fontSize:TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText), 
             color: ColorConstants.buttonColor, backgroundColor: Colors.blueGrey[50],
             )),
 
