@@ -135,6 +135,7 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
                   ),
                 ),
               ),
+              /*
               Container(
                 margin: const EdgeInsets.only(top: 20.0),
                 child: const Center(
@@ -148,6 +149,7 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
                   ),
                 ),
               ),
+              */
               loading(),
               Container(
                 margin: const EdgeInsets.only(top: 210.0, left: 0.0),
