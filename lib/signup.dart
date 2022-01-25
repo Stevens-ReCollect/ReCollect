@@ -43,20 +43,22 @@ class _SignUpPageState extends State<SignUpPage> {
       home: Form(
         key: _key,
         child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            foregroundColor: Colors.black,
+            elevation: 0,
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back_ios_new),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ),
           backgroundColor: Colors.white,
           body: SingleChildScrollView(
             child: Column(
               children: <Widget>[
-                Container(
-                  margin: const EdgeInsets.only(top: 50.0, left: 10.0),
-                  alignment: Alignment.centerLeft,
-                  child: IconButton(
-                    icon: const Icon(Icons.arrow_back_ios_new),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                ),
+                Container(),
                 Container(
                   width: 0.8 * deviceWidth,
                   margin: const EdgeInsets.only(top: 50.0, left: 0.0),
@@ -72,7 +74,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
                 Container(
                   width: 0.8 * deviceWidth,
-                  margin: const EdgeInsets.only(top: 15.0, left: 0.0),
+                  // margin: const EdgeInsets.only(top: 15.0, left: 0.0),
                   child: TextButton(
                     child: RichText(
                       text: TextSpan(
@@ -199,7 +201,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 15.0, left: 0.0),
-                  height: 68,
+                  height: 2.5 * TextSizeConstants.bodyText,
                   width: 0.5 * deviceWidth,
                   child: TextButton(
                     child: Text(

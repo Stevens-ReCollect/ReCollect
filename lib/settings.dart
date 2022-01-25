@@ -265,34 +265,36 @@ class TextAdjustPageState extends State<TextAdjustPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: true,
-          backgroundColor: ColorConstants.appBar,
-        ),
-        body: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const Text(
-                "Adjust your text size",
-                style: TextStyle(fontSize: TextSizeConstants.memoryTitle),
-              ),
-              Slider.adaptive(
-                value: textAdjust,
-                max: 2,
-                min: 0.75,
-                divisions: 5,
-                thumbColor: ColorConstants.appBar,
-                activeColor: ColorConstants.appBar,
-                label: textAdjust.toString(),
-                onChangeEnd: (double value) {
-                  print('$value');
-                },
-                onChanged: (double value) {
-                  setState(() {
-                    textAdjust = value;
-                  });
-                },
-              )
-            ]));
+      appBar: AppBar(
+        automaticallyImplyLeading: true,
+        backgroundColor: ColorConstants.appBar,
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          const Text(
+            "Adjust your text size",
+            style: TextStyle(fontSize: TextSizeConstants.memoryTitle),
+          ),
+          Slider.adaptive(
+            value: textAdjust,
+            max: 2,
+            min: 0.75,
+            divisions: 5,
+            thumbColor: ColorConstants.appBar,
+            activeColor: ColorConstants.appBar,
+            label: textAdjust.toString(),
+            onChangeEnd: (double value) {
+              print('$value');
+            },
+            onChanged: (double value) {
+              setState(() {
+                textAdjust = value;
+              });
+            },
+          )
+        ],
+      ),
+    );
   }
 }

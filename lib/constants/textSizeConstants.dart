@@ -13,6 +13,6 @@ class TextSizeConstants {
   static const double hint = 12;
 
   static getadaptiveTextSize(BuildContext context, double value) {
-    return (value / 720) * MediaQuery.of(context).size.height;
+    return (value / 850) * MediaQuery.of(context).size.height;
   }
 }

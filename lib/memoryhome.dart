@@ -181,7 +181,7 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
             ),
             TextButton(
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.of(context, rootNavigator: true).pop();
               },
               child: const Text("Cancel"),
               style: ButtonStyle(
@@ -205,7 +205,7 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
   Widget memoryDeleteConfirmation(String memoryId) {
     return AlertDialog(
       content: const Text(
-          "Are you sure you want to delete this memory?\n\nNOTE: you will lose all data and media in this memory!"),
+          "Are you sure you want to delete this memory?\n\nNOTE: You will lose all data and media in this memory!"),
       actions: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -236,7 +236,7 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
             ),
             TextButton(
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.of(context, rootNavigator: true).pop();
               },
               child: const Text("Cancel"),
               style: ButtonStyle(
