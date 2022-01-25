@@ -17,7 +17,11 @@ class AuthenticationService {
     try {
       await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
-      return "Success";
+      // if (_user.user!.emailVerified) {
+        return "Success!";
+      // } else {
+      //  return "Please verify your email with the link sent to your email.";
+     // }
     } on FirebaseAuthException catch (ex) {
       return ex.message.toString();
     }
@@ -30,16 +34,18 @@ class AuthenticationService {
       required String confirmPassword,
       required String caregiverPin}) async {
     try {
-      await _firebaseAuth.createUserWithEmailAndPassword(
+      final _user = await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
       await FirestoreService()
           .addNewUser(email: email, caregiverPin: caregiverPin, counter: 0);
+      await _user.user!.sendEmailVerification();
       return "Success";
     } on FirebaseAuthException catch (ex) {
       return ex.message.toString();
     }
   }
 
+  //VALIDATE EMAIL METHOD
   String? validateEmail(String? email) {
     if (email == null || email.isEmpty) {
       return 'E-mail address is required.';
@@ -53,6 +59,7 @@ class AuthenticationService {
     return null;
   }
 
+  //VALIDATE PASSWORD METHOD
   String? validatePassword(String? password) {
     if (password == null || password.isEmpty) {
       return 'Password is required.';
@@ -68,6 +75,7 @@ class AuthenticationService {
     return null;
   }
 
+  //VALIDATE PIN METHOD
   String? validatePin(String? caregiverPin) {
     if (caregiverPin == null || caregiverPin.isEmpty) {
       return 'Caregiver Pin is required.';

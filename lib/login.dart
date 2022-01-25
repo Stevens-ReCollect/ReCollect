@@ -175,7 +175,7 @@ class _LogInPageState extends State<LogInPage> {
                       });
 
                       print(logInResult);
-                      if (logInResult == "Success") {
+                      if (logInResult == "Success!") {
                         await FirestoreService()
                             .getCounter(
                                 email: _email.text, password: _password.text)
@@ -184,7 +184,6 @@ class _LogInPageState extends State<LogInPage> {
                             counterResult = counter;
                           });
                         });
-                        // print(counterResult);
 
                         if (counterResult == 0) {
                           Navigator.pushNamed(context, RouteConstants.tutorialRoute);
