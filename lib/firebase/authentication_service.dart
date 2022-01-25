@@ -62,7 +62,7 @@ class AuthenticationService {
         r'^(?=.*[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
     RegExp regex = RegExp(pattern);
     if (!regex.hasMatch(password)) {
-      return 'Password must be at least 8 characters, include an uppercase letter, number, and symbol.';
+      return 'Password must be at least 8 characters, and must \ninclude an uppercase letter, number, and symbol.';
     }
 
     return null;
