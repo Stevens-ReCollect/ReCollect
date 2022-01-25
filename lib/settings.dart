@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/startup.dart';
-import 'package:open_settings/open_settings.dart';
+import 'package:app_settings/app_settings.dart';
 import 'constants/textSizeConstants.dart';
 import 'package:recollect_app/progressReport.dart';
 import 'package:recollect_app/firebase/authentication_service.dart';
@@ -97,32 +97,32 @@ class SettingsPageState extends State<SettingsPage> {
                       },
                     )
                   ])),
-              Container(
-                  width: deviceWidth,
-                  padding: const EdgeInsets.all(10),
-                  color: const Color(0xFFEEEEEE),
-                  child: Row(children: <Widget>[
-                    IconButton(
-                      icon: const Icon(Icons.color_lens),
-                      onPressed: () {
-                        OpenSettings.openAccessibilitySetting();
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (context) => const TextAdjustPage()));
-                      },
-                    ),
-                    InkWell(
-                      child: Text('High Contrast',
-                          style: TextStyle(
-                              fontSize: 0.7 *
-                                  TextSizeConstants.getadaptiveTextSize(
-                                      context, TextSizeConstants.bodyText))),
-                      onTap: () {
-                       OpenSettings.openAccessibilitySetting();
-                      },
-                    )
-                  ])),
+              // Container(
+              //     width: deviceWidth,
+              //     padding: const EdgeInsets.all(10),
+              //     color: const Color(0xFFEEEEEE),
+              //     child: Row(children: <Widget>[
+              //       IconButton(
+              //         icon: const Icon(Icons.color_lens),
+              //         onPressed: () {
+              //           OpenSettings.openAccessibilitySetting();
+              //           // Navigator.push(
+              //           //     context,
+              //           //     MaterialPageRoute(
+              //           //         builder: (context) => const TextAdjustPage()));
+              //         },
+              //       ),
+              //       InkWell(
+              //         child: Text('High Contrast',
+              //             style: TextStyle(
+              //                 fontSize: 0.7 *
+              //                     TextSizeConstants.getadaptiveTextSize(
+              //                         context, TextSizeConstants.bodyText))),
+              //         onTap: () {
+              //          AppSettings.openDisplaySettings();
+              //         },
+              //       )
+              //     ])),
               Container(
                   width: deviceWidth,
                   padding: const EdgeInsets.all(10),
@@ -131,7 +131,7 @@ class SettingsPageState extends State<SettingsPage> {
                     IconButton(
                       icon: const Icon(Icons.text_fields),
                       onPressed: () {
-                        OpenSettings.openAccessibilitySetting(); //Display settings should have text size adjustments
+                        AppSettings.openDisplaySettings(); //Display settings should have text size adjustments
                       },
                     ),
                     InkResponse(
@@ -141,7 +141,7 @@ class SettingsPageState extends State<SettingsPage> {
                                     TextSizeConstants.getadaptiveTextSize(
                                         context, TextSizeConstants.bodyText))),
                         onTap: () {
-                          OpenSettings.openAccessibilitySetting();
+                          AppSettings.openDisplaySettings();
                         
                         })
                   ])),
