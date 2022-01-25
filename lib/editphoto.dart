@@ -147,6 +147,7 @@ class _EditPhotoPageState extends State<EditPhotoPage> {
                   ),
                 ),
               ),
+              /*
               Container(
                 margin: const EdgeInsets.only(top: 20.0),
                 child: const Center(
@@ -160,9 +161,10 @@ class _EditPhotoPageState extends State<EditPhotoPage> {
                   ),
                 ),
               ),
+              */
               loading(),
               Container(
-                margin: const EdgeInsets.only(top: 250.0, left: 0.0),
+                margin: const EdgeInsets.only(top: 170.0, left: 0.0),
                 width: 0.4 * deviceWidth,
                 child: TextButton(
                   child: const Text(

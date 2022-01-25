@@ -90,7 +90,7 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
               ),
             ),
             Container(
-              margin: const EdgeInsets.only(top: 20.0, left: 30.0),
+              margin: const EdgeInsets.only(top: 5.0, left: 30.0),
               child: ListTile(
                 title: const Text(
                   'Cover Photo',
@@ -142,7 +142,7 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
             ),
             Container(
               width: 0.8 * deviceWidth,
-              margin: const EdgeInsets.only(top: 15.0, left: 0.0),
+              margin: const EdgeInsets.only(top: 5.0, left: 0.0),
               child: TextField(
                 controller: _title,
                 decoration: InputDecoration(
