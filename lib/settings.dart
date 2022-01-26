@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recollect_app/changepassword.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/startup.dart';
 import 'constants/routeConstants.dart';
@@ -49,7 +50,12 @@ class SettingsPageState extends State<SettingsPage> {
                   child: Row(children: <Widget>[
                     IconButton(
                       icon: const Icon(Icons.lock_outline),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ChangePasswordPage()));
+                      },
                     ),
                     InkWell(
                       child: Text('Change Password',

@@ -40,6 +40,14 @@ class AuthenticationService {
     }
   }
 
+  Future<String> changePassword() async {
+    try {
+      return "Success";
+    } on FirebaseAuthException catch (ex) {
+      return ex.message.toString();
+    }
+  }
+
   String? validateEmail(String? email) {
     if (email == null || email.isEmpty) {
       return 'E-mail address is required.';
