@@ -5,14 +5,20 @@ import 'package:recollect_app/settings.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
+import 'constants/textSizeConstants.dart';
+
 class Navigate extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
+    MediaQueryData queryData = MediaQuery.of(context);
+    var deviceHeight = queryData.size.height;
     return PersistentTabView(
       context,
       controller: _controller,
       screens: _buildScreens(),
-      items: _navBarsItems(),
+      items: _navBarsItems(context),
+      navBarHeight: 0.1*deviceHeight,
       confineInSafeArea: true,
       backgroundColor: Colors.white, // Default is Colors.white.
       handleAndroidBackButtonPress: true, // Default is true.
@@ -39,7 +45,7 @@ class Navigate extends StatelessWidget {
         duration: Duration(milliseconds: 200),
       ),
       navBarStyle:
-          NavBarStyle.style3, // Choose the nav bar style with this property.
+          NavBarStyle.style6, // Choose the nav bar style with this property.
     );
   }
 }
@@ -50,22 +56,38 @@ List<Widget> _buildScreens() {
   return [MyHomePage(), ProgressReport(), SettingsPage()];
 }
 
-List<PersistentBottomNavBarItem> _navBarsItems() {
+List<PersistentBottomNavBarItem> _navBarsItems(BuildContext context) {
   return [
     PersistentBottomNavBarItem(
         icon: const Icon(Icons.photo_library),
+        iconSize: 0.8*TextSizeConstants.getadaptiveTextSize(
+                                context, TextSizeConstants.bodyText),
         title: ("Memories"),
         inactiveColorPrimary: ColorConstants.unfavoredButton,
-        activeColorPrimary: ColorConstants.buttonColor),
+        activeColorPrimary: ColorConstants.buttonColor,
+        textStyle: TextStyle(fontSize: 0.8*TextSizeConstants.getadaptiveTextSize(
+                                context, TextSizeConstants.bodyText)),
+        ),
     PersistentBottomNavBarItem(
         icon: const Icon(Icons.poll),
+        iconSize: 0.8*TextSizeConstants.getadaptiveTextSize(
+                                context, TextSizeConstants.bodyText),
         title: ("Progress Report"),
         inactiveColorPrimary: ColorConstants.unfavoredButton,
-        activeColorPrimary: ColorConstants.buttonColor),
+        activeColorPrimary: ColorConstants.buttonColor,
+        textStyle: TextStyle(fontSize: 0.8*TextSizeConstants.getadaptiveTextSize(
+                                context, TextSizeConstants.bodyText)),
+        ),
+        
     PersistentBottomNavBarItem(
         icon: const Icon(Icons.settings),
+        iconSize: 0.8*TextSizeConstants.getadaptiveTextSize(
+                                context, TextSizeConstants.bodyText),
         title: ("Settings"),
         inactiveColorPrimary: ColorConstants.unfavoredButton,
-        activeColorPrimary: ColorConstants.buttonColor),
+        activeColorPrimary: ColorConstants.buttonColor,
+        textStyle: TextStyle(fontSize: 0.8*TextSizeConstants.getadaptiveTextSize(
+                                context, TextSizeConstants.bodyText)),
+        ),
   ];
 }
