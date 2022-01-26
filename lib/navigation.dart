@@ -18,7 +18,7 @@ class Navigate extends StatelessWidget {
       controller: _controller,
       screens: _buildScreens(),
       items: _navBarsItems(context),
-      navBarHeight: 0.1*deviceHeight,
+      navBarHeight: 0.09*deviceHeight,
       confineInSafeArea: true,
       backgroundColor: Colors.white, // Default is Colors.white.
       handleAndroidBackButtonPress: true, // Default is true.
@@ -65,7 +65,7 @@ List<PersistentBottomNavBarItem> _navBarsItems(BuildContext context) {
         title: ("Memories"),
         inactiveColorPrimary: ColorConstants.unfavoredButton,
         activeColorPrimary: ColorConstants.buttonColor,
-        textStyle: TextStyle(fontSize: 0.8*TextSizeConstants.getadaptiveTextSize(
+        textStyle: TextStyle(fontSize: 0.7*TextSizeConstants.getadaptiveTextSize(
                                 context, TextSizeConstants.bodyText)),
         ),
     PersistentBottomNavBarItem(
@@ -75,7 +75,7 @@ List<PersistentBottomNavBarItem> _navBarsItems(BuildContext context) {
         title: ("Progress Report"),
         inactiveColorPrimary: ColorConstants.unfavoredButton,
         activeColorPrimary: ColorConstants.buttonColor,
-        textStyle: TextStyle(fontSize: 0.8*TextSizeConstants.getadaptiveTextSize(
+        textStyle: TextStyle(fontSize: 0.7*TextSizeConstants.getadaptiveTextSize(
                                 context, TextSizeConstants.bodyText)),
         ),
         
@@ -86,7 +86,7 @@ List<PersistentBottomNavBarItem> _navBarsItems(BuildContext context) {
         title: ("Settings"),
         inactiveColorPrimary: ColorConstants.unfavoredButton,
         activeColorPrimary: ColorConstants.buttonColor,
-        textStyle: TextStyle(fontSize: 0.8*TextSizeConstants.getadaptiveTextSize(
+        textStyle: TextStyle(fontSize: 0.7*TextSizeConstants.getadaptiveTextSize(
                                 context, TextSizeConstants.bodyText)),
         ),
   ];
