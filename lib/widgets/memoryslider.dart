@@ -1,18 +1,25 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:provider/provider.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/textSizeConstants.dart';
+import 'package:recollect_app/firebase/authentication_service.dart';
+import 'package:recollect_app/login.dart';
+import 'package:recollect_app/memory_example.dart';
 import 'package:video_player/video_player.dart';
 import 'package:audioplayers/audioplayers.dart';
 
 class MemorySlider extends StatefulWidget{
   const MemorySlider({Key? key}) : super(key: key);
+ 
   @override
   State<MemorySlider> createState() => MemorySliderState();
 
 }
 
-class MemoryList{
+class MemoryList{  
   String type; //file type
   String asset; //link or data call to the file
   String title; //title for audio files
@@ -21,6 +28,25 @@ class MemoryList{
   //These parameters can be changed to best reflect the firebase or vice versa
 
 Widget selectType(BuildContext context){
+
+  User? currentUser = AuthenticationService().getUser();
+    if (currentUser == null) {
+      throw Exception('currentUser is null');
+    }
+    // final Stream<QuerySnapshot> _momentStream = FirebaseFirestore.instance
+    //     .collection('moments')
+    //     .where("memory_id", isEqualTo: widget.memoryData['doc_id'])
+    //     .snapshots();
+    // return StreamBuilder<QuerySnapshot>(
+    //   stream: _momentStream,
+    //   builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+    //     if (snapshot.hasError) {
+    //       return const Text('Something went wrong');
+    //     }
+    //     if (snapshot.connectionState == ConnectionState.waiting) {
+    //       return const Text('Loading...');
+    //     }
+
   if(type == 'photo'){
       return Column(
         mainAxisSize: MainAxisSize.max,
@@ -106,15 +132,15 @@ Widget selectType(BuildContext context){
             ],);
     } else {
       return const SizedBox();
-    }
-}
+    }}
 }
 
-var _videoController;
+
 class MemorySliderState extends State<MemorySlider> {
-   var _current;
+   
+  var _current;
 
-   @override
+  @override
   void initState() {
     _current = 1;
     super.initState();
