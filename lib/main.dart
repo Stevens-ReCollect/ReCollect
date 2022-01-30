@@ -199,7 +199,7 @@ class MyHomePageState extends State<MyHomePage> {
                                 MemoryHomePage(memoryData: data)));
                   } else {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => MemoryPage()));
+                        MaterialPageRoute(builder: (context) => MemoryPage(memoryData: data)));
                   }
                 },
                 child: Stack(
