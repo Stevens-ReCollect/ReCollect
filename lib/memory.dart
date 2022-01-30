@@ -1,17 +1,32 @@
-
-// ignore_for_file: file_names
-
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/textSizeConstants.dart';
-import 'package:recollect_app/main.dart';
-import 'package:recollect_app/widgets/memoryslider.dart';
+import 'package:recollect_app/widgets/photowidget.dart';
+import 'package:recollect_app/widgets/videoplayer.dart';
+import 'package:recollect_app/widgets/audioplayer.dart';
 
+class MemoryPage extends StatefulWidget {
+  const MemoryPage({this.memoryData});
+  final memoryData;
+  @override
+  _MemoryState createState() => _MemoryState();
+}
 
-  
- late String _buttonController; // alerts the correct dialog
- late String affirmTitle;
- late String affirmation; // affirming message
+class _MemoryState extends State<MemoryPage> {
+  var _current = 0; //TODO: Implement current moment indicator
+
+  @override
+  Widget build(BuildContext context) {
+    MediaQueryData queryData = MediaQuery.of(context);
+      var pixelRatio = queryData.devicePixelRatio; //responsive sizing
+      var deviceWidth = queryData.size.width;
+      var deviceHeight = queryData.size.height;
+
+      late String _buttonController; // alerts the correct dialog
+      late String affirmTitle;
+      late String affirmation; // affirming message
 
   Widget _affirmingResponse(BuildContext context){
   if(_buttonController == "Yes"){
@@ -55,58 +70,55 @@ import 'package:recollect_app/widgets/memoryslider.dart';
 
   }
 
-
-
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'ReCollect',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MemoryPage(),
-    );
-  }
-}
-
-class MemoryPage extends StatefulWidget {
-
-  @override
-  State<MemoryPage> createState() => _MemoryPageState();
-}
-
-class _MemoryPageState extends State<MemoryPage> {
+  memoryCarouselSlider() {
   
-  var accMode = MyHomePageState.accountMode;
-  var _isButtonDisabled;
+    final Stream<QuerySnapshot> _momentStream = FirebaseFirestore.instance
+          .collection('moments')
+          .where("memory_id", isEqualTo: widget.memoryData['doc_id'])
+          .snapshots();
+      return StreamBuilder<QuerySnapshot>(
+        stream: _momentStream,
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return Text('Something went wrong');
+          }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Text('Loading...');
+        }
 
-  @override
-  void initState() {
-     _isButtonDisabled = false;
-    super.initState();
-  }
+  return CarouselSlider(
+      options: CarouselOptions(
+        aspectRatio: 1/1,
+        viewportFraction: 1,
+        onPageChanged:(index, reason) {
+                setState(() {
+                  _current = index + 1;
+                });
+              }),
+      items: snapshot.data!.docs.map(
+          (DocumentSnapshot document) {
+            Map<String, dynamic> data =
+                document.data()! as Map<String, dynamic>;
+            // print("Print data: $data");
+            if (data.isEmpty) {
+              return Text("Hello");
+            } else {
+                if(data['type'] == 'photo'){
+                return PhotoWidget(data['description'], data['file_path']); 
+              } else if(data['type'] == 'video'){
+                return VideoPlayerWidget(data['description'], data['file_path']);
+              } else if(data['type'] == 'audio'){
+                return AudioPlayerWidget(data['description'], '', data['file_path']);
+              } else {
+                return const SizedBox();
+              }
+            }}
+              )
+            .toList());
+  });
+}
 
-  void _isEditMode() {
-    if (accMode == 0){
-    print('This is Edit Mode');
-    setState(() {
-      _isButtonDisabled = true;
-    });
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-  MediaQueryData queryData = MediaQuery.of(context);
-//responsive sizing
-  var deviceWidth = queryData.size.width;
-  var deviceHeight = queryData.size.height;
-    return Scaffold(
+return Scaffold(
       appBar: AppBar(
         // App bar properties
         // title: Text(widget.title),
@@ -125,17 +137,12 @@ class _MemoryPageState extends State<MemoryPage> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             SizedBox(height: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.h2),),
-            // Container(
-            // padding: EdgeInsets.all(20),
-            // width: 0.9*deviceWidth,
-            // child: Text("This is when you and Grandpa Bobby cut your wedding cake.", style: TextStyle(color: ColorConstants.bodyText, fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),
-            // )), 
-            //this is where the description will go
+            
             SizedBox(
               width: 0.8*deviceWidth,
               height:0.6*deviceHeight,
             
-              child:const Center(child: MemorySlider()),
+              child:Center(child: memoryCarouselSlider()), 
               
             ),
               SizedBox(height: deviceHeight/80),
@@ -146,8 +153,6 @@ class _MemoryPageState extends State<MemoryPage> {
                   children: [
                   ElevatedButton(
                     onPressed: (){
-                    _isButtonDisabled ? null : _isEditMode;
-                     //null will get replaced with function that increments memory data
                      _buttonController = "Yes";
                       showDialog(
                         context: context,
@@ -160,7 +165,6 @@ class _MemoryPageState extends State<MemoryPage> {
                   ),),
                   SizedBox(width: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),
                   ElevatedButton(onPressed: (){
-                    _isButtonDisabled ? null : _isEditMode; //null will get replaced with function that increments memory data
                   _buttonController = "No";
                  showDialog(
                         context: context,
@@ -173,7 +177,6 @@ class _MemoryPageState extends State<MemoryPage> {
                   ),
                   SizedBox(width:TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),
                   ElevatedButton(onPressed: (){
-                    _isButtonDisabled ? null : _isEditMode; //null will get replaced with function that increments memory data
                   _buttonController = "Maybe";
                    showDialog(
                         context: context,
@@ -190,4 +193,8 @@ class _MemoryPageState extends State<MemoryPage> {
         ),
     ));
   }
+
+
+
+
 }

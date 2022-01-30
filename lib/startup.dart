@@ -4,6 +4,7 @@ import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/routeConstants.dart';
 import 'package:recollect_app/login.dart';
 import 'package:recollect_app/main.dart';
+import 'package:recollect_app/memory.dart';
 import 'package:recollect_app/memoryhome.dart';
 import 'package:recollect_app/progressReport.dart';
 import 'package:recollect_app/signup.dart';
@@ -14,9 +15,7 @@ import 'package:recollect_app/addaudio.dart';
 import 'package:recollect_app/navigation.dart';
 import 'package:recollect_app/settings.dart';
 import 'package:recollect_app/tutorial.dart';
-
 import 'constants/textSizeConstants.dart';
-import 'memory_example.dart';
 
 class StartUp extends StatelessWidget {
   final Future<FirebaseApp> _fbApp = Firebase.initializeApp();

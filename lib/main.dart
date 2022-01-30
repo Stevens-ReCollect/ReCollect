@@ -15,7 +15,7 @@ import 'package:recollect_app/constants/textSizeConstants.dart';
 import 'package:recollect_app/creatememory.dart';
 import 'package:recollect_app/firebase/firestore_service.dart';
 import 'package:recollect_app/login.dart';
-import 'package:recollect_app/memory_example.dart';
+import 'package:recollect_app/memory.dart';
 import 'package:recollect_app/progressReport.dart';
 import 'package:recollect_app/signup.dart';
 import 'package:recollect_app/startup.dart';
@@ -143,7 +143,7 @@ class MyHomePageState extends State<MyHomePage> {
                                 MemoryHomePage(memoryData: data)));
                   } else {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => MemoryPage()));
+                        MaterialPageRoute(builder: (context) => MemoryPage(memoryData: data)));
                   }
                 },
                 child: Stack(

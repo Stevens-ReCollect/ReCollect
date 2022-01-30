@@ -1,0 +1,41 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:recollect_app/constants/colorConstants.dart';
+import 'package:recollect_app/constants/textSizeConstants.dart';
+import 'package:video_player/video_player.dart';
+
+class VideoPlayerWidget extends StatelessWidget {
+  const VideoPlayerWidget(this.description, this.asset);
+  final description;
+  final asset;
+
+  @override
+  Widget build(BuildContext context) {
+    VideoPlayerController _videoController = VideoPlayerController.network(asset)..initialize();
+      return Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                // Find videoplayer package
+                SizedBox(height:0.4*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),
+                Text(description, style: TextStyle(color: ColorConstants.bodyText, fontSize: 0.9*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),),
+                Stack(
+                  children: <Widget>[
+                AspectRatio(aspectRatio: 5/4,
+                child:VideoPlayer(_videoController)),
+                FloatingActionButton(
+                  backgroundColor: Colors.transparent,
+                  onPressed: () {
+                      _videoController.value.isPlaying
+                          ? _videoController.pause()
+                          : _videoController.play();
+                  },
+                  child: Icon(
+                    _videoController.value.isPlaying ? Icons.pause: Icons.play_arrow,
+                  ))]),
+                  
+              ],
+            );
+  }
+
+}
