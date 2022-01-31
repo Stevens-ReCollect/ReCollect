@@ -80,10 +80,10 @@ class _MemoryState extends State<MemoryPage> {
         stream: _momentStream,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
-            return Text('Something went wrong');
+            return const Text('Something went wrong');
           }
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Text('Loading...');
+            return const Text('Loading...');
         }
 
   return CarouselSlider(
@@ -101,9 +101,9 @@ class _MemoryState extends State<MemoryPage> {
                 document.data()! as Map<String, dynamic>;
             // print("Print data: $data");
             if (data.isEmpty) {
-              return Text("Hello");
-            } else {
-                if(data['type'] == 'photo'){
+              return const Text("This memory is empty.");
+            } else 
+              { if(data['type'] == 'photo'){
                 return PhotoWidget(data['description'], data['file_path']); 
               } else if(data['type'] == 'video'){
                 return VideoPlayerWidget(data['description'], data['file_path']);
@@ -112,19 +112,16 @@ class _MemoryState extends State<MemoryPage> {
               } else {
                 return const SizedBox();
               }
-            }}
-              )
+            }})
             .toList());
   });
 }
 
 return Scaffold(
       appBar: AppBar(
-        // App bar properties
-        // title: Text(widget.title),
         automaticallyImplyLeading: true,
         backgroundColor: ColorConstants.appBar,
-        title: Text('Wedding', style: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.buttonText)),), //memory title
+        title: Text('', style: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.buttonText)),), //memory title
         
       ),
       body: SingleChildScrollView(

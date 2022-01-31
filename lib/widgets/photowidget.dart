@@ -3,9 +3,9 @@ import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/textSizeConstants.dart';
 
 class PhotoWidget extends StatelessWidget {
-  const PhotoWidget(this.description, this.asset);
-  final description;
-  final asset;
+  const PhotoWidget(this.description, this.asset, {Key? key}) : super(key: key);
+  final String description;
+  final String asset;
 
   @override
   Widget build(BuildContext context) {
