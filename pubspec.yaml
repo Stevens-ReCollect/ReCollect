@@ -91,6 +91,8 @@ flutter:
     - lib/assets/birdsflying.mp3
     - lib/images/FallLeaves.jpg
     - lib/images/Bird.jpg
+    - lib/assets/recollect_logo.png
+    - lib/assets/recollect_logo_with_bkg.png
 
   #   - images/a_dot_ham.jpeg
 
