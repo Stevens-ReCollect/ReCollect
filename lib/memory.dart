@@ -104,7 +104,7 @@ class _MemoryState extends State<MemoryPage> {
               items: snapshot.data!.docs.map((DocumentSnapshot document) {
                 Map<String, dynamic> data =
                     document.data()! as Map<String, dynamic>;
-                print("Print data: $data");
+                // print("Print data: $data");
                 if (data.isEmpty) {
                   return const Text("This memory is empty.");
                 } else {
