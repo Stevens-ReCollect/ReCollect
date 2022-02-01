@@ -206,6 +206,10 @@ class _LogInPageState extends State<LogInPage> {
                                 Navigator.pushNamed(
                                     context, RouteConstants.navigationRoute);
                               }
+                            } else {
+                              setState(() {
+                                _isButtonDisabled = false;
+                              });
                             }
                           }),
               ),

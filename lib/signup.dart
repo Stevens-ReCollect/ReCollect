@@ -248,6 +248,10 @@ class _SignUpPageState extends State<SignUpPage> {
                             if (signUpResult == "Success") {
                               Navigator.pushNamed(
                                   context, RouteConstants.loginRoute);
+                            } else {
+                              setState(() {
+                                _isButtonDisabled = false;
+                              });
                             }
                           },
                   ),
