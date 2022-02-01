@@ -13,6 +13,7 @@ import 'package:recollect_app/constants/routeConstants.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:recollect_app/editmemory.dart';
 import 'package:recollect_app/editphoto.dart';
+import 'package:recollect_app/editvideo.dart';
 import 'package:recollect_app/firebase/authentication_service.dart';
 import 'package:recollect_app/firebase/firestore_service.dart';
 
@@ -87,14 +88,25 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
                       children: <Widget>[
                         IconButton(
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => EditPhotoPage(
-                                  momentData: data,
+                            if (data['type'] == 'Photo') {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => EditPhotoPage(
+                                    momentData: data,
+                                  ),
                                 ),
-                              ),
-                            );
+                              );
+                            } else if (data['type'] == 'Video') {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => EditVideoPage(
+                                    momentData: data,
+                                  ),
+                                ),
+                              );
+                            }
                           },
                           icon: const Icon(Icons.edit),
                         ),

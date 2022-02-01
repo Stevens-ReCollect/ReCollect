@@ -62,209 +62,215 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
     MediaQueryData queryData = MediaQuery.of(context); //responsive sizing
     var deviceWidth = queryData.size.width;
     var deviceHeight = queryData.size.height;
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Container(
-              margin: const EdgeInsets.only(top: 50.0, left: 10.0),
-              alignment: Alignment.centerLeft,
-              child: IconButton(
-                icon: const Icon(Icons.arrow_back_ios_new),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
+    return Container(
+        child: Stack(children: <Widget>[
+      Container(
+          child: Scaffold(
+        backgroundColor: Colors.white,
+        body: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Container(
+                margin: const EdgeInsets.only(top: 50.0, left: 10.0),
+                alignment: Alignment.centerLeft,
+                child: IconButton(
+                  icon: const Icon(Icons.arrow_back_ios_new),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
               ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(top: 0.0),
-              child: Center(
-                child: Text(
-                  'Create a Memory',
-                  style: TextStyle(
-                    fontSize: TextSizeConstants.getadaptiveTextSize(
-                        context, TextSizeConstants.memoryTitle),
-                    fontFamily: 'Roboto',
-                    fontWeight: FontWeight.w900,
+              Container(
+                margin: const EdgeInsets.only(top: 0.0),
+                child: Center(
+                  child: Text(
+                    'Create a Memory',
+                    style: TextStyle(
+                      fontSize: TextSizeConstants.getadaptiveTextSize(
+                          context, TextSizeConstants.memoryTitle),
+                      fontFamily: 'Roboto',
+                      fontWeight: FontWeight.w900,
+                    ),
                   ),
                 ),
               ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(top: 5.0, left: 30.0),
-              child: ListTile(
-                title: const Text(
-                  'Cover Photo',
-                  style: TextStyle(
+              Container(
+                margin: const EdgeInsets.only(top: 5.0, left: 30.0),
+                child: ListTile(
+                  title: const Text(
+                    'Cover Photo',
+                    style: TextStyle(
+                        fontFamily: 'Roboto',
+                        fontWeight: FontWeight.w400,
+                        fontSize: 18.0),
+                  ),
+                  subtitle: TextButton(
+                    onPressed: () {
+                      pickImage();
+                    },
+                    child: image != null
+                        ? const Text(
+                            'Change Photo',
+                            style: TextStyle(
+                                fontFamily: 'Roboto',
+                                fontWeight: FontWeight.w400,
+                                fontSize: 12.0),
+                          )
+                        : const Text("Add Photo"),
+                    style: TextButton.styleFrom(
+                      minimumSize: Size.zero,
+                      padding: EdgeInsets.zero,
+                      alignment: Alignment.centerLeft,
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    ),
+                  ),
+                  leading: ClipRRect(
+                    borderRadius: BorderRadius.circular(5.0),
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(
+                        minHeight: 60.0,
+                        minWidth: 60.0,
+                        maxHeight: 60.0,
+                        maxWidth: 60.0,
+                      ),
+                      child: image != null
+                          ? Image.file(
+                              image!,
+                              width: 60.0,
+                              height: 60.0,
+                              fit: BoxFit.cover,
+                            )
+                          : const FlutterLogo(size: 60.0),
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                width: 0.8 * deviceWidth,
+                margin: const EdgeInsets.only(top: 5.0, left: 0.0),
+                child: TextField(
+                  controller: _title,
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    labelText: 'Title',
+                    labelStyle: TextStyle(
+                        fontSize: TextSizeConstants.getadaptiveTextSize(
+                            context, TextSizeConstants.formField)),
+                    hintText: 'Example: Christmas 2010',
+                    hintStyle: TextStyle(
+                        fontSize: TextSizeConstants.getadaptiveTextSize(
+                            context, TextSizeConstants.formField)),
+                  ),
+                ),
+              ),
+              Container(
+                width: 0.8 * deviceWidth,
+                margin: const EdgeInsets.only(top: 15.0, left: 0.0),
+                child: TextField(
+                  controller: _startDate,
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    labelText: 'Start Date',
+                    labelStyle: TextStyle(
+                        fontSize: TextSizeConstants.getadaptiveTextSize(
+                            context, TextSizeConstants.formField)),
+                    hintText: 'MM/DD/YYY',
+                    hintStyle: TextStyle(
+                        fontSize: TextSizeConstants.getadaptiveTextSize(
+                            context, TextSizeConstants.formField)),
+                  ),
+                ),
+              ),
+              Container(
+                width: 0.8 * deviceWidth,
+                margin: const EdgeInsets.only(top: 15.0, left: 0.0),
+                child: TextField(
+                  controller: _endDate,
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    labelText: 'End Date',
+                    labelStyle: TextStyle(
+                        fontSize: TextSizeConstants.getadaptiveTextSize(
+                            context, TextSizeConstants.formField)),
+                    hintText: 'MM/DD/YYYY',
+                    hintStyle: TextStyle(
+                        fontSize: TextSizeConstants.getadaptiveTextSize(
+                            context, TextSizeConstants.formField)),
+                  ),
+                ),
+              ),
+              Container(
+                height: 0.23 * deviceHeight,
+                width: 0.8 * deviceWidth,
+                margin: const EdgeInsets.only(top: 15.0, left: 0.0),
+                child: TextField(
+                  controller: _description,
+                  maxLines: 15,
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    labelText: 'Description',
+                    labelStyle: TextStyle(
+                        fontSize: TextSizeConstants.getadaptiveTextSize(
+                            context, TextSizeConstants.formField)),
+                    hintText: 'Description',
+                    hintStyle: TextStyle(
+                        fontSize: TextSizeConstants.getadaptiveTextSize(
+                            context, TextSizeConstants.formField)),
+                    alignLabelWithHint: true,
+                  ),
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 10.0, left: 0.0),
+                width: 0.5 * deviceWidth,
+                child: TextButton(
+                  child: Text(
+                    'Next',
+                    style: TextStyle(
+                      fontSize: TextSizeConstants.getadaptiveTextSize(
+                          context, TextSizeConstants.buttonText),
                       fontFamily: 'Roboto',
                       fontWeight: FontWeight.w400,
-                      fontSize: 18.0),
-                ),
-                subtitle: TextButton(
-                  onPressed: () {
-                    pickImage();
+                    ),
+                  ),
+                  style: ButtonStyle(
+                    padding:
+                        MaterialStateProperty.all(const EdgeInsets.all(10)),
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        ColorConstants.buttonColor),
+                    foregroundColor: MaterialStateProperty.all<Color>(
+                        ColorConstants.buttonText),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                    ),
+                  ),
+                  onPressed: () async {
+                    setState(() {
+                      _loading = true;
+                    });
+                    if (_title != null) {
+                      final result = await FirestoreService().addNewMemory(
+                          title: _title.text,
+                          startDate: _startDate.text,
+                          endDate: _endDate.text,
+                          description: _description.text,
+                          file: image);
+                      //if (result != null) {
+                      // Navigator.pushNamed(
+                      //     context, RouteConstants.memoryHomeRoute);
+                      // Navigator.push(context, MaterialPageRoute(builder: (context) => MemoryHomePage(memoryData: memoryData))))
+                      Navigator.pop(context);
+                    
                   },
-                  child: image != null
-                      ? const Text(
-                          'Change Photo',
-                          style: TextStyle(
-                              fontFamily: 'Roboto',
-                              fontWeight: FontWeight.w400,
-                              fontSize: 12.0),
-                        )
-                      : const Text("Add Photo"),
-                  style: TextButton.styleFrom(
-                    minimumSize: Size.zero,
-                    padding: EdgeInsets.zero,
-                    alignment: Alignment.centerLeft,
-                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  ),
-                ),
-                leading: ClipRRect(
-                  borderRadius: BorderRadius.circular(5.0),
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(
-                      minHeight: 60.0,
-                      minWidth: 60.0,
-                      maxHeight: 60.0,
-                      maxWidth: 60.0,
-                    ),
-                    child: image != null
-                        ? Image.file(
-                            image!,
-                            width: 60.0,
-                            height: 60.0,
-                            fit: BoxFit.cover,
-                          )
-                        : const FlutterLogo(size: 60.0),
-                  ),
                 ),
               ),
-            ),
-            Container(
-              width: 0.8 * deviceWidth,
-              margin: const EdgeInsets.only(top: 5.0, left: 0.0),
-              child: TextField(
-                controller: _title,
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(),
-                  labelText: 'Title',
-                  labelStyle: TextStyle(
-                      fontSize: TextSizeConstants.getadaptiveTextSize(
-                          context, TextSizeConstants.formField)),
-                  hintText: 'Example: Christmas 2010',
-                  hintStyle: TextStyle(
-                      fontSize: TextSizeConstants.getadaptiveTextSize(
-                          context, TextSizeConstants.formField)),
-                ),
-              ),
-            ),
-            Container(
-              width: 0.8 * deviceWidth,
-              margin: const EdgeInsets.only(top: 15.0, left: 0.0),
-              child: TextField(
-                controller: _startDate,
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(),
-                  labelText: 'Start Date',
-                  labelStyle: TextStyle(
-                      fontSize: TextSizeConstants.getadaptiveTextSize(
-                          context, TextSizeConstants.formField)),
-                  hintText: 'MM/DD/YYY',
-                  hintStyle: TextStyle(
-                      fontSize: TextSizeConstants.getadaptiveTextSize(
-                          context, TextSizeConstants.formField)),
-                ),
-              ),
-            ),
-            Container(
-              width: 0.8 * deviceWidth,
-              margin: const EdgeInsets.only(top: 15.0, left: 0.0),
-              child: TextField(
-                controller: _endDate,
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(),
-                  labelText: 'End Date',
-                  labelStyle: TextStyle(
-                      fontSize: TextSizeConstants.getadaptiveTextSize(
-                          context, TextSizeConstants.formField)),
-                  hintText: 'MM/DD/YYYY',
-                  hintStyle: TextStyle(
-                      fontSize: TextSizeConstants.getadaptiveTextSize(
-                          context, TextSizeConstants.formField)),
-                ),
-              ),
-            ),
-            Container(
-              height: 0.23 * deviceHeight,
-              width: 0.8 * deviceWidth,
-              margin: const EdgeInsets.only(top: 15.0, left: 0.0),
-              child: TextField(
-                controller: _description,
-                maxLines: 15,
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(),
-                  labelText: 'Description',
-                  labelStyle: TextStyle(
-                      fontSize: TextSizeConstants.getadaptiveTextSize(
-                          context, TextSizeConstants.formField)),
-                  hintText: 'Description',
-                  hintStyle: TextStyle(
-                      fontSize: TextSizeConstants.getadaptiveTextSize(
-                          context, TextSizeConstants.formField)),
-                  alignLabelWithHint: true,
-                ),
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(top: 10.0, left: 0.0),
-              width: 0.5 * deviceWidth,
-              child: TextButton(
-                child: Text(
-                  'Next',
-                  style: TextStyle(
-                    fontSize: TextSizeConstants.getadaptiveTextSize(
-                        context, TextSizeConstants.buttonText),
-                    fontFamily: 'Roboto',
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                style: ButtonStyle(
-                  padding: MaterialStateProperty.all(const EdgeInsets.all(10)),
-                  backgroundColor: MaterialStateProperty.all<Color>(
-                      ColorConstants.buttonColor),
-                  foregroundColor: MaterialStateProperty.all<Color>(
-                      ColorConstants.buttonText),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                  ),
-                ),
-                onPressed: () async {
-                  if (_isButtonDisabled) {
-                    null;
-                  }
-                  final result = FirestoreService().addNewMemory(
-                      title: _title.text,
-                      startDate: _startDate.text,
-                      endDate: _endDate.text,
-                      description: _description.text,
-                      file: image);
-
-                  if (result != null) {
-                    // Navigator.pushNamed(
-                    //     context, RouteConstants.memoryHomeRoute);
-                    // Navigator.push(context, MaterialPageRoute(builder: (context) => MemoryHomePage(memoryData: memoryData))))
-                    Navigator.pop(context);
-                  }
-                },
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
-    );
+      )),
+      Container(alignment: Alignment.center, child: loading())
+    ]));
   }
 }
