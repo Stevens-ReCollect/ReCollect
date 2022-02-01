@@ -67,87 +67,90 @@ class _EditPhotoPageState extends State<EditPhotoPage> {
     MediaQueryData queryData = MediaQuery.of(context); //responsive sizing
     var deviceWidth = queryData.size.width;
     var deviceHeight = queryData.size.height;
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.black,
-          elevation: 0,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new),
-            onPressed: () {
-              Navigator.pop(context);
-            },
+    return Container(
+        child: Stack(children: <Widget>[
+      Container(
+          child: MaterialApp(
+        home: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            foregroundColor: Colors.black,
+            elevation: 0,
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back_ios_new),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            title: const Text("Edit Photo"),
           ),
-          title: const Text("Edit Photo"),
-        ),
-        backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              ListTile(
-                title: const Text(
-                  'Photo Selected',
-                  style: TextStyle(
-                      fontFamily: 'Roboto',
-                      fontWeight: FontWeight.w400,
-                      fontSize: 18.0),
-                ),
-                subtitle: TextButton(
-                  onPressed: () {
-                    pickImage();
-                  },
-                  child: const Text(
-                    'Change Photo',
+          backgroundColor: Colors.white,
+          body: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                ListTile(
+                  title: const Text(
+                    'Photo Selected',
                     style: TextStyle(
                         fontFamily: 'Roboto',
                         fontWeight: FontWeight.w400,
-                        fontSize: 12.0),
+                        fontSize: 18.0),
                   ),
-                  style: TextButton.styleFrom(
-                    minimumSize: Size.zero,
-                    padding: EdgeInsets.zero,
-                    alignment: Alignment.centerLeft,
-                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  ),
-                ),
-                leading: ClipRRect(
-                  borderRadius: BorderRadius.circular(5.0),
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(
-                      minHeight: 60.0,
-                      minWidth: 60.0,
-                      maxHeight: 60.0,
-                      maxWidth: 60.0,
+                  subtitle: TextButton(
+                    onPressed: () {
+                      pickImage();
+                    },
+                    child: const Text(
+                      'Change Photo',
+                      style: TextStyle(
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.w400,
+                          fontSize: 12.0),
                     ),
-                    child: _image == null
-                        ? Image.network(
-                            widget.momentData['file_path'],
-                            fit: BoxFit.fill,
-                          )
-                        : Image.file(
-                            _image!,
-                            fit: BoxFit.fill,
-                          ),
+                    style: TextButton.styleFrom(
+                      minimumSize: Size.zero,
+                      padding: EdgeInsets.zero,
+                      alignment: Alignment.centerLeft,
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    ),
+                  ),
+                  leading: ClipRRect(
+                    borderRadius: BorderRadius.circular(5.0),
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(
+                        minHeight: 60.0,
+                        minWidth: 60.0,
+                        maxHeight: 60.0,
+                        maxWidth: 60.0,
+                      ),
+                      child: _image == null
+                          ? Image.network(
+                              widget.momentData['file_path'],
+                              fit: BoxFit.fill,
+                            )
+                          : Image.file(
+                              _image!,
+                              fit: BoxFit.fill,
+                            ),
+                    ),
                   ),
                 ),
-              ),
-              Container(
-                height: 0.3 * deviceHeight,
-                width: 0.8 * deviceWidth,
-                margin: const EdgeInsets.only(top: 15.0, left: 0.0),
-                child: TextField(
-                  controller: _description,
-                  maxLines: 15,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Description',
-                    hintText: 'Desciption',
-                    alignLabelWithHint: true,
+                Container(
+                  height: 0.3 * deviceHeight,
+                  width: 0.8 * deviceWidth,
+                  margin: const EdgeInsets.only(top: 15.0, left: 0.0),
+                  child: TextField(
+                    controller: _description,
+                    maxLines: 15,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Description',
+                      hintText: 'Desciption',
+                      alignLabelWithHint: true,
+                    ),
                   ),
                 ),
-              ),
-              /*
+                /*
               Container(
                 margin: const EdgeInsets.only(top: 20.0),
                 child: const Center(
@@ -162,50 +165,51 @@ class _EditPhotoPageState extends State<EditPhotoPage> {
                 ),
               ),
               */
-              loading(),
-              Container(
-                margin: const EdgeInsets.only(top: 170.0, left: 0.0),
-                width: 0.4 * deviceWidth,
-                child: TextButton(
-                  child: const Text(
-                    'Save',
-                    style: TextStyle(
-                      fontSize: 24.0,
-                      fontFamily: 'Roboto',
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        ColorConstants.buttonColor),
-                    foregroundColor: MaterialStateProperty.all<Color>(
-                        ColorConstants.buttonText),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
+                Container(
+                  margin: const EdgeInsets.only(top: 170.0, left: 0.0),
+                  width: 0.4 * deviceWidth,
+                  child: TextButton(
+                    child: const Text(
+                      'Save',
+                      style: TextStyle(
+                        fontSize: 24.0,
+                        fontFamily: 'Roboto',
+                        fontWeight: FontWeight.w400,
                       ),
                     ),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          ColorConstants.buttonColor),
+                      foregroundColor: MaterialStateProperty.all<Color>(
+                          ColorConstants.buttonText),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                      ),
+                    ),
+                    onPressed: () async {
+                      setState(() {
+                        _loading = true;
+                      });
+                      print("Clicked Saved");
+                      if (_image != null) {
+                        await FirestoreService().editMoment(
+                            memoryId: widget.momentData['memory_id'],
+                            momentId: widget.momentData['doc_id'],
+                            file: _image,
+                            description: _description.text);
+                      }
+                      Navigator.pop(context);
+                    },
                   ),
-                  onPressed: () async {
-                    setState(() {
-                      _loading = true;
-                    });
-                    print("Clicked Saved");
-                    if (_image != null) {
-                      await FirestoreService().editMoment(
-                          memoryId: widget.momentData['memory_id'],
-                          momentId: widget.momentData['doc_id'],
-                          file: _image,
-                          description: _description.text);
-                    }
-                    Navigator.pop(context);
-                  },
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
-      ),
-    );
+      )),
+      Container(alignment: Alignment.center, child: loading())
+    ]));
   }
 }
