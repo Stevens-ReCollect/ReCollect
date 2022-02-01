@@ -21,6 +21,7 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _caregiverPin = TextEditingController();
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
   String signUpResult = "";
+  bool _isButtonDisabled = false;
 
   String? validateConfirmPassword(String? confirmPassword) {
     if (confirmPassword == null || confirmPassword.isEmpty) {
@@ -224,25 +225,35 @@ class _SignUpPageState extends State<SignUpPage> {
                         ),
                       ),
                     ),
-                    onPressed: () async {
-                      if (_key.currentState!.validate()) {
-                        await AuthenticationService()
-                            .signUp(
-                                email: _email.text,
-                                password: _password.text,
-                                confirmPassword: _confirmPassword.text,
-                                caregiverPin: _caregiverPin.text)
-                            .then((String result) {
-                          setState(() {
-                            signUpResult = result;
-                          });
-                        });
-                      }
-                      print(signUpResult);
-                      if (signUpResult == "Success") {
-                        Navigator.pushNamed(context, RouteConstants.loginRoute);
-                      }
-                    },
+                    onPressed: _isButtonDisabled
+                        ? null
+                        : () async {
+                            setState(() {
+                              _isButtonDisabled = true;
+                            });
+                            if (_key.currentState!.validate()) {
+                              await AuthenticationService()
+                                  .signUp(
+                                      email: _email.text,
+                                      password: _password.text,
+                                      confirmPassword: _confirmPassword.text,
+                                      caregiverPin: _caregiverPin.text)
+                                  .then((String result) {
+                                setState(() {
+                                  signUpResult = result;
+                                });
+                              });
+                            }
+                            print(signUpResult);
+                            if (signUpResult == "Success") {
+                              Navigator.pushNamed(
+                                  context, RouteConstants.loginRoute);
+                            } else {
+                              setState(() {
+                                _isButtonDisabled = false;
+                              });
+                            }
+                          },
                   ),
                 ),
               ],

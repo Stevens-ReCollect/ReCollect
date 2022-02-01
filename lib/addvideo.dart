@@ -22,6 +22,7 @@ class _AddVideoPageState extends State<AddVideoPage> {
   final TextEditingController _description = TextEditingController();
   File? video;
   bool _loading = false;
+  bool _isButtonDisabled = false;
 
   @override
   void initState() {
@@ -167,23 +168,26 @@ class _AddVideoPageState extends State<AddVideoPage> {
                         ),
                       ),
                     ),
-                    onPressed: () async {
-                      setState(() {
-                        _loading = true;
-                      });
-                      print("Clicked Saved");
-                      if (video != null) {
-                        await FirestoreService().addNewMoment(
-                            memoryId: widget.memoryData['doc_id'],
-                            type: 'Video',
-                            file: video,
-                            description: _description.text);
-                      }
-                      // Navigator.pushNamed(
-                      //     context, RouteConstants.memoryHomeRoute);
-                      Navigator.pop(context);
-                    },
-                  ),
+                    onPressed: _isButtonDisabled
+                      ? null
+                      : () async {
+                          setState(() {
+                            _loading = true;
+                            _isButtonDisabled = true;
+                          });
+                          print("Clicked Saved");
+                          if (video != null) {
+                            await FirestoreService().addNewMoment(
+                                memoryId: widget.memoryData['doc_id'],
+                                type: 'Video',
+                                file: video,
+                                description: _description.text);
+                          }
+                          // Navigator.pushNamed(
+                          //     context, RouteConstants.memoryHomeRoute);
+                          Navigator.pop(context);
+                        },
+                   ),
                 ),
               ],
             ),
