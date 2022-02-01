@@ -63,7 +63,12 @@ class SettingsPageState extends State<SettingsPage> {
                               fontSize: 0.7 *
                                   TextSizeConstants.getadaptiveTextSize(
                                       context, TextSizeConstants.bodyText))),
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ChangePasswordPage()));
+                      },
                     )
                   ])),
               Container(

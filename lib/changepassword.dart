@@ -17,8 +17,8 @@ class ChangePasswordPage extends StatefulWidget {
 }
 
 class _ChangePasswordPageState extends State<ChangePasswordPage> {
-  final TextEditingController _email = TextEditingController();
-  final TextEditingController _password = TextEditingController();
+  final TextEditingController _currentPassword = TextEditingController();
+  final TextEditingController _newPassword = TextEditingController();
   final TextEditingController _confirmPassword = TextEditingController();
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
   String signUpResult = "";
@@ -28,7 +28,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
       return 'Confirm Password is required.';
     }
 
-    if (confirmPassword != _password.text) {
+    if (confirmPassword != _newPassword.text) {
       return 'Passwords do not match.';
     }
 
@@ -64,7 +64,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                   width: 0.8 * deviceWidth,
                   margin: const EdgeInsets.only(top: 50.0, left: 0.0),
                   child: Text(
-                    'Sign Up',
+                    'Change Password',
                     style: TextStyle(
                       fontSize: TextSizeConstants.getadaptiveTextSize(
                           context, TextSizeConstants.memoryTitle),
@@ -79,7 +79,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                   child: TextButton(
                     child: RichText(
                       text: TextSpan(
-                        text: 'Have an account? ',
+                        text: 'Please enter current password.',
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: TextSizeConstants.getadaptiveTextSize(
@@ -87,18 +87,6 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                           fontFamily: 'Roboto',
                           fontWeight: FontWeight.w400,
                         ),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: 'Log in.',
-                            style: TextStyle(
-                              color: ColorConstants.bodyText,
-                              fontSize: TextSizeConstants.getadaptiveTextSize(
-                                  context, TextSizeConstants.bodyText),
-                              fontFamily: 'Roboto',
-                              fontWeight: FontWeight.w400,
-                            ),
-                          )
-                        ],
                       ),
                     ),
                     style: TextButton.styleFrom(
@@ -112,30 +100,15 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 ),
                 Container(
                   width: 0.8 * deviceWidth,
-                  margin: const EdgeInsets.only(top: 10.0, left: 0.0),
-                  child: Text(
-                    signUpResult,
-                    style: TextStyle(
-                      color: Colors.red,
-                      fontSize: TextSizeConstants.getadaptiveTextSize(
-                          context, TextSizeConstants.hint),
-                    ),
-                  ),
-                ),
-                Container(
-                  width: 0.8 * deviceWidth,
-                  margin: const EdgeInsets.only(top: 15.0, left: 0.0),
+                  margin: const EdgeInsets.only(top: 30.0, left: 0.0),
                   child: TextFormField(
-                    controller: _email,
+                    obscureText: true,
+                    controller: _currentPassword,
                     validator: AuthenticationService().validateEmail,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: 'Email',
+                      labelText: 'Current Password',
                       labelStyle: TextStyle(
-                          fontSize: TextSizeConstants.getadaptiveTextSize(
-                              context, TextSizeConstants.formField)),
-                      hintText: 'example@example.com',
-                      hintStyle: TextStyle(
                           fontSize: TextSizeConstants.getadaptiveTextSize(
                               context, TextSizeConstants.formField)),
                     ),
@@ -143,14 +116,14 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 ),
                 Container(
                   width: 0.8 * deviceWidth,
-                  margin: const EdgeInsets.only(top: 15.0, left: 0.0),
+                  margin: const EdgeInsets.only(top: 30.0, left: 0.0),
                   child: TextFormField(
                     obscureText: true,
-                    controller: _password,
+                    controller: _newPassword,
                     validator: AuthenticationService().validatePassword,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: 'Password',
+                      labelText: 'New Password',
                       labelStyle: TextStyle(
                           fontSize: TextSizeConstants.getadaptiveTextSize(
                               context, TextSizeConstants.formField)),
@@ -159,7 +132,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 ),
                 Container(
                   width: 0.8 * deviceWidth,
-                  margin: const EdgeInsets.only(top: 15.0, left: 0.0),
+                  margin: const EdgeInsets.only(top: 30.0, left: 0.0),
                   child: TextFormField(
                     obscureText: true,
                     controller: _confirmPassword,
@@ -174,12 +147,12 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(top: 15.0, left: 0.0),
+                  margin: const EdgeInsets.only(top: 30.0, left: 0.0),
                   height: 2.5 * TextSizeConstants.bodyText,
                   width: 0.5 * deviceWidth,
                   child: TextButton(
                     child: Text(
-                      'Sign Up',
+                      'Change Password',
                       style: TextStyle(
                         fontSize: TextSizeConstants.getadaptiveTextSize(
                             context, TextSizeConstants.buttonText),
@@ -227,25 +200,3 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   }
 }
 
-Widget _buildCaregiverPinPopop(BuildContext context) {
-  MediaQueryData queryData = MediaQuery.of(context);
-  var deviceWidth = queryData.size.width;
-  return AlertDialog(
-    content: Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        SizedBox(
-          width: 0.7 * deviceWidth,
-          height: 0.2 * deviceWidth,
-          child: Text(
-            'The Caregiver Pin is the pin you will use to enter back to Edit Mode.',
-            style: TextStyle(
-                fontSize: TextSizeConstants.getadaptiveTextSize(
-                    context, TextSizeConstants.hint)),
-          ),
-        ),
-      ],
-    ),
-  );
-}
