@@ -131,7 +131,8 @@ class SettingsPageState extends State<SettingsPage> {
                     IconButton(
                       icon: const Icon(Icons.text_fields),
                       onPressed: () {
-                        AppSettings.openDisplaySettings(); //Display settings should have text size adjustments
+                        AppSettings
+                            .openDisplaySettings(); //Display settings should have text size adjustments
                       },
                     ),
                     InkResponse(
@@ -142,7 +143,6 @@ class SettingsPageState extends State<SettingsPage> {
                                         context, TextSizeConstants.bodyText))),
                         onTap: () {
                           AppSettings.openDisplaySettings();
-                        
                         })
                   ])),
               Container(
@@ -170,16 +170,17 @@ class SettingsPageState extends State<SettingsPage> {
                         });
                         print(logOutResult);
                         if (logOutResult == "Signed Out") {
-                          Navigator.of(context).pushAndRemoveUntil(
-                              MaterialPageRoute(
-                                  builder: (context) => StartUpPage()),
-                              (route) => false);
+                          Navigator.of(context, rootNavigator: true)
+                              .pushAndRemoveUntil(
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          StartUpPage()),
+                                  (route) => false);
                         }
                       },
                     )
                   ])),
             ]));
- 
   }
 }
 
