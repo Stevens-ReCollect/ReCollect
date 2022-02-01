@@ -23,6 +23,7 @@ class _EditPhotoPageState extends State<EditPhotoPage> {
   TextEditingController _description = TextEditingController(text: "");
   File? _image;
   bool _loading = false;
+  bool _isButtonDisabled = false;
 
   Future setFields() async {
     try {
@@ -186,20 +187,23 @@ class _EditPhotoPageState extends State<EditPhotoPage> {
                       ),
                     ),
                   ),
-                  onPressed: () async {
-                    setState(() {
-                      _loading = true;
-                    });
-                    print("Clicked Saved");
-                    if (_image != null) {
-                      await FirestoreService().editMoment(
-                          memoryId: widget.momentData['memory_id'],
-                          momentId: widget.momentData['doc_id'],
-                          file: _image,
-                          description: _description.text);
-                    }
-                    Navigator.pop(context);
-                  },
+                  onPressed: _isButtonDisabled
+                      ? null
+                      : () async {
+                          setState(() {
+                            _loading = true;
+                            _isButtonDisabled = true;
+                          });
+                          print("Clicked Saved");
+                          if (_image != null) {
+                            await FirestoreService().editMoment(
+                                memoryId: widget.momentData['memory_id'],
+                                momentId: widget.momentData['doc_id'],
+                                file: _image,
+                                description: _description.text);
+                          }
+                          Navigator.pop(context);
+                        },
                 ),
               ),
             ],

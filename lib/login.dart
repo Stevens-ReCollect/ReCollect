@@ -23,6 +23,7 @@ class _LogInPageState extends State<LogInPage> {
   CollectionReference users = FirebaseFirestore.instance.collection('users');
   String logInResult = "";
   int counterResult = 0;
+  bool _isButtonDisabled = false;
 
   @override
   Widget build(BuildContext context) {
@@ -167,37 +168,46 @@ class _LogInPageState extends State<LogInPage> {
                         ),
                       ),
                     ),
-                    onPressed: () async {
-                      await AuthenticationService()
-                          .signIn(email: _email.text, password: _password.text)
-                          .then((String result) {
-                        setState(() {
-                          logInResult = result;
-                        });
-                      });
+                    onPressed: _isButtonDisabled
+                        ? null
+                        : () async {
+                            setState(() {
+                              _isButtonDisabled = true;
+                            });
+                            await AuthenticationService()
+                                .signIn(
+                                    email: _email.text,
+                                    password: _password.text)
+                                .then((String result) {
+                              setState(() {
+                                logInResult = result;
+                              });
+                            });
 
-                      print(logInResult);
-                      if (logInResult == "Success!") {
-                        await FirestoreService()
-                            .getCounter(
-                                email: _email.text, password: _password.text)
-                            .then((int counter) {
-                          setState(() {
-                            counterResult = counter;
-                          });
-                        });
+                            print(logInResult);
+                            if (logInResult == "Success!") {
+                              await FirestoreService()
+                                  .getCounter(
+                                      email: _email.text,
+                                      password: _password.text)
+                                  .then((int counter) {
+                                setState(() {
+                                  counterResult = counter;
+                                });
+                              });
 
-                        if (counterResult == 0) {
-                          Navigator.pushNamed(
-                              context, RouteConstants.tutorialRoute);
-                          await FirestoreService().editCounter(
-                              email: _email.text, password: _password.text);
-                        } else {
-                          Navigator.pushNamed(
-                              context, RouteConstants.navigationRoute);
-                        }
-                      }
-                    }),
+                              if (counterResult == 0) {
+                                Navigator.pushNamed(
+                                    context, RouteConstants.tutorialRoute);
+                                await FirestoreService().editCounter(
+                                    email: _email.text,
+                                    password: _password.text);
+                              } else {
+                                Navigator.pushNamed(
+                                    context, RouteConstants.navigationRoute);
+                              }
+                            }
+                          }),
               ),
             ],
           ),

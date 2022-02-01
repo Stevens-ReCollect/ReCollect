@@ -25,6 +25,7 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
 
   File? image;
   bool _loading = false;
+  bool _isButtonDisabled = false;
 
   Future pickImage() async {
     try {
@@ -45,6 +46,7 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
     if (_loading) {
       return CircularProgressIndicator();
     } else {
+      _isButtonDisabled = false;
       return SizedBox();
     }
   }
@@ -241,6 +243,9 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
                   ),
                 ),
                 onPressed: () async {
+                  if (_isButtonDisabled) {
+                    null;
+                  }
                   final result = FirestoreService().addNewMemory(
                       title: _title.text,
                       startDate: _startDate.text,

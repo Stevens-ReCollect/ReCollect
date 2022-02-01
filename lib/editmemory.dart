@@ -28,6 +28,7 @@ class _EditMemoryPageState extends State<EditMemoryPage> {
 
   File? image;
   bool _loading = false;
+  bool _isButtonDisabled = false;
 
   Future setFields() async {
     try {
@@ -210,7 +211,7 @@ class _EditMemoryPageState extends State<EditMemoryPage> {
               ),
             ),
             Container(
-              height: 0.3 * deviceHeight,
+              height: 0.21 * deviceHeight,
               width: 0.8 * deviceWidth,
               margin: const EdgeInsets.only(top: 15.0, left: 0.0),
               child: TextField(
@@ -255,20 +256,23 @@ class _EditMemoryPageState extends State<EditMemoryPage> {
                     ),
                   ),
                 ),
-                onPressed: () async {
-                  setState(() {
-                    _loading = true;
-                  });
-                  await FirestoreService().editMemory(
-                      title: _title.text,
-                      startDate: _startDate.text,
-                      endDate: _endDate.text,
-                      description: _description.text,
-                      thumbnail: image,
-                      memoryId: widget.memoryData['doc_id']);
+                onPressed: _isButtonDisabled
+                    ? null
+                    : () async {
+                        setState(() {
+                          _loading = true;
+                          _isButtonDisabled = true;
+                        });
+                        await FirestoreService().editMemory(
+                            title: _title.text,
+                            startDate: _startDate.text,
+                            endDate: _endDate.text,
+                            description: _description.text,
+                            thumbnail: image,
+                            memoryId: widget.memoryData['doc_id']);
 
-                  Navigator.pop(context, true);
-                },
+                        Navigator.pop(context, true);
+                      },
               ),
             ),
           ],

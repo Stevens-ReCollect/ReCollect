@@ -23,6 +23,7 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
   final TextEditingController _description = TextEditingController();
   File? image;
   bool _loading = false;
+  bool _isButtonDisabled = false;
 
   Future pickImage() async {
     try {
@@ -174,22 +175,25 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
                       ),
                     ),
                   ),
-                  onPressed: () async {
-                    setState(() {
-                      _loading = true;
-                    });
-                    print("Clicked Saved");
-                    if (image != null) {
-                      await FirestoreService().addNewMoment(
-                          memoryId: widget.memoryData['doc_id'],
-                          type: 'Photo',
-                          file: image,
-                          description: _description.text);
-                    }
-                    // Navigator.pushNamed(
-                    //     context, RouteConstants.memoryHomeRoute);
-                    Navigator.pop(context);
-                  },
+                  onPressed: _isButtonDisabled
+                      ? null
+                      : () async {
+                          setState(() {
+                            _loading = true;
+                            _isButtonDisabled = true;
+                          });
+                          print("Clicked Saved");
+                          if (image != null) {
+                            await FirestoreService().addNewMoment(
+                                memoryId: widget.memoryData['doc_id'],
+                                type: 'Photo',
+                                file: image,
+                                description: _description.text);
+                          }
+                          // Navigator.pushNamed(
+                          //     context, RouteConstants.memoryHomeRoute);
+                          Navigator.pop(context);
+                        },
                 ),
               ),
             ],
