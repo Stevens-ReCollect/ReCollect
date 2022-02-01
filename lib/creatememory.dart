@@ -224,47 +224,46 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
                 margin: const EdgeInsets.only(top: 10.0, left: 0.0),
                 width: 0.5 * deviceWidth,
                 child: TextButton(
-                  child: Text(
-                    'Next',
-                    style: TextStyle(
-                      fontSize: TextSizeConstants.getadaptiveTextSize(
-                          context, TextSizeConstants.buttonText),
-                      fontFamily: 'Roboto',
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                  style: ButtonStyle(
-                    padding:
-                        MaterialStateProperty.all(const EdgeInsets.all(10)),
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        ColorConstants.buttonColor),
-                    foregroundColor: MaterialStateProperty.all<Color>(
-                        ColorConstants.buttonText),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
+                    child: Text(
+                      'Next',
+                      style: TextStyle(
+                        fontSize: TextSizeConstants.getadaptiveTextSize(
+                            context, TextSizeConstants.buttonText),
+                        fontFamily: 'Roboto',
+                        fontWeight: FontWeight.w400,
                       ),
                     ),
-                  ),
-                  onPressed: () async {
-                    setState(() {
-                      _loading = true;
-                    });
-                    if (_title != null) {
-                      final result = await FirestoreService().addNewMemory(
-                          title: _title.text,
-                          startDate: _startDate.text,
-                          endDate: _endDate.text,
-                          description: _description.text,
-                          file: image);
-                      //if (result != null) {
-                      // Navigator.pushNamed(
-                      //     context, RouteConstants.memoryHomeRoute);
-                      // Navigator.push(context, MaterialPageRoute(builder: (context) => MemoryHomePage(memoryData: memoryData))))
-                      Navigator.pop(context);
-                    
-                  },
-                ),
+                    style: ButtonStyle(
+                      padding:
+                          MaterialStateProperty.all(const EdgeInsets.all(10)),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          ColorConstants.buttonColor),
+                      foregroundColor: MaterialStateProperty.all<Color>(
+                          ColorConstants.buttonText),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                      ),
+                    ),
+                    onPressed: () async {
+                      setState(() {
+                        _loading = true;
+                      });
+                      if (_title != null) {
+                        final result = await FirestoreService().addNewMemory(
+                            title: _title.text,
+                            startDate: _startDate.text,
+                            endDate: _endDate.text,
+                            description: _description.text,
+                            file: image);
+                        //if (result != null) {
+                        // Navigator.pushNamed(
+                        //     context, RouteConstants.memoryHomeRoute);
+                        // Navigator.push(context, MaterialPageRoute(builder: (context) => MemoryHomePage(memoryData: memoryData))))
+                        Navigator.pop(context);
+                      }
+                    }),
               ),
             ],
           ),
