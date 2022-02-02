@@ -33,14 +33,17 @@ class VideoPlayerWidget extends StatelessWidget {
           children: <Widget>[
             AspectRatio(
                 aspectRatio: 5 / 4, child: VideoPlayer(_videoController)),
-            FloatingActionButton(
-              backgroundColor: Colors.transparent,
+            IconButton(
+              iconSize: 1.5 *
+                TextSizeConstants.getadaptiveTextSize(
+                    context, TextSizeConstants.bodyText),
+              color: Colors.white,
               onPressed: () {
                 _videoController.value.isPlaying
                     ? _videoController.pause()
                     : _videoController.play();
               },
-              child: Icon(
+              icon: Icon(
                 _videoController.value.isPlaying
                     ? Icons.pause
                     : Icons.play_arrow,
