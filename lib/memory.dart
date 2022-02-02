@@ -94,32 +94,36 @@ class _MemoryState extends State<MemoryPage> {
 
             return CarouselSlider(
               options: CarouselOptions(
-                  aspectRatio: 1 / 1,
-                  viewportFraction: 1,
-                  onPageChanged: (index, reason) {
-                    setState(() {
-                      _current = index + 1;
-                    });
-                  }),
+                aspectRatio: 1 / 1,
+                viewportFraction: 1,
+                // onPageChanged: (index, reason) {
+                //   setState(() {
+                //     _current = index + 1;
+                //   });
+                // },
+              ),
               items: snapshot.data!.docs.map((DocumentSnapshot document) {
                 Map<String, dynamic> data =
                     document.data()! as Map<String, dynamic>;
-                // print("Print data: $data");
-                if (data.isEmpty) {
-                  return const Text("This memory is empty.");
-                } else {
-                  if (data['type'] == 'Photo') {
-                    return PhotoWidget(data['description'], data['file_path']);
-                  } else if (data['type'] == 'Video') {
-                    return VideoPlayerWidget(
-                        data['description'], data['file_path']);
-                  } else if (data['type'] == 'Audio') {
-                    return AudioPlayerWidget(
-                        data['description'], '', data['file_path']);
+                return Builder(builder: (BuildContext context) {
+                  // print("Print data: $data");
+                  if (data.isEmpty) {
+                    return const Text("This memory is empty.");
                   } else {
-                    return const SizedBox();
+                    if (data['type'] == 'Photo') {
+                      return PhotoWidget(
+                          data['description'], data['file_path']);
+                    } else if (data['type'] == 'Video') {
+                      return VideoPlayerWidget(
+                          data['description'], data['file_path']);
+                    } else if (data['type'] == 'Audio') {
+                      return AudioPlayerWidget(
+                          data['description'], '', data['file_path']);
+                    } else {
+                      return const SizedBox();
+                    }
                   }
-                }
+                });
               }).toList(),
             );
           });
