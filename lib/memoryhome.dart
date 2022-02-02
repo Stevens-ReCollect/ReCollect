@@ -225,12 +225,15 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
             TextButton(
               onPressed: () async {
                 await FirestoreService().deleteMemory(memoryId: memoryId);
-                Navigator.popUntil(context, ModalRoute.withName('/home'));
+                // Navigator.popUntil(context, ModalRoute.withName('/home'));
+                Navigator.of(context, rootNavigator: true).pop();
+                // Navigator.popUntil(context, ModalRoute.withName('/home'));
+                Navigator.pop(context);
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                      content: const Text("Successfully deleted memory"),
-                      backgroundColor: ColorConstants.buttonColor,
-                      duration: const Duration(seconds: 2)),
+                  const SnackBar(
+                      content: Text("Successfully deleted memory"),
+                      backgroundColor: Colors.black,
+                      duration: Duration(seconds: 2)),
                 );
               },
               child: const Text("Yes"),
