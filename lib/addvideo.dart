@@ -10,6 +10,7 @@ import 'package:recollect_app/signup.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
+import 'package:path_provider/path_provider.dart';
 
 import 'constants/routeConstants.dart';
 
@@ -52,14 +53,18 @@ class _AddVideoPageState extends State<AddVideoPage> {
         video: file.path,
         imageFormat: ImageFormat.JPEG,
         maxWidth: 128,
-        quality: 25,
+        quality: 100,
       );
-
+      File? thumbnailPNG;
+      if (thumbnailTemp != null) {
+        final tempDir = await getTemporaryDirectory();
+        thumbnailPNG = await File('${tempDir.path}/image.png').create();
+        thumbnailPNG.writeAsBytesSync(thumbnailTemp);
+        print(thumbnailPNG);
+      }
       setState(() {
-        if (thumbnailTemp != null) {
-          this.thumbnail = File.fromRawPath(thumbnailTemp);
-        }
         this.video = videoTemp;
+        this.thumbnail = thumbnailPNG;
       });
     } on PlatformException catch (e) {
       print('Failed to pick image $e');
@@ -125,7 +130,7 @@ class _AddVideoPageState extends State<AddVideoPage> {
                         maxHeight: 60.0,
                         maxWidth: 60.0,
                       ),
-                      child: video != null
+                      child: thumbnail != null
                           ? Image.file(
                               thumbnail!,
                               width: 60.0,

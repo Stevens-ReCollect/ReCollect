@@ -50,6 +50,7 @@ dependencies:
   audioplayers: ^0.20.1
   app_settings: ^4.1.1
   video_thumbnail: ^0.4.3
+  path_provider: ^2.0.8
 
   # overlay_container: ^0.0.5+1
 

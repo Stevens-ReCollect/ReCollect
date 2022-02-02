@@ -125,7 +125,7 @@ class _EditVideoPageState extends State<EditVideoPage> {
                       ),
                       child: _video == null
                           ? Image.network(
-                              widget.momentData['file_path'],
+                              widget.momentData['thumbnail'],
                               fit: BoxFit.fill,
                             )
                           : Image.file(

@@ -253,7 +253,7 @@ class FirestoreService {
               file: thumbnail,
               user: currentUser.email,
               memory: memoryId,
-              moment: documentReference.id)
+              moment: documentReference.id + 'thumbnail')
           .then((url) => thumbnailURL = url);
       return documentReference
           .update({'file_path': fileURL, 'thumbnail': thumbnailURL});
