@@ -123,9 +123,25 @@ class _AddVideoPageState extends State<AddVideoPage> {
                           maxWidth: 60.0,
                         ),
                         child: FutureBuilder<dynamic>(
-                          future: getThumbnail(video),
-                          builder: (context, snapshot),
-                        )
+                            future: getThumbnail(video),
+                            builder: (context, snapshot) {
+                              if (!snapshot.hasData) {
+                                print(snapshot.data);
+                                return CircularProgressIndicator();
+                              }
+                              final thumbnail = snapshot.data;
+                              if (thumbnail.isEmpty) {
+                                return Text('');
+                              } else {
+                                return thumbnail;
+                                // return Image.(
+                                //   image: thumbnail,
+                                //   width: 60,
+                                //   height: 60,
+                                //   fit: BoxFit.cover,
+                                // );
+                              }
+                            })
                         // child: video != null
                         //     ? Image.file(
                         //         video!,
