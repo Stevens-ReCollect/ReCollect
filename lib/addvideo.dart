@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -22,6 +23,7 @@ class AddVideoPage extends StatefulWidget {
 class _AddVideoPageState extends State<AddVideoPage> {
   final TextEditingController _description = TextEditingController();
   File? video;
+  File? thumbnail;
   bool _loading = false;
   bool _isButtonDisabled = false;
 
@@ -46,21 +48,22 @@ class _AddVideoPageState extends State<AddVideoPage> {
         return;
       }
       final videoTemp = File(file.path);
+      final thumbnailTemp = await VideoThumbnail.thumbnailData(
+        video: file.path,
+        imageFormat: ImageFormat.JPEG,
+        maxWidth: 128,
+        quality: 25,
+      );
+
       setState(() {
+        if (thumbnailTemp != null) {
+          this.thumbnail = File.fromRawPath(thumbnailTemp);
+        }
         this.video = videoTemp;
       });
     } on PlatformException catch (e) {
       print('Failed to pick image $e');
     }
-  }
-
-  Future getThumbnail(videoFile) async {
-    final uint8list = await VideoThumbnail.thumbnailData(
-      video: videoFile.path,
-      imageFormat: ImageFormat.JPEG,
-      maxWidth: 128,
-      quality: 25,
-    );
   }
 
   @override
@@ -116,48 +119,21 @@ class _AddVideoPageState extends State<AddVideoPage> {
                   leading: ClipRRect(
                     borderRadius: BorderRadius.circular(5.0),
                     child: ConstrainedBox(
-                        constraints: const BoxConstraints(
-                          minHeight: 60.0,
-                          minWidth: 60.0,
-                          maxHeight: 60.0,
-                          maxWidth: 60.0,
-                        ),
-                        child: FutureBuilder<dynamic>(
-                            future: getThumbnail(video),
-                            builder: (context, snapshot) {
-                              if (!snapshot.hasData) {
-                                print(snapshot.data);
-                                return CircularProgressIndicator();
-                              }
-                              final thumbnail = snapshot.data;
-                              if (thumbnail.isEmpty) {
-                                return Text('');
-                              } else {
-                                return thumbnail;
-                                // return Image.(
-                                //   image: thumbnail,
-                                //   width: 60,
-                                //   height: 60,
-                                //   fit: BoxFit.cover,
-                                // );
-                              }
-                            })
-                        // child: video != null
-                        //     ? Image.file(
-                        //         video!,
-                        //         width: 60.0,
-                        //         height: 60.0,
-                        //         fit: BoxFit.cover,
-                        //       )
-                        //     : const FlutterLogo(size: 60.0),
-                        // child: Image.file(_image),
-                        // child: CachedNetworkImage(
-                        //   imageUrl: "http://via.placeholder.com/150x150",
-                        //   placeholder: (context, url) =>
-                        //       CircularProgressIndicator(),
-                        //   errorWidget: (context, url, error) => Icon(Icons.error),
-                        // ),
-                        ),
+                      constraints: const BoxConstraints(
+                        minHeight: 60.0,
+                        minWidth: 60.0,
+                        maxHeight: 60.0,
+                        maxWidth: 60.0,
+                      ),
+                      child: video != null
+                          ? Image.file(
+                              thumbnail!,
+                              width: 60.0,
+                              height: 60.0,
+                              fit: BoxFit.cover,
+                            )
+                          : const FlutterLogo(size: 60.0),
+                    ),
                   ),
                 ),
                 Container(
@@ -211,6 +187,7 @@ class _AddVideoPageState extends State<AddVideoPage> {
                                   memoryId: widget.memoryData['doc_id'],
                                   type: 'Video',
                                   file: video,
+                                  thumbnail: thumbnail,
                                   description: _description.text);
                             }
                             // Navigator.pushNamed(

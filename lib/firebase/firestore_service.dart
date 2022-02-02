@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -212,9 +213,11 @@ class FirestoreService {
       {required String memoryId,
       required String type,
       required File? file,
+      File? thumbnail,
       String? description}) async {
     User? currentUser = AuthenticationService().getUser();
     String fileURL = 'temporary';
+    String thumbnailURL = 'temporary';
     if (currentUser == null) {
       throw Exception('currentUser is null');
     }
@@ -228,6 +231,7 @@ class FirestoreService {
       'description': description,
       'memory_id': memoryId,
       'file_path': '',
+      'thumbnail': '',
     }).then((value) {
       documentReference = value;
       print("Moment added: $documentReference");
@@ -244,7 +248,19 @@ class FirestoreService {
           .then((url) => fileURL = url);
     }
 
-    return documentReference.update({'file_path': fileURL});
+    if (thumbnail != null) {
+      await uploadFile(
+              file: thumbnail,
+              user: currentUser.email,
+              memory: memoryId,
+              moment: documentReference.id)
+          .then((url) => thumbnailURL = url);
+      return documentReference
+          .update({'file_path': fileURL, 'thumbnail': thumbnailURL});
+    } else {
+      return documentReference
+          .update({'file_path': fileURL, 'thumbnail': fileURL});
+    }
   }
 
   Future<void> editMoment(
