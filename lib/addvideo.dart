@@ -8,6 +8,7 @@ import 'package:recollect_app/firebase/firestore_service.dart';
 import 'package:recollect_app/signup.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:video_thumbnail/video_thumbnail.dart';
 
 import 'constants/routeConstants.dart';
 
@@ -51,6 +52,15 @@ class _AddVideoPageState extends State<AddVideoPage> {
     } on PlatformException catch (e) {
       print('Failed to pick image $e');
     }
+  }
+
+  Future getThumbnail(videoFile) async {
+    final uint8list = await VideoThumbnail.thumbnailData(
+      video: videoFile.path,
+      imageFormat: ImageFormat.JPEG,
+      maxWidth: 128,
+      quality: 25,
+    );
   }
 
   @override
@@ -106,28 +116,32 @@ class _AddVideoPageState extends State<AddVideoPage> {
                   leading: ClipRRect(
                     borderRadius: BorderRadius.circular(5.0),
                     child: ConstrainedBox(
-                      constraints: const BoxConstraints(
-                        minHeight: 60.0,
-                        minWidth: 60.0,
-                        maxHeight: 60.0,
-                        maxWidth: 60.0,
-                      ),
-                      child: video != null
-                          ? Image.file(
-                              video!,
-                              width: 60.0,
-                              height: 60.0,
-                              fit: BoxFit.cover,
-                            )
-                          : const FlutterLogo(size: 60.0),
-                      // child: Image.file(_image),
-                      // child: CachedNetworkImage(
-                      //   imageUrl: "http://via.placeholder.com/150x150",
-                      //   placeholder: (context, url) =>
-                      //       CircularProgressIndicator(),
-                      //   errorWidget: (context, url, error) => Icon(Icons.error),
-                      // ),
-                    ),
+                        constraints: const BoxConstraints(
+                          minHeight: 60.0,
+                          minWidth: 60.0,
+                          maxHeight: 60.0,
+                          maxWidth: 60.0,
+                        ),
+                        child: FutureBuilder<dynamic>(
+                          future: getThumbnail(video),
+                          builder: (context, snapshot),
+                        )
+                        // child: video != null
+                        //     ? Image.file(
+                        //         video!,
+                        //         width: 60.0,
+                        //         height: 60.0,
+                        //         fit: BoxFit.cover,
+                        //       )
+                        //     : const FlutterLogo(size: 60.0),
+                        // child: Image.file(_image),
+                        // child: CachedNetworkImage(
+                        //   imageUrl: "http://via.placeholder.com/150x150",
+                        //   placeholder: (context, url) =>
+                        //       CircularProgressIndicator(),
+                        //   errorWidget: (context, url, error) => Icon(Icons.error),
+                        // ),
+                        ),
                   ),
                 ),
                 Container(
@@ -169,25 +183,25 @@ class _AddVideoPageState extends State<AddVideoPage> {
                       ),
                     ),
                     onPressed: _isButtonDisabled
-                      ? null
-                      : () async {
-                          setState(() {
-                            _loading = true;
-                            _isButtonDisabled = true;
-                          });
-                          print("Clicked Saved");
-                          if (video != null) {
-                            await FirestoreService().addNewMoment(
-                                memoryId: widget.memoryData['doc_id'],
-                                type: 'Video',
-                                file: video,
-                                description: _description.text);
-                          }
-                          // Navigator.pushNamed(
-                          //     context, RouteConstants.memoryHomeRoute);
-                          Navigator.pop(context);
-                        },
-                   ),
+                        ? null
+                        : () async {
+                            setState(() {
+                              _loading = true;
+                              _isButtonDisabled = true;
+                            });
+                            print("Clicked Saved");
+                            if (video != null) {
+                              await FirestoreService().addNewMoment(
+                                  memoryId: widget.memoryData['doc_id'],
+                                  type: 'Video',
+                                  file: video,
+                                  description: _description.text);
+                            }
+                            // Navigator.pushNamed(
+                            //     context, RouteConstants.memoryHomeRoute);
+                            Navigator.pop(context);
+                          },
+                  ),
                 ),
               ],
             ),
