@@ -10,31 +10,45 @@ class VideoPlayerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    VideoPlayerController _videoController = VideoPlayerController.network(asset)..initialize();
-      return Column(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                // Find videoplayer package
-                SizedBox(height:0.4*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),
-                Text(description, style: TextStyle(color: ColorConstants.bodyText, fontSize: 0.9*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),),
-                Stack(
-                  children: <Widget>[
-                AspectRatio(aspectRatio: 5/4,
-                child:VideoPlayer(_videoController)),
-                FloatingActionButton(
-                  backgroundColor: Colors.transparent,
-                  onPressed: () {
-                      _videoController.value.isPlaying
-                          ? _videoController.pause()
-                          : _videoController.play();
-                  },
-                  child: Icon(
-                    _videoController.value.isPlaying ? Icons.pause: Icons.play_arrow,
-                  ))]),
-                  
-              ],
-            );
+    VideoPlayerController _videoController =
+        VideoPlayerController.network(asset)..initialize();
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: <Widget>[
+        // Find videoplayer package
+        SizedBox(
+            height: 0.4 *
+                TextSizeConstants.getadaptiveTextSize(
+                    context, TextSizeConstants.bodyText)),
+        Text(
+          description,
+          style: TextStyle(
+              color: ColorConstants.bodyText,
+              fontSize: 0.9 *
+                  TextSizeConstants.getadaptiveTextSize(
+                      context, TextSizeConstants.bodyText)),
+        ),
+        Stack(
+          children: <Widget>[
+            AspectRatio(
+                aspectRatio: 5 / 4, child: VideoPlayer(_videoController)),
+            FloatingActionButton(
+              backgroundColor: Colors.transparent,
+              onPressed: () {
+                _videoController.value.isPlaying
+                    ? _videoController.pause()
+                    : _videoController.play();
+              },
+              child: Icon(
+                _videoController.value.isPlaying
+                    ? Icons.pause
+                    : Icons.play_arrow,
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
   }
-
 }
