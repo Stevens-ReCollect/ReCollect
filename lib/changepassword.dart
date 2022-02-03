@@ -205,10 +205,12 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                       ),
                     ),
                     onPressed: () async {
+                      print('pressed');
                       await AuthenticationService()
                           .validateCurrentPassword(
-                              _email.text, _newPassword.text)
+                              _email.text, _currentPassword.text)
                           .then((String result) {
+                        print(result);
                         setState(() {
                           checkCurrentPasswordValid = result;
                         });
@@ -216,7 +218,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
 
                       if (_key.currentState!.validate() &&
                           checkCurrentPasswordValid == "Success") {
-                        AuthenticationService()
+                        await AuthenticationService()
                             .updatePassword(_newPassword.text);
 
                         print("Your password has been changed");
@@ -230,10 +232,13 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
 
                         print(confirmResult);
                         if (confirmResult == "Signed Out") {
-                          Navigator.of(context).pushAndRemoveUntil(
-                              MaterialPageRoute(
-                                  builder: (context) => StartUpPage()),
-                              (route) => true);
+                          Navigator.of(context, rootNavigator: true)
+                              .pushAndRemoveUntil(
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        StartUpPage(),
+                                  ),
+                                  (route) => false);
                         }
                       }
                     },
