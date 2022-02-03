@@ -10,6 +10,7 @@ import 'package:recollect_app/constants/textSizeConstants.dart';
 import 'package:recollect_app/login.dart';
 import 'package:recollect_app/progressReport.dart';
 import 'package:recollect_app/navigation.dart';
+import 'package:recollect_app/startup.dart';
 
 class ChangePasswordPage extends StatefulWidget {
   @override
@@ -17,11 +18,14 @@ class ChangePasswordPage extends StatefulWidget {
 }
 
 class _ChangePasswordPageState extends State<ChangePasswordPage> {
+  final TextEditingController _email = TextEditingController();
   final TextEditingController _currentPassword = TextEditingController();
   final TextEditingController _newPassword = TextEditingController();
   final TextEditingController _confirmPassword = TextEditingController();
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
-  String signUpResult = "";
+  String confirmResult = "";
+
+  String checkCurrentPasswordValid = "";
 
   String? validateConfirmPassword(String? confirmPassword) {
     if (confirmPassword == null || confirmPassword.isEmpty) {
@@ -30,6 +34,18 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
 
     if (confirmPassword != _newPassword.text) {
       return 'Passwords do not match.';
+    }
+
+    return null;
+  }
+
+  String? validateCurrentPassword(String? currentPassword) {
+    if (currentPassword == null || currentPassword.isEmpty) {
+      return 'Your Password is required.';
+    }
+
+    if (checkCurrentPasswordValid == "") {
+      return "Please double check your current password.";
     }
 
     return null;
@@ -79,7 +95,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                   child: TextButton(
                     child: RichText(
                       text: TextSpan(
-                        text: 'Please enter current password.',
+                        text: 'Please enter your email and password.',
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: TextSizeConstants.getadaptiveTextSize(
@@ -93,9 +109,26 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                       padding: EdgeInsets.zero,
                       alignment: Alignment.centerLeft,
                     ),
-                    onPressed: () {
-                      Navigator.pushNamed(context, RouteConstants.loginRoute);
-                    },
+                    onPressed: () {},
+                  ),
+                ),
+                Container(
+                  width: 0.8 * deviceWidth,
+                  margin: const EdgeInsets.only(top: 15.0, left: 0.0),
+                  child: TextFormField(
+                    controller: _email,
+                    validator: AuthenticationService().validateEmail,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Email',
+                      labelStyle: TextStyle(
+                          fontSize: TextSizeConstants.getadaptiveTextSize(
+                              context, TextSizeConstants.formField)),
+                      hintText: 'example@example.com',
+                      hintStyle: TextStyle(
+                          fontSize: TextSizeConstants.getadaptiveTextSize(
+                              context, TextSizeConstants.formField)),
+                    ),
                   ),
                 ),
                 Container(
@@ -104,7 +137,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                   child: TextFormField(
                     obscureText: true,
                     controller: _currentPassword,
-                    validator: AuthenticationService().validateEmail,
+                    validator: AuthenticationService().validatePassword,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'Current Password',
@@ -172,22 +205,37 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                       ),
                     ),
                     onPressed: () async {
-                      /* if (_key.currentState!.validate()) {
+                      await AuthenticationService()
+                          .validateCurrentPassword(
+                              _email.text, _newPassword.text)
+                          .then((String result) {
+                        setState(() {
+                          checkCurrentPasswordValid = result;
+                        });
+                      });
+
+                      if (_key.currentState!.validate() &&
+                          checkCurrentPasswordValid == "Success") {
+                        AuthenticationService()
+                            .updatePassword(_newPassword.text);
+
+                        print("Your password has been changed");
                         await AuthenticationService()
-                            .changePassword(
-                                email: _email.text,
-                                password: _password.text,
-                                confirmPassword: _confirmPassword.text)
+                            .signOut()
                             .then((String result) {
                           setState(() {
-                            signUpResult = result;
+                            confirmResult = result;
                           });
                         });
+
+                        print(confirmResult);
+                        if (confirmResult == "Signed Out") {
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                  builder: (context) => StartUpPage()),
+                              (route) => true);
+                        }
                       }
-                      print(signUpResult);
-                      if (signUpResult == "Success") {
-                        Navigator.pushNamed(context, RouteConstants.loginRoute);
-                      } */
                     },
                   ),
                 ),
@@ -199,4 +247,3 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
     );
   }
 }
-
