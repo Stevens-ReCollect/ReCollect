@@ -170,12 +170,15 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
               onPressed: () async {
                 await FirestoreService()
                     .deleteMoment(momentId: momentId, memoryId: memoryId);
-                Navigator.pop(context);
+                Navigator.of(context, rootNavigator: true).pop();
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                      content: const Text("Successfully deleted moment"),
-                      backgroundColor: ColorConstants.buttonColor,
-                      duration: const Duration(seconds: 2)),
+                    content: Text("Successfully deleted moment"),
+                    backgroundColor: ColorConstants.buttonColor,
+                    duration: Duration(seconds: 2),
+                    behavior: SnackBarBehavior.floating,
+                    margin: EdgeInsets.all(20),
+                  ),
                 );
               },
               child: const Text("Yes"),
@@ -225,12 +228,16 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
             TextButton(
               onPressed: () async {
                 await FirestoreService().deleteMemory(memoryId: memoryId);
-                Navigator.popUntil(context, ModalRoute.withName('/home'));
+                Navigator.of(context, rootNavigator: true).pop();
+                Navigator.pop(context);
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                      content: const Text("Successfully deleted memory"),
-                      backgroundColor: ColorConstants.buttonColor,
-                      duration: const Duration(seconds: 2)),
+                    content: Text("Successfully deleted memory"),
+                    backgroundColor: ColorConstants.buttonColor,
+                    duration: Duration(seconds: 2),
+                    behavior: SnackBarBehavior.floating,
+                    margin: EdgeInsets.all(20),
+                  ),
                 );
               },
               child: const Text("Yes"),
