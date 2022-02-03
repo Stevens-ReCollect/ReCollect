@@ -48,6 +48,7 @@ dependencies:
   persistent_bottom_nav_bar: ^4.0.2
   video_player: ^2.2.10
   audioplayers: ^0.20.1
+  app_settings: ^4.1.1
 
   # overlay_container: ^0.0.5+1
 
@@ -90,6 +91,8 @@ flutter:
     - lib/assets/birdsflying.mp3
     - lib/images/FallLeaves.jpg
     - lib/images/Bird.jpg
+    - lib/assets/recollect_logo.png
+    - lib/assets/recollect_logo_with_bkg.png
 
   #   - images/a_dot_ham.jpeg
 

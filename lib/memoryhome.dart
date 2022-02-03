@@ -13,6 +13,7 @@ import 'package:recollect_app/constants/routeConstants.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:recollect_app/editmemory.dart';
 import 'package:recollect_app/editphoto.dart';
+import 'package:recollect_app/editvideo.dart';
 import 'package:recollect_app/firebase/authentication_service.dart';
 import 'package:recollect_app/firebase/firestore_service.dart';
 
@@ -87,14 +88,25 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
                       children: <Widget>[
                         IconButton(
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => EditPhotoPage(
-                                  momentData: data,
+                            if (data['type'] == 'Photo') {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => EditPhotoPage(
+                                    momentData: data,
+                                  ),
                                 ),
-                              ),
-                            );
+                              );
+                            } else if (data['type'] == 'Video') {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => EditVideoPage(
+                                    momentData: data,
+                                  ),
+                                ),
+                              );
+                            }
                           },
                           icon: const Icon(Icons.edit),
                         ),
@@ -181,7 +193,7 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
             ),
             TextButton(
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.of(context, rootNavigator: true).pop();
               },
               child: const Text("Cancel"),
               style: ButtonStyle(
@@ -205,7 +217,7 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
   Widget memoryDeleteConfirmation(String memoryId) {
     return AlertDialog(
       content: const Text(
-          "Are you sure you want to delete this memory?\n\nNOTE: you will lose all data and media in this memory!"),
+          "Are you sure you want to delete this memory?\n\nNOTE: You will lose all data and media in this memory!"),
       actions: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -236,7 +248,7 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
             ),
             TextButton(
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.of(context, rootNavigator: true).pop();
               },
               child: const Text("Cancel"),
               style: ButtonStyle(
@@ -346,6 +358,7 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
                   ),
                   value: 1,
                 ),
+                /*
                 PopupMenuItem<int>(
                   child: Text('Add Audio',
                       style: TextStyle(
@@ -353,6 +366,7 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
                               context, TextSizeConstants.dropDownText))),
                   value: 2,
                 ),
+                */
               ],
             ),
           ),

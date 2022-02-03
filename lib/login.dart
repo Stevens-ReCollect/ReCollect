@@ -23,6 +23,7 @@ class _LogInPageState extends State<LogInPage> {
   CollectionReference users = FirebaseFirestore.instance.collection('users');
   String logInResult = "";
   int counterResult = 0;
+  bool _isButtonDisabled = false;
 
   @override
   Widget build(BuildContext context) {
@@ -31,20 +32,22 @@ class _LogInPageState extends State<LogInPage> {
     var deviceHeight = queryData.size.height;
     return MaterialApp(
       home: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
+          elevation: 0,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios_new),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ),
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              Container(
-                margin: const EdgeInsets.only(top: 50.0, left: 10.0),
-                alignment: Alignment.centerLeft,
-                child: IconButton(
-                  icon: const Icon(Icons.arrow_back_ios_new),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ),
+              Container(),
               Container(
                 width: 0.8 * deviceWidth,
                 margin: const EdgeInsets.only(top: 50.0, left: 0.0),
@@ -142,7 +145,7 @@ class _LogInPageState extends State<LogInPage> {
               ),
               Container(
                 margin: const EdgeInsets.all(15.0),
-                height: 68,
+                height: 2.5 * TextSizeConstants.bodyText,
                 width: 0.5 * deviceWidth,
                 child: TextButton(
                     child: Text(
@@ -165,36 +168,50 @@ class _LogInPageState extends State<LogInPage> {
                         ),
                       ),
                     ),
-                    onPressed: () async {
-                      await AuthenticationService()
-                          .signIn(email: _email.text, password: _password.text)
-                          .then((String result) {
-                        setState(() {
-                          logInResult = result;
-                        });
-                      });
+                    onPressed: _isButtonDisabled
+                        ? null
+                        : () async {
+                            setState(() {
+                              _isButtonDisabled = true;
+                            });
+                            await AuthenticationService()
+                                .signIn(
+                                    email: _email.text,
+                                    password: _password.text)
+                                .then((String result) {
+                              setState(() {
+                                logInResult = result;
+                              });
+                            });
 
-                      print(logInResult);
-                      if (logInResult == "Success") {
-                        await FirestoreService()
-                            .getCounter(
-                                email: _email.text, password: _password.text)
-                            .then((int counter) {
-                          setState(() {
-                            counterResult = counter;
-                          });
-                        });
-                        // print(counterResult);
+                            print(logInResult);
+                            if (logInResult == "Success!") {
+                              await FirestoreService()
+                                  .getCounter(
+                                      email: _email.text,
+                                      password: _password.text)
+                                  .then((int counter) {
+                                setState(() {
+                                  counterResult = counter;
+                                });
+                              });
 
-                        if (counterResult == 0) {
-                          Navigator.pushNamed(context, RouteConstants.tutorialRoute);
-                          await FirestoreService().editCounter(
-                              email: _email.text, password: _password.text);
-                        } else {
-                          Navigator.pushNamed(context, RouteConstants.navigationRoute);
-                        }
-                      }
-                    }),
+                              if (counterResult == 0) {
+                                Navigator.pushNamed(
+                                    context, RouteConstants.tutorialRoute);
+                                await FirestoreService().editCounter(
+                                    email: _email.text,
+                                    password: _password.text);
+                              } else {
+                                Navigator.pushNamed(
+                                    context, RouteConstants.navigationRoute);
+                              }
+                            } else {
+                              setState(() {
+                                _isButtonDisabled = false;
+                              });
+                            }
+                          }),
               ),
             ],
           ),

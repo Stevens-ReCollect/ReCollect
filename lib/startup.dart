@@ -58,11 +58,17 @@ class StartUpPage extends StatelessWidget {
     var deviceHeight = queryData.size.height;
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Column(
+      body:  Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
+            SizedBox(
+            height: 0.3*deviceWidth,
+            child:Center(child: Image.asset('lib/assets/recollect_logo.png', width: 0.3*deviceWidth,))),
+          
             Container(
-              margin: const EdgeInsets.only(top: 320.0),
+              margin: const EdgeInsets.only(top: 40.0),
               child: Center(
                 child: Text(
                   'ReCollect',
@@ -76,8 +82,8 @@ class StartUpPage extends StatelessWidget {
               ),
             ),
             Container(
-              margin: const EdgeInsets.only(top: 68.0),
-              height: 0.075 * deviceHeight,
+              margin: const EdgeInsets.only(top: 40.0),
+              height: 2.5 * TextSizeConstants.bodyText,
               width: 0.6 * deviceWidth,
               child: TextButton(
                 child: Text(
@@ -90,7 +96,6 @@ class StartUpPage extends StatelessWidget {
                   ),
                 ),
                 style: ButtonStyle(
-                  padding: MaterialStateProperty.all(EdgeInsets.all(15)),
                   backgroundColor: MaterialStateProperty.all<Color>(
                       ColorConstants.buttonColor),
                   foregroundColor: MaterialStateProperty.all<Color>(
@@ -108,7 +113,7 @@ class StartUpPage extends StatelessWidget {
             ),
             Container(
               margin: const EdgeInsets.only(top: 22.0),
-              height: 0.075 * deviceHeight,
+              height: 2.5 * TextSizeConstants.bodyText,
               width: 0.6 * deviceWidth,
               child: TextButton(
                 child: Text(
@@ -121,7 +126,6 @@ class StartUpPage extends StatelessWidget {
                   ),
                 ),
                 style: ButtonStyle(
-                  padding: MaterialStateProperty.all(EdgeInsets.all(15)),
                   backgroundColor: MaterialStateProperty.all<Color>(
                       ColorConstants.buttonColor),
                   foregroundColor: MaterialStateProperty.all<Color>(
@@ -136,11 +140,10 @@ class StartUpPage extends StatelessWidget {
                   Navigator.pushNamed(context, RouteConstants.loginRoute);
                 },
               ),
-              
             ),
           ],
         ),
-      ),
+      
     );
   }
 }

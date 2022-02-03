@@ -1,18 +1,25 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:provider/provider.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/textSizeConstants.dart';
+import 'package:recollect_app/firebase/authentication_service.dart';
+import 'package:recollect_app/login.dart';
+import 'package:recollect_app/memory_example.dart';
 import 'package:video_player/video_player.dart';
 import 'package:audioplayers/audioplayers.dart';
 
 class MemorySlider extends StatefulWidget{
   const MemorySlider({Key? key}) : super(key: key);
+ 
   @override
   State<MemorySlider> createState() => MemorySliderState();
 
 }
 
-class MemoryList{
+class MemoryList{  
   String type; //file type
   String asset; //link or data call to the file
   String title; //title for audio files
@@ -21,13 +28,32 @@ class MemoryList{
   //These parameters can be changed to best reflect the firebase or vice versa
 
 Widget selectType(BuildContext context){
+
+  User? currentUser = AuthenticationService().getUser();
+    if (currentUser == null) {
+      throw Exception('currentUser is null');
+    }
+    // final Stream<QuerySnapshot> _momentStream = FirebaseFirestore.instance
+    //     .collection('moments')
+    //     .where("memory_id", isEqualTo: widget.memoryData['doc_id'])
+    //     .snapshots();
+    // return StreamBuilder<QuerySnapshot>(
+    //   stream: _momentStream,
+    //   builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+    //     if (snapshot.hasError) {
+    //       return const Text('Something went wrong');
+    //     }
+    //     if (snapshot.connectionState == ConnectionState.waiting) {
+    //       return const Text('Loading...');
+    //     }
+
   if(type == 'photo'){
       return Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                const SizedBox(height:10),
-                Text(description, style: TextStyle(color: ColorConstants.bodyText, fontSize: 0.7*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),),
+                SizedBox(height:0.4*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),
+                Text(description, style: TextStyle(color: ColorConstants.bodyText, fontSize: 0.9*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),),
                 AspectRatio(aspectRatio: 5/4,
                 child:Image.asset(asset, fit: BoxFit.cover,),
                 )
@@ -40,8 +66,8 @@ Widget selectType(BuildContext context){
         mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 // Find videoplayer package
-                const SizedBox(height:10),
-                Text(description, style: TextStyle(color: ColorConstants.bodyText, fontSize: 0.7*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),),
+                SizedBox(height:0.4*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),
+                Text(description, style: TextStyle(color: ColorConstants.bodyText, fontSize: 0.9*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),),
                 Stack(
                   children: <Widget>[
                 AspectRatio(aspectRatio: 5/4,
@@ -64,9 +90,9 @@ Widget selectType(BuildContext context){
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                const SizedBox(height:10),
-               Text(description, style: TextStyle(color: ColorConstants.bodyText, fontSize: 0.7*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),),
-              const SizedBox(height: 30),
+                SizedBox(height:0.4*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),
+               Text(description, style: TextStyle(color: ColorConstants.bodyText, fontSize: 0.9*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),),
+              SizedBox(height:0.4*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),
               Container(
                 width:0.8*MediaQuery.of(context).size.width,
                 padding: const EdgeInsets.all(10),
@@ -106,15 +132,15 @@ Widget selectType(BuildContext context){
             ],);
     } else {
       return const SizedBox();
-    }
-}
+    }}
 }
 
-var _videoController;
+
 class MemorySliderState extends State<MemorySlider> {
-   var _current;
+   
+  var _current;
 
-   @override
+  @override
   void initState() {
     _current = 1;
     super.initState();
@@ -156,7 +182,7 @@ class MemorySliderState extends State<MemorySlider> {
                 ))
             .toList()),
             Text((_current.toString()+ "/" + memList.length.toString()),
-            style: TextStyle(fontSize:0.6*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText), 
+            style: TextStyle(fontSize:TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText), 
             color: ColorConstants.buttonColor, backgroundColor: Colors.blueGrey[50],
             )),
 

@@ -41,6 +41,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'ReCollect',
+      highContrastTheme: ThemeData(
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        primaryColor: Colors.black,
+        
+      ),
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
         primarySwatch: Colors.blue,
@@ -351,19 +356,18 @@ class MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
           // App bar properties
-          // title: Text(widget.title),
-          centerTitle: true,
           automaticallyImplyLeading: false,
-          leadingWidth: 300,
           backgroundColor: ColorConstants.appBar,
           actions: <Widget>[
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Listener(
-                    // onPointerDown: ColorConstants().toggleColors(value),
-                    child: ToggleSwitch(
+                ToggleSwitch(
                   //Toggle between modes
-                  minWidth: 0.3 * deviceWidth,
+                  minWidth:0.3*deviceWidth,
+                  minHeight: 40,
                   changeOnTap: true,
                   inactiveBgColor: Colors.white,
                   dividerColor: Colors.black,
@@ -371,7 +375,7 @@ class MyHomePageState extends State<MyHomePage> {
                     ColorConstants.buttonColor
                   ], //toggle colors stuck :(
                   initialLabelIndex: accountMode,
-                  fontSize: 0.7 *
+                  fontSize: 0.6 *
                       TextSizeConstants.getadaptiveTextSize(
                           context, TextSizeConstants.buttonText),
                   totalSwitches: 2,
@@ -389,11 +393,12 @@ class MyHomePageState extends State<MyHomePage> {
                       );
                     }
                   },
-                )),
+                ),
                 //   SizedBox(
                 //    width: 0.38*deviceWidth,
                 //  ),
-                createSettings(),
+                // createSettings(),
+                SizedBox(width: 0.2*deviceWidth,)
               ],
             ),
           ]),

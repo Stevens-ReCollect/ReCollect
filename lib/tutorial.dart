@@ -89,7 +89,7 @@ class TutorialState extends State<Tutorial> {
     return Scaffold(
         body: Center(
       child: Container(
-        width: 0.8 * deviceWidth,
+        width: 0.9 * deviceWidth,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
