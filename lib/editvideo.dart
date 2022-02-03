@@ -8,6 +8,8 @@ import 'package:recollect_app/firebase/firestore_service.dart';
 import 'package:recollect_app/signup.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:video_thumbnail/video_thumbnail.dart';
+import 'package:path_provider/path_provider.dart';
 
 import 'constants/routeConstants.dart';
 
@@ -22,6 +24,7 @@ class EditVideoPage extends StatefulWidget {
 class _EditVideoPageState extends State<EditVideoPage> {
   TextEditingController _description = TextEditingController(text: "");
   File? _video;
+  File? _thumbnail;
   bool _loading = false;
 
   Future setFields() async {
@@ -40,8 +43,21 @@ class _EditVideoPageState extends State<EditVideoPage> {
         return;
       }
       final videoTemp = File(file.path);
+      final thumbnailTemp = await VideoThumbnail.thumbnailData(
+        video: file.path,
+        imageFormat: ImageFormat.JPEG,
+        maxWidth: 128,
+        quality: 100,
+      );
+      File? thumbnailPNG;
+      if (thumbnailTemp != null) {
+        final tempDir = await getTemporaryDirectory();
+        thumbnailPNG = await File('${tempDir.path}/image.png').create();
+        thumbnailPNG.writeAsBytesSync(thumbnailTemp);
+      }
       setState(() {
         this._video = videoTemp;
+        this._thumbnail = thumbnailPNG;
       });
     } on PlatformException catch (e) {
       print('Failed to pick image $e');
@@ -129,7 +145,7 @@ class _EditVideoPageState extends State<EditVideoPage> {
                               fit: BoxFit.fill,
                             )
                           : Image.file(
-                              _video!,
+                              _thumbnail!,
                               fit: BoxFit.fill,
                             ),
                     ),
@@ -198,6 +214,7 @@ class _EditVideoPageState extends State<EditVideoPage> {
                             memoryId: widget.momentData['memory_id'],
                             momentId: widget.momentData['doc_id'],
                             file: _video,
+                            thumbnail: _thumbnail,
                             description: _description.text);
                       }
                       Navigator.pop(context);

@@ -60,7 +60,6 @@ class _AddVideoPageState extends State<AddVideoPage> {
         final tempDir = await getTemporaryDirectory();
         thumbnailPNG = await File('${tempDir.path}/image.png').create();
         thumbnailPNG.writeAsBytesSync(thumbnailTemp);
-        print(thumbnailPNG);
       }
       setState(() {
         this.video = videoTemp;

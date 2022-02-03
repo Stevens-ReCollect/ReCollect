@@ -267,6 +267,7 @@ class FirestoreService {
       {required String memoryId,
       required String momentId,
       File? file,
+      File? thumbnail,
       String? description}) async {
     CollectionReference moments = _firestore.collection('moments');
     User? currentUser = AuthenticationService().getUser();
@@ -274,6 +275,7 @@ class FirestoreService {
       throw Exception('currentUser is null');
     }
     String newUrl = "";
+    String newThumbnailUrl = '';
 
     if (file != null) {
       await uploadFile(
@@ -283,13 +285,33 @@ class FirestoreService {
               moment: momentId)
           .then((url) => newUrl = url);
     }
-
+    if (thumbnail != null) {
+      await uploadFile(
+              file: thumbnail,
+              user: currentUser.email,
+              memory: memoryId,
+              moment: momentId + 'thumbnail')
+          .then((url) => newThumbnailUrl = url);
+    }
     if (newUrl != "") {
       moments
           .doc(momentId)
           .update({'file_path': newUrl})
           .then((value) => print("Moment Updated"))
           .catchError((error) => print("Failed to update moment $error"));
+    }
+    if (newThumbnailUrl != '') {
+      moments
+          .doc(momentId)
+          .update({'thumbnail': newThumbnailUrl})
+          .then((value) => print("Thumbnail Updated"))
+          .catchError((error) => print("Failed to update thumbnail $error"));
+    } else {
+      moments
+          .doc(momentId)
+          .update({'thumbnail': newUrl})
+          .then((value) => print("Thumbnail Updated"))
+          .catchError((error) => print("Failed to update thumbnail $error"));
     }
 
     return moments
