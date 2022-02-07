@@ -1,7 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:recollect_app/changepassword.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/routeConstants.dart';
+import 'package:recollect_app/forgotpassword.dart';
 import 'package:recollect_app/login.dart';
 import 'package:recollect_app/main.dart';
 import 'package:recollect_app/memory.dart';
@@ -44,6 +46,8 @@ class StartUp extends StatelessWidget {
         RouteConstants.navigationRoute: (context) => Navigate(),
         RouteConstants.settingsRoute: (context) => SettingsPage(),
         RouteConstants.tutorialRoute: (context) => Tutorial(),
+        RouteConstants.changeRoute: (context) => ChangePasswordPage(),
+        RouteConstants.forgotRoute: (context) => ForgotPasswordPage(),
       },
     );
   }

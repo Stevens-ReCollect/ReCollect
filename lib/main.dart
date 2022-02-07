@@ -15,6 +15,7 @@ import 'package:recollect_app/constants/routeConstants.dart';
 import 'package:recollect_app/constants/textSizeConstants.dart';
 import 'package:recollect_app/creatememory.dart';
 import 'package:recollect_app/firebase/firestore_service.dart';
+import 'package:recollect_app/forgotpassword.dart';
 import 'package:recollect_app/login.dart';
 import 'package:recollect_app/memory.dart';
 import 'package:recollect_app/progressReport.dart';
@@ -67,6 +68,7 @@ class MyApp extends StatelessWidget {
         RouteConstants.settingsRoute: (context) => SettingsPage(),
         RouteConstants.tutorialRoute: (context) => Tutorial(),
         RouteConstants.changeRoute: (context) => ChangePasswordPage(),
+        RouteConstants.forgotRoute: (context) => ForgotPasswordPage(),
       },
       // ),
     );
