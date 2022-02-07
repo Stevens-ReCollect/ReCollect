@@ -45,6 +45,29 @@ class AuthenticationService {
     }
   }
 
+
+  Future<String> validateCurrentPassword(
+      String currentEmail, String currentPassword) async {
+    var firebaseUser = await _firebaseAuth.currentUser;
+
+    // placeholder for change password function
+    var authCredentials = EmailAuthProvider.credential(
+        email: currentEmail, password: currentPassword);
+
+    // Issue with the actual workflow, being that the method 
+    // gives an error below with String? != String
+
+    // var authCredentials = EmailAuthProvider.credential(
+    //    email: firebaseUser!.email password: currentPassword);
+
+    try {
+      await firebaseUser!.reauthenticateWithCredential(authCredentials);
+      return "Success";
+    } on FirebaseAuthException catch (ex) {
+      return ex.message.toString();
+    }
+  }
+
   //VALIDATE EMAIL METHOD
   String? validateEmail(String? email) {
     if (email == null || email.isEmpty) {
@@ -104,5 +127,11 @@ class AuthenticationService {
     } on FirebaseAuthException {
       return null;
     }
+  }
+
+  //UPDATE PASSWORD METHOD
+  Future<void> updatePassword(String newPassword) async {
+    var firebaseUser = getUser();
+    firebaseUser!.updatePassword(newPassword);
   }
 }
