@@ -439,10 +439,14 @@ class MyHomePageState extends State<MyHomePage> {
 
   navDisplay(int value) {
     if (value == 0) {
-      disableNav = false;
+      Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (BuildContext context) => Navigate()),
+          (route) => true);
     }
     if (value == 1) {
-      disableNav = true;
+      Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (BuildContext context) => MyHomePage()),
+          (route) => true);
     }
     setState(() {});
   }

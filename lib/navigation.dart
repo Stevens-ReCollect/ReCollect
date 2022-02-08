@@ -19,6 +19,7 @@ class _NavigateState extends State<Navigate> {
   Widget build(BuildContext context) {
     MediaQueryData queryData = MediaQuery.of(context);
     var deviceHeight = queryData.size.height;
+
     return PersistentTabView(
       context,
       controller: _controller,
