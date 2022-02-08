@@ -153,7 +153,7 @@ class _MemoryState extends State<MemoryPage> {
                       context, TextSizeConstants.h2),
                 ),
                 SizedBox(
-                  width: 0.8 * deviceWidth,
+                  width: deviceWidth,
                   height: 0.6 * deviceHeight,
                   child: Center(child: memoryCarouselSlider()),
                 ),

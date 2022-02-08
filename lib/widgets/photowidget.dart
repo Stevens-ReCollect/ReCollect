@@ -18,14 +18,15 @@ class PhotoWidget extends StatelessWidget {
               TextSizeConstants.getadaptiveTextSize(
                   context, TextSizeConstants.bodyText),
         ),
-        Text(
+        Padding(padding: const EdgeInsets.all(10),
+          child:Text(
           description,
           style: TextStyle(
             color: ColorConstants.bodyText,
             fontSize: 0.9 *
                 TextSizeConstants.getadaptiveTextSize(
                     context, TextSizeConstants.bodyText),
-          ),
+          )),
         ),
         AspectRatio(
             aspectRatio: 5 / 4, child: Image.network(asset, fit: BoxFit.cover))
