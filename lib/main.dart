@@ -15,6 +15,7 @@ import 'package:recollect_app/constants/routeConstants.dart';
 import 'package:recollect_app/constants/textSizeConstants.dart';
 import 'package:recollect_app/creatememory.dart';
 import 'package:recollect_app/firebase/firestore_service.dart';
+import 'package:recollect_app/forgotpassword.dart';
 import 'package:recollect_app/login.dart';
 import 'package:recollect_app/memory.dart';
 import 'package:recollect_app/progressReport.dart';
@@ -44,7 +45,6 @@ class MyApp extends StatelessWidget {
       highContrastTheme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
         primaryColor: Colors.black,
-        
       ),
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -67,6 +67,7 @@ class MyApp extends StatelessWidget {
         RouteConstants.settingsRoute: (context) => SettingsPage(),
         RouteConstants.tutorialRoute: (context) => Tutorial(),
         RouteConstants.changeRoute: (context) => ChangePasswordPage(),
+        RouteConstants.forgotRoute: (context) => ForgotPasswordPage(),
       },
       // ),
     );
@@ -149,8 +150,11 @@ class MyHomePageState extends State<MyHomePage> {
                             builder: (context) =>
                                 MemoryHomePage(memoryData: data)));
                   } else {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => MemoryPage(memoryData: data)));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                MemoryPage(memoryData: data)));
                   }
                 },
                 child: Stack(
@@ -205,8 +209,11 @@ class MyHomePageState extends State<MyHomePage> {
                             builder: (context) =>
                                 MemoryHomePage(memoryData: data)));
                   } else {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => MemoryPage(memoryData: data)));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                MemoryPage(memoryData: data)));
                   }
                 },
                 child: Stack(
@@ -366,7 +373,7 @@ class MyHomePageState extends State<MyHomePage> {
               children: <Widget>[
                 ToggleSwitch(
                   //Toggle between modes
-                  minWidth:0.3*deviceWidth,
+                  minWidth: 0.3 * deviceWidth,
                   minHeight: 40,
                   changeOnTap: true,
                   inactiveBgColor: Colors.white,
@@ -382,7 +389,7 @@ class MyHomePageState extends State<MyHomePage> {
                   labels: const ['Edit Mode', 'Story Mode'],
                   onToggle: (value) {
                     //  print('switched to: $value');
-                    toggleColors(value);
+                    toggleColors(value!);
                     accountMode = value;
                     if (accountMode == 0) {
                       showDialog(
@@ -398,7 +405,9 @@ class MyHomePageState extends State<MyHomePage> {
                 //    width: 0.38*deviceWidth,
                 //  ),
                 // createSettings(),
-                SizedBox(width: 0.2*deviceWidth,)
+                SizedBox(
+                  width: 0.2 * deviceWidth,
+                )
               ],
             ),
           ]),

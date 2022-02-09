@@ -11,6 +11,7 @@ import 'package:recollect_app/firebase/firestore_service.dart';
 import 'package:recollect_app/main.dart';
 import 'package:recollect_app/signup.dart';
 import 'package:recollect_app/tutorial.dart';
+import 'package:recollect_app/forgotpassword.dart';
 
 class LogInPage extends StatefulWidget {
   @override
@@ -212,6 +213,35 @@ class _LogInPageState extends State<LogInPage> {
                               });
                             }
                           }),
+              ),
+              Container(
+                margin: const EdgeInsets.all(5.0),
+                height: 2.5 * TextSizeConstants.bodyText,
+                width: 0.5 * deviceWidth,
+                child: TextButton(
+                    child: Text(
+                      'Forgot Password?',
+                      style: TextStyle(
+                        fontSize: TextSizeConstants.getadaptiveTextSize(
+                            context, TextSizeConstants.bodyText),
+                        fontFamily: 'Roboto',
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          ColorConstants.buttonColor),
+                      foregroundColor: MaterialStateProperty.all<Color>(
+                          ColorConstants.buttonText),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.pushNamed(context, RouteConstants.forgotRoute);
+                    }),
               ),
             ],
           ),
