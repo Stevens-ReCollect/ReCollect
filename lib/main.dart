@@ -387,7 +387,7 @@ class MyHomePageState extends State<MyHomePage> {
                   labels: const ['Edit Mode', 'Story Mode'],
                   onToggle: (value) {
                     //  print('switched to: $value');
-                    toggleColors(value);
+                    toggleColors(value!);
                     navDisplay(value);
                     accountMode = value;
                     if (accountMode == 0) {
