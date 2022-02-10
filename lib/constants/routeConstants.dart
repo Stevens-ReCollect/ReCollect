@@ -13,4 +13,5 @@ class RouteConstants {
   static const String settingsRoute = '/settings';
   static const String tutorialRoute = '/tutorial';
   static const String changeRoute = '/changepassword';
+  static const String forgotRoute = '/forgotpassword';
 }

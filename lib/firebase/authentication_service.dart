@@ -45,6 +45,15 @@ class AuthenticationService {
     }
   }
 
+  // RESET PASSWORD METHOD
+  Future<String> resetPassword({required String email}) async {
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
+      return "Success";
+    } on FirebaseAuthException catch (ex) {
+      return ex.message.toString();
+    }
+  }
 
   Future<String> validateCurrentPassword(
       String currentEmail, String currentPassword) async {
@@ -54,7 +63,7 @@ class AuthenticationService {
     var authCredentials = EmailAuthProvider.credential(
         email: currentEmail, password: currentPassword);
 
-    // Issue with the actual workflow, being that the method 
+    // Issue with the actual workflow, being that the method
     // gives an error below with String? != String
 
     // var authCredentials = EmailAuthProvider.credential(
