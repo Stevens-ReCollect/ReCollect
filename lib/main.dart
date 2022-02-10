@@ -390,6 +390,7 @@ class MyHomePageState extends State<MyHomePage> {
                   onToggle: (value) {
                     //  print('switched to: $value');
                     toggleColors(value!);
+                    navDisplay(value);
                     accountMode = value;
                     if (accountMode == 0) {
                       showDialog(
@@ -436,6 +437,20 @@ class MyHomePageState extends State<MyHomePage> {
         ),
       ),
     );
+  }
+
+  navDisplay(int value) {
+    if (value == 0) {
+      Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (BuildContext context) => Navigate()),
+          (route) => true);
+    }
+    if (value == 1) {
+      Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (BuildContext context) => MyHomePage()),
+          (route) => true);
+    }
+    setState(() {});
   }
 
   toggleColors(int value) {
