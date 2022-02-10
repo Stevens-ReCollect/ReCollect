@@ -21,14 +21,15 @@ class VideoPlayerWidget extends StatelessWidget {
             height: 0.4 *
                 TextSizeConstants.getadaptiveTextSize(
                     context, TextSizeConstants.bodyText)),
-        Text(
+        Padding(padding: const EdgeInsets.all(10),
+          child:Text(
           description,
           style: TextStyle(
               color: ColorConstants.bodyText,
               fontSize: 0.9 *
                   TextSizeConstants.getadaptiveTextSize(
                       context, TextSizeConstants.bodyText)),
-        ),
+        )),
         Stack(
           children: <Widget>[
             AspectRatio(

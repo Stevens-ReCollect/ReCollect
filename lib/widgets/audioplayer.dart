@@ -16,8 +16,10 @@ class AudioPlayerWidget extends StatelessWidget{
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                SizedBox(height:0.4*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),
-               Text(description, style: TextStyle(color: ColorConstants.bodyText, fontSize: 0.9*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),),
+               SizedBox(height:0.4*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),
+               Padding(padding: const EdgeInsets.all(10),
+               child:Text(description, style: TextStyle(color: ColorConstants.bodyText, fontSize: 0.9*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),),
+               ),
               SizedBox(height:0.4*TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.bodyText)),
               Container(
                 width:0.8*MediaQuery.of(context).size.width,
