@@ -8,6 +8,7 @@ import 'package:recollect_app/firebase/firestore_service.dart';
 import 'package:recollect_app/signup.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:video_thumbnail/video_thumbnail.dart';
 
 import 'constants/routeConstants.dart';
 
@@ -22,6 +23,7 @@ class EditVideoPage extends StatefulWidget {
 class _EditVideoPageState extends State<EditVideoPage> {
   TextEditingController _description = TextEditingController(text: "");
   File? _video;
+  File? _thumbnail;
   bool _loading = false;
 
   Future setFields() async {
@@ -40,6 +42,21 @@ class _EditVideoPageState extends State<EditVideoPage> {
         return;
       }
       final videoTemp = File(file.path);
+      await VideoThumbnail.thumbnailFile(
+              video: file.path,
+              imageFormat: ImageFormat.JPEG,
+              maxWidth: 60,
+              quality: 100)
+          .then((value) => {
+                setState(() {
+                  // print('Thumbnail: $thumbnailTemp');
+                  // print('Video: $videoTemp');
+                  _video = videoTemp;
+                  if (value != null) {
+                    _thumbnail = File(value);
+                  }
+                })
+              });
       setState(() {
         this._video = videoTemp;
       });
@@ -123,13 +140,13 @@ class _EditVideoPageState extends State<EditVideoPage> {
                         maxHeight: 60.0,
                         maxWidth: 60.0,
                       ),
-                      child: _video == null
+                      child: _thumbnail == null
                           ? Image.network(
-                              widget.momentData['file_path'],
+                              widget.momentData['thumbnail_path'],
                               fit: BoxFit.fill,
                             )
                           : Image.file(
-                              _video!,
+                              _thumbnail!,
                               fit: BoxFit.fill,
                             ),
                     ),
@@ -193,13 +210,14 @@ class _EditVideoPageState extends State<EditVideoPage> {
                         _loading = true;
                       });
                       print("Clicked Saved");
-                      if (_video != null) {
-                        await FirestoreService().editMoment(
-                            memoryId: widget.momentData['memory_id'],
-                            momentId: widget.momentData['doc_id'],
-                            file: _video,
-                            description: _description.text);
-                      }
+
+                      await FirestoreService().editMoment(
+                          memoryId: widget.momentData['memory_id'],
+                          momentId: widget.momentData['doc_id'],
+                          file: _video,
+                          thumbnail: _thumbnail,
+                          description: _description.text);
+
                       Navigator.pop(context);
                     },
                   ),

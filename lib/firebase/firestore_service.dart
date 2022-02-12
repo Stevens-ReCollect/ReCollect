@@ -292,12 +292,24 @@ class FirestoreService {
           .then((url) => newThumbnailUrl = url);
     }
     if (newUrl != "") {
-      await moments.doc(momentId).update({'file_path': newUrl});
+      await moments
+          .doc(momentId)
+          .update({'file_path': newUrl})
+          .then((value) => print('Moment Updated'))
+          .catchError((e) => print('Moment failed to update: $e'));
     }
     if (newThumbnailUrl != "") {
-      await moments.doc(momentId).update({'thumbnail_path': newThumbnailUrl});
+      await moments
+          .doc(momentId)
+          .update({'thumbnail_path': newThumbnailUrl})
+          .then((value) => print('Moment Updated'))
+          .catchError((e) => print('Moment failed to update: $e'));
     }
-    return moments.doc(momentId).update({'description': description!});
+    return moments
+        .doc(momentId)
+        .update({'description': description})
+        .then((value) => print('Moment Updated'))
+        .catchError((e) => print('Moment failed to update: $e'));
   }
 
   Future<void> deleteMoment(

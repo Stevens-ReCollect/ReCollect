@@ -126,7 +126,7 @@ class _EditPhotoPageState extends State<EditPhotoPage> {
                       ),
                       child: _image == null
                           ? Image.network(
-                              widget.momentData['file_path'],
+                              widget.momentData['thumbnail_path'],
                               fit: BoxFit.fill,
                             )
                           : Image.file(
@@ -190,22 +190,24 @@ class _EditPhotoPageState extends State<EditPhotoPage> {
                       ),
                     ),
                     onPressed: _isButtonDisabled
-                      ? null
-                      : () async {
-                          setState(() {
-                            _loading = true;
-                            _isButtonDisabled = true;
-                          });
-                          print("Clicked Saved");
-                          if (_image != null) {
+                        ? null
+                        : () async {
+                            setState(() {
+                              _loading = true;
+                              _isButtonDisabled = true;
+                            });
+                            print("Clicked Saved");
+                            print('$_image');
+
                             await FirestoreService().editMoment(
                                 memoryId: widget.momentData['memory_id'],
                                 momentId: widget.momentData['doc_id'],
                                 file: _image,
+                                thumbnail: _image,
                                 description: _description.text);
-                          }
-                          Navigator.pop(context);
-                        },
+
+                            Navigator.pop(context);
+                          },
                   ),
                 ),
               ],
