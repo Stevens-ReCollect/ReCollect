@@ -78,7 +78,7 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
                         height: 80.0,
                         width: 80.0,
                         child: Image.network(
-                          data['file_path'],
+                          data['thumbnail_path'],
                           fit: BoxFit.fill,
                         ),
                       ),

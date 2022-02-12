@@ -134,8 +134,11 @@ class FirestoreService {
 
     //Upload file to Storage
     if (file != null) {
-      await uploadThumbnail(
-              file: file, user: currentUser.email, memory: documentReference.id)
+      await uploadFile(
+              file: file,
+              user: currentUser.email,
+              memory: documentReference.id,
+              moment: "memory-thumbnail")
           .then((url) => fileURL = url);
     }
 
@@ -163,7 +166,7 @@ class FirestoreService {
               file: thumbnail,
               user: currentUser.email,
               memory: memoryId,
-              moment: "thumbnail")
+              moment: "memory-thumbnail")
           .then((url) => newUrl = url);
     }
 
@@ -212,9 +215,11 @@ class FirestoreService {
       {required String memoryId,
       required String type,
       required File? file,
+      required File? thumbnail,
       String? description}) async {
     User? currentUser = AuthenticationService().getUser();
     String fileURL = 'temporary';
+    String thumbnailURL = 'temporary';
     if (currentUser == null) {
       throw Exception('currentUser is null');
     }
@@ -228,6 +233,7 @@ class FirestoreService {
       'description': description,
       'memory_id': memoryId,
       'file_path': '',
+      'thumbnail_path': '',
     }).then((value) {
       documentReference = value;
       print("Moment added: $documentReference");
@@ -243,14 +249,23 @@ class FirestoreService {
               moment: documentReference.id)
           .then((url) => fileURL = url);
     }
-
-    return documentReference.update({'file_path': fileURL});
+    if (thumbnail != null) {
+      await uploadFile(
+              file: thumbnail,
+              user: currentUser.email,
+              memory: memoryId,
+              moment: documentReference.id + 'thumbnail')
+          .then((url) => thumbnailURL = url);
+    }
+    return documentReference
+        .update({'file_path': fileURL, 'thumbnail_path': thumbnailURL});
   }
 
   Future<void> editMoment(
       {required String memoryId,
       required String momentId,
       File? file,
+      File? thumbnail,
       String? description}) async {
     CollectionReference moments = _firestore.collection('moments');
     User? currentUser = AuthenticationService().getUser();
@@ -258,6 +273,7 @@ class FirestoreService {
       throw Exception('currentUser is null');
     }
     String newUrl = "";
+    String newThumbnailUrl = "";
 
     if (file != null) {
       await uploadFile(
@@ -267,20 +283,21 @@ class FirestoreService {
               moment: momentId)
           .then((url) => newUrl = url);
     }
-
-    if (newUrl != "") {
-      moments
-          .doc(momentId)
-          .update({'file_path': newUrl})
-          .then((value) => print("Moment Updated"))
-          .catchError((error) => print("Failed to update moment $error"));
+    if (thumbnail != null) {
+      await uploadFile(
+              file: thumbnail,
+              user: currentUser.email,
+              memory: memoryId,
+              moment: momentId + 'thumbnail')
+          .then((url) => newThumbnailUrl = url);
     }
-
-    return moments
-        .doc(momentId)
-        .update({'description': description})
-        .then((value) => print("Moment Updated"))
-        .catchError((error) => print("Failed to update moment $error"));
+    if (newUrl != "") {
+      await moments.doc(momentId).update({'file_path': newUrl});
+    }
+    if (newThumbnailUrl != "") {
+      await moments.doc(momentId).update({'thumbnail_path': newThumbnailUrl});
+    }
+    return moments.doc(momentId).update({'description': description!});
   }
 
   Future<void> deleteMoment(
@@ -295,10 +312,15 @@ class FirestoreService {
         .delete()
         .then((value) => print("Moment file deleted"))
         .catchError((error) => print("Failed to delete moment file: $error"));
+    _storage
+        .ref(currentUser.email! + "/" + memoryId + "/" + momentId + 'thumbnail')
+        .delete()
+        .then((value) => print("Moment file deleted"))
+        .catchError((error) => print("Failed to delete moment file: $error"));
     return moments
         .doc(momentId)
         .delete()
-        .then((value) => print("Moment Deleted"))
+        .then((value) => print("Moment doc deleted"))
         .catchError((error) => print("Failed to delete moment: $error"));
   }
 
@@ -316,19 +338,19 @@ class FirestoreService {
     return fileURL;
   }
 
-  Future<String> uploadThumbnail(
-      {required File file,
-      required String? user,
-      required String memory}) async {
-    String fileURL = '';
-    Reference reference =
-        _storage.ref(user! + "/" + memory + "/" + "thumbnail");
-    await reference.putFile(file);
-    // await Future.delayed(const Duration(seconds: 5));
-    fileURL = await reference.getDownloadURL();
-    print("File URL: $fileURL");
-    return fileURL;
-  }
+  // Future<String> uploadThumbnail(
+  //     {required File file,
+  //     required String? user,
+  //     required String memory}) async {
+  //   String fileURL = '';
+  //   Reference reference =
+  //       _storage.ref(user! + "/" + memory + "/" + "thumbnail");
+  //   await reference.putFile(file);
+  //   // await Future.delayed(const Duration(seconds: 5));
+  //   fileURL = await reference.getDownloadURL();
+  //   print("File URL: $fileURL");
+  //   return fileURL;
+  // }
 
   Future<String> checkPin({required String pin}) async {
     CollectionReference users = _firestore.collection('users');

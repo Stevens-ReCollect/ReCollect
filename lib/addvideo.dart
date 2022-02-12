@@ -195,6 +195,7 @@ class _AddVideoPageState extends State<AddVideoPage> {
                                   memoryId: widget.memoryData['doc_id'],
                                   type: 'Video',
                                   file: video,
+                                  thumbnail: thumbnail,
                                   description: _description.text);
                             }
                             // Navigator.pushNamed(
