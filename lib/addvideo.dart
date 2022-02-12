@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -46,19 +47,21 @@ class _AddVideoPageState extends State<AddVideoPage> {
         return;
       }
       final videoTemp = File(file.path);
-      var thumbnailTemp;
-      var uint = await VideoThumbnail.thumbnailData(
+      await VideoThumbnail.thumbnailFile(
               video: file.path,
               imageFormat: ImageFormat.JPEG,
               maxWidth: 60,
-              quality: 25)
-          .then((value) => thumbnailTemp = File.fromRawPath(value!));
-      setState(() {
-        print('Thumbnail: $thumbnailTemp');
-        print('Video: $videoTemp');
-        this.video = videoTemp;
-        this.thumbnail = thumbnailTemp;
-      });
+              quality: 100)
+          .then((value) => {
+                setState(() {
+                  // print('Thumbnail: $thumbnailTemp');
+                  // print('Video: $videoTemp');
+                  video = videoTemp;
+                  if (value != null) {
+                    thumbnail = File(value);
+                  }
+                })
+              });
     } on PlatformException catch (e) {
       print('Failed to pick image $e');
     }
