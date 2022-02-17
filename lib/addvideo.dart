@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,7 +9,7 @@ import 'package:recollect_app/firebase/firestore_service.dart';
 import 'package:recollect_app/signup.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-
+import 'package:video_thumbnail/video_thumbnail.dart';
 import 'constants/routeConstants.dart';
 
 class AddVideoPage extends StatefulWidget {
@@ -21,6 +22,7 @@ class AddVideoPage extends StatefulWidget {
 class _AddVideoPageState extends State<AddVideoPage> {
   final TextEditingController _description = TextEditingController();
   File? video;
+  File? thumbnail;
   bool _loading = false;
   bool _isButtonDisabled = false;
 
@@ -45,9 +47,21 @@ class _AddVideoPageState extends State<AddVideoPage> {
         return;
       }
       final videoTemp = File(file.path);
-      setState(() {
-        this.video = videoTemp;
-      });
+      await VideoThumbnail.thumbnailFile(
+              video: file.path,
+              imageFormat: ImageFormat.JPEG,
+              maxWidth: 60,
+              quality: 100)
+          .then((value) => {
+                setState(() {
+                  // print('Thumbnail: $thumbnailTemp');
+                  // print('Video: $videoTemp');
+                  video = videoTemp;
+                  if (value != null) {
+                    thumbnail = File(value);
+                  }
+                })
+              });
     } on PlatformException catch (e) {
       print('Failed to pick image $e');
     }
@@ -112,9 +126,9 @@ class _AddVideoPageState extends State<AddVideoPage> {
                         maxHeight: 60.0,
                         maxWidth: 60.0,
                       ),
-                      child: video != null
+                      child: thumbnail != null
                           ? Image.file(
-                              video!,
+                              thumbnail!,
                               width: 60.0,
                               height: 60.0,
                               fit: BoxFit.cover,
@@ -169,25 +183,26 @@ class _AddVideoPageState extends State<AddVideoPage> {
                       ),
                     ),
                     onPressed: _isButtonDisabled
-                      ? null
-                      : () async {
-                          setState(() {
-                            _loading = true;
-                            _isButtonDisabled = true;
-                          });
-                          print("Clicked Saved");
-                          if (video != null) {
-                            await FirestoreService().addNewMoment(
-                                memoryId: widget.memoryData['doc_id'],
-                                type: 'Video',
-                                file: video,
-                                description: _description.text);
-                          }
-                          // Navigator.pushNamed(
-                          //     context, RouteConstants.memoryHomeRoute);
-                          Navigator.pop(context);
-                        },
-                   ),
+                        ? null
+                        : () async {
+                            setState(() {
+                              _loading = true;
+                              _isButtonDisabled = true;
+                            });
+                            print("Clicked Saved");
+                            if (video != null) {
+                              await FirestoreService().addNewMoment(
+                                  memoryId: widget.memoryData['doc_id'],
+                                  type: 'Video',
+                                  file: video,
+                                  thumbnail: thumbnail,
+                                  description: _description.text);
+                            }
+                            // Navigator.pushNamed(
+                            //     context, RouteConstants.memoryHomeRoute);
+                            Navigator.pop(context);
+                          },
+                  ),
                 ),
               ],
             ),

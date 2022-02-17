@@ -178,24 +178,25 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
                       ),
                     ),
                     onPressed: _isButtonDisabled
-                      ? null
-                      : () async {
-                          setState(() {
-                            _loading = true;
-                            _isButtonDisabled = true;
-                          });
-                          print("Clicked Saved");
-                          if (image != null) {
-                            await FirestoreService().addNewMoment(
-                                memoryId: widget.memoryData['doc_id'],
-                                type: 'Photo',
-                                file: image,
-                                description: _description.text);
-                          }
-                          // Navigator.pushNamed(
-                          //     context, RouteConstants.memoryHomeRoute);
-                          Navigator.pop(context);
-                        },
+                        ? null
+                        : () async {
+                            setState(() {
+                              _loading = true;
+                              _isButtonDisabled = true;
+                            });
+                            print("Clicked Saved");
+                            if (image != null) {
+                              await FirestoreService().addNewMoment(
+                                  memoryId: widget.memoryData['doc_id'],
+                                  type: 'Photo',
+                                  file: image,
+                                  thumbnail: image,
+                                  description: _description.text);
+                            }
+                            // Navigator.pushNamed(
+                            //     context, RouteConstants.memoryHomeRoute);
+                            Navigator.pop(context);
+                          },
                   ),
                 ),
               ],
