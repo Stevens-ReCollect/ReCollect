@@ -153,7 +153,8 @@ class FirestoreService {
       String? startDate,
       String? endDate,
       String? description,
-      File? thumbnail}) async {
+      File? thumbnail,
+      int? views}) async {
     CollectionReference memories = _firestore.collection('memories');
     User? currentUser = AuthenticationService().getUser();
     if (currentUser == null) {
@@ -209,6 +210,23 @@ class FirestoreService {
         .delete()
         .then((value) => print("Memory Deleted"))
         .catchError((error) => print("Failed to delete memory: $error"));
+  }
+
+  Future<void> memoryViews(
+      {required String memoryId, required int? views}) async {
+    CollectionReference memories = _firestore.collection('memories');
+    User? currentUser = AuthenticationService().getUser();
+    if (currentUser == null) {
+      throw Exception('currentUser is null');
+    }
+
+    return memories
+        .doc(memoryId)
+        .update({
+          'views': views,
+        })
+        .then((value) => print("Memory Updated"))
+        .catchError((error) => print("Failed to update memory: $error"));
   }
 
   Future<void> addNewMoment(
