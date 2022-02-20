@@ -153,8 +153,7 @@ class FirestoreService {
       String? startDate,
       String? endDate,
       String? description,
-      File? thumbnail,
-      int? views}) async {
+      File? thumbnail}) async {
     CollectionReference memories = _firestore.collection('memories');
     User? currentUser = AuthenticationService().getUser();
     if (currentUser == null) {
