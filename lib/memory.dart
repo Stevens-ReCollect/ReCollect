@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/textSizeConstants.dart';
+import 'package:recollect_app/firebase/firestore_service.dart';
 import 'package:recollect_app/widgets/photowidget.dart';
 import 'package:recollect_app/widgets/videoplayer.dart';
 import 'package:recollect_app/widgets/audioplayer.dart';
@@ -169,8 +170,17 @@ class _MemoryState extends State<MemoryPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         _buttonController = "Yes";
+                        if (widget.memoryData['yes'] == null) {
+                          await FirestoreService().yesCounter(
+                            momentID: widget.memoryData['doc_id'],
+                            counter: 1);
+                        } else {
+                          await FirestoreService().yesCounter(
+                            momentID: widget.memoryData['doc_id'],
+                            counter: widget.memoryData['yes'] + 1);
+                        }
                         showDialog(
                             context: context,
                             builder: (BuildContext context) =>
@@ -189,8 +199,17 @@ class _MemoryState extends State<MemoryPage> {
                         width: TextSizeConstants.getadaptiveTextSize(
                             context, TextSizeConstants.bodyText)),
                     ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           _buttonController = "No";
+                          if (widget.memoryData['no'] == null) {
+                          await FirestoreService().noCounter(
+                            momentID: widget.memoryData['doc_id'],
+                            counter: 1);
+                          } else {
+                          await FirestoreService().noCounter(
+                            momentID: widget.memoryData['doc_id'],
+                            counter: widget.memoryData['no'] + 1);
+                          }
                           showDialog(
                               context: context,
                               builder: (BuildContext context) =>
@@ -209,8 +228,17 @@ class _MemoryState extends State<MemoryPage> {
                         width: TextSizeConstants.getadaptiveTextSize(
                             context, TextSizeConstants.bodyText)),
                     ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           _buttonController = "Maybe";
+                          if (widget.memoryData['maybe'] == null) {
+                          await FirestoreService().maybeCounter(
+                            momentID: widget.memoryData['doc_id'],
+                            counter: 1);
+                          } else {
+                          await FirestoreService().maybeCounter(
+                            momentID: widget.memoryData['doc_id'],
+                            counter: widget.memoryData['maybe'] + 1);
+                          }
                           showDialog(
                               context: context,
                               builder: (BuildContext context) =>
