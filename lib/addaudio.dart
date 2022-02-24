@@ -15,6 +15,9 @@ class AddAudioPage extends StatefulWidget {
 }
 
 class _AddAudioPageState extends State<AddAudioPage> {
+  File? audio;
+  String audioName = 'No Audio Selected';
+
   String _description = '';
 
   @override
@@ -25,14 +28,17 @@ class _AddAudioPageState extends State<AddAudioPage> {
 
   Future pickAudio() async {
     try {
-      print('in pickAudio');
       final result = await FilePicker.platform.pickFiles(
           type: FileType.audio, allowMultiple: false, dialogTitle: 'Add Audio');
       if (result == null) {
         return;
       }
-      final file = File(result.files.first.path!);
-      print(file);
+      final audioTemp = File(result.files.first.path!);
+      final audioNameTemp = result.files.first.name;
+      setState(() {
+        audio = audioTemp;
+        audioName = audioNameTemp;
+      });
     } on PlatformException catch (e) {
       print('Failed to select audio: $e');
     }
@@ -44,46 +50,69 @@ class _AddAudioPageState extends State<AddAudioPage> {
     var deviceWidth = queryData.size.width;
     var deviceHeight = queryData.size.height;
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        title: const Text("Add Audio"),
+      ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            Container(
-              margin: const EdgeInsets.only(top: 50.0, left: 10.0),
-              alignment: Alignment.centerLeft,
-              child: IconButton(
-                icon: const Icon(Icons.arrow_back_ios_new),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(top: 20.0),
-              child: Center(
-                child: Text(
-                  '{Selected Audio}',
-                  style: TextStyle(
-                    fontSize: TextSizeConstants.getadaptiveTextSize(
-                        context, TextSizeConstants.memoryTitle),
+            ListTile(
+              contentPadding:
+                  EdgeInsets.symmetric(horizontal: 0.1 * deviceWidth),
+              title: Text(
+                audioName,
+                style: const TextStyle(
                     fontFamily: 'Roboto',
-                    fontWeight: FontWeight.w900,
-                  ),
+                    fontWeight: FontWeight.w400,
+                    fontSize: 18.0),
+              ),
+              subtitle: TextButton(
+                onPressed: () {
+                  pickAudio();
+                },
+                child: const Text(
+                  'Change Audio',
+                  style: TextStyle(
+                      fontFamily: 'Roboto',
+                      fontWeight: FontWeight.w400,
+                      fontSize: 12.0),
+                ),
+                style: TextButton.styleFrom(
+                  minimumSize: Size.zero,
+                  padding: EdgeInsets.zero,
+                  alignment: Alignment.centerLeft,
+                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 ),
               ),
-            ),
-            Container(
-              width: 0.8 * deviceWidth,
-              margin: const EdgeInsets.only(top: 30.0, left: 0.0),
-              child: TextField(
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(),
-                  labelText: 'Title',
-                  labelStyle: TextStyle(
-                      fontSize: TextSizeConstants.getadaptiveTextSize(
-                          context, TextSizeConstants.formField)),
-                ),
-              ),
+              // leading: ClipRRect(
+              //   borderRadius: BorderRadius.circular(5.0),
+              //   child: ConstrainedBox(
+              //     constraints: const BoxConstraints(
+              //       minHeight: 60.0,
+              //       minWidth: 60.0,
+              //       maxHeight: 60.0,
+              //       maxWidth: 60.0,
+              //     ),
+              //     child: thumbnail != null
+              //         ? Image.file(
+              //             thumbnail!,
+              //             width: 60.0,
+              //             height: 60.0,
+              //             fit: BoxFit.cover,
+              //           )
+              //         : const FlutterLogo(size: 60.0),
+              //   ),
+              // ),
             ),
             Container(
               height: 0.3 * deviceHeight,
@@ -104,10 +133,6 @@ class _AddAudioPageState extends State<AddAudioPage> {
                   alignLabelWithHint: true,
                 ),
               ),
-            ),
-            ElevatedButton(
-              onPressed: pickAudio,
-              child: const Text('Open Audio Picker'),
             ),
             Container(
               margin: const EdgeInsets.only(top: 150.0, left: 0.0),

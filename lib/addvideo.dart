@@ -92,6 +92,8 @@ class _AddVideoPageState extends State<AddVideoPage> {
                   ),
                 ),
                 ListTile(
+                  contentPadding:
+                      EdgeInsets.symmetric(horizontal: 0.1 * deviceWidth),
                   title: const Text(
                     'Video Selected',
                     style: TextStyle(
@@ -134,13 +136,6 @@ class _AddVideoPageState extends State<AddVideoPage> {
                               fit: BoxFit.cover,
                             )
                           : const FlutterLogo(size: 60.0),
-                      // child: Image.file(_image),
-                      // child: CachedNetworkImage(
-                      //   imageUrl: "http://via.placeholder.com/150x150",
-                      //   placeholder: (context, url) =>
-                      //       CircularProgressIndicator(),
-                      //   errorWidget: (context, url, error) => Icon(Icons.error),
-                      // ),
                     ),
                   ),
                 ),

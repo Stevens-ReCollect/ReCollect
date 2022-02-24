@@ -106,6 +106,8 @@ class _EditVideoPageState extends State<EditVideoPage> {
             child: Column(
               children: <Widget>[
                 ListTile(
+                  contentPadding:
+                      EdgeInsets.symmetric(horizontal: 0.1 * deviceWidth),
                   title: const Text(
                     'Video Selected',
                     style: TextStyle(

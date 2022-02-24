@@ -79,6 +79,8 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
                   ),
                 ),
                 ListTile(
+                  contentPadding:
+                      EdgeInsets.symmetric(horizontal: 0.1 * deviceWidth),
                   title: const Text(
                     'Photo Selected',
                     style: TextStyle(
