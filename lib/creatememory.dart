@@ -164,12 +164,6 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
     }
   }
 
-  // @override
-  // void initState() {
-  //   pickImage();
-  //   super.initState();
-  // }
-
   @override
   Widget build(BuildContext context) {
     MediaQueryData queryData = MediaQuery.of(context); //responsive sizing
@@ -202,7 +196,7 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
                       fontSize: TextSizeConstants.getadaptiveTextSize(
                           context, TextSizeConstants.memoryTitle),
                       fontFamily: 'Roboto',
-                      fontWeight: FontWeight.w900,
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
                 ),
@@ -235,6 +229,7 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
                       padding: EdgeInsets.zero,
                       alignment: Alignment.centerLeft,
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      primary: ColorConstants.buttonColor
                     ),
                   ),
                   leading: ClipRRect(
@@ -289,7 +284,7 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
                   TextButton(
                     style: ButtonStyle(
                        foregroundColor: MaterialStateProperty.all<Color>(
-                      ColorConstants.hintText)),
+                      ColorConstants.buttonColor)),
                     onPressed: () { 
                     showDialog(
                         context: context,
@@ -319,7 +314,7 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
                   TextButton(
                     style: ButtonStyle(
                        foregroundColor: MaterialStateProperty.all<Color>(
-                      ColorConstants.hintText)),
+                      ColorConstants.buttonColor)),
                     onPressed: () { 
                     showDialog(
                         context: context,
