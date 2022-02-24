@@ -199,7 +199,7 @@ class MyHomePageState extends State<MyHomePage> {
               );
             } else {
               return InkWell(
-                onTap: () {
+                onTap: () async {
                   if (accountMode == 0) {
                     // Navigator.pushNamed(
                     //     context, RouteConstants.memoryHomeRoute);
@@ -209,6 +209,13 @@ class MyHomePageState extends State<MyHomePage> {
                             builder: (context) =>
                                 MemoryHomePage(memoryData: data)));
                   } else {
+                    if (data['views'] == null) {
+                      await FirestoreService()
+                          .memoryViews(memoryId: data['doc_id'], views: 1);
+                    } else {
+                      await FirestoreService().memoryViews(
+                          memoryId: data['doc_id'], views: data['views'] + 1);
+                    }
                     Navigator.push(
                         context,
                         MaterialPageRoute(
