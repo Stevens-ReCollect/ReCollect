@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:open_file/open_file.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/textSizeConstants.dart';
 import 'package:recollect_app/firebase/firestore_service.dart';
@@ -47,6 +48,7 @@ class _AddVideoPageState extends State<AddVideoPage> {
         return;
       }
       final videoTemp = File(file.path);
+      openFile(file);
       await VideoThumbnail.thumbnailFile(
               video: file.path,
               imageFormat: ImageFormat.JPEG,
@@ -54,8 +56,6 @@ class _AddVideoPageState extends State<AddVideoPage> {
               quality: 100)
           .then((value) => {
                 setState(() {
-                  // print('Thumbnail: $thumbnailTemp');
-                  // print('Video: $videoTemp');
                   video = videoTemp;
                   if (value != null) {
                     thumbnail = File(value);
@@ -65,6 +65,10 @@ class _AddVideoPageState extends State<AddVideoPage> {
     } on PlatformException catch (e) {
       print('Failed to pick image $e');
     }
+  }
+
+  void openFile(XFile file) {
+    OpenFile.open(file.path);
   }
 
   @override

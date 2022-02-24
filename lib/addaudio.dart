@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:open_file/open_file.dart';
 import 'constants/routeConstants.dart';
 import 'constants/textSizeConstants.dart';
 
@@ -29,12 +30,17 @@ class _AddAudioPageState extends State<AddAudioPage> {
   Future pickAudio() async {
     try {
       final result = await FilePicker.platform.pickFiles(
-          type: FileType.audio, allowMultiple: false, dialogTitle: 'Add Audio');
+          type: FileType.custom,
+          allowMultiple: false,
+          allowedExtensions: ['mp3'],
+          dialogTitle: 'Add Audio');
       if (result == null) {
         return;
       }
-      final audioTemp = File(result.files.first.path!);
-      final audioNameTemp = result.files.first.name;
+      final platformFile = result.files.first;
+      final audioTemp = File(platformFile.path!);
+      final audioNameTemp = platformFile.name;
+      openFile(platformFile);
       setState(() {
         audio = audioTemp;
         audioName = audioNameTemp;
@@ -42,6 +48,10 @@ class _AddAudioPageState extends State<AddAudioPage> {
     } on PlatformException catch (e) {
       print('Failed to select audio: $e');
     }
+  }
+
+  void openFile(PlatformFile file) {
+    OpenFile.open(file.path!);
   }
 
   @override

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:open_file/open_file.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/textSizeConstants.dart';
 import 'package:recollect_app/firebase/firestore_service.dart';
@@ -31,6 +32,7 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
       if (file == null) {
         return;
       }
+      openFile(file);
       final imageTemp = File(file.path);
       setState(() {
         this.image = imageTemp;
@@ -38,6 +40,10 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
     } on PlatformException catch (e) {
       print('Failed to pick image $e');
     }
+  }
+
+  void openFile(XFile file) {
+    OpenFile.open(file.path);
   }
 
   loading() {
