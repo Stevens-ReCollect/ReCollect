@@ -50,6 +50,8 @@ dependencies:
   video_player: ^2.2.10
   audioplayers: ^0.20.1
   app_settings: ^4.1.1
+  syncfusion_flutter_datepicker: ^19.4.53
+  intl: ^0.17.0
 
   # overlay_container: ^0.0.5+1
 

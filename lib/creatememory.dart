@@ -11,6 +11,8 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:intl/intl.dart';
 
 class CreateMemoryPage extends StatefulWidget {
   @override
@@ -19,6 +21,7 @@ class CreateMemoryPage extends StatefulWidget {
 
 class _CreateMemoryPageState extends State<CreateMemoryPage> {
   final TextEditingController _title = TextEditingController();
+  //TODO: add date picker controller
   final TextEditingController _startDate = TextEditingController();
   final TextEditingController _endDate = TextEditingController();
   final TextEditingController _description = TextEditingController();
@@ -26,6 +29,40 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
   File? image;
   bool _loading = false;
   bool _isButtonDisabled = false;
+
+  String _selectedDate = '';
+  String _dateCount = '';
+  String _range = '';
+  String _rangeCount = '';
+
+
+ void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
+    /// The argument value will return the changed date as [DateTime] when the
+    /// widget [SfDateRangeSelectionMode] set as single.
+    ///
+    /// The argument value will return the changed dates as [List<DateTime>]
+    /// when the widget [SfDateRangeSelectionMode] set as multiple.
+    ///
+    /// The argument value will return the changed range as [PickerDateRange]
+    /// when the widget [SfDateRangeSelectionMode] set as range.
+    ///
+    /// The argument value will return the changed ranges as
+    /// [List<PickerDateRange] when the widget [SfDateRangeSelectionMode] set as
+    /// multi range.
+    setState(() {
+      if (args.value is PickerDateRange) {
+        _range = '${DateFormat('MM/dd/yyyy').format(args.value.startDate)} -'
+            // ignore: lines_longer_than_80_chars
+            ' ${DateFormat('MM/dd/yyyy').format(args.value.endDate ?? args.value.startDate)}';
+      } else if (args.value is DateTime) {
+        _selectedDate = args.value.toString();
+      } else if (args.value is List<DateTime>) {
+        _dateCount = args.value.length.toString();
+      } else {
+        _rangeCount = args.value.length.toString();
+      }
+    });
+  }
 
   Future pickImage() async {
     try {
@@ -163,42 +200,64 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
                   ),
                 ),
               ),
+             
               Container(
                 width: 0.8 * deviceWidth,
                 margin: const EdgeInsets.only(top: 15.0, left: 0.0),
-                child: TextField(
-                  controller: _startDate,
-                  decoration: InputDecoration(
-                    border: const OutlineInputBorder(),
-                    labelText: 'Start Date',
-                    labelStyle: TextStyle(
+                padding: const EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                border: Border.all(color: ColorConstants.hintText)),
+                child:Column( 
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children:<Widget>[
+                  Text('Start to End Date', textAlign: TextAlign.left, style:TextStyle(
                         fontSize: TextSizeConstants.getadaptiveTextSize(
-                            context, TextSizeConstants.formField)),
-                    hintText: 'MM/DD/YYY',
-                    hintStyle: TextStyle(
-                        fontSize: TextSizeConstants.getadaptiveTextSize(
-                            context, TextSizeConstants.formField)),
+                            context, TextSizeConstants.formField))),
+                SfDateRangePicker(
+                  showActionButtons: true,
+                    // controller: _startDate,
+                    onSelectionChanged: _onSelectionChanged,
+                    showNavigationArrow: true,
+                    view: DateRangePickerView.century,
+                    selectionMode: DateRangePickerSelectionMode.range,
+                    initialSelectedRange: PickerDateRange(
+                        DateTime.now().subtract(const Duration(days: 44561)),
+                        DateTime.now()),
                   ),
-                ),
+                // child: TextField(
+                //   controller: _startDate,
+                //   decoration: InputDecoration(
+                //     border: const OutlineInputBorder(),
+                //     labelText: 'Start Date',
+                //     labelStyle: TextStyle(
+                //         fontSize: TextSizeConstants.getadaptiveTextSize(
+                //             context, TextSizeConstants.formField)),
+                //     hintText: 'MM/DD/YYY',
+                //     hintStyle: TextStyle(
+                //         fontSize: TextSizeConstants.getadaptiveTextSize(
+                //             context, TextSizeConstants.formField)),
+                //   ),
+                // ),
+                ]),
               ),
-              Container(
-                width: 0.8 * deviceWidth,
-                margin: const EdgeInsets.only(top: 15.0, left: 0.0),
-                child: TextField(
-                  controller: _endDate,
-                  decoration: InputDecoration(
-                    border: const OutlineInputBorder(),
-                    labelText: 'End Date',
-                    labelStyle: TextStyle(
-                        fontSize: TextSizeConstants.getadaptiveTextSize(
-                            context, TextSizeConstants.formField)),
-                    hintText: 'MM/DD/YYYY',
-                    hintStyle: TextStyle(
-                        fontSize: TextSizeConstants.getadaptiveTextSize(
-                            context, TextSizeConstants.formField)),
-                  ),
-                ),
-              ),
+              // Container(
+              //   width: 0.8 * deviceWidth,
+              //   margin: const EdgeInsets.only(top: 15.0, left: 0.0),
+              //   child: TextField(
+              //     // controller: _endDate,
+              //     decoration: InputDecoration(
+              //       border: const OutlineInputBorder(),
+              //       labelText: 'End Date',
+              //       labelStyle: TextStyle(
+              //           fontSize: TextSizeConstants.getadaptiveTextSize(
+              //               context, TextSizeConstants.formField)),
+              //       hintText: 'MM/DD/YYYY',
+              //       hintStyle: TextStyle(
+              //           fontSize: TextSizeConstants.getadaptiveTextSize(
+              //               context, TextSizeConstants.formField)),
+              //     ),
+              //   ),
+              // ),
               Container(
                 height: 0.23 * deviceHeight,
                 width: 0.8 * deviceWidth,
@@ -253,8 +312,8 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
                       if (_title != null) {
                         final result = await FirestoreService().addNewMemory(
                             title: _title.text,
-                            startDate: _startDate.text,
-                            endDate: _endDate.text,
+                            startDate: '', //TODO: figure out outputs for date picker
+                            endDate: '',
                             description: _description.text,
                             file: image);
                         //if (result != null) {
@@ -273,3 +332,4 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
     ]));
   }
 }
+
