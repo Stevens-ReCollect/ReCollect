@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:recollect_app/addaudio.dart';
 import 'package:recollect_app/addphoto.dart';
 import 'package:recollect_app/addvideo.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
@@ -154,7 +155,12 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
         break;
       case 2:
         print('Clicked Add Audio');
-        Navigator.pushNamed(context, RouteConstants.addAudio);
+        // Navigator.pushNamed(context, RouteConstants.addAudio);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    AddAudioPage(memoryData: widget.memoryData)));
         break;
     }
   }
@@ -365,15 +371,16 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
                   ),
                   value: 1,
                 ),
-                /*
                 PopupMenuItem<int>(
-                  child: Text('Add Audio',
-                      style: TextStyle(
-                          fontSize: TextSizeConstants.getadaptiveTextSize(
-                              context, TextSizeConstants.dropDownText))),
+                  child: Text(
+                    'Add Audio',
+                    style: TextStyle(
+                      fontSize: TextSizeConstants.getadaptiveTextSize(
+                          context, TextSizeConstants.dropDownText),
+                    ),
+                  ),
                   value: 2,
                 ),
-                */
               ],
             ),
           ),

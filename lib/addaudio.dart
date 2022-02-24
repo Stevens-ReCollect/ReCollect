@@ -1,11 +1,15 @@
-import 'package:flutter/material.dart';
-import 'package:recollect_app/constants/colorConstants.dart';
-import 'package:recollect_app/signup.dart';
+import 'dart:io';
 
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:recollect_app/constants/colorConstants.dart';
+import 'package:file_picker/file_picker.dart';
 import 'constants/routeConstants.dart';
 import 'constants/textSizeConstants.dart';
 
 class AddAudioPage extends StatefulWidget {
+  const AddAudioPage({this.memoryData});
+  final memoryData;
   @override
   _AddAudioPageState createState() => _AddAudioPageState();
 }
@@ -14,8 +18,29 @@ class _AddAudioPageState extends State<AddAudioPage> {
   String _description = '';
 
   @override
+  void initState() {
+    pickAudio();
+    super.initState();
+  }
+
+  Future pickAudio() async {
+    try {
+      print('in pickAudio');
+      final result = await FilePicker.platform.pickFiles(
+          type: FileType.audio, allowMultiple: false, dialogTitle: 'Add Audio');
+      if (result == null) {
+        return;
+      }
+      final file = File(result.files.first.path!);
+      print(file);
+    } on PlatformException catch (e) {
+      print('Failed to select audio: $e');
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    MediaQueryData queryData = MediaQuery.of(context);//responsive sizing
+    MediaQueryData queryData = MediaQuery.of(context); //responsive sizing
     var deviceWidth = queryData.size.width;
     var deviceHeight = queryData.size.height;
     return Scaffold(
@@ -39,7 +64,8 @@ class _AddAudioPageState extends State<AddAudioPage> {
                 child: Text(
                   '{Selected Audio}',
                   style: TextStyle(
-                    fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.memoryTitle),
+                    fontSize: TextSizeConstants.getadaptiveTextSize(
+                        context, TextSizeConstants.memoryTitle),
                     fontFamily: 'Roboto',
                     fontWeight: FontWeight.w900,
                   ),
@@ -47,40 +73,51 @@ class _AddAudioPageState extends State<AddAudioPage> {
               ),
             ),
             Container(
-              width: 0.8*deviceWidth,
+              width: 0.8 * deviceWidth,
               margin: const EdgeInsets.only(top: 30.0, left: 0.0),
               child: TextField(
                 decoration: InputDecoration(
-                    border: const OutlineInputBorder(), 
-                    labelText: 'Title',
-                    labelStyle: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.formField)),
-                    ),
+                  border: const OutlineInputBorder(),
+                  labelText: 'Title',
+                  labelStyle: TextStyle(
+                      fontSize: TextSizeConstants.getadaptiveTextSize(
+                          context, TextSizeConstants.formField)),
+                ),
               ),
             ),
             Container(
-              height: 0.3*deviceHeight,
-              width: 0.8*deviceWidth,
+              height: 0.3 * deviceHeight,
+              width: 0.8 * deviceWidth,
               margin: const EdgeInsets.only(top: 15.0, left: 0.0),
               child: TextField(
                 maxLines: 15,
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(),
                   labelText: 'Description',
-                  labelStyle: TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.formField)),
+                  labelStyle: TextStyle(
+                      fontSize: TextSizeConstants.getadaptiveTextSize(
+                          context, TextSizeConstants.formField)),
                   hintText: 'Description',
-                  hintStyle:TextStyle(fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.formField)),
+                  hintStyle: TextStyle(
+                      fontSize: TextSizeConstants.getadaptiveTextSize(
+                          context, TextSizeConstants.formField)),
                   alignLabelWithHint: true,
                 ),
               ),
             ),
+            ElevatedButton(
+              onPressed: pickAudio,
+              child: const Text('Open Audio Picker'),
+            ),
             Container(
               margin: const EdgeInsets.only(top: 150.0, left: 0.0),
-              width: 0.4*deviceWidth,
+              width: 0.4 * deviceWidth,
               child: TextButton(
                 child: Text(
                   'Save',
                   style: TextStyle(
-                    fontSize: TextSizeConstants.getadaptiveTextSize(context, TextSizeConstants.buttonText),
+                    fontSize: TextSizeConstants.getadaptiveTextSize(
+                        context, TextSizeConstants.buttonText),
                     fontFamily: 'Roboto',
                     fontWeight: FontWeight.w400,
                   ),
