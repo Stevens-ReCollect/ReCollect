@@ -104,25 +104,18 @@ class _AddAudioPageState extends State<AddAudioPage> {
                   tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 ),
               ),
-              // leading: ClipRRect(
-              //   borderRadius: BorderRadius.circular(5.0),
-              //   child: ConstrainedBox(
-              //     constraints: const BoxConstraints(
-              //       minHeight: 60.0,
-              //       minWidth: 60.0,
-              //       maxHeight: 60.0,
-              //       maxWidth: 60.0,
-              //     ),
-              //     child: thumbnail != null
-              //         ? Image.file(
-              //             thumbnail!,
-              //             width: 60.0,
-              //             height: 60.0,
-              //             fit: BoxFit.cover,
-              //           )
-              //         : const FlutterLogo(size: 60.0),
-              //   ),
-              // ),
+              leading: ClipRRect(
+                borderRadius: BorderRadius.circular(5.0),
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(
+                    minHeight: 60.0,
+                    minWidth: 60.0,
+                    maxHeight: 60.0,
+                    maxWidth: 60.0,
+                  ),
+                  child: const FlutterLogo(size: 60.0),
+                ),
+              ),
             ),
             Container(
               height: 0.3 * deviceHeight,
