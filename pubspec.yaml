@@ -65,6 +65,12 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^1.0.0
   dart_code_metrics: ^4.8.1
+  flutter_launcher_icons: ^0.9.2
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "lib/assets/recollect_logo_with_bkg.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
