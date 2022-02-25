@@ -53,7 +53,7 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
                 primary: ColorConstants.buttonColor),
             onPressed: () async {
               _onSelectionChanged;
-              _startDate.text = _selectedDate;
+              _startDate.text = _selectedDate.substring(0,10);
               Navigator.pop(context);
             },
           child: Text('Okay',
@@ -95,7 +95,7 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
                 primary: ColorConstants.buttonColor),
             onPressed: () async {
               _onSelectionChanged;
-              _endDate.text = _selectedDate;
+              _endDate.text = _selectedDate.substring(0,10);
               Navigator.pop(context);
             },
           child: Text('Okay',
