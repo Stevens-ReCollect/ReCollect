@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
+import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,6 +12,8 @@ import 'package:recollect_app/signup.dart';
 import 'package:image_picker/image_picker.dart';
 import 'constants/routeConstants.dart';
 import 'constants/textSizeConstants.dart';
+import 'package:flutter/services.dart' show rootBundle;
+import 'package:path_provider/path_provider.dart';
 
 class AddAudioPage extends StatefulWidget {
   const AddAudioPage({this.memoryData});
@@ -23,6 +26,7 @@ class _AddAudioPageState extends State<AddAudioPage> {
   final TextEditingController _description = TextEditingController();
   File? audio;
   String audioName = 'No Audio Selected';
+  File? thumbnail;
   bool _loading = false;
   bool _isButtonDisabled = false;
 
@@ -185,11 +189,12 @@ class _AddAudioPageState extends State<AddAudioPage> {
                         });
                         print("Clicked Saved");
                         if (audio != null) {
-                          await FirestoreService().addNewMoment(
+                          await FirestoreService().addNewAudioMoment(
                               memoryId: widget.memoryData['doc_id'],
                               type: 'Audio',
                               file: audio,
-                              thumbnail: audio,
+                              name: audioName,
+                              thumbnail: thumbnail,
                               description: _description.text);
                         }
                         // Navigator.pushNamed(
