@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -8,12 +7,8 @@ import 'package:open_file/open_file.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/firebase/firestore_service.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:recollect_app/signup.dart';
-import 'package:image_picker/image_picker.dart';
-import 'constants/routeConstants.dart';
-import 'constants/textSizeConstants.dart';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:path_provider/path_provider.dart';
+import 'constants/textSizeConstants.dart';
 
 class AddAudioPage extends StatefulWidget {
   const AddAudioPage({this.memoryData});
@@ -61,6 +56,8 @@ class _AddAudioPageState extends State<AddAudioPage> {
       setState(() {
         audio = audioTemp;
         audioName = audioNameTemp;
+        convertImageAssetToFile('lib/assets/recollect_logo.png')
+            .then((value) => thumbnail = value);
       });
     } on PlatformException catch (e) {
       print('Failed to select audio: $e');
@@ -69,6 +66,23 @@ class _AddAudioPageState extends State<AddAudioPage> {
 
   void openFile(PlatformFile file) {
     OpenFile.open(file.path!);
+  }
+
+  Future<File> convertImageAssetToFile(String assetPath) async {
+    var bytes = await rootBundle.load(assetPath);
+    String tempPath = (await getTemporaryDirectory()).path;
+    File file = File('$tempPath/recollect_logo.png');
+    await file.writeAsBytes(
+        bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes));
+    return file;
+  }
+
+  void openFileFile(File file) {
+    try {
+      OpenFile.open(file.path);
+    } catch (e) {
+      print('error: $e');
+    }
   }
 
   @override
@@ -130,7 +144,12 @@ class _AddAudioPageState extends State<AddAudioPage> {
                     maxHeight: 60.0,
                     maxWidth: 60.0,
                   ),
-                  child: const FlutterLogo(size: 60.0),
+                  child: Image.asset(
+                    'lib/assets/recollect_logo.png',
+                    width: 60.0,
+                    height: 60.0,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),
@@ -155,6 +174,11 @@ class _AddAudioPageState extends State<AddAudioPage> {
                 ),
               ),
             ),
+            ElevatedButton(
+                onPressed: () {
+                  openFileFile(thumbnail!);
+                },
+                child: Text('Open File')),
             Container(
               margin: const EdgeInsets.only(top: 150.0, left: 0.0),
               width: 0.4 * deviceWidth,
@@ -189,7 +213,7 @@ class _AddAudioPageState extends State<AddAudioPage> {
                         });
                         print("Clicked Saved");
                         if (audio != null) {
-                          await FirestoreService().addNewAudioMoment(
+                          await FirestoreService().addNewMoment(
                               memoryId: widget.memoryData['doc_id'],
                               type: 'Audio',
                               file: audio,

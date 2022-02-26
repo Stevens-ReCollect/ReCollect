@@ -52,6 +52,7 @@ dependencies:
   app_settings: ^4.1.1
   file_picker: ^4.4.0
   open_file: ^3.2.1
+  path_provider: ^2.0.9
 
   # overlay_container: ^0.0.5+1
 

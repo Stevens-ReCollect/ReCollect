@@ -76,11 +76,11 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
                     leading: ClipRRect(
                       borderRadius: BorderRadius.circular(5.0),
                       child: Container(
-                        height: 80.0,
-                        width: 80.0,
+                        height: 60.0,
+                        width: 60.0,
                         child: Image.network(
                           data['thumbnail_path'],
-                          fit: BoxFit.fill,
+                          fit: BoxFit.cover,
                         ),
                       ),
                     ),

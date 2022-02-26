@@ -216,7 +216,8 @@ class FirestoreService {
       required String type,
       required File? file,
       required File? thumbnail,
-      String? description}) async {
+      String? description,
+      String? name}) async {
     User? currentUser = AuthenticationService().getUser();
     String fileURL = 'temporary';
     String thumbnailURL = 'temporary';
@@ -229,59 +230,8 @@ class FirestoreService {
     DocumentReference documentReference = moments.doc("null");
     await moments.add({
       'user_email': currentUser.email,
-      'type': type,
-      'description': description,
-      'memory_id': memoryId,
-      'file_path': '',
-      'thumbnail_path': '',
-    }).then((value) {
-      documentReference = value;
-      print("Moment added: $documentReference");
-      addId(moments);
-    }).catchError((error) => print("Failed to add new moment: $error"));
-
-    //Upload file to Storage
-    if (file != null) {
-      await uploadFile(
-              file: file,
-              user: currentUser.email,
-              memory: memoryId,
-              moment: documentReference.id)
-          .then((url) => fileURL = url);
-    }
-    if (thumbnail != null) {
-      await uploadFile(
-              file: thumbnail,
-              user: currentUser.email,
-              memory: memoryId,
-              moment: documentReference.id + 'thumbnail')
-          .then((url) => thumbnailURL = url);
-    }
-    return documentReference
-        .update({'file_path': fileURL, 'thumbnail_path': thumbnailURL});
-  }
-
-  Future<void> addNewAudioMoment(
-      {required String memoryId,
-      required String type,
-      required String? name,
-      required File? file,
-      required File? thumbnail,
-      String? description}) async {
-    User? currentUser = AuthenticationService().getUser();
-    String fileURL = 'temporary';
-    String thumbnailURL = 'temporary';
-    if (currentUser == null) {
-      throw Exception('currentUser is null');
-    }
-
-    //Add to Firestore
-    CollectionReference moments = _firestore.collection('moments');
-    DocumentReference documentReference = moments.doc("null");
-    await moments.add({
-      'user_email': currentUser.email,
-      'type': type,
       'name': name,
+      'type': type,
       'description': description,
       'memory_id': memoryId,
       'file_path': '',
@@ -312,6 +262,58 @@ class FirestoreService {
     return documentReference
         .update({'file_path': fileURL, 'thumbnail_path': thumbnailURL});
   }
+
+  // Future<void> addNewAudioMoment(
+  //     {required String memoryId,
+  //     required String type,
+  //     required String? name,
+  //     required File? file,
+  //     required File? thumbnail,
+  //     String? description}) async {
+  //   User? currentUser = AuthenticationService().getUser();
+  //   String fileURL = 'temporary';
+  //   String thumbnailURL = 'temporary';
+  //   if (currentUser == null) {
+  //     throw Exception('currentUser is null');
+  //   }
+
+  //   //Add to Firestore
+  //   CollectionReference moments = _firestore.collection('moments');
+  //   DocumentReference documentReference = moments.doc("null");
+  //   await moments.add({
+  //     'user_email': currentUser.email,
+  //     'type': type,
+  //     'name': name,
+  //     'description': description,
+  //     'memory_id': memoryId,
+  //     'file_path': '',
+  //     'thumbnail_path': '',
+  //   }).then((value) {
+  //     documentReference = value;
+  //     print("Moment added: $documentReference");
+  //     addId(moments);
+  //   }).catchError((error) => print("Failed to add new moment: $error"));
+
+  //   //Upload file to Storage
+  //   if (file != null) {
+  //     await uploadFile(
+  //             file: file,
+  //             user: currentUser.email,
+  //             memory: memoryId,
+  //             moment: documentReference.id)
+  //         .then((url) => fileURL = url);
+  //   }
+  //   if (thumbnail != null) {
+  //     await uploadFile(
+  //             file: thumbnail,
+  //             user: currentUser.email,
+  //             memory: memoryId,
+  //             moment: documentReference.id + 'thumbnail')
+  //         .then((url) => thumbnailURL = url);
+  //   }
+  //   return documentReference
+  //       .update({'file_path': fileURL, 'thumbnail_path': thumbnailURL});
+  // }
 
   Future<void> editMoment(
       {required String memoryId,
