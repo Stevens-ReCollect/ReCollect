@@ -1,10 +1,14 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:recollect_app/constants/colorConstants.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:open_file/open_file.dart';
+import 'package:recollect_app/constants/colorConstants.dart';
+import 'package:recollect_app/firebase/firestore_service.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:recollect_app/signup.dart';
+import 'package:image_picker/image_picker.dart';
 import 'constants/routeConstants.dart';
 import 'constants/textSizeConstants.dart';
 
@@ -16,15 +20,24 @@ class AddAudioPage extends StatefulWidget {
 }
 
 class _AddAudioPageState extends State<AddAudioPage> {
+  final TextEditingController _description = TextEditingController();
   File? audio;
   String audioName = 'No Audio Selected';
-
-  String _description = '';
+  bool _loading = false;
+  bool _isButtonDisabled = false;
 
   @override
   void initState() {
     pickAudio();
     super.initState();
+  }
+
+  loading() {
+    if (_loading) {
+      return CircularProgressIndicator();
+    } else {
+      return SizedBox();
+    }
   }
 
   Future pickAudio() async {
@@ -122,6 +135,7 @@ class _AddAudioPageState extends State<AddAudioPage> {
               width: 0.8 * deviceWidth,
               margin: const EdgeInsets.only(top: 15.0, left: 0.0),
               child: TextField(
+                controller: _description,
                 maxLines: 15,
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(),
@@ -162,9 +176,26 @@ class _AddAudioPageState extends State<AddAudioPage> {
                     ),
                   ),
                 ),
-                onPressed: () {
-                  Navigator.pushNamed(context, RouteConstants.memoryHomeRoute);
-                },
+                onPressed: _isButtonDisabled
+                    ? null
+                    : () async {
+                        setState(() {
+                          _loading = true;
+                          _isButtonDisabled = true;
+                        });
+                        print("Clicked Saved");
+                        if (audio != null) {
+                          await FirestoreService().addNewMoment(
+                              memoryId: widget.memoryData['doc_id'],
+                              type: 'Audio',
+                              file: audio,
+                              thumbnail: audio,
+                              description: _description.text);
+                        }
+                        // Navigator.pushNamed(
+                        //     context, RouteConstants.memoryHomeRoute);
+                        Navigator.pop(context);
+                      },
               ),
             ),
           ],
