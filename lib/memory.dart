@@ -134,7 +134,7 @@ class _MemoryState extends State<MemoryPage> {
           automaticallyImplyLeading: true,
           backgroundColor: ColorConstants.appBar,
           title: Text(
-            '',
+            widget.memoryData['title'],
             style: TextStyle(
                 fontSize: TextSizeConstants.getadaptiveTextSize(
                     context, TextSizeConstants.buttonText)),
