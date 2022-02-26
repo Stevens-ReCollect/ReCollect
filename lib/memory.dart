@@ -118,7 +118,7 @@ class _MemoryState extends State<MemoryPage> {
                           data['description'], data['file_path']);
                     } else if (data['type'] == 'Audio') {
                       return AudioPlayerWidget(
-                          data['description'], '', data['file_path']);
+                          data['description'], data['name'], data['file_path']);
                     } else {
                       return const SizedBox();
                     }
