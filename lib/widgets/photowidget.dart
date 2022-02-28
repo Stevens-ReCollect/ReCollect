@@ -31,6 +31,7 @@ class PhotoWidget extends StatelessWidget {
                         context, TextSizeConstants.bodyText),
               )),
         ),
+        
         AspectRatio(
             aspectRatio: 5 / 4, child: Image.network(asset, fit: BoxFit.cover))
       ],

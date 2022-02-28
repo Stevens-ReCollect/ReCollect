@@ -12,6 +12,7 @@ class AffirmButtonsWidget extends StatelessWidget {
   final doc_id;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  // METHOD TO GET THE CORRECT MOMENT COUNTER FOR YES, NO, AND MAYBE
   Future<int> getMomentCounter(
       {required String id, required String label}) async {
     CollectionReference moments = _firestore.collection('moments');
