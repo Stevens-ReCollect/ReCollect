@@ -15,6 +15,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:recollect_app/editmemory.dart';
 import 'package:recollect_app/editphoto.dart';
 import 'package:recollect_app/editvideo.dart';
+import 'package:recollect_app/editaudio.dart';
 import 'package:recollect_app/firebase/authentication_service.dart';
 import 'package:recollect_app/firebase/firestore_service.dart';
 
@@ -103,6 +104,15 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => EditVideoPage(
+                                    momentData: data,
+                                  ),
+                                ),
+                              );
+                            } else {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => EditAudioPage(
                                     momentData: data,
                                   ),
                                 ),

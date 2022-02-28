@@ -56,7 +56,7 @@ class _AddAudioPageState extends State<AddAudioPage> {
       setState(() {
         audio = audioTemp;
         audioName = audioNameTemp;
-        convertImageAssetToFile('lib/assets/recollect_logo.png')
+        convertImageAssetToFile('lib/assets/audioicon.png')
             .then((value) => thumbnail = value);
       });
     } on PlatformException catch (e) {
@@ -71,7 +71,7 @@ class _AddAudioPageState extends State<AddAudioPage> {
   Future<File> convertImageAssetToFile(String assetPath) async {
     var bytes = await rootBundle.load(assetPath);
     String tempPath = (await getTemporaryDirectory()).path;
-    File file = File('$tempPath/recollect_logo.png');
+    File file = File('$tempPath/audioicon.png');
     await file.writeAsBytes(
         bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes));
     return file;
@@ -176,7 +176,7 @@ class _AddAudioPageState extends State<AddAudioPage> {
             ),
             ElevatedButton(
                 onPressed: () {
-                  openFileFile(thumbnail!);
+                  openFileFile(audio!);
                 },
                 child: Text('Open File')),
             Container(

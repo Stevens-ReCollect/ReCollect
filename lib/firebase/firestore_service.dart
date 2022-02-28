@@ -268,7 +268,8 @@ class FirestoreService {
       required String momentId,
       File? file,
       File? thumbnail,
-      String? description}) async {
+      String? description,
+      String? name}) async {
     CollectionReference moments = _firestore.collection('moments');
     User? currentUser = AuthenticationService().getUser();
     if (currentUser == null) {
@@ -297,6 +298,13 @@ class FirestoreService {
       await moments
           .doc(momentId)
           .update({'file_path': newUrl})
+          .then((value) => print('Moment Updated'))
+          .catchError((e) => print('Moment failed to update: $e'));
+    }
+    if (name != "") {
+      await moments
+          .doc(momentId)
+          .update({'name': name})
           .then((value) => print('Moment Updated'))
           .catchError((e) => print('Moment failed to update: $e'));
     }
