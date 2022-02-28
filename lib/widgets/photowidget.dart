@@ -33,7 +33,9 @@ class PhotoWidget extends StatelessWidget {
         ),
         
         AspectRatio(
-            aspectRatio: 5 / 4, child: Image.network(asset, fit: BoxFit.cover))
+            aspectRatio: 5 / 4, child: Image.network(asset, fit: BoxFit.cover)),
+
+        AffirmButtonsWidget(this.doc_id).affirmingResponse(context),
       ],
     );
   }

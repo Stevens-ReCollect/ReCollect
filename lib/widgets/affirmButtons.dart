@@ -41,20 +41,12 @@ class AffirmButtonsWidget extends StatelessWidget {
 
     return counter;
   }
-
-  @override
-  Widget build(BuildContext context) {
-    MediaQueryData queryData = MediaQuery.of(context);
-    var pixelRatio = queryData.devicePixelRatio; //responsive sizing
-    var deviceWidth = queryData.size.width;
-    var deviceHeight = queryData.size.height;
-
-    late String _buttonController; // alerts the correct dialog
+  
+  late String _buttonController; // alerts the correct dialog
+  Widget affirmingResponse(BuildContext context) {
     late String affirmTitle;
-    late String affirmation; // affirming message
-    int momentCounter = 0;
+    late String affirmation;
 
-    Widget _affirmingResponse(BuildContext context) {
       if (_buttonController == "Yes") {
         affirmTitle = "Great job!";
         affirmation = "Amazing progress.";
@@ -101,6 +93,15 @@ class AffirmButtonsWidget extends StatelessWidget {
             )
           ]);
     }
+
+  @override
+  Widget build(BuildContext context) {
+    MediaQueryData queryData = MediaQuery.of(context);
+    var pixelRatio = queryData.devicePixelRatio; //responsive sizing
+    var deviceWidth = queryData.size.width;
+    var deviceHeight = queryData.size.height;
+    int momentCounter = 0;
+
 
     return Scaffold(
         appBar: AppBar(
@@ -150,7 +151,7 @@ class AffirmButtonsWidget extends StatelessWidget {
                         showDialog(
                             context: context,
                             builder: (BuildContext context) =>
-                                _affirmingResponse(context));
+                                affirmingResponse(context));
                       },
                       child: const Text('Yes'),
                       style: ElevatedButton.styleFrom(
@@ -174,7 +175,7 @@ class AffirmButtonsWidget extends StatelessWidget {
                           showDialog(
                               context: context,
                               builder: (BuildContext context) =>
-                                  _affirmingResponse(context));
+                                  affirmingResponse(context));
                         },
                         child: const Text("No"),
                         style: ElevatedButton.styleFrom(
@@ -198,7 +199,7 @@ class AffirmButtonsWidget extends StatelessWidget {
                           showDialog(
                               context: context,
                               builder: (BuildContext context) =>
-                                  _affirmingResponse(context));
+                                  affirmingResponse(context));
                         },
                         child: const Text("Maybe"),
                         style: ElevatedButton.styleFrom(
