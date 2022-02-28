@@ -87,15 +87,22 @@ class FirestoreService {
   }
 
   Future<void> yesCounter(
-      {required String momentID, required int? counter}) async {
+      {required Stream<QuerySnapshot<Object?>> momentID,
+      required int? counter}) async {
     CollectionReference moments = _firestore.collection('moments');
     User? currentUser = AuthenticationService().getUser();
     if (currentUser == null) {
       throw Exception('currentUser is null');
     }
 
+    String docID = momentID.toString();
+
+    // FirebaseFirestore.instance
+    //       .collection('moments')
+    //       .where("memory_id", isEqualTo: widget.memoryData['doc_id'])
+
     return moments
-        .doc(momentID)
+        .doc(docID)
         .update({
           'yes': counter,
         })

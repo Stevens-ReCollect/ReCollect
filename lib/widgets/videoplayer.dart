@@ -4,9 +4,10 @@ import 'package:recollect_app/constants/textSizeConstants.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPlayerWidget extends StatelessWidget {
-  const VideoPlayerWidget(this.description, this.asset);
+  const VideoPlayerWidget(this.description, this.asset, this.doc_id);
   final description;
   final asset;
+  final doc_id;
 
   @override
   Widget build(BuildContext context) {

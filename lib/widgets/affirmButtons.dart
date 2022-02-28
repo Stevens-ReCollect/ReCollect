@@ -1,23 +1,45 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/textSizeConstants.dart';
+import 'package:recollect_app/firebase/authentication_service.dart';
 import 'package:recollect_app/firebase/firestore_service.dart';
-import 'package:recollect_app/widgets/affirmButtons.dart';
-import 'package:recollect_app/widgets/photowidget.dart';
-import 'package:recollect_app/widgets/videoplayer.dart';
-import 'package:recollect_app/widgets/audioplayer.dart';
+import 'package:video_player/video_player.dart';
 
-class MemoryPage extends StatefulWidget {
-  const MemoryPage({this.memoryData});
-  final memoryData;
-  @override
-  _MemoryState createState() => _MemoryState();
-}
+class AffirmButtonsWidget extends StatelessWidget {
+  AffirmButtonsWidget(this.doc_id);
+  final doc_id;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-class _MemoryState extends State<MemoryPage> {
-  var _current = 0; //TODO: Implement current moment indicator
+  Future<int> getMomentCounter(
+      {required String id, required String label}) async {
+    CollectionReference moments = _firestore.collection('moments');
+    User? currentUser = AuthenticationService().getUser();
+    int counter = 0;
+    if (currentUser == null) {
+      throw Exception('currentUser is null');
+    }
+
+    await moments
+        .where('doc_id', isEqualTo: id)
+        .get()
+        .then((QuerySnapshot querySnapshot) => {
+              querySnapshot.docs.forEach((doc) => {
+                    if (doc.data() != null)
+                      {
+                        if (label == 'yes')
+                          {counter = doc['yes']}
+                        else if (label == 'no')
+                          {counter = doc['no']}
+                        else
+                          {counter = doc['maybe']}
+                      }
+                  })
+            });
+
+    return counter;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +51,7 @@ class _MemoryState extends State<MemoryPage> {
     late String _buttonController; // alerts the correct dialog
     late String affirmTitle;
     late String affirmation; // affirming message
-    late Stream<QuerySnapshot>
-        _currentMoment; // streams the current moment on screen
+    int momentCounter = 0;
 
     Widget _affirmingResponse(BuildContext context) {
       if (_buttonController == "Yes") {
@@ -80,60 +101,6 @@ class _MemoryState extends State<MemoryPage> {
           ]);
     }
 
-    memoryCarouselSlider() {
-      Stream<QuerySnapshot> _momentStream = FirebaseFirestore.instance
-          .collection('moments')
-          .where("memory_id", isEqualTo: widget.memoryData['doc_id'])
-          .snapshots();
-      return StreamBuilder<QuerySnapshot>(
-          stream: _momentStream,
-          builder:
-              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (snapshot.hasError) {
-              return const Text('Something went wrong');
-            }
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Text('Loading...');
-            }
-
-            return CarouselSlider(
-              options: CarouselOptions(
-                aspectRatio: 1 / 1,
-                viewportFraction: 1,
-                onPageChanged: (index, reason) {
-                  setState(() {
-                    _current = index + 1;
-                    _currentMoment = _momentStream;
-                  });
-                },
-              ),
-              items: snapshot.data!.docs.map((DocumentSnapshot document) {
-                Map<String, dynamic> data =
-                    document.data()! as Map<String, dynamic>;
-                return Builder(builder: (BuildContext context) {
-                  // print("Print data: $data");
-                  if (data.isEmpty) {
-                    return const Text("This memory is empty.");
-                  } else {
-                    if (data['type'] == 'Photo') {
-                      return PhotoWidget(
-                          data['description'], data['file_path'], data['doc_id']);
-                    } else if (data['type'] == 'Video') {
-                      return VideoPlayerWidget(
-                          data['description'], data['file_path'], data['doc_id']);
-                    } else if (data['type'] == 'Audio') {
-                      return AudioPlayerWidget(
-                          data['description'], '', data['file_path'], data['doc_id']);
-                    } else {
-                      return const SizedBox();
-                    }
-                  }
-                });
-              }).toList(),
-            );
-          });
-    }
-
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: true,
@@ -160,7 +127,6 @@ class _MemoryState extends State<MemoryPage> {
                 SizedBox(
                   width: deviceWidth,
                   height: 0.6 * deviceHeight,
-                  child: Center(child: memoryCarouselSlider()),
                 ),
                 SizedBox(height: deviceHeight / 80),
                 Text(
@@ -176,14 +142,10 @@ class _MemoryState extends State<MemoryPage> {
                     ElevatedButton(
                       onPressed: () async {
                         _buttonController = "Yes";
-                        if (widget.memoryData['yes'] == null) {
-                          await FirestoreService()
-                              .yesCounter(momentID: _currentMoment, counter: 1);
-                        } else {
-                          await FirestoreService().yesCounter(
-                              momentID: _currentMoment,
-                              counter: widget.memoryData['yes'] + 1);
-                        }
+                        FirestoreService().yesCounter(
+                            momentID: this.doc_id,
+                            counter: await getMomentCounter(
+                                    id: doc_id, label: "yes") + 1);
                         showDialog(
                             context: context,
                             builder: (BuildContext context) =>
@@ -204,15 +166,10 @@ class _MemoryState extends State<MemoryPage> {
                     ElevatedButton(
                         onPressed: () async {
                           _buttonController = "No";
-                          if (widget.memoryData['no'] == null) {
-                            await FirestoreService().noCounter(
-                                momentID: widget.memoryData['doc_id'],
-                                counter: 1);
-                          } else {
-                            await FirestoreService().noCounter(
-                                momentID: widget.memoryData['doc_id'],
-                                counter: widget.memoryData['no'] + 1);
-                          }
+                          FirestoreService().noCounter(
+                              momentID: this.doc_id,
+                              counter: await getMomentCounter(
+                                    id: doc_id, label: "no") + 1);
                           showDialog(
                               context: context,
                               builder: (BuildContext context) =>
@@ -233,15 +190,10 @@ class _MemoryState extends State<MemoryPage> {
                     ElevatedButton(
                         onPressed: () async {
                           _buttonController = "Maybe";
-                          if (widget.memoryData['maybe'] == null) {
-                            await FirestoreService().maybeCounter(
-                                momentID: widget.memoryData['doc_id'],
-                                counter: 1);
-                          } else {
-                            await FirestoreService().maybeCounter(
-                                momentID: widget.memoryData['doc_id'],
-                                counter: widget.memoryData['maybe'] + 1);
-                          }
+                          FirestoreService().maybeCounter(
+                              momentID: this.doc_id,
+                              counter: await getMomentCounter(
+                                    id: doc_id, label: "maybe") + 1);
                           showDialog(
                               context: context,
                               builder: (BuildContext context) =>
