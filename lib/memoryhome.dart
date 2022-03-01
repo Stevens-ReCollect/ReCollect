@@ -48,65 +48,95 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Text('Loading...');
         }
-
-        // return Text("Hello");
-        return Column(
-          children: snapshot.data!.docs.map(
-            (DocumentSnapshot document) {
-              Map<String, dynamic> data =
-                  document.data()! as Map<String, dynamic>;
-              // print("Print data: $data");
-              if (data.isEmpty) {
-                return Text("Hello");
-              } else {
-                return Card(
-                  color: Colors.white,
-                  elevation: 0,
-                  margin: EdgeInsets.all(TextSizeConstants.getadaptiveTextSize(
-                      context, TextSizeConstants.dropDownText)),
-                  // child: Slidable(
-                  child: ListTile(
-                    title: Text(
-                      data['type'],
-                      style: TextStyle(
-                        fontFamily: 'Roboto',
-                        fontSize: TextSizeConstants.getadaptiveTextSize(
-                            context, TextSizeConstants.bodyText),
-                      ),
-                    ),
-                    leading: ClipRRect(
-                      borderRadius: BorderRadius.circular(5.0),
-                      child: Container(
-                        height: 60.0,
-                        width: 60.0,
-                        child: Image.network(
-                          data['thumbnail_path'],
-                          fit: BoxFit.cover,
+        if (snapshot.data?.size == 0) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Image.asset(
+                'lib/assets/polaroid_camera.png',
+                width: deviceWidth * 0.9,
+              ),
+              Text(
+                'No moments',
+                style: TextStyle(
+                  fontFamily: 'Roboto',
+                  fontWeight: FontWeight.w500,
+                  fontSize: TextSizeConstants.getadaptiveTextSize(
+                      context, TextSizeConstants.bodyText),
+                ),
+              ),
+              Text(
+                'Press “+” to add moments to this memory',
+                style: TextStyle(
+                  fontFamily: 'Roboto',
+                  fontWeight: FontWeight.w400,
+                  fontSize: TextSizeConstants.getadaptiveTextSize(
+                      context, TextSizeConstants.formField),
+                  color: Colors.black54,
+                ),
+              ),
+            ],
+          );
+        } else {
+          return Column(
+            children: snapshot.data!.docs.map(
+              (DocumentSnapshot document) {
+                Map<String, dynamic> data =
+                    document.data()! as Map<String, dynamic>;
+                // print("Print data: $data");
+                if (data.isEmpty) {
+                  return Text("Hello");
+                } else {
+                  return Card(
+                    color: Colors.white,
+                    elevation: 0,
+                    margin: EdgeInsets.all(
+                        TextSizeConstants.getadaptiveTextSize(
+                            context, TextSizeConstants.dropDownText)),
+                    // child: Slidable(
+                    child: ListTile(
+                      title: Text(
+                        data['type'],
+                        style: TextStyle(
+                          fontFamily: 'Roboto',
+                          fontSize: TextSizeConstants.getadaptiveTextSize(
+                              context, TextSizeConstants.bodyText),
                         ),
                       ),
-                    ),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        IconButton(
-                          onPressed: () {
-                            if (data['type'] == 'Photo') {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => EditPhotoPage(
-                                    momentData: data,
+                      leading: ClipRRect(
+                        borderRadius: BorderRadius.circular(5.0),
+                        child: Container(
+                          height: 60.0,
+                          width: 60.0,
+                          child: Image.network(
+                            data['thumbnail_path'],
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          IconButton(
+                            onPressed: () {
+                              if (data['type'] == 'Photo') {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => EditPhotoPage(
+                                      momentData: data,
+                                    ),
                                   ),
-                                ),
-                              );
-                            } else if (data['type'] == 'Video') {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => EditVideoPage(
-                                    momentData: data,
+                                );
+                              } else if (data['type'] == 'Video') {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => EditVideoPage(
+                                      momentData: data,
+                                    ),
                                   ),
-                                ),
                               );
                             } else {
                               Navigator.push(
@@ -133,12 +163,13 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
                         )
                       ],
                     ),
-                  ),
-                );
-              }
-            },
-          ).toList(),
-        );
+                   ),
+                  );
+                }
+              },
+            ).toList(),
+          );
+        }
       },
     );
   }
@@ -299,38 +330,6 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
     var deviceWidth = queryData.size.width;
     var deviceHeight = queryData.size.height;
 
-    content() {
-      var moments = userMoments();
-      if (moments != null) {
-        return moments;
-      } else {
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Text>[
-            Text(
-              'No moments',
-              style: TextStyle(
-                fontFamily: 'Roboto',
-                fontWeight: FontWeight.w500,
-                fontSize: TextSizeConstants.getadaptiveTextSize(
-                    context, TextSizeConstants.bodyText),
-              ),
-            ),
-            Text(
-              'Press “+” to add moments to this memory',
-              style: TextStyle(
-                fontFamily: 'Roboto',
-                fontWeight: FontWeight.w400,
-                fontSize: TextSizeConstants.getadaptiveTextSize(
-                    context, TextSizeConstants.formField),
-                color: Colors.black54,
-              ),
-            ),
-          ],
-        );
-      }
-    }
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -441,7 +440,7 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
                 )
               ],
             ),
-            content(),
+            userMoments(),
           ],
         ),
       ),
