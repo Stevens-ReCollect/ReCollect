@@ -144,7 +144,6 @@ class AffirmButtonsWidget extends StatelessWidget {
   Widget affirmingResponse(BuildContext context) {
     late String affirmTitle;
     late String affirmation;
-    _buttonController = "";
     if (_buttonController == "Yes") {
       affirmTitle = "Great job!";
       affirmation = "Amazing progress.";
