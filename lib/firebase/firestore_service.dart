@@ -86,6 +86,58 @@ class FirestoreService {
     return counter;
   }
 
+  Future<void> yesCounter(
+      {required String momentID,
+      required int? counter}) async {
+    CollectionReference moments = _firestore.collection('moments');
+    User? currentUser = AuthenticationService().getUser();
+    if (currentUser == null) {
+      throw Exception('currentUser is null');
+    }
+
+    return moments
+        .doc(momentID)
+        .update({
+          'yes': counter,
+        })
+        .then((value) => print("Moment Yes Updated"))
+        .catchError((error) => print("Failed to update Moment: $error"));
+  }
+
+  Future<void> noCounter(
+      {required String momentID, required int? counter}) async {
+    CollectionReference moments = _firestore.collection('moments');
+    User? currentUser = AuthenticationService().getUser();
+    if (currentUser == null) {
+      throw Exception('currentUser is null');
+    }
+
+    return moments
+        .doc(momentID)
+        .update({
+          'no': counter,
+        })
+        .then((value) => print("Moment No Updated"))
+        .catchError((error) => print("Failed to update Moment: $error"));
+  }
+
+  Future<void> maybeCounter(
+      {required String momentID, required int? counter}) async {
+    CollectionReference moments = _firestore.collection('moments');
+    User? currentUser = AuthenticationService().getUser();
+    if (currentUser == null) {
+      throw Exception('currentUser is null');
+    }
+
+    return moments
+        .doc(momentID)
+        .update({
+          'maybe': counter,
+        })
+        .then((value) => print("Moment Maybe Updated"))
+        .catchError((error) => print("Failed to update Moment: $error"));
+  }
+
   Future<void> addNewUser(
       {required String email,
       required String caregiverPin,
@@ -253,6 +305,9 @@ class FirestoreService {
       'memory_id': memoryId,
       'file_path': '',
       'thumbnail_path': '',
+      'yes': 0,
+      'no': 0,
+      'maybe': 0,
     }).then((value) {
       documentReference = value;
       print("Moment added: $documentReference");
