@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/services.dart';
 import 'package:recollect_app/changepassword.dart';
 import 'package:recollect_app/firebase/authentication_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -29,6 +30,8 @@ import 'package:recollect_app/tutorial.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
   await Firebase.initializeApp();
   runApp(StartUp());
 }
@@ -199,7 +202,7 @@ class MyHomePageState extends State<MyHomePage> {
               );
             } else {
               return InkWell(
-                onTap: () {
+                onTap: () async {
                   if (accountMode == 0) {
                     // Navigator.pushNamed(
                     //     context, RouteConstants.memoryHomeRoute);
@@ -209,6 +212,13 @@ class MyHomePageState extends State<MyHomePage> {
                             builder: (context) =>
                                 MemoryHomePage(memoryData: data)));
                   } else {
+                    if (data['views'] == null) {
+                      await FirestoreService()
+                          .memoryViews(memoryId: data['doc_id'], views: 1);
+                    } else {
+                      await FirestoreService().memoryViews(
+                          memoryId: data['doc_id'], views: data['views'] + 1);
+                    }
                     Navigator.push(
                         context,
                         MaterialPageRoute(

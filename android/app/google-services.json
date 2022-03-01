@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:255149902894:android:e1d92aca3f93c7b2d623bf",
         "android_client_info": {
-          "package_name": "com.example.recollect_app"
+          "package_name": "com.recollect.recollect_app"
         }
       },
       "oauth_client": [
