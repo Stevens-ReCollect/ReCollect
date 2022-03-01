@@ -41,58 +41,59 @@ class AffirmButtonsWidget extends StatelessWidget {
 
     return counter;
   }
-  
+
   late String _buttonController; // alerts the correct dialog
   Widget affirmingResponse(BuildContext context) {
     late String affirmTitle;
     late String affirmation;
+    _buttonController = "";
 
-      if (_buttonController == "Yes") {
-        affirmTitle = "Great job!";
-        affirmation = "Amazing progress.";
-      } else if (_buttonController == "Maybe") {
-        affirmTitle = "All progress is good progress!";
-        affirmation = "Swipe through to see if more moments will help.";
-      } else {
-        affirmTitle = "It's okay!";
-        affirmation = "We can always come back to this moment.";
-      }
-      return AlertDialog(
-          title: Text(
-            affirmTitle,
-            style: TextStyle(
-              fontSize: TextSizeConstants.getadaptiveTextSize(
-                  context, TextSizeConstants.bodyText),
-            ),
-            textAlign: TextAlign.center,
-          ),
-          content: Text(
-            affirmation,
-            style: TextStyle(
-              fontSize: 0.8 *
-                  TextSizeConstants.getadaptiveTextSize(
-                      context, TextSizeConstants.bodyText),
-            ),
-            textAlign: TextAlign.left,
-          ),
-          contentPadding: EdgeInsets.all(TextSizeConstants.getadaptiveTextSize(
-              context, TextSizeConstants.bodyText)),
-          actions: <Widget>[
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.all(15),
-                  primary: ColorConstants.buttonColor),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('Okay',
-                  style: TextStyle(
-                      fontSize: 0.7 *
-                          TextSizeConstants.getadaptiveTextSize(
-                              context, TextSizeConstants.buttonText))),
-            )
-          ]);
+    if (_buttonController == "Yes") {
+      affirmTitle = "Great job!";
+      affirmation = "Amazing progress.";
+    } else if (_buttonController == "Maybe") {
+      affirmTitle = "All progress is good progress!";
+      affirmation = "Swipe through to see if more moments will help.";
+    } else {
+      affirmTitle = "It's okay!";
+      affirmation = "We can always come back to this moment.";
     }
+    return AlertDialog(
+        title: Text(
+          affirmTitle,
+          style: TextStyle(
+            fontSize: TextSizeConstants.getadaptiveTextSize(
+                context, TextSizeConstants.bodyText),
+          ),
+          textAlign: TextAlign.center,
+        ),
+        content: Text(
+          affirmation,
+          style: TextStyle(
+            fontSize: 0.8 *
+                TextSizeConstants.getadaptiveTextSize(
+                    context, TextSizeConstants.bodyText),
+          ),
+          textAlign: TextAlign.left,
+        ),
+        contentPadding: EdgeInsets.all(TextSizeConstants.getadaptiveTextSize(
+            context, TextSizeConstants.bodyText)),
+        actions: <Widget>[
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.all(15),
+                primary: ColorConstants.buttonColor),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text('Okay',
+                style: TextStyle(
+                    fontSize: 0.7 *
+                        TextSizeConstants.getadaptiveTextSize(
+                            context, TextSizeConstants.buttonText))),
+          )
+        ]);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +102,6 @@ class AffirmButtonsWidget extends StatelessWidget {
     var deviceWidth = queryData.size.width;
     var deviceHeight = queryData.size.height;
     int momentCounter = 0;
-
 
     return Scaffold(
         appBar: AppBar(
@@ -147,7 +147,8 @@ class AffirmButtonsWidget extends StatelessWidget {
                         FirestoreService().yesCounter(
                             momentID: this.doc_id,
                             counter: await getMomentCounter(
-                                    id: doc_id, label: "yes") + 1);
+                                    id: doc_id, label: "yes") +
+                                1);
                         showDialog(
                             context: context,
                             builder: (BuildContext context) =>
@@ -171,7 +172,8 @@ class AffirmButtonsWidget extends StatelessWidget {
                           FirestoreService().noCounter(
                               momentID: this.doc_id,
                               counter: await getMomentCounter(
-                                    id: doc_id, label: "no") + 1);
+                                      id: doc_id, label: "no") +
+                                  1);
                           showDialog(
                               context: context,
                               builder: (BuildContext context) =>
@@ -195,7 +197,8 @@ class AffirmButtonsWidget extends StatelessWidget {
                           FirestoreService().maybeCounter(
                               momentID: this.doc_id,
                               counter: await getMomentCounter(
-                                    id: doc_id, label: "maybe") + 1);
+                                      id: doc_id, label: "maybe") +
+                                  1);
                           showDialog(
                               context: context,
                               builder: (BuildContext context) =>

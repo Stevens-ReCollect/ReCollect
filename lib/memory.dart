@@ -32,54 +32,6 @@ class _MemoryState extends State<MemoryPage> {
     late Stream<QuerySnapshot>
         _currentMoment; // streams the current moment on screen
 
-    Widget _affirmingResponse(BuildContext context) {
-      if (_buttonController == "Yes") {
-        affirmTitle = "Great job!";
-        affirmation = "Amazing progress.";
-      } else if (_buttonController == "Maybe") {
-        affirmTitle = "All progress is good progress!";
-        affirmation = "Swipe through to see if more moments will help.";
-      } else {
-        affirmTitle = "It's okay!";
-        affirmation = "We can always come back to this moment.";
-      }
-      return AlertDialog(
-          title: Text(
-            affirmTitle,
-            style: TextStyle(
-              fontSize: TextSizeConstants.getadaptiveTextSize(
-                  context, TextSizeConstants.bodyText),
-            ),
-            textAlign: TextAlign.center,
-          ),
-          content: Text(
-            affirmation,
-            style: TextStyle(
-              fontSize: 0.8 *
-                  TextSizeConstants.getadaptiveTextSize(
-                      context, TextSizeConstants.bodyText),
-            ),
-            textAlign: TextAlign.left,
-          ),
-          contentPadding: EdgeInsets.all(TextSizeConstants.getadaptiveTextSize(
-              context, TextSizeConstants.bodyText)),
-          actions: <Widget>[
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.all(15),
-                  primary: ColorConstants.buttonColor),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('Okay',
-                  style: TextStyle(
-                      fontSize: 0.7 *
-                          TextSizeConstants.getadaptiveTextSize(
-                              context, TextSizeConstants.buttonText))),
-            )
-          ]);
-    }
-
     memoryCarouselSlider() {
       Stream<QuerySnapshot> _momentStream = FirebaseFirestore.instance
           .collection('moments')
@@ -158,106 +110,10 @@ class _MemoryState extends State<MemoryPage> {
                       context, TextSizeConstants.h2),
                 ),
                 SizedBox(
-                  width: deviceWidth,
+                  width: 0.9 * deviceWidth,
                   height: 0.6 * deviceHeight,
                   child: Center(child: memoryCarouselSlider()),
                 ),
-                SizedBox(height: deviceHeight / 80),
-                Text(
-                  'Do you remember?',
-                  style: TextStyle(
-                      fontSize: TextSizeConstants.getadaptiveTextSize(
-                          context, TextSizeConstants.bodyText)),
-                ),
-                SizedBox(height: deviceHeight / 80),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () async {
-                        _buttonController = "Yes";
-                        if (widget.memoryData['yes'] == null) {
-                          await FirestoreService()
-                              .yesCounter(momentID: _currentMoment, counter: 1);
-                        } else {
-                          await FirestoreService().yesCounter(
-                              momentID: _currentMoment,
-                              counter: widget.memoryData['yes'] + 1);
-                        }
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) =>
-                                _affirmingResponse(context));
-                      },
-                      child: const Text('Yes'),
-                      style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.all(deviceWidth / 40),
-                          primary: ColorConstants.buttonColor,
-                          textStyle: TextStyle(
-                              fontSize: 0.9 *
-                                  TextSizeConstants.getadaptiveTextSize(
-                                      context, TextSizeConstants.buttonText))),
-                    ),
-                    SizedBox(
-                        width: TextSizeConstants.getadaptiveTextSize(
-                            context, TextSizeConstants.bodyText)),
-                    ElevatedButton(
-                        onPressed: () async {
-                          _buttonController = "No";
-                          if (widget.memoryData['no'] == null) {
-                            await FirestoreService().noCounter(
-                                momentID: widget.memoryData['doc_id'],
-                                counter: 1);
-                          } else {
-                            await FirestoreService().noCounter(
-                                momentID: widget.memoryData['doc_id'],
-                                counter: widget.memoryData['no'] + 1);
-                          }
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) =>
-                                  _affirmingResponse(context));
-                        },
-                        child: const Text("No"),
-                        style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.all(deviceWidth / 40),
-                            primary: ColorConstants.unfavoredButton,
-                            textStyle: TextStyle(
-                                fontSize: 0.9 *
-                                    TextSizeConstants.getadaptiveTextSize(
-                                        context,
-                                        TextSizeConstants.buttonText)))),
-                    SizedBox(
-                        width: TextSizeConstants.getadaptiveTextSize(
-                            context, TextSizeConstants.bodyText)),
-                    ElevatedButton(
-                        onPressed: () async {
-                          _buttonController = "Maybe";
-                          if (widget.memoryData['maybe'] == null) {
-                            await FirestoreService().maybeCounter(
-                                momentID: widget.memoryData['doc_id'],
-                                counter: 1);
-                          } else {
-                            await FirestoreService().maybeCounter(
-                                momentID: widget.memoryData['doc_id'],
-                                counter: widget.memoryData['maybe'] + 1);
-                          }
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) =>
-                                  _affirmingResponse(context));
-                        },
-                        child: const Text("Maybe"),
-                        style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.all(deviceWidth / 40),
-                            primary: ColorConstants.unfavoredButton,
-                            textStyle: TextStyle(
-                                fontSize: 0.9 *
-                                    TextSizeConstants.getadaptiveTextSize(
-                                        context,
-                                        TextSizeConstants.buttonText)))),
-                  ],
-                )
               ],
             ),
           ),
