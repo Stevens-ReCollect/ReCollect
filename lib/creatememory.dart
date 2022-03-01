@@ -122,14 +122,14 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
 
 
  String _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
-   
+   final form = new DateFormat('MM/dd/yyyy');
     setState(() {
       if (args.value is PickerDateRange) {
         _range = '${DateFormat('MM/dd/yyyy').format(args.value.startDate)} -'
             // ignore: lines_longer_than_80_chars
             ' ${DateFormat('MM/dd/yyyy').format(args.value.endDate ?? args.value.startDate)}';
       } else if (args.value is DateTime) {
-        _selectedDate = args.value.toString();
+        _selectedDate = form.format(args.value).toString();
       } else if (args.value is List<DateTime>) {
         _dateCount = args.value.length.toString();
       } else {
