@@ -17,7 +17,7 @@ class PhotoWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: <Widget>[
         SizedBox(
-          height: 0.4 *
+          height: 0.2 *
               TextSizeConstants.getadaptiveTextSize(
                   context, TextSizeConstants.bodyText),
         ),
@@ -35,7 +35,7 @@ class PhotoWidget extends StatelessWidget {
         AspectRatio(
             aspectRatio: 5 / 4, child: Image.network(asset, fit: BoxFit.cover)),
 
-        AffirmButtonsWidget(doc_id).affirmingResponse(context)
+        AffirmButtonsWidget(doc_id).build(context)
       ],
     );
   }

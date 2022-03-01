@@ -51,6 +51,7 @@ class _MemoryState extends State<MemoryPage> {
             return CarouselSlider(
               options: CarouselOptions(
                 aspectRatio: 1 / 1,
+                height: deviceHeight,
                 viewportFraction: 1,
                 onPageChanged: (index, reason) {
                   setState(() {
@@ -91,32 +92,30 @@ class _MemoryState extends State<MemoryPage> {
           automaticallyImplyLeading: true,
           backgroundColor: ColorConstants.appBar,
           title: Text(
-            '',
+            '', //TODO: show moment title in app bar
             style: TextStyle(
                 fontSize: TextSizeConstants.getadaptiveTextSize(
                     context, TextSizeConstants.buttonText)),
           ), //memory title
         ),
         body: SingleChildScrollView(
-          child: AspectRatio(
-            aspectRatio: 100 / 200,
+          // child: AspectRatio(
+          //   aspectRatio: 100 / 100,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
+                
                 SizedBox(
-                  height: TextSizeConstants.getadaptiveTextSize(
-                      context, TextSizeConstants.h2),
-                ),
-                SizedBox(
-                  width: 0.9 * deviceWidth,
-                  height: 0.6 * deviceHeight,
+                  width: deviceWidth,
+                  height: 0.7*deviceHeight,
                   child: Center(child: memoryCarouselSlider()),
                 ),
               ],
             ),
           ),
-        ));
+        // )
+        );
   }
 }

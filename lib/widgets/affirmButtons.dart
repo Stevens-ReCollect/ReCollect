@@ -43,11 +43,113 @@ class AffirmButtonsWidget extends StatelessWidget {
   }
 
   late String _buttonController; // alerts the correct dialog
+
+  @override
+  Widget build(BuildContext context) {
+    MediaQueryData queryData = MediaQuery.of(context);
+    var deviceWidth = queryData.size.width;
+    var deviceHeight = queryData.size.height;
+    int momentCounter = 0;
+
+        return Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+          
+                SizedBox(height: deviceHeight / 80),
+                Text(
+                  'Do you remember?',
+                  style: TextStyle(
+                      fontSize: TextSizeConstants.getadaptiveTextSize(
+                          context, TextSizeConstants.bodyText)),
+                ),
+                SizedBox(height: deviceHeight / 80),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () async {
+                        _buttonController = "Yes";
+                        FirestoreService().yesCounter(
+                            momentID: doc_id,
+                            counter: await getMomentCounter(
+                                    id: doc_id, label: "yes") +
+                                1);
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) =>
+                                affirmingResponse(context));
+                      },
+                      child: const Text('Yes'),
+                      style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.all(deviceWidth / 40),
+                          primary: ColorConstants.buttonColor,
+                          textStyle: TextStyle(
+                              fontSize: 0.9 *
+                                  TextSizeConstants.getadaptiveTextSize(
+                                      context, TextSizeConstants.buttonText))),
+                    ),
+                    SizedBox(
+                        width: TextSizeConstants.getadaptiveTextSize(
+                            context, TextSizeConstants.bodyText)),
+                    ElevatedButton(
+                        onPressed: () async {
+                          _buttonController = "No";
+                          FirestoreService().noCounter(
+                              momentID: doc_id,
+                              counter: await getMomentCounter(
+                                      id: doc_id, label: "no") +
+                                  1);
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) =>
+                                  affirmingResponse(context));
+                        },
+                        child: const Text("No"),
+                        style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.all(deviceWidth / 40),
+                            primary: ColorConstants.unfavoredButton,
+                            textStyle: TextStyle(
+                                fontSize: 0.9 *
+                                    TextSizeConstants.getadaptiveTextSize(
+                                        context,
+                                        TextSizeConstants.buttonText)))),
+                    SizedBox(
+                        width: TextSizeConstants.getadaptiveTextSize(
+                            context, TextSizeConstants.bodyText)),
+                    ElevatedButton(
+                        onPressed: () async {
+                          _buttonController = "Maybe";
+                          FirestoreService().maybeCounter(
+                              momentID: doc_id,
+                              counter: await getMomentCounter(
+                                      id: doc_id, label: "maybe") +
+                                  1);
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) =>
+                                  affirmingResponse(context));
+                        },
+                        child: const Text("Maybe"),
+                        style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.all(deviceWidth / 40),
+                            primary: ColorConstants.unfavoredButton,
+                            textStyle: TextStyle(
+                                fontSize: 0.9 *
+                                    TextSizeConstants.getadaptiveTextSize(
+                                        context,
+                                        TextSizeConstants.buttonText)))),
+                  ],
+                )
+              ],
+            );
+  }
+
   Widget affirmingResponse(BuildContext context) {
-    late String affirmTitle;
+   late String affirmTitle;
     late String affirmation;
     _buttonController = "";
-
     if (_buttonController == "Yes") {
       affirmTitle = "Great job!";
       affirmation = "Amazing progress.";
@@ -95,129 +197,5 @@ class AffirmButtonsWidget extends StatelessWidget {
         ]);
   }
 
-  @override
-  Widget build(BuildContext context) {
-    MediaQueryData queryData = MediaQuery.of(context);
-    var pixelRatio = queryData.devicePixelRatio; //responsive sizing
-    var deviceWidth = queryData.size.width;
-    var deviceHeight = queryData.size.height;
-    int momentCounter = 0;
 
-    return Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: true,
-          backgroundColor: ColorConstants.appBar,
-          title: Text(
-            '',
-            style: TextStyle(
-                fontSize: TextSizeConstants.getadaptiveTextSize(
-                    context, TextSizeConstants.buttonText)),
-          ), //memory title
-        ),
-        body: SingleChildScrollView(
-          child: AspectRatio(
-            aspectRatio: 100 / 200,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                SizedBox(
-                  height: TextSizeConstants.getadaptiveTextSize(
-                      context, TextSizeConstants.h2),
-                ),
-                SizedBox(
-                  width: deviceWidth,
-                  height: 0.6 * deviceHeight,
-                ),
-                SizedBox(height: deviceHeight / 80),
-                Text(
-                  'Do you remember?',
-                  style: TextStyle(
-                      fontSize: TextSizeConstants.getadaptiveTextSize(
-                          context, TextSizeConstants.bodyText)),
-                ),
-                SizedBox(height: deviceHeight / 80),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () async {
-                        _buttonController = "Yes";
-                        FirestoreService().yesCounter(
-                            momentID: this.doc_id,
-                            counter: await getMomentCounter(
-                                    id: doc_id, label: "yes") +
-                                1);
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) =>
-                                affirmingResponse(context));
-                      },
-                      child: const Text('Yes'),
-                      style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.all(deviceWidth / 40),
-                          primary: ColorConstants.buttonColor,
-                          textStyle: TextStyle(
-                              fontSize: 0.9 *
-                                  TextSizeConstants.getadaptiveTextSize(
-                                      context, TextSizeConstants.buttonText))),
-                    ),
-                    SizedBox(
-                        width: TextSizeConstants.getadaptiveTextSize(
-                            context, TextSizeConstants.bodyText)),
-                    ElevatedButton(
-                        onPressed: () async {
-                          _buttonController = "No";
-                          FirestoreService().noCounter(
-                              momentID: this.doc_id,
-                              counter: await getMomentCounter(
-                                      id: doc_id, label: "no") +
-                                  1);
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) =>
-                                  affirmingResponse(context));
-                        },
-                        child: const Text("No"),
-                        style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.all(deviceWidth / 40),
-                            primary: ColorConstants.unfavoredButton,
-                            textStyle: TextStyle(
-                                fontSize: 0.9 *
-                                    TextSizeConstants.getadaptiveTextSize(
-                                        context,
-                                        TextSizeConstants.buttonText)))),
-                    SizedBox(
-                        width: TextSizeConstants.getadaptiveTextSize(
-                            context, TextSizeConstants.bodyText)),
-                    ElevatedButton(
-                        onPressed: () async {
-                          _buttonController = "Maybe";
-                          FirestoreService().maybeCounter(
-                              momentID: this.doc_id,
-                              counter: await getMomentCounter(
-                                      id: doc_id, label: "maybe") +
-                                  1);
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) =>
-                                  affirmingResponse(context));
-                        },
-                        child: const Text("Maybe"),
-                        style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.all(deviceWidth / 40),
-                            primary: ColorConstants.unfavoredButton,
-                            textStyle: TextStyle(
-                                fontSize: 0.9 *
-                                    TextSizeConstants.getadaptiveTextSize(
-                                        context,
-                                        TextSizeConstants.buttonText)))),
-                  ],
-                )
-              ],
-            ),
-          ),
-        ));
-  }
 }
