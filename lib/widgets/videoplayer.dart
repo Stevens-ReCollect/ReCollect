@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/textSizeConstants.dart';
+import 'package:recollect_app/widgets/affirmButtons.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPlayerWidget extends StatelessWidget {
@@ -53,6 +54,7 @@ class VideoPlayerWidget extends StatelessWidget {
             ),
           ],
         ),
+        AffirmButtonsWidget(doc_id).build(context),
       ],
     );
   }

@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/textSizeConstants.dart';
+import 'package:recollect_app/widgets/affirmButtons.dart';
 
 class AudioPlayerWidget extends StatelessWidget {
   const AudioPlayerWidget(
@@ -78,6 +79,7 @@ class AudioPlayerWidget extends StatelessWidget {
                     icon: Icon(Icons.pause, color: ColorConstants.buttonColor))
               ],
             )),
+          AffirmButtonsWidget(doc_id).build(context),
       ],
     );
   }

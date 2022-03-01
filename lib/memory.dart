@@ -54,10 +54,10 @@ class _MemoryState extends State<MemoryPage> {
                 height: deviceHeight,
                 viewportFraction: 1,
                 onPageChanged: (index, reason) {
-                  setState(() {
-                    _current = index + 1;
-                    _currentMoment = _momentStream;
-                  });
+                  // setState(() {
+                  //   _current = index + 1;
+                  //   _currentMoment = _momentStream;
+                  // });
                 },
               ),
               items: snapshot.data!.docs.map((DocumentSnapshot document) {
