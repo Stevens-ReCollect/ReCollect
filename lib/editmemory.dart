@@ -11,6 +11,7 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class EditMemoryPage extends StatefulWidget {
   const EditMemoryPage({this.memoryData});
