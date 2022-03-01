@@ -102,6 +102,7 @@ flutter:
     - lib/images/Bird.jpg
     - lib/assets/recollect_logo.png
     - lib/assets/recollect_logo_with_bkg.png
+    - lib/assets/polaroid_camera.png
 
   #   - images/a_dot_ham.jpeg
 
