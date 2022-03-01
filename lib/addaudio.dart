@@ -145,7 +145,7 @@ class _AddAudioPageState extends State<AddAudioPage> {
                     maxWidth: 60.0,
                   ),
                   child: Image.asset(
-                    'lib/assets/recollect_logo.png',
+                    'lib/assets/audioicon.png',
                     width: 60.0,
                     height: 60.0,
                     fit: BoxFit.cover,
@@ -174,11 +174,6 @@ class _AddAudioPageState extends State<AddAudioPage> {
                 ),
               ),
             ),
-            ElevatedButton(
-                onPressed: () {
-                  openFileFile(audio!);
-                },
-                child: Text('Open File')),
             Container(
               margin: const EdgeInsets.only(top: 150.0, left: 0.0),
               width: 0.4 * deviceWidth,
