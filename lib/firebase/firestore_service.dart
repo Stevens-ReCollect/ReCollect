@@ -49,17 +49,6 @@ class FirestoreService {
                       }
                   })
             });
-/*
-    return memories
-        .doc(memoryId)
-        .update({
-          'title': title,
-          'start_date': startDate,
-          'end_date': endDate,
-          'description': description,
-        })
-        .then((value) => print("Memory Updated"))
-        .catchError((error) => print("Failed to update memory: $error")); */
   }
 
   // get the current Counter number for a user
@@ -87,8 +76,7 @@ class FirestoreService {
   }
 
   Future<void> yesCounter(
-      {required String momentID,
-      required int? counter}) async {
+      {required String momentID, required int? counter}) async {
     CollectionReference moments = _firestore.collection('moments');
     User? currentUser = AuthenticationService().getUser();
     if (currentUser == null) {
@@ -432,20 +420,6 @@ class FirestoreService {
     return fileURL;
   }
 
-  // Future<String> uploadThumbnail(
-  //     {required File file,
-  //     required String? user,
-  //     required String memory}) async {
-  //   String fileURL = '';
-  //   Reference reference =
-  //       _storage.ref(user! + "/" + memory + "/" + "thumbnail");
-  //   await reference.putFile(file);
-  //   // await Future.delayed(const Duration(seconds: 5));
-  //   fileURL = await reference.getDownloadURL();
-  //   print("File URL: $fileURL");
-  //   return fileURL;
-  // }
-
   Future<String> checkPin({required String pin}) async {
     CollectionReference users = _firestore.collection('users');
     User? currentUser = AuthenticationService().getUser();
@@ -461,5 +435,25 @@ class FirestoreService {
       return "Success";
     }
     return "fail";
+  }
+
+  Future<num> getOverallRememberanceRate() async {
+    CollectionReference moments = _firestore.collection('moments');
+    User? currentUser = AuthenticationService().getUser();
+    num yes = 0;
+    num no = 0;
+    num maybe = 0;
+    await moments
+        .where('user_email', isEqualTo: currentUser!.email)
+        .get()
+        .then((QuerySnapshot querySnapshot) => {
+              querySnapshot.docs.forEach((doc) {
+                yes = yes + doc['yes'];
+                no = no + doc['no'];
+                maybe = maybe + doc['maybe'];
+              })
+            });
+
+    return (yes / (yes + no + maybe)) * 100;
   }
 }
