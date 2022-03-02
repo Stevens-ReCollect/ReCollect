@@ -285,7 +285,8 @@ class FirestoreService {
       required String type,
       required File? file,
       required File? thumbnail,
-      String? description}) async {
+      String? description,
+      String? name}) async {
     User? currentUser = AuthenticationService().getUser();
     String fileURL = 'temporary';
     String thumbnailURL = 'temporary';
@@ -298,6 +299,7 @@ class FirestoreService {
     DocumentReference documentReference = moments.doc("null");
     await moments.add({
       'user_email': currentUser.email,
+      'name': name,
       'type': type,
       'description': description,
       'memory_id': memoryId,
@@ -338,7 +340,8 @@ class FirestoreService {
       required String momentId,
       File? file,
       File? thumbnail,
-      String? description}) async {
+      String? description,
+      String? name}) async {
     CollectionReference moments = _firestore.collection('moments');
     User? currentUser = AuthenticationService().getUser();
     if (currentUser == null) {
@@ -367,6 +370,13 @@ class FirestoreService {
       await moments
           .doc(momentId)
           .update({'file_path': newUrl})
+          .then((value) => print('Moment Updated'))
+          .catchError((e) => print('Moment failed to update: $e'));
+    }
+    if (name != "") {
+      await moments
+          .doc(momentId)
+          .update({'name': name})
           .then((value) => print('Moment Updated'))
           .catchError((e) => print('Moment failed to update: $e'));
     }

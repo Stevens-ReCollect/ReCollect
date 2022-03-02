@@ -2,48 +2,74 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:open_file/open_file.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/textSizeConstants.dart';
 import 'package:recollect_app/firebase/firestore_service.dart';
 import 'package:recollect_app/signup.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:open_file/open_file.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 import 'constants/routeConstants.dart';
 
-class AddPhotoPage extends StatefulWidget {
-  const AddPhotoPage({this.memoryData});
-  final memoryData;
+class EditAudioPage extends StatefulWidget {
+  EditAudioPage({required this.momentData});
+  final momentData;
 
   @override
-  _AddPhotoPageState createState() => _AddPhotoPageState();
+  _EditAudioPageState createState() => _EditAudioPageState();
 }
 
-class _AddPhotoPageState extends State<AddPhotoPage> {
-  final TextEditingController _description = TextEditingController();
-  File? image;
+class _EditAudioPageState extends State<EditAudioPage> {
+  TextEditingController _description = TextEditingController(text: "");
+  File? _audio;
+  File? _thumbnail;
+  String _audioName = 'No Audio Selected';
   bool _loading = false;
   bool _isButtonDisabled = false;
 
-  Future pickImage() async {
+  Future setFields() async {
     try {
-      final file = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (file == null) {
+      _description =
+          TextEditingController(text: widget.momentData['description']);
+    } on PlatformException catch (e) {
+      print("Failed to get image: $e");
+    }
+  }
+
+  Future pickAudio() async {
+    try {
+      final result = await FilePicker.platform.pickFiles(
+          type: FileType.custom,
+          allowMultiple: false,
+          allowedExtensions: ['mp3'],
+          dialogTitle: 'Add Audio');
+      if (result == null) {
         return;
       }
-      openFile(file);
-      final imageTemp = File(file.path);
+      final platformFile = result.files.first;
+      final audioTemp = File(platformFile.path!);
+      final audioNameTemp = platformFile.name;
       setState(() {
-        this.image = imageTemp;
+        _audio = audioTemp;
+        _audioName = audioNameTemp;
+        convertImageAssetToFile('lib/assets/audioicon.png')
+            .then((value) => _thumbnail = value);
       });
     } on PlatformException catch (e) {
       print('Failed to pick image $e');
     }
   }
 
-  void openFile(XFile file) {
-    OpenFile.open(file.path);
+  Future<File> convertImageAssetToFile(String assetPath) async {
+    var bytes = await rootBundle.load(assetPath);
+    String tempPath = (await getTemporaryDirectory()).path;
+    File file = File('$tempPath/audioicon.png');
+    await file.writeAsBytes(
+        bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes));
+    return file;
   }
 
   loading() {
@@ -56,8 +82,16 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
 
   @override
   void initState() {
-    pickImage();
+    setFields();
     super.initState();
+  }
+
+  void openFileFile(File file) {
+    try {
+      OpenFile.open(file.path);
+    } catch (e) {
+      print('error: $e');
+    }
   }
 
   @override
@@ -70,25 +104,27 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
       Container(
           child: MaterialApp(
         home: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            foregroundColor: Colors.black,
+            elevation: 0,
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back_ios_new),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            title: const Text("Edit Audio"),
+          ),
           backgroundColor: Colors.white,
           body: SingleChildScrollView(
             child: Column(
               children: <Widget>[
-                Container(
-                  margin: const EdgeInsets.only(top: 50.0, left: 10.0),
-                  alignment: Alignment.centerLeft,
-                  child: IconButton(
-                    icon: const Icon(Icons.arrow_back_ios_new),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                ),
                 ListTile(
                   contentPadding:
                       EdgeInsets.symmetric(horizontal: 0.1 * deviceWidth),
                   title: const Text(
-                    'Photo Selected',
+                    'Audio Selected',
                     style: TextStyle(
                         fontFamily: 'Roboto',
                         fontWeight: FontWeight.w400,
@@ -96,10 +132,10 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
                   ),
                   subtitle: TextButton(
                     onPressed: () {
-                      pickImage();
+                      pickAudio();
                     },
                     child: const Text(
-                      'Change Photo',
+                      'Change Audio',
                       style: TextStyle(
                           fontFamily: 'Roboto',
                           fontWeight: FontWeight.w400,
@@ -121,14 +157,15 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
                         maxHeight: 60.0,
                         maxWidth: 60.0,
                       ),
-                      child: image != null
-                          ? Image.file(
-                              image!,
-                              width: 60.0,
-                              height: 60.0,
-                              fit: BoxFit.cover,
+                      child: _audio == null
+                          ? Image.network(
+                              widget.momentData['thumbnail_path'],
+                              fit: BoxFit.fill,
                             )
-                          : const FlutterLogo(size: 60.0),
+                          : Image.file(
+                              _thumbnail!,
+                              fit: BoxFit.fill,
+                            ),
                     ),
                   ),
                 ),
@@ -147,6 +184,11 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
                     ),
                   ),
                 ),
+                ElevatedButton(
+                    onPressed: () {
+                      openFileFile(_audio!);
+                    },
+                    child: Text('Open File')),
                 /*
               Container(
                 margin: const EdgeInsets.only(top: 20.0),
@@ -193,16 +235,16 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
                               _isButtonDisabled = true;
                             });
                             print("Clicked Saved");
-                            if (image != null) {
-                              await FirestoreService().addNewMoment(
-                                  memoryId: widget.memoryData['doc_id'],
-                                  type: 'Photo',
-                                  file: image,
-                                  thumbnail: image,
-                                  description: _description.text);
-                            }
-                            // Navigator.pushNamed(
-                            //     context, RouteConstants.memoryHomeRoute);
+                            print('$_audio');
+
+                            await FirestoreService().editMoment(
+                                memoryId: widget.momentData['memory_id'],
+                                momentId: widget.momentData['doc_id'],
+                                file: _audio,
+                                name: _audioName,
+                                thumbnail: _thumbnail,
+                                description: _description.text);
+
                             Navigator.pop(context);
                           },
                   ),

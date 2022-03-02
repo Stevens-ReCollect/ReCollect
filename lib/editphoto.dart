@@ -90,6 +90,8 @@ class _EditPhotoPageState extends State<EditPhotoPage> {
             child: Column(
               children: <Widget>[
                 ListTile(
+                  contentPadding:
+                      EdgeInsets.symmetric(horizontal: 0.1 * deviceWidth),
                   title: const Text(
                     'Photo Selected',
                     style: TextStyle(

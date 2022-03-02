@@ -50,6 +50,9 @@ dependencies:
   video_player: ^2.2.10
   audioplayers: ^0.20.1
   app_settings: ^4.1.1
+  file_picker: ^4.4.0
+  open_file: ^3.2.1
+  path_provider: ^2.0.9
   syncfusion_flutter_datepicker: ^19.4.53
   intl: ^0.17.0
 
@@ -103,6 +106,7 @@ flutter:
     - lib/images/FallLeaves.jpg
     - lib/images/Bird.jpg
     - lib/assets/recollect_logo.png
+    - lib/assets/audioicon.png
     - lib/assets/recollect_logo_with_bkg.png
     - lib/assets/polaroid_camera.png
 

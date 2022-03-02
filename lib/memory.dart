@@ -76,7 +76,7 @@ class _MemoryState extends State<MemoryPage> {
                           data['description'], data['file_path'], data['doc_id']);
                     } else if (data['type'] == 'Audio') {
                       return AudioPlayerWidget(
-                          data['description'], '', data['file_path'], data['doc_id']);
+                          data['description'], data['name'], data['file_path'], data['doc_id']);
                     } else {
                       return const SizedBox();
                     }
@@ -92,7 +92,7 @@ class _MemoryState extends State<MemoryPage> {
           automaticallyImplyLeading: true,
           backgroundColor: ColorConstants.appBar,
           title: Text(
-            '', //TODO: show moment title in app bar
+            widget.memoryData['title'],
             style: TextStyle(
                 fontSize: TextSizeConstants.getadaptiveTextSize(
                     context, TextSizeConstants.buttonText)),
