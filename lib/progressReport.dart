@@ -102,21 +102,36 @@ class ProgressReportState extends State<ProgressReport> {
                       ],
                       annotations: <CircularChartAnnotation>[
                         CircularChartAnnotation(
+                          horizontalAlignment: ChartAlignment.center,
+                          verticalAlignment: ChartAlignment.center,
                           widget: Text(
-                            '$overallRememberanceRate%',
+                            '$overallRememberanceRate%\n',
                             style: TextStyle(
+                              color: ColorConstants.bodyText,
                               fontSize: TextSizeConstants.getadaptiveTextSize(
                                 context,
                                 TextSizeConstants.h2,
                               ),
                               fontWeight: FontWeight.w700,
                             ),
-                            textAlign: TextAlign.center,
                           ),
                         ),
                         CircularChartAnnotation(
-                          widget: Text('Overall Rememberance Rate'),
-                        )
+                          horizontalAlignment: ChartAlignment.center,
+                          verticalAlignment: ChartAlignment.near,
+                          widget: Text(
+                            'Overall Rememberance Rate',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: ColorConstants.bodyText,
+                              fontSize: TextSizeConstants.getadaptiveTextSize(
+                                context,
+                                TextSizeConstants.bodyText,
+                              ),
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
