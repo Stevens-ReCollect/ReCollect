@@ -23,6 +23,7 @@ class _LogInPageState extends State<LogInPage> {
   TextEditingController _password = TextEditingController();
   CollectionReference users = FirebaseFirestore.instance.collection('users');
   String logInResult = "";
+  Color logInResultColor = Colors.red;
   int counterResult = 0;
   bool _isButtonDisabled = false;
 
@@ -105,7 +106,7 @@ class _LogInPageState extends State<LogInPage> {
                 child: Text(
                   logInResult,
                   style: TextStyle(
-                    color: Colors.red,
+                    color: logInResultColor,
                     fontSize: TextSizeConstants.getadaptiveTextSize(
                         context, TextSizeConstants.hint),
                   ),
@@ -187,6 +188,7 @@ class _LogInPageState extends State<LogInPage> {
 
                             print(logInResult);
                             if (logInResult == "Success!") {
+                              logInResultColor = Colors.green;
                               await FirestoreService()
                                   .getCounter(
                                       email: _email.text,
@@ -230,7 +232,7 @@ class _LogInPageState extends State<LogInPage> {
                     ),
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(
-                          ColorConstants.buttonColor),
+                          ColorConstants.unfavoredButton),
                       foregroundColor: MaterialStateProperty.all<Color>(
                           ColorConstants.buttonText),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
