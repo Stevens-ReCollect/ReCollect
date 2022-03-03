@@ -453,7 +453,9 @@ class FirestoreService {
                 maybe = maybe + doc['maybe'];
               })
             });
-
+    print('Yes Count: $yes');
+    print('No Count: $no');
+    print('Maybe Count: $maybe');
     return (yes / (yes + no + maybe)) * 100;
   }
 }

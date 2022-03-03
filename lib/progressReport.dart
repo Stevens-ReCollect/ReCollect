@@ -24,13 +24,13 @@ class ProgressReport extends StatefulWidget {
 }
 
 class ProgressReportState extends State<ProgressReport> {
-  num overallRememberanceRate = 0;
+  double overallRememberanceRate = 0;
 
   Future getRates() async {
     try {
       final tempRate = await FirestoreService().getOverallRememberanceRate();
       setState(() {
-        overallRememberanceRate = tempRate;
+        overallRememberanceRate = double.parse((tempRate).toStringAsFixed(1));
       });
     } on PlatformException catch (e) {
       print('Failed to get Overall Rememberance Rate: $e');
@@ -46,31 +46,38 @@ class ProgressReportState extends State<ProgressReport> {
   @override
   Widget build(BuildContext context) {
     final List<ChartData> chartData = [
-      ChartData('Remembrance Rate', overallRememberanceRate.toDouble(),
-          Color(0xFF00CB5D)),
       ChartData(
-          'Subtract', (100 - overallRememberanceRate).toDouble(), Colors.white),
+          'Remembrance Rate', overallRememberanceRate, ColorConstants.appBar),
+      ChartData('Subtract', 100 - overallRememberanceRate, Colors.white),
     ];
     MediaQueryData queryData = MediaQuery.of(context);
     var deviceWidth = queryData.size.width;
     var deviceHeight = queryData.size.height;
     return Scaffold(
       appBar: AppBar(
-          // App bar properties
-          // title: Text(widget.title),
-          automaticallyImplyLeading: true,
-          backgroundColor: ColorConstants.appBar,
-          title: Text('Progress Report',
-              style: TextStyle(
-                  fontSize: TextSizeConstants.getadaptiveTextSize(
-                      context, TextSizeConstants.buttonText)))),
+        // App bar properties
+        // title: Text(widget.title),
+        automaticallyImplyLeading: true,
+        backgroundColor: ColorConstants.appBar,
+        title: Text(
+          'Progress Report',
+          style: TextStyle(
+            fontSize: TextSizeConstants.getadaptiveTextSize(
+              context,
+              TextSizeConstants.buttonText,
+            ),
+          ),
+        ),
+      ),
       body: AspectRatio(
         aspectRatio: 100 / 100,
         child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Expanded(
-                child: Stack(alignment: Alignment.center, children: <Widget>[
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Expanded(
+              child: Stack(
+                alignment: Alignment.center,
+                children: <Widget>[
                   // Container(
                   //   margin: const EdgeInsets.only(top: 200.0),
                   //   width: 0.9 * deviceWidth,
@@ -102,42 +109,69 @@ class ProgressReportState extends State<ProgressReport> {
                       ],
                       annotations: <CircularChartAnnotation>[
                         CircularChartAnnotation(
+                          width: '100%',
+                          height: '70%',
+                          radius: '0%',
                           horizontalAlignment: ChartAlignment.center,
                           verticalAlignment: ChartAlignment.center,
-                          widget: Text(
-                            '$overallRememberanceRate%\n',
-                            style: TextStyle(
-                              color: ColorConstants.bodyText,
-                              fontSize: TextSizeConstants.getadaptiveTextSize(
-                                context,
-                                TextSizeConstants.h2,
+                          widget: Column(
+                            children: [
+                              Text(
+                                '$overallRememberanceRate%',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: ColorConstants.bodyText,
+                                  fontSize:
+                                      TextSizeConstants.getadaptiveTextSize(
+                                    context,
+                                    TextSizeConstants.h2,
+                                  ),
+                                  fontWeight: FontWeight.w700,
+                                ),
                               ),
-                              fontWeight: FontWeight.w700,
-                            ),
+                              Text(
+                                'Overall Rememberance Rate',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: ColorConstants.bodyText,
+                                  fontSize:
+                                      TextSizeConstants.getadaptiveTextSize(
+                                    context,
+                                    TextSizeConstants.bodyText,
+                                  ),
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        CircularChartAnnotation(
-                          horizontalAlignment: ChartAlignment.center,
-                          verticalAlignment: ChartAlignment.near,
-                          widget: Text(
-                            'Overall Rememberance Rate',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: ColorConstants.bodyText,
-                              fontSize: TextSizeConstants.getadaptiveTextSize(
-                                context,
-                                TextSizeConstants.bodyText,
-                              ),
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ),
+                        // CircularChartAnnotation(
+                        //   width: '100%',
+                        //   height: '40%',
+                        //   radius: '0%',
+                        //   horizontalAlignment: ChartAlignment.center,
+                        //   verticalAlignment: ChartAlignment.center,
+                        //   widget: Text(
+                        //     'Overall Rememberance Rate',
+                        //     textAlign: TextAlign.center,
+                        //     style: TextStyle(
+                        //       color: ColorConstants.bodyText,
+                        //       fontSize: TextSizeConstants.getadaptiveTextSize(
+                        //         context,
+                        //         TextSizeConstants.bodyText,
+                        //       ),
+                        //       fontWeight: FontWeight.w400,
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),
-                ]),
-              )
-            ]),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
