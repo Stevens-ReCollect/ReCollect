@@ -16,6 +16,13 @@ class ChartData {
   final Color color;
 }
 
+class BarChartData {
+  BarChartData(this.type, this.remember, this.subtract);
+  final String type;
+  final double remember;
+  final double subtract;
+}
+
 class ProgressReport extends StatefulWidget {
   const ProgressReport({Key? key}) : super(key: key);
 
@@ -25,15 +32,46 @@ class ProgressReport extends StatefulWidget {
 
 class ProgressReportState extends State<ProgressReport> {
   double overallRememberanceRate = 0;
+  double photoRememberanceRate = 0;
+  double videoRememberanceRate = 0;
+  double audioRememberanceRate = 0;
 
   Future getRates() async {
     try {
       final tempRate = await FirestoreService().getOverallRememberanceRate();
+      print(tempRate);
       setState(() {
         overallRememberanceRate = double.parse((tempRate).toStringAsFixed(1));
       });
     } on PlatformException catch (e) {
       print('Failed to get Overall Rememberance Rate: $e');
+    }
+    try {
+      final tempRate = await FirestoreService().getPhotoRememberanceRate();
+      print(tempRate);
+      setState(() {
+        photoRememberanceRate = double.parse((tempRate).toStringAsFixed(1));
+      });
+    } on PlatformException catch (e) {
+      print('Failed to get Photo Rememberance Rate: $e');
+    }
+    try {
+      final tempRate = await FirestoreService().getVideoRememberanceRate();
+      print(tempRate);
+      setState(() {
+        videoRememberanceRate = double.parse((tempRate).toStringAsFixed(1));
+      });
+    } on PlatformException catch (e) {
+      print('Failed to get Video Rememberance Rate: $e');
+    }
+    try {
+      final tempRate = await FirestoreService().getAudioRememberanceRate();
+      print(tempRate);
+      setState(() {
+        audioRememberanceRate = double.parse((tempRate).toStringAsFixed(1));
+      });
+    } on PlatformException catch (e) {
+      print('Failed to get Audio Rememberance Rate: $e');
     }
   }
 
@@ -49,6 +87,10 @@ class ProgressReportState extends State<ProgressReport> {
       ChartData(
           'Remembrance Rate', overallRememberanceRate, ColorConstants.appBar),
       ChartData('Subtract', 100 - overallRememberanceRate, Colors.white),
+    ];
+    final List<BarChartData> photoChartData = [
+      BarChartData('Photo', photoRememberanceRate, 100 - photoRememberanceRate),
+      BarChartData('Video', photoRememberanceRate, 100 - photoRememberanceRate)
     ];
     MediaQueryData queryData = MediaQuery.of(context);
     var deviceWidth = queryData.size.width;
@@ -78,16 +120,6 @@ class ProgressReportState extends State<ProgressReport> {
               child: Stack(
                 alignment: Alignment.center,
                 children: <Widget>[
-                  // Container(
-                  //   margin: const EdgeInsets.only(top: 200.0),
-                  //   width: 0.9 * deviceWidth,
-                  //   child: Text(
-                  //     'Progress Report is Currently in Development',
-                  //     style: TextStyle(
-                  //         fontSize: 40, fontWeight: FontWeight.w800),
-                  //     textAlign: TextAlign.center,
-                  //   ),
-                  // ),
                   Container(
                     width: deviceWidth,
                     child: SfCircularChart(
@@ -145,28 +177,25 @@ class ProgressReportState extends State<ProgressReport> {
                             ],
                           ),
                         ),
-                        // CircularChartAnnotation(
-                        //   width: '100%',
-                        //   height: '40%',
-                        //   radius: '0%',
-                        //   horizontalAlignment: ChartAlignment.center,
-                        //   verticalAlignment: ChartAlignment.center,
-                        //   widget: Text(
-                        //     'Overall Rememberance Rate',
-                        //     textAlign: TextAlign.center,
-                        //     style: TextStyle(
-                        //       color: ColorConstants.bodyText,
-                        //       fontSize: TextSizeConstants.getadaptiveTextSize(
-                        //         context,
-                        //         TextSizeConstants.bodyText,
-                        //       ),
-                        //       fontWeight: FontWeight.w400,
-                        //     ),
-                        //   ),
-                        // ),
                       ],
                     ),
                   ),
+                  Container(
+                    width: deviceWidth,
+                    child: SfCartesianChart(
+                      primaryXAxis: CategoryAxis(),
+                      series: <ChartSeries>[
+                        StackedBar100Series<BarChartData, String>(
+                          dataSource: photoChartData,
+                          color: ColorConstants.appBar,
+                          xValueMapper: (BarChartData data, _) => data.type,
+                          yValueMapper: (BarChartData data, _) => data.remember,
+                          width: .1,
+                          //spacing: .1
+                        )
+                      ],
+                    ),
+                  )
                 ],
               ),
             )
