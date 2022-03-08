@@ -88,9 +88,10 @@ class ProgressReportState extends State<ProgressReport> {
           'Remembrance Rate', overallRememberanceRate, ColorConstants.appBar),
       ChartData('Subtract', 100 - overallRememberanceRate, Colors.white),
     ];
-    final List<BarChartData> photoChartData = [
+    final List<BarChartData> barChartData = [
+      BarChartData('Audio', audioRememberanceRate, 100 - audioRememberanceRate),
+      BarChartData('Video', videoRememberanceRate, 100 - videoRememberanceRate),
       BarChartData('Photo', photoRememberanceRate, 100 - photoRememberanceRate),
-      BarChartData('Video', photoRememberanceRate, 100 - photoRememberanceRate)
     ];
     MediaQueryData queryData = MediaQuery.of(context);
     var deviceWidth = queryData.size.width;
@@ -117,8 +118,8 @@ class ProgressReportState extends State<ProgressReport> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Expanded(
-              child: Stack(
-                alignment: Alignment.center,
+              child: Column(
+                //alignment: Alignment.center,
                 children: <Widget>[
                   Container(
                     width: deviceWidth,
@@ -183,22 +184,29 @@ class ProgressReportState extends State<ProgressReport> {
                   Container(
                     width: deviceWidth,
                     child: SfCartesianChart(
-                      primaryXAxis: CategoryAxis(),
+                      primaryXAxis: CategoryAxis(
+                        isVisible: true,
+                      ),
+                      primaryYAxis: CategoryAxis(isVisible: true),
                       series: <ChartSeries>[
                         StackedBar100Series<BarChartData, String>(
-                          dataSource: photoChartData,
+                          dataSource: barChartData,
                           color: ColorConstants.appBar,
                           xValueMapper: (BarChartData data, _) => data.type,
                           yValueMapper: (BarChartData data, _) => data.remember,
-                          width: .1,
-                          //spacing: .1
-                        )
+                        ),
+                        StackedBar100Series<BarChartData, String>(
+                            dataSource: barChartData,
+                            color: Color.fromARGB(255, 255, 255, 255),
+                            xValueMapper: (BarChartData data, _) => data.type,
+                            yValueMapper: (BarChartData data, _) =>
+                                data.subtract)
                       ],
                     ),
                   )
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),
