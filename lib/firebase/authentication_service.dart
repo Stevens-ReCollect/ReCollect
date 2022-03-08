@@ -55,8 +55,8 @@ class AuthenticationService {
     }
   }
 
-  Future<String> validateCurrentPassword(
-      String currentEmail, String currentPassword) async {
+  // VALIDATE CURRENT PASSWORD METHOD
+  Future<String> validateCurrentPassword(String currentEmail, String currentPassword) async {
     var firebaseUser = await _firebaseAuth.currentUser;
 
     // placeholder for change password function
@@ -67,7 +67,7 @@ class AuthenticationService {
     // gives an error below with String? != String
 
     // var authCredentials = EmailAuthProvider.credential(
-    //    email: firebaseUser!.email password: currentPassword);
+    //    email: firebaseUser.email, password: currentPassword);
 
     try {
       await firebaseUser!.reauthenticateWithCredential(authCredentials);

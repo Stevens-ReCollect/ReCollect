@@ -151,10 +151,14 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                 });
                               }
 
-                              print("A password reset link was sent to $_email");
+                              print(
+                                  "A password reset link was sent to $_email");
                               if (logInResult == "Success") {
-                                Navigator.pushNamed(
-                                    context, RouteConstants.loginRoute);
+                                showDialog(
+                                    context: context,
+                                    barrierDismissible: false,
+                                    builder: (BuildContext context) =>
+                                        confirmPopUp(context));
                               } else {
                                 setState(() {
                                   _isButtonDisabled = false;
@@ -168,5 +172,34 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         ),
       ),
     );
+  }
+
+  confirmPopUp(BuildContext context) {
+    //Forgot Password pop up
+    return AlertDialog(
+        title: Text('Your forgot password link has been sent to your email.',
+            style: TextStyle(
+              fontSize: TextSizeConstants.getadaptiveTextSize(
+                  context, TextSizeConstants.bodyText),
+            )),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+        ),
+        actions: <Widget>[
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.all(15),
+                primary: ColorConstants.buttonColor),
+            onPressed: () async {
+              Navigator.pushNamed(context, RouteConstants.loginRoute);
+            },
+            child: Text('Back to Log In',
+                style: TextStyle(
+                    fontSize: 0.7 *
+                        TextSizeConstants.getadaptiveTextSize(
+                            context, TextSizeConstants.buttonText))),
+          )
+        ]);
   }
 }

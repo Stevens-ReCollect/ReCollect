@@ -22,9 +22,9 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   final TextEditingController _currentPassword = TextEditingController();
   final TextEditingController _newPassword = TextEditingController();
   final TextEditingController _confirmPassword = TextEditingController();
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
   String confirmResult = "";
-
   String checkCurrentPasswordValid = "";
 
   String? validateConfirmPassword(String? confirmPassword) {
@@ -39,16 +39,47 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
     return null;
   }
 
-  String? validateCurrentPassword(String? currentPassword) {
-    if (currentPassword == null || currentPassword.isEmpty) {
-      return 'Your Password is required.';
+  String? validateSamePassword(String? newPassword) {
+    if (newPassword == null || newPassword.isEmpty) {
+      return 'New Password is required.';
     }
 
-    if (checkCurrentPasswordValid == "") {
-      return "Please double check your current password.";
+    if (newPassword == _currentPassword.text) {
+      return "Your new password must be different \nthan the current one.";
+    }
+
+    String pattern =
+        r'^(?=.*[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
+    RegExp regex = RegExp(pattern);
+    if (!regex.hasMatch(newPassword)) {
+      return 'Password must be at least 8 characters, and must \ninclude an uppercase letter, number, and symbol.';
     }
 
     return null;
+  }
+
+  String? validateCurrentPassword(String? currentPassword) {
+    if (currentPassword == null || currentPassword.isEmpty) {
+      return 'Current Password is required.';
+    }
+
+    String errorMessage = "";
+    var firebaseUser = _firebaseAuth.currentUser;
+
+    var authCredentials = EmailAuthProvider.credential(
+        email: _email.text, password: currentPassword);
+
+    try {
+      firebaseUser!.reauthenticateWithCredential(authCredentials);
+    } on FirebaseAuthException catch (ex) {
+      errorMessage = ex.message.toString();
+    }
+
+    if (errorMessage == "") {
+      return null;
+    } else {
+      return "Your password or email is incorrect.";
+    }
   }
 
   @override
@@ -137,7 +168,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                   child: TextFormField(
                     obscureText: true,
                     controller: _currentPassword,
-                    validator: AuthenticationService().validatePassword,
+                    validator: validateCurrentPassword,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'Current Password',
@@ -153,7 +184,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                   child: TextFormField(
                     obscureText: true,
                     controller: _newPassword,
-                    validator: AuthenticationService().validatePassword,
+                    validator: validateSamePassword,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'New Password',
@@ -188,7 +219,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                       'Change Password',
                       style: TextStyle(
                         fontSize: TextSizeConstants.getadaptiveTextSize(
-                            context, TextSizeConstants.buttonText),
+                            context, TextSizeConstants.largeTextButtons),
                         fontFamily: 'Roboto',
                         fontWeight: FontWeight.w400,
                       ),
@@ -205,12 +236,10 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                       ),
                     ),
                     onPressed: () async {
-                      print('pressed');
                       await AuthenticationService()
                           .validateCurrentPassword(
                               _email.text, _currentPassword.text)
                           .then((String result) {
-                        print(result);
                         setState(() {
                           checkCurrentPasswordValid = result;
                         });
@@ -218,6 +247,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
 
                       if (_key.currentState!.validate() &&
                           checkCurrentPasswordValid == "Success") {
+                        print(checkCurrentPasswordValid);
                         await AuthenticationService()
                             .updatePassword(_newPassword.text);
 
@@ -232,13 +262,11 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
 
                         print(confirmResult);
                         if (confirmResult == "Signed Out") {
-                          Navigator.of(context, rootNavigator: true)
-                              .pushAndRemoveUntil(
-                                  MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        StartUpPage(),
-                                  ),
-                                  (route) => false);
+                          showDialog(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (BuildContext context) =>
+                                  confirmPopUp(context));
                         }
                       }
                     },
@@ -250,5 +278,38 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
         ),
       ),
     );
+  }
+
+  confirmPopUp(BuildContext context) {
+    //Forgot Password pop up
+    return AlertDialog(
+        title: Text('Your password has been successfully changed!',
+            style: TextStyle(
+              fontSize: TextSizeConstants.getadaptiveTextSize(
+                  context, TextSizeConstants.bodyText),
+            )),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+        ),
+        actions: <Widget>[
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.all(15),
+                primary: ColorConstants.buttonColor),
+            onPressed: () async {
+              Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => StartUpPage(),
+                  ),
+                  (route) => false);
+            },
+            child: Text('Back to Log In',
+                style: TextStyle(
+                    fontSize: 0.7 *
+                        TextSizeConstants.getadaptiveTextSize(
+                            context, TextSizeConstants.buttonText))),
+          )
+        ]);
   }
 }
