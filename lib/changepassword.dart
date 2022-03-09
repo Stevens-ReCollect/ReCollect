@@ -26,6 +26,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
   String confirmResult = "";
   String checkCurrentPasswordValid = "";
+  String errorMessage = "";
 
   String? validateConfirmPassword(String? confirmPassword) {
     if (confirmPassword == null || confirmPassword.isEmpty) {
@@ -63,19 +64,17 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
       return 'Current Password is required.';
     }
 
-    String errorMessage = "";
-    var firebaseUser = _firebaseAuth.currentUser;
+    AuthenticationService()
+        .validateCurrentPassword(_email.text, _currentPassword.text)
+        .then((String result) {
+      setState(() {
+        errorMessage = result;
+      });
+    });
 
-    var authCredentials = EmailAuthProvider.credential(
-        email: _email.text, password: currentPassword);
-
-    try {
-      firebaseUser!.reauthenticateWithCredential(authCredentials);
-    } on FirebaseAuthException catch (ex) {
-      errorMessage = ex.message.toString();
-    }
-
-    if (errorMessage == "") {
+    if (errorMessage == "Success") {
+      setState(()
+        {});
       return null;
     } else {
       return "Your password or email is incorrect.";
