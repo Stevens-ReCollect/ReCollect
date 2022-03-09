@@ -25,6 +25,7 @@ class _EditVideoPageState extends State<EditVideoPage> {
   File? _video;
   File? _thumbnail;
   bool _loading = false;
+  bool _isButtonDisabled = false;
 
   Future setFields() async {
     try {
@@ -207,21 +208,24 @@ class _EditVideoPageState extends State<EditVideoPage> {
                         ),
                       ),
                     ),
-                    onPressed: () async {
-                      setState(() {
-                        _loading = true;
-                      });
-                      print("Clicked Saved");
+                    onPressed: _isButtonDisabled
+                        ? null
+                        : () async {
+                            setState(() {
+                              _loading = true;
+                              _isButtonDisabled = true;
+                            });
+                            print("Clicked Saved");
 
-                      await FirestoreService().editMoment(
-                          memoryId: widget.momentData['memory_id'],
-                          momentId: widget.momentData['doc_id'],
-                          file: _video,
-                          thumbnail: _thumbnail,
-                          description: _description.text);
+                            await FirestoreService().editMoment(
+                                memoryId: widget.momentData['memory_id'],
+                                momentId: widget.momentData['doc_id'],
+                                file: _video,
+                                thumbnail: _thumbnail,
+                                description: _description.text);
 
-                      Navigator.pop(context);
-                    },
+                            Navigator.pop(context);
+                          },
                   ),
                 ),
               ],
