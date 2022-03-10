@@ -26,12 +26,76 @@ class AudioPlayerState extends State<AudioPlayerWidget> {
     Future duration = audioPlayer.getDuration();
     Future currentPos = audioPlayer.getCurrentPosition();
 
+
+      format(Duration d) =>
+        d.toString().split('.').first.padLeft(8, "0");
+
+    
+
+  Future<int> _getPosition() async {
+        await audioPlayer.setUrl(widget.asset);
+        return Future.delayed(
+          const Duration(seconds: 60),
+          () => audioPlayer.getCurrentPosition(),
+        );
+      }
+
+    Future<int> _getDuration() async {
+        await audioPlayer.setUrl(widget.asset);
+        return Future.delayed(
+          const Duration(seconds: 60),
+          () => audioPlayer.getDuration(),
+        );
+      }
+
     initState() {
       audioPlayer.setUrl(widget.asset);
     }
 
-    format(Duration d) =>
-        d.toString().split('.').first.padLeft(8, "0"); //duration format
+ FutureBuilder<dynamic> getAssetDuration() {
+    return FutureBuilder<dynamic>(
+                  // to get current position and duration
+                  future: _getPosition(),
+                  builder: (context, snapshot1) {
+                    switch (snapshot1.connectionState) {
+                      case ConnectionState.none:
+                        return const Text('No Connection...');
+                      case ConnectionState.active:
+                      case ConnectionState.waiting:
+                        return const Text('Awaiting result...');
+                      case ConnectionState.done:
+                        if (snapshot1.hasError) {
+                          return Text('Error: ${snapshot1.error}');
+                        } else {
+                          return FutureBuilder<dynamic>(
+                              future: _getDuration(),
+                              builder: (context, snapshot2) {
+                                switch (snapshot2.connectionState) {
+                                  case ConnectionState.none:
+                                    return const Text('No Connection...');
+                                  case ConnectionState.active:
+                                  case ConnectionState.waiting:
+                                    return const Text('Awaiting result...');
+                                  case ConnectionState.done:
+                                    if (snapshot2.hasError) {
+                                      return Text('Error: ${snapshot2.error}');
+                                    } else {
+                                      return Row(children: [
+                                        Text(format(Duration(
+                                                milliseconds: snapshot1.data)) +
+                                            '/' +
+                                            format(Duration(
+                                                    milliseconds: snapshot2.data))),
+                                    
+                                      ]);
+                                    }
+                                }
+                              });
+                        }
+                    }
+ });}
+
+ //duration format
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -117,58 +181,7 @@ class AudioPlayerState extends State<AudioPlayerWidget> {
               const SizedBox(
                 height: 20,
               ),
-              FutureBuilder<dynamic>(
-                  // to get current position and duration
-                  future: currentPos,
-                  builder: (context, snapshot1) {
-                    switch (snapshot1.connectionState) {
-                      case ConnectionState.none:
-                        return const Text('No Connection...');
-                      case ConnectionState.active:
-                      case ConnectionState.waiting:
-                        return const Text('Awaiting result...');
-                      case ConnectionState.done:
-                        if (snapshot1.hasError) {
-                          return Text('Error: ${snapshot1.error}');
-                        } else {
-                          return FutureBuilder<dynamic>(
-                              future: duration,
-                              builder: (context, snapshot2) {
-                                switch (snapshot2.connectionState) {
-                                  case ConnectionState.none:
-                                    return const Text('No Connection...');
-                                  case ConnectionState.active:
-                                  case ConnectionState.waiting:
-                                    return const Text('Awaiting result...');
-                                  case ConnectionState.done:
-                                    if (snapshot2.hasError) {
-                                      return Text('Error: ${snapshot2.error}');
-                                    } else {
-                                      return Row(children: [
-                                        Text(format(Duration(
-                                                seconds: snapshot1.data)) +
-                                            '/' +
-                                            format(Duration(
-                                                    seconds: snapshot2.data))
-                                                .padLeft(8, "0")),
-                                        // Slider.adaptive(
-                                        //     value: double.parse(
-                                        //         snapshot1.data.toString()),
-                                        //     max: double.parse(
-                                        //         snapshot2.data.toString()),
-                                        //     activeColor:
-                                        //         ColorConstants.buttonColor,
-                                        //     onChanged: (value) async {
-                                        //       await audioPlayer
-                                        //           .setUrl(widget.asset);
-                                        //     })
-                                      ]);
-                                    }
-                                }
-                              });
-                        }
-                    }
-                  })
+              getAssetDuration(),
             ])),
         AffirmButtonsWidget(widget.doc_id).build(context),
       ],

@@ -55,6 +55,7 @@ dependencies:
   path_provider: ^2.0.9
   syncfusion_flutter_datepicker: ^19.4.53
   intl: ^0.17.0
+  just_audio: ^0.9.20
 
   # overlay_container: ^0.0.5+1
 
