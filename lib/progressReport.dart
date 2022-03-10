@@ -97,119 +97,125 @@ class ProgressReportState extends State<ProgressReport> {
     var deviceWidth = queryData.size.width;
     var deviceHeight = queryData.size.height;
     return Scaffold(
-      appBar: AppBar(
-        // App bar properties
-        // title: Text(widget.title),
-        automaticallyImplyLeading: true,
-        backgroundColor: ColorConstants.appBar,
-        title: Text(
-          'Progress Report',
-          style: TextStyle(
-            fontSize: TextSizeConstants.getadaptiveTextSize(
-              context,
-              TextSizeConstants.buttonText,
+        appBar: AppBar(
+          // App bar properties
+          // title: Text(widget.title),
+          automaticallyImplyLeading: true,
+          backgroundColor: ColorConstants.appBar,
+          title: Text(
+            'Progress Report',
+            style: TextStyle(
+              fontSize: TextSizeConstants.getadaptiveTextSize(
+                context,
+                TextSizeConstants.buttonText,
+              ),
             ),
           ),
         ),
-      ),
-      body: AspectRatio(
-        aspectRatio: 100 / 100,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Expanded(
-              child: Column(
-                //alignment: Alignment.center,
-                children: <Widget>[
-                  Container(
-                    width: deviceWidth,
-                    child: SfCircularChart(
-                      palette: [
-                        // Color(0xFF00CB5D),
-                        ColorConstants.appBar,
-                        Colors.white,
-                      ],
-                      series: <CircularSeries>[
-                        DoughnutSeries<ChartData, String>(
-                          dataSource: chartData,
-                          radius: '90%',
-                          innerRadius: '80%',
-                          xValueMapper: (ChartData data, _) => data.x,
-                          yValueMapper: (ChartData data, _) => data.y,
-                          // Corner style of doughnut segments
-                          cornerStyle: CornerStyle.bothFlat,
-                        ),
-                      ],
-                      annotations: <CircularChartAnnotation>[
-                        CircularChartAnnotation(
-                          width: '100%',
-                          height: '70%',
-                          radius: '0%',
-                          horizontalAlignment: ChartAlignment.center,
-                          verticalAlignment: ChartAlignment.center,
-                          widget: Column(
-                            children: [
-                              Text(
-                                '$overallRememberanceRate%',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: ColorConstants.bodyText,
-                                  fontSize:
-                                      TextSizeConstants.getadaptiveTextSize(
-                                    context,
-                                    TextSizeConstants.h2,
+        body: SingleChildScrollView(
+          //aspectRatio: 100 / 100,
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  child: Column(
+                    //alignment: Alignment.center,
+                    children: <Widget>[
+                      Container(
+                        width: deviceWidth,
+                        child: SfCircularChart(
+                          palette: [
+                            // Color(0xFF00CB5D),
+                            ColorConstants.appBar,
+                            Colors.white,
+                          ],
+                          series: <CircularSeries>[
+                            DoughnutSeries<ChartData, String>(
+                              dataSource: chartData,
+                              radius: '90%',
+                              innerRadius: '80%',
+                              xValueMapper: (ChartData data, _) => data.x,
+                              yValueMapper: (ChartData data, _) => data.y,
+                              // Corner style of doughnut segments
+                              cornerStyle: CornerStyle.bothFlat,
+                            ),
+                          ],
+                          annotations: <CircularChartAnnotation>[
+                            CircularChartAnnotation(
+                              width: '100%',
+                              height: '70%',
+                              radius: '0%',
+                              horizontalAlignment: ChartAlignment.center,
+                              verticalAlignment: ChartAlignment.center,
+                              widget: Column(
+                                children: [
+                                  Text(
+                                    '$overallRememberanceRate%',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: ColorConstants.bodyText,
+                                      fontSize:
+                                          TextSizeConstants.getadaptiveTextSize(
+                                        context,
+                                        TextSizeConstants.h2,
+                                      ),
+                                      fontWeight: FontWeight.w700,
+                                    ),
                                   ),
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                              Text(
-                                'Overall Rememberance Rate',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: ColorConstants.bodyText,
-                                  fontSize:
-                                      TextSizeConstants.getadaptiveTextSize(
-                                    context,
-                                    TextSizeConstants.bodyText,
+                                  Text(
+                                    'Overall Rememberance Rate',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: ColorConstants.bodyText,
+                                      fontSize:
+                                          TextSizeConstants.getadaptiveTextSize(
+                                        context,
+                                        TextSizeConstants.bodyText,
+                                      ),
+                                      fontWeight: FontWeight.w400,
+                                    ),
                                   ),
-                                  fontWeight: FontWeight.w400,
-                                ),
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    width: deviceWidth,
-                    child: SfCartesianChart(
-                      primaryXAxis: CategoryAxis(
-                        isVisible: true,
                       ),
-                      primaryYAxis: CategoryAxis(isVisible: true),
-                      series: <ChartSeries>[
-                        StackedBar100Series<BarChartData, String>(
-                          dataSource: barChartData,
-                          color: ColorConstants.appBar,
-                          xValueMapper: (BarChartData data, _) => data.type,
-                          yValueMapper: (BarChartData data, _) => data.remember,
+                      Container(
+                        width: deviceWidth,
+                        child: SfCartesianChart(
+                          plotAreaBorderWidth: 0,
+                          primaryXAxis: CategoryAxis(
+                            isVisible: false,
+                            // labelPlacement: LabelPlacement.onTicks,
+                            // labelPosition: ChartDataLabelPosition.inside
+                          ),
+                          primaryYAxis: CategoryAxis(isVisible: false),
+                          series: <ChartSeries>[
+                            StackedBar100Series<BarChartData, String>(
+                              dataSource: barChartData,
+                              color: ColorConstants.appBar,
+                              xValueMapper: (BarChartData data, _) => data.type,
+                              yValueMapper: (BarChartData data, _) =>
+                                  data.remember,
+                            ),
+                            StackedBar100Series<BarChartData, String>(
+                                dataSource: barChartData,
+                                color: Color.fromARGB(255, 226, 226, 226),
+                                xValueMapper: (BarChartData data, _) =>
+                                    data.type,
+                                yValueMapper: (BarChartData data, _) =>
+                                    data.subtract)
+                          ],
                         ),
-                        StackedBar100Series<BarChartData, String>(
-                            dataSource: barChartData,
-                            color: Color.fromARGB(255, 255, 255, 255),
-                            xValueMapper: (BarChartData data, _) => data.type,
-                            yValueMapper: (BarChartData data, _) =>
-                                data.subtract)
-                      ],
-                    ),
-                  )
-                ],
-              ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
-    );
+          ),
+        ));
   }
 }
