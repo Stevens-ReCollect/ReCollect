@@ -105,7 +105,7 @@ class AudioPlayerState extends State <AudioPlayerWidget> {
               ],
             ),
             const SizedBox(height: 20,),
-            FutureBuilder<dynamic>(
+            FutureBuilder<dynamic>( // to get current position and duration
               future: currentPos,
               builder: (context, snapshot1) {
                 switch (snapshot1.connectionState) {
