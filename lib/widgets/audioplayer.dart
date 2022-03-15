@@ -20,22 +20,11 @@ class AudioPlayerWidget extends StatefulWidget {
 }
 
 class AudioPlayerState extends State<AudioPlayerWidget> {
-  @override
-  Widget build(BuildContext context) {
-    AudioPlayer audioPlayer = AudioPlayer(mode: PlayerMode.MEDIA_PLAYER);
-    Future duration = audioPlayer.getDuration();
-    Future currentPos = audioPlayer.getCurrentPosition();
-
-
-      format(Duration d) =>
-        d.toString().split('.').first.padLeft(8, "0");
-
-    
-
+  AudioPlayer audioPlayer = AudioPlayer(mode: PlayerMode.MEDIA_PLAYER);
   Future<int> _getPosition() async {
         await audioPlayer.setUrl(widget.asset);
         return Future.delayed(
-          const Duration(seconds: 60),
+          const Duration(seconds: 4), //TODO: Find a way to work quicker than 4 secs
           () => audioPlayer.getCurrentPosition(),
         );
       }
@@ -43,14 +32,25 @@ class AudioPlayerState extends State<AudioPlayerWidget> {
     Future<int> _getDuration() async {
         await audioPlayer.setUrl(widget.asset);
         return Future.delayed(
-          const Duration(seconds: 60),
+          const Duration(seconds: 4), //TODO: Find a way to work quicker than 4 secs
           () => audioPlayer.getDuration(),
         );
       }
-
-    initState() {
+      
+    @override
+    void initState() {
       audioPlayer.setUrl(widget.asset);
+      _getDuration();
+      _getPosition();
+      super.initState();
     }
+
+  @override
+  Widget build(BuildContext context) {
+    // Future duration = audioPlayer.getDuration();
+    // Future currentPos = audioPlayer.getCurrentPosition();
+      format(Duration d) =>
+        d.toString().split('.').first.padLeft(8, "0");
 
  FutureBuilder<dynamic> getAssetDuration() {
     return FutureBuilder<dynamic>(
@@ -62,7 +62,7 @@ class AudioPlayerState extends State<AudioPlayerWidget> {
                         return const Text('No Connection...');
                       case ConnectionState.active:
                       case ConnectionState.waiting:
-                        return const Text('Awaiting result...');
+                        return const Text('...');
                       case ConnectionState.done:
                         if (snapshot1.hasError) {
                           return Text('Error: ${snapshot1.error}');
@@ -75,17 +75,19 @@ class AudioPlayerState extends State<AudioPlayerWidget> {
                                     return const Text('No Connection...');
                                   case ConnectionState.active:
                                   case ConnectionState.waiting:
-                                    return const Text('Awaiting result...');
+                                    return const Text('...');
                                   case ConnectionState.done:
                                     if (snapshot2.hasError) {
                                       return Text('Error: ${snapshot2.error}');
                                     } else {
                                       return Row(children: [
-                                        Text(format(Duration(
-                                                milliseconds: snapshot1.data)) +
-                                            '/' +
-                                            format(Duration(
-                                                    milliseconds: snapshot2.data))),
+                                        Text("- " + format(Duration(
+                                                milliseconds: snapshot1.data - snapshot2.data)) 
+                                            //     +
+                                            // '/' +
+                                            // format(Duration(
+                                            //         milliseconds: snapshot2.data))
+                                                    ),
                                     
                                       ]);
                                     }
