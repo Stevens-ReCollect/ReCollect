@@ -11,6 +11,7 @@ class TextSizeConstants {
   static const double bodyText = 24;
   static const double dropDownText = 18;
   static const double hint = 12;
+  static const double largeTextButtons = 20;
 
   static getadaptiveTextSize(BuildContext context, double value) {
     return (value / 850) * MediaQuery.of(context).size.height;

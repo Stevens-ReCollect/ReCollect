@@ -225,14 +225,14 @@ class _LogInPageState extends State<LogInPage> {
                       'Forgot Password?',
                       style: TextStyle(
                         fontSize: TextSizeConstants.getadaptiveTextSize(
-                            context, TextSizeConstants.bodyText),
+                            context, TextSizeConstants.largeTextButtons),
                         fontFamily: 'Roboto',
                         fontWeight: FontWeight.w400,
                       ),
                     ),
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(
-                          ColorConstants.unfavoredButton),
+                          ColorConstants.buttonColor),
                       foregroundColor: MaterialStateProperty.all<Color>(
                           ColorConstants.buttonText),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
