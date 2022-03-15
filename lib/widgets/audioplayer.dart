@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,29 +21,21 @@ class AudioPlayerWidget extends StatefulWidget {
   AudioPlayerState createState() => AudioPlayerState();
 }
 
+ 
 class AudioPlayerState extends State<AudioPlayerWidget> {
   AudioPlayer audioPlayer = AudioPlayer(mode: PlayerMode.MEDIA_PLAYER);
-  Future<int> _getPosition() async {
-        await audioPlayer.setUrl(widget.asset);
-        return Future.delayed(
-          const Duration(seconds: 4), //TODO: Find a way to work quicker than 4 secs
-          () => audioPlayer.getCurrentPosition(),
-        );
-      }
+  Duration _position = Duration();
+  Duration _duration = Duration();
 
-    Future<int> _getDuration() async {
-        await audioPlayer.setUrl(widget.asset);
-        return Future.delayed(
-          const Duration(seconds: 4), //TODO: Find a way to work quicker than 4 secs
-          () => audioPlayer.getDuration(),
-        );
-      }
-      
     @override
     void initState() {
       audioPlayer.setUrl(widget.asset);
-      _getDuration();
-      _getPosition();
+      audioPlayer.onAudioPositionChanged.listen((Duration  p) => {
+        setState(() => _position = p)
+      });
+        audioPlayer.onDurationChanged.listen((Duration  d) => {
+        setState(() => _duration = d)
+      });
       super.initState();
     }
 
@@ -52,50 +46,32 @@ class AudioPlayerState extends State<AudioPlayerWidget> {
       format(Duration d) =>
         d.toString().split('.').first.padLeft(8, "0");
 
- FutureBuilder<dynamic> getAssetDuration() {
-    return FutureBuilder<dynamic>(
-                  // to get current position and duration
-                  future: _getPosition(),
-                  builder: (context, snapshot1) {
-                    switch (snapshot1.connectionState) {
-                      case ConnectionState.none:
-                        return const Text('No Connection...');
-                      case ConnectionState.active:
-                      case ConnectionState.waiting:
-                        return const Text('...');
-                      case ConnectionState.done:
-                        if (snapshot1.hasError) {
-                          return Text('Error: ${snapshot1.error}');
-                        } else {
-                          return FutureBuilder<dynamic>(
-                              future: _getDuration(),
-                              builder: (context, snapshot2) {
-                                switch (snapshot2.connectionState) {
-                                  case ConnectionState.none:
-                                    return const Text('No Connection...');
-                                  case ConnectionState.active:
-                                  case ConnectionState.waiting:
-                                    return const Text('...');
-                                  case ConnectionState.done:
-                                    if (snapshot2.hasError) {
-                                      return Text('Error: ${snapshot2.error}');
-                                    } else {
-                                      return Row(children: [
-                                        Text("- " + format(Duration(
-                                                milliseconds: snapshot1.data - snapshot2.data)) 
-                                            //     +
-                                            // '/' +
-                                            // format(Duration(
-                                            //         milliseconds: snapshot2.data))
-                                                    ),
-                                    
-                                      ]);
-                                    }
-                                }
-                              });
-                        }
-                    }
- });}
+    getAssetDuration() {
+      var d = double.parse(_duration.inSeconds.toString());
+      var p = double.parse(_position.inSeconds.toString());
+
+      if (_duration == Duration(seconds: 0)){
+        return Container();
+      }
+      return Row(children: [
+        Text(format(_position) + "/" + format(_duration)),
+        SliderTheme(
+        data:  SliderThemeData(
+                thumbColor: ColorConstants.appBar,
+                thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 5)),
+        child:Slider(
+            activeColor: ColorConstants.appBar,
+            max: d,
+            value: p,
+            onChanged: (value) {
+              setState(() {
+                p = value;
+              });
+            }))
+      ]);
+    }
+            
+       
 
  //duration format
 
