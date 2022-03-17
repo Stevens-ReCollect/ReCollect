@@ -23,8 +23,8 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
 
     
   final TextEditingController _title = TextEditingController();
-  final TextEditingController _startDate = TextEditingController();
-  final TextEditingController _endDate = TextEditingController();
+  final TextEditingController _startDate = TextEditingController(text: "yyyy-MM-dd");
+  final TextEditingController _endDate = TextEditingController(text: "yyyy-MM-dd");
   final TextEditingController _description = TextEditingController();
 
   File? image;
@@ -35,6 +35,37 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
   String _dateCount = '';
   String _range = '';
   String _rangeCount = '';
+
+  dateError(BuildContext context){ //Error Message
+    MediaQueryData queryData = MediaQuery.of(context);
+    var deviceWidth = queryData.size.width;
+    var deviceHeight = queryData.size.height;
+    return AlertDialog(
+      title: Text('Date Error!',
+            style: TextStyle(
+              fontSize: TextSizeConstants.getadaptiveTextSize(
+                  context, TextSizeConstants.bodyText), color: Colors.red,
+            )),
+      actions: <Widget>[
+        ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.all(15),
+                primary: ColorConstants.buttonColor),
+            onPressed: () async {
+              Navigator.pop(context);
+            },
+          child: Text('Okay',
+                style: TextStyle(
+                    fontSize: 0.7 *
+                        TextSizeConstants.getadaptiveTextSize(
+                            context, TextSizeConstants.buttonText))),
+          )],
+          content: Text('Change the dates so that the start date is before or equal to end date!',
+            style: TextStyle(
+              fontSize: 0.8*TextSizeConstants.getadaptiveTextSize(
+                  context, TextSizeConstants.bodyText),
+            )),);       
+  }
 
   startDatePicker(BuildContext context){ //start date picker
     MediaQueryData queryData = MediaQuery.of(context);
@@ -53,7 +84,7 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
                 primary: ColorConstants.buttonColor),
             onPressed: () async {
               _onSelectionChanged;
-              _startDate.text = _selectedDate.substring(0,10);
+              _startDate.text = _selectedDate.replaceAll('/', '-').substring(0,10);
               Navigator.pop(context);
             },
           child: Text('Okay',
@@ -62,7 +93,7 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
                         TextSizeConstants.getadaptiveTextSize(
                             context, TextSizeConstants.buttonText))),
           )],
-      content: Container(
+      content: SizedBox(
         width: deviceWidth,
         height: deviceHeight / 3,
         child: SfDateRangePicker(
@@ -95,7 +126,7 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
                 primary: ColorConstants.buttonColor),
             onPressed: () async {
               _onSelectionChanged;
-              _endDate.text = _selectedDate.substring(0,10);
+              _endDate.text = _selectedDate.replaceAll('/', '-').substring(0,10);
               Navigator.pop(context);
             },
           child: Text('Okay',
@@ -122,14 +153,14 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
 
 
  String _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
-   final form = DateFormat('MM/dd/yyyy');
+   final form = DateFormat('yyyy-MM-dd');
     setState(() {
       if (args.value is PickerDateRange) {
         _range = '${form.format(args.value.startDate)} -'
             // ignore: lines_longer_than_80_chars
             ' ${form.format(args.value.endDate ?? args.value.startDate)}';
       } else if (args.value is DateTime) {
-        _selectedDate = form.format(args.value).toString();
+        _selectedDate = args.value.toString();
       } else if (args.value is List<DateTime>) {
         _dateCount = args.value.length.toString();
       } else {
@@ -169,6 +200,8 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
     MediaQueryData queryData = MediaQuery.of(context); //responsive sizing
     var deviceWidth = queryData.size.width;
     var deviceHeight = queryData.size.height;
+    String logInResult = "";
+
     return Container(
         child: Stack(children: <Widget>[
       Container(
@@ -378,10 +411,23 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
                       ),
                     ),
                     onPressed: () async {
-                      setState(() {
+                      var sd = DateTime.parse(_startDate.text);
+                      var ed = DateTime.parse(_endDate.text);
+                  
+                      if(sd.isAfter(ed) || ed.isBefore(sd)){
+                        showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (BuildContext context) =>
+                            dateError(context),
+                      );
+                  } 
+
+                      if (_title != null && (sd.isBefore(ed) || sd.isAtSameMomentAs(ed))) {
+                        setState(() {
                         _loading = true;
-                      });
-                      if (_title != null) {
+                        });
+                        logInResult = "";
                         final result = await FirestoreService().addNewMemory(
                             title: _title.text,
                             startDate: _startDate.text, //TODO: figure out outputs for date picker
