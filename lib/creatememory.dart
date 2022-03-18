@@ -23,10 +23,12 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
 
     
   final TextEditingController _title = TextEditingController();
-  final TextEditingController _startDate = TextEditingController(text: "yyyy-MM-dd");
-  final TextEditingController _endDate = TextEditingController(text: "yyyy-MM-dd");
+  final TextEditingController _startDate = TextEditingController(text: "MM-DD-YYYY");
+  final TextEditingController _endDate = TextEditingController(text: "MM-DD-YYYY");
   final TextEditingController _description = TextEditingController();
 
+  DateTime sDate = DateTime.now();
+  DateTime eDate = DateTime.now();
   
 
   File? image;
@@ -74,8 +76,8 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
 
     if (newDate != null) {
       setState(() {
-        String formattedDate = DateFormat('yyyy-MM-dd').format(newDate);
-        // newStart = DateTime.parse(DateFormat('yyyy-MM-dd').format(newDate));
+        String formattedDate = DateFormat('MM-dd-yyyy').format(newDate);
+        sDate = DateTime.parse(DateFormat('yyyy-MM-dd').format(newDate));
         _startDate.text = formattedDate;
       });
     }
@@ -95,8 +97,8 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
    
     if (newDate != null) {
       setState(() {
-        String formattedDate = DateFormat('yyyy-MM-dd').format(newDate);
-        // newEnd = DateTime.parse(DateFormat('yyyy-MM-dd').format(newDate));
+        String formattedDate = DateFormat('MM-dd-yyyy').format(newDate);
+        eDate = DateTime.parse(DateFormat('yyyy-MM-dd').format(newDate));
         _endDate.text = formattedDate;
       });
     }
@@ -344,10 +346,8 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
                       ),
                     ),
                     onPressed: () async {
-                      var sd = DateTime.parse(_startDate.text);
-                      var ed = DateTime.parse(_endDate.text);
 
-                      if(sd.isAfter(ed) || ed.isBefore(sd)){
+                      if(sDate.isAfter(eDate) || eDate.isBefore(sDate)){ //Date Check
                         showDialog(
                         context: context,
                         barrierDismissible: false,
@@ -356,7 +356,7 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
                       );
                   } 
 
-                      if (_title != null && (sd.isBefore(ed) || sd.isAtSameMomentAs(ed))) {
+                      if (_title != null && (sDate.isBefore(eDate) || sDate.isAtSameMomentAs(eDate))) {
                         setState(() {
                         _loading = true;
                         });

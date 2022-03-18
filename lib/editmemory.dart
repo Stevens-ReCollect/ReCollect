@@ -24,8 +24,8 @@ class EditMemoryPage extends StatefulWidget {
 
 class _EditMemoryPageState extends State<EditMemoryPage> {
   TextEditingController _title = TextEditingController(text: "");
-  TextEditingController _startDate = TextEditingController(text: "yyyy-MM-dd");
-  TextEditingController _endDate = TextEditingController(text: "yyyy-MM-dd");
+  TextEditingController _startDate = TextEditingController(text: "MM-DD-YYYY");
+  TextEditingController _endDate = TextEditingController(text: "MM-DD-YYYY");
   TextEditingController _description = TextEditingController(text: "");
 
   File? image;
@@ -44,10 +44,8 @@ class _EditMemoryPageState extends State<EditMemoryPage> {
     }
   }
 
-  String _selectedDate = '';
-  String _dateCount = '';
-  String _range = '';
-  String _rangeCount = '';
+  DateTime sDate = DateTime.now();
+  DateTime eDate = DateTime.now();
 
    dateError(BuildContext context){ //Error message
     MediaQueryData queryData = MediaQuery.of(context);
@@ -93,7 +91,7 @@ startDatePicker() async{ //start date picker
     if (newDate != null) {
       setState(() {
         String formattedDate = DateFormat('yyyy-MM-dd').format(newDate);
-        // newStart = DateTime.parse(DateFormat('yyyy-MM-dd').format(newDate));
+        sDate = DateTime.parse(DateFormat('yyyy-MM-dd').format(newDate));
         _startDate.text = formattedDate;
       });
     }
@@ -114,7 +112,7 @@ startDatePicker() async{ //start date picker
     if (newDate != null) {
       setState(() {
         String formattedDate = DateFormat('yyyy-MM-dd').format(newDate);
-        // newEnd = DateTime.parse(DateFormat('yyyy-MM-dd').format(newDate));
+        eDate = DateTime.parse(DateFormat('yyyy-MM-dd').format(newDate));
         _endDate.text = formattedDate;
       });
     }
@@ -353,11 +351,8 @@ startDatePicker() async{ //start date picker
                       ),
                     ),
                     onPressed: () async {
-
-                      var sd = DateTime.parse(_startDate.text);
-                      var ed = DateTime.parse(_endDate.text);
                   
-                      if(sd.isAfter(ed) || ed.isBefore(sd)){
+                      if(sDate.isAfter(eDate) || eDate.isBefore(sDate)){ //Date check
                         showDialog(
                         context: context,
                         barrierDismissible: false,
@@ -365,7 +360,7 @@ startDatePicker() async{ //start date picker
                             dateError(context),
                       );
                   } 
-                       if (_title != null && (sd.isBefore(ed) || sd.isAtSameMomentAs(ed))) {
+                       if (_title != null && (sDate.isBefore(eDate) || sDate.isAtSameMomentAs(eDate))) {
                         setState(() {
                         _loading = true;
                         });
