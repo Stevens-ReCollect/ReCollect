@@ -80,136 +80,45 @@ class _EditMemoryPageState extends State<EditMemoryPage> {
             )),);       
   }
 
+startDatePicker() async{ //start date picker
+     final DateTime? newDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900, 1),
+      lastDate: DateTime.now(),
+      helpText: 'Select a Start Date',
+    );
 
-  startDatePicker(BuildContext context){ //start date picker
-    MediaQueryData queryData = MediaQuery.of(context);
-    var deviceWidth = queryData.size.width;
-    var deviceHeight = queryData.size.height;
-    return AlertDialog(
-      title: Text('Select Start Date.',
-            style: TextStyle(
-              fontSize: TextSizeConstants.getadaptiveTextSize(
-                  context, TextSizeConstants.bodyText),
-            )),
-      actions: <Widget>[
-        ElevatedButton(
-            style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.all(15),
-                primary: ColorConstants.buttonColor),
-            onPressed: () async {
-              _onSelectionChanged;
-              _startDate.text = _selectedDate.replaceAll('/', '-').substring(0,10);
-              Navigator.pop(context);
-            },
-          child: Text('Okay',
-                style: TextStyle(
-                    fontSize: 0.7 *
-                        TextSizeConstants.getadaptiveTextSize(
-                            context, TextSizeConstants.buttonText))),
-          ), 
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.all(15),
-                primary: ColorConstants.unfavoredButton),
-            onPressed: () async {
-              Navigator.pop(context);
-            },
-          child: Text('Cancel',
-                style: TextStyle(
-                    fontSize: 0.7 *
-                        TextSizeConstants.getadaptiveTextSize(
-                            context, TextSizeConstants.buttonText))),
-          )],
-      content: Container(
-        width: deviceWidth,
-        height: deviceHeight / 3,
-        child: SfDateRangePicker(
-                  showActionButtons: false,
-                    // controller: _startDate,
-                    onSelectionChanged: _onSelectionChanged,
-                    showNavigationArrow: true,
-                    view: DateRangePickerView.decade,
-                    selectionMode: DateRangePickerSelectionMode.single,
-                    initialSelectedRange: PickerDateRange(
-                        DateTime.now().subtract(const Duration(days: 44561)),
-                        DateTime.now()),
-                  )));
-  }
 
-  endDatePicker(BuildContext context){ //end date picker
-    MediaQueryData queryData = MediaQuery.of(context);
-    var deviceWidth = queryData.size.width;
-    var deviceHeight = queryData.size.height;
-    return AlertDialog(
-      title: Text('Select End Date.',
-            style: TextStyle(
-              fontSize: TextSizeConstants.getadaptiveTextSize(
-                  context, TextSizeConstants.bodyText),
-            )),
-      actions: <Widget>[
-        ElevatedButton(
-            style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.all(15),
-                primary: ColorConstants.buttonColor),
-            onPressed: () async {
-              _onSelectionChanged;
-              _endDate.text = _selectedDate.replaceAll('/', '-').substring(0,10);
-              Navigator.pop(context);
-            },
-          child: Text('Okay',
-                style: TextStyle(
-                    fontSize: 0.7 *
-                        TextSizeConstants.getadaptiveTextSize(
-                            context, TextSizeConstants.buttonText))),
-          ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.all(15),
-                primary: ColorConstants.unfavoredButton),
-            onPressed: () async {
-              Navigator.pop(context);
-            },
-          child: Text('Cancel',
-                style: TextStyle(
-                    fontSize: 0.7 *
-                        TextSizeConstants.getadaptiveTextSize(
-                            context, TextSizeConstants.buttonText))),
-          )],
-      content: Container(
-        width: deviceWidth,
-        height: deviceHeight / 3,
-        child: SfDateRangePicker(
-                  showActionButtons: false,
-                    // controller: _startDate,
-                    onSelectionChanged: _onSelectionChanged,
-                    showNavigationArrow: true,
-                    view: DateRangePickerView.decade,
-                    selectionMode: DateRangePickerSelectionMode.single,
-                    initialSelectedRange: PickerDateRange(
-                        DateTime.now().subtract(const Duration(days: 44561)),
-                        DateTime.now()),
-                  )));
+    if (newDate != null) {
+      setState(() {
+        String formattedDate = DateFormat('yyyy-MM-dd').format(newDate);
+        // newStart = DateTime.parse(DateFormat('yyyy-MM-dd').format(newDate));
+        _startDate.text = formattedDate;
+      });
+    }
+  
   }
 
 
- String _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
-   final form = DateFormat('yyyy-MM-dd');
-    setState(() {
-      if (args.value is PickerDateRange) {
-        _range = '${form.format(args.value.startDate)} -'
-            // ignore: lines_longer_than_80_chars
-            ' ${form.format(args.value.endDate ?? args.value.startDate)}';
-      } else if (args.value is DateTime) {
-        _selectedDate = form.format(args.value).toString();
-      } else if (args.value is List<DateTime>) {
-        _dateCount = args.value.length.toString();
-      } else {
-        _rangeCount = args.value.length.toString();
-      }
-    });
+   endDatePicker() async{ //start date picker
+     final DateTime? newDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900, 1),
+      lastDate: DateTime.now(),
+      helpText: 'Select a End Date',
+    );
 
-    return _selectedDate;
-  }
+   
+    if (newDate != null) {
+      setState(() {
+        String formattedDate = DateFormat('yyyy-MM-dd').format(newDate);
+        // newEnd = DateTime.parse(DateFormat('yyyy-MM-dd').format(newDate));
+        _endDate.text = formattedDate;
+      });
+    }
+    }
 
 
   Future pickImage() async {
@@ -361,12 +270,7 @@ class _EditMemoryPageState extends State<EditMemoryPage> {
                        foregroundColor: MaterialStateProperty.all<Color>(
                       ColorConstants.buttonColor)),
                     onPressed: () { 
-                    showDialog(
-                        context: context,
-                        barrierDismissible: false,
-                        builder: (BuildContext context) =>
-                            startDatePicker(context),
-                  );},
+                            startDatePicker();},
                   child:Text('Start Date', style: TextStyle(
                          fontSize: TextSizeConstants.getadaptiveTextSize(
                             context, TextSizeConstants.formField)),)
@@ -391,12 +295,8 @@ class _EditMemoryPageState extends State<EditMemoryPage> {
                        foregroundColor: MaterialStateProperty.all<Color>(
                       ColorConstants.buttonColor)),
                     onPressed: () { 
-                    showDialog(
-                        context: context,
-                        barrierDismissible: false,
-                        builder: (BuildContext context) =>
-                            endDatePicker(context),
-                  );},
+                            endDatePicker();
+                  },
                   child:Text('End Date', style: TextStyle(
                          fontSize: TextSizeConstants.getadaptiveTextSize(
                             context, TextSizeConstants.formField)),)
