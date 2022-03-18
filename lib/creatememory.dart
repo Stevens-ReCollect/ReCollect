@@ -60,7 +60,7 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
                         TextSizeConstants.getadaptiveTextSize(
                             context, TextSizeConstants.buttonText))),
           )],
-          content: Text('Change the dates so that the start date is before or equal to end date!',
+          content: Text('Change the dates so that the start date is before or the same date as the end date!',
             style: TextStyle(
               fontSize: 0.8*TextSizeConstants.getadaptiveTextSize(
                   context, TextSizeConstants.bodyText),
@@ -92,7 +92,21 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
                     fontSize: 0.7 *
                         TextSizeConstants.getadaptiveTextSize(
                             context, TextSizeConstants.buttonText))),
-          )],
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.all(15),
+                primary: ColorConstants.unfavoredButton),
+            onPressed: () async {
+              Navigator.pop(context);
+            },
+          child: Text('Cancel',
+                style: TextStyle(
+                    fontSize: 0.7 *
+                        TextSizeConstants.getadaptiveTextSize(
+                            context, TextSizeConstants.buttonText))),
+          )
+          ],
       content: SizedBox(
         width: deviceWidth,
         height: deviceHeight / 3,
@@ -134,7 +148,21 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
                     fontSize: 0.7 *
                         TextSizeConstants.getadaptiveTextSize(
                             context, TextSizeConstants.buttonText))),
-          )],
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.all(15),
+                primary: ColorConstants.unfavoredButton),
+            onPressed: () async {
+              Navigator.pop(context);
+            },
+          child: Text('Cancel',
+                style: TextStyle(
+                    fontSize: 0.7 *
+                        TextSizeConstants.getadaptiveTextSize(
+                            context, TextSizeConstants.buttonText))),
+          )
+          ],
       content: Container(
         width: deviceWidth,
         height: deviceHeight / 3,
