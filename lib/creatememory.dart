@@ -20,59 +20,63 @@ class CreateMemoryPage extends StatefulWidget {
 }
 
 class _CreateMemoryPageState extends State<CreateMemoryPage> {
-
-    
   final TextEditingController _title = TextEditingController();
-  final TextEditingController _startDate = TextEditingController(text: "MM-DD-YYYY");
-  final TextEditingController _endDate = TextEditingController(text: "MM-DD-YYYY");
+  final TextEditingController _startDate =
+      TextEditingController(text: "MM-DD-YYYY");
+  final TextEditingController _endDate =
+      TextEditingController(text: "MM-DD-YYYY");
   final TextEditingController _description = TextEditingController();
 
   DateTime sDate = DateTime.now();
   DateTime eDate = DateTime.now();
-  
 
   File? image;
   bool _loading = false;
   bool _isButtonDisabled = false;
 
-
-  dateError(BuildContext context){ //Error Message
+  dateError(BuildContext context) {
+    //Error Message
     return AlertDialog(
       title: Text('Date Error!',
-            style: TextStyle(
-              fontSize: TextSizeConstants.getadaptiveTextSize(
-                  context, TextSizeConstants.bodyText), color: Colors.red,
-            )),
+          style: TextStyle(
+            fontSize: TextSizeConstants.getadaptiveTextSize(
+                context, TextSizeConstants.bodyText),
+            color: Colors.red,
+          )),
       actions: <Widget>[
         ElevatedButton(
-            style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.all(15),
-                primary: ColorConstants.buttonColor),
-            onPressed: () async {
-              Navigator.pop(context);
-            },
+          style: ElevatedButton.styleFrom(
+              padding: const EdgeInsets.all(15),
+              primary: ColorConstants.buttonColor),
+          onPressed: () async {
+            Navigator.pop(context);
+          },
           child: Text('Okay',
-                style: TextStyle(
-                    fontSize: 0.7 *
-                        TextSizeConstants.getadaptiveTextSize(
-                            context, TextSizeConstants.buttonText))),
-          )],
-          content: Text('Change the dates so that the start date is before or the same date as the end date!',
-            style: TextStyle(
-              fontSize: 0.8*TextSizeConstants.getadaptiveTextSize(
-                  context, TextSizeConstants.bodyText),
-            )),);       
+              style: TextStyle(
+                  fontSize: 0.7 *
+                      TextSizeConstants.getadaptiveTextSize(
+                          context, TextSizeConstants.buttonText))),
+        )
+      ],
+      content: Text(
+          'Change the dates so that the start date is before or the same date as the end date!',
+          style: TextStyle(
+            fontSize: 0.8 *
+                TextSizeConstants.getadaptiveTextSize(
+                    context, TextSizeConstants.bodyText),
+          )),
+    );
   }
-  
- startDatePicker() async{ //start date picker
-     final DateTime? newDate = await showDatePicker(
+
+  startDatePicker() async {
+    //start date picker
+    final DateTime? newDate = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(1900, 1),
       lastDate: DateTime.now(),
       helpText: 'Select a Start Date',
     );
-
 
     if (newDate != null) {
       setState(() {
@@ -81,12 +85,11 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
         _startDate.text = formattedDate;
       });
     }
-  
   }
 
-
-   endDatePicker() async{ //start date picker
-     final DateTime? newDate = await showDatePicker(
+  endDatePicker() async {
+    //start date picker
+    final DateTime? newDate = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(1900, 1),
@@ -94,7 +97,6 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
       helpText: 'Select a End Date',
     );
 
-   
     if (newDate != null) {
       setState(() {
         String formattedDate = DateFormat('MM-dd-yyyy').format(newDate);
@@ -102,8 +104,7 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
         _endDate.text = formattedDate;
       });
     }
-    }
-
+  }
 
   Future pickImage() async {
     try {
@@ -129,13 +130,10 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
     }
   }
 
-@override
+  @override
   void initState() {
-    startDatePicker();
-    endDatePicker();
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -200,12 +198,11 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
                           )
                         : const Text("Add Photo"),
                     style: TextButton.styleFrom(
-                      minimumSize: Size.zero,
-                      padding: EdgeInsets.zero,
-                      alignment: Alignment.centerLeft,
-                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      primary: ColorConstants.buttonColor
-                    ),
+                        minimumSize: Size.zero,
+                        padding: EdgeInsets.zero,
+                        alignment: Alignment.centerLeft,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        primary: ColorConstants.buttonColor),
                   ),
                   leading: ClipRRect(
                     borderRadius: BorderRadius.circular(5.0),
@@ -246,57 +243,60 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
                   ),
                 ),
               ),
-             
               Container(
                 width: 0.8 * deviceWidth,
                 margin: const EdgeInsets.only(top: 15.0, left: 0.0),
-                padding: const EdgeInsets.symmetric(horizontal:15),
+                padding: const EdgeInsets.symmetric(horizontal: 15),
                 decoration: BoxDecoration(
-                  border: Border.all(
-                    color: ColorConstants.hintText
-                  )),
-                child:Row(children: <Widget> [
+                    border: Border.all(color: ColorConstants.hintText)),
+                child: Row(children: <Widget>[
                   TextButton(
-                    style: ButtonStyle(
-                       foregroundColor: MaterialStateProperty.all<Color>(
-                      ColorConstants.buttonColor)),
-                    onPressed: () { 
-                    
-                            startDatePicker();
-                            },
-                  child:Text('Start Date', style: TextStyle(
-                         fontSize: TextSizeConstants.getadaptiveTextSize(
-                            context, TextSizeConstants.formField)),)
+                      style: ButtonStyle(
+                          foregroundColor: MaterialStateProperty.all<Color>(
+                              ColorConstants.buttonColor)),
+                      onPressed: () {
+                        startDatePicker();
+                      },
+                      child: Text(
+                        'Start Date',
+                        style: TextStyle(
+                            fontSize: TextSizeConstants.getadaptiveTextSize(
+                                context, TextSizeConstants.formField)),
+                      )),
+                  Text(
+                    _startDate.text,
+                    style: TextStyle(
+                        fontSize: TextSizeConstants.getadaptiveTextSize(
+                            context, TextSizeConstants.formField)),
                   ),
-                  Text(_startDate.text, style: TextStyle(
-                         fontSize: TextSizeConstants.getadaptiveTextSize(
-                            context, TextSizeConstants.formField)),),
-                  ]),
+                ]),
               ),
-
               Container(
-                width: 0.8 * deviceWidth,
-                margin: const EdgeInsets.only(top: 15.0, left: 0.0),
-                padding: const EdgeInsets.symmetric(horizontal:15),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: ColorConstants.hintText
-                  )),
-                child:Row(children: <Widget> [
-                  TextButton(
-                    style: ButtonStyle(
-                       foregroundColor: MaterialStateProperty.all<Color>(
-                      ColorConstants.buttonColor)),
-                    onPressed: () { 
-          
-                        endDatePicker();},
-                  child:Text('End Date', style: TextStyle(
-                         fontSize: TextSizeConstants.getadaptiveTextSize(
-                            context, TextSizeConstants.formField)),)
-                  ),
-                  Text(_endDate.text, style: TextStyle(
-                         fontSize: TextSizeConstants.getadaptiveTextSize(
-                            context, TextSizeConstants.formField)),),
+                  width: 0.8 * deviceWidth,
+                  margin: const EdgeInsets.only(top: 15.0, left: 0.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  decoration: BoxDecoration(
+                      border: Border.all(color: ColorConstants.hintText)),
+                  child: Row(children: <Widget>[
+                    TextButton(
+                        style: ButtonStyle(
+                            foregroundColor: MaterialStateProperty.all<Color>(
+                                ColorConstants.buttonColor)),
+                        onPressed: () {
+                          endDatePicker();
+                        },
+                        child: Text(
+                          'End Date',
+                          style: TextStyle(
+                              fontSize: TextSizeConstants.getadaptiveTextSize(
+                                  context, TextSizeConstants.formField)),
+                        )),
+                    Text(
+                      _endDate.text,
+                      style: TextStyle(
+                          fontSize: TextSizeConstants.getadaptiveTextSize(
+                              context, TextSizeConstants.formField)),
+                    ),
                   ])),
               Container(
                 height: 0.23 * deviceHeight,
@@ -346,24 +346,26 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
                       ),
                     ),
                     onPressed: () async {
-
-                      if(sDate.isAfter(eDate) || eDate.isBefore(sDate)){ //Date Check
+                      if (sDate.isAfter(eDate) || eDate.isBefore(sDate)) {
+                        //Date Check
                         showDialog(
-                        context: context,
-                        barrierDismissible: false,
-                        builder: (BuildContext context) =>
-                            dateError(context),
-                      );
-                  } 
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (BuildContext context) => dateError(context),
+                        );
+                      }
 
-                      if (_title != null && (sDate.isBefore(eDate) || sDate.isAtSameMomentAs(eDate))) {
+                      if (_title != null &&
+                          (sDate.isBefore(eDate) ||
+                              sDate.isAtSameMomentAs(eDate))) {
                         setState(() {
-                        _loading = true;
+                          _loading = true;
                         });
                         logInResult = "";
                         final result = await FirestoreService().addNewMemory(
                             title: _title.text,
-                            startDate: _startDate.text, //TODO: figure out outputs for date picker
+                            startDate: _startDate
+                                .text, //TODO: figure out outputs for date picker
                             endDate: _endDate.text,
                             description: _description.text,
                             file: image);
@@ -383,4 +385,3 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
     ]));
   }
 }
-
