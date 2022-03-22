@@ -332,6 +332,11 @@ class MyHomePageState extends State<MyHomePage> {
               child: Text('Cancel'),
               onPressed: () {
                 Navigator.of(context).pop();
+                setState(() {
+                  toggleColors(1);
+                  navDisplay(1);
+                  accountMode = 1;
+                });
               }),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
