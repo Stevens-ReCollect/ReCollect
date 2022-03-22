@@ -328,6 +328,11 @@ class MyHomePageState extends State<MyHomePage> {
           ],
         ),
         actions: <Widget>[
+          TextButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              }),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.all(15),
