@@ -24,8 +24,8 @@ class EditMemoryPage extends StatefulWidget {
 
 class _EditMemoryPageState extends State<EditMemoryPage> {
   TextEditingController _title = TextEditingController(text: "");
-  TextEditingController _startDate = TextEditingController(text: "");
-  TextEditingController _endDate = TextEditingController(text: "");
+  TextEditingController _startDate = TextEditingController(text: "MM-DD-YYYY");
+  TextEditingController _endDate = TextEditingController(text: "MM-DD-YYYY");
   TextEditingController _description = TextEditingController(text: "");
 
   File? image;
@@ -44,20 +44,18 @@ class _EditMemoryPageState extends State<EditMemoryPage> {
     }
   }
 
-  String _selectedDate = '';
-  String _dateCount = '';
-  String _range = '';
-  String _rangeCount = '';
+  DateTime sDate = DateTime.now();
+  DateTime eDate = DateTime.now();
 
-  startDatePicker(BuildContext context){ //start date picker
+   dateError(BuildContext context){ //Error message
     MediaQueryData queryData = MediaQuery.of(context);
     var deviceWidth = queryData.size.width;
     var deviceHeight = queryData.size.height;
     return AlertDialog(
-      title: Text('Select Start Date.',
+      title: Text('Date Error!',
             style: TextStyle(
               fontSize: TextSizeConstants.getadaptiveTextSize(
-                  context, TextSizeConstants.bodyText),
+                  context, TextSizeConstants.bodyText), color: Colors.red,
             )),
       actions: <Widget>[
         ElevatedButton(
@@ -65,8 +63,6 @@ class _EditMemoryPageState extends State<EditMemoryPage> {
                 padding: const EdgeInsets.all(15),
                 primary: ColorConstants.buttonColor),
             onPressed: () async {
-              _onSelectionChanged;
-              _startDate.text = _selectedDate.substring(0,10);
               Navigator.pop(context);
             },
           child: Text('Okay',
@@ -75,83 +71,52 @@ class _EditMemoryPageState extends State<EditMemoryPage> {
                         TextSizeConstants.getadaptiveTextSize(
                             context, TextSizeConstants.buttonText))),
           )],
-      content: Container(
-        width: deviceWidth,
-        height: deviceHeight / 3,
-        child: SfDateRangePicker(
-                  showActionButtons: false,
-                    // controller: _startDate,
-                    onSelectionChanged: _onSelectionChanged,
-                    showNavigationArrow: true,
-                    view: DateRangePickerView.decade,
-                    selectionMode: DateRangePickerSelectionMode.single,
-                    initialSelectedRange: PickerDateRange(
-                        DateTime.now().subtract(const Duration(days: 44561)),
-                        DateTime.now()),
-                  )));
-  }
-
-  endDatePicker(BuildContext context){ //end date picker
-    MediaQueryData queryData = MediaQuery.of(context);
-    var deviceWidth = queryData.size.width;
-    var deviceHeight = queryData.size.height;
-    return AlertDialog(
-      title: Text('Select End Date.',
+          content: Text('Change the dates so that the start date is before or the same date as the end date!',
             style: TextStyle(
-              fontSize: TextSizeConstants.getadaptiveTextSize(
+              fontSize: 0.8*TextSizeConstants.getadaptiveTextSize(
                   context, TextSizeConstants.bodyText),
-            )),
-      actions: <Widget>[
-        ElevatedButton(
-            style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.all(15),
-                primary: ColorConstants.buttonColor),
-            onPressed: () async {
-              _onSelectionChanged;
-              _endDate.text = _selectedDate.substring(0,10);
-              Navigator.pop(context);
-            },
-          child: Text('Okay',
-                style: TextStyle(
-                    fontSize: 0.7 *
-                        TextSizeConstants.getadaptiveTextSize(
-                            context, TextSizeConstants.buttonText))),
-          )],
-      content: Container(
-        width: deviceWidth,
-        height: deviceHeight / 3,
-        child: SfDateRangePicker(
-                  showActionButtons: false,
-                    // controller: _startDate,
-                    onSelectionChanged: _onSelectionChanged,
-                    showNavigationArrow: true,
-                    view: DateRangePickerView.decade,
-                    selectionMode: DateRangePickerSelectionMode.single,
-                    initialSelectedRange: PickerDateRange(
-                        DateTime.now().subtract(const Duration(days: 44561)),
-                        DateTime.now()),
-                  )));
+            )),);       
+  }
+
+startDatePicker() async{ //start date picker
+     final DateTime? newDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900, 1),
+      lastDate: DateTime.now(),
+      helpText: 'Select a Start Date',
+    );
+
+
+    if (newDate != null) {
+      setState(() {
+        String formattedDate = DateFormat('MM-dd-yyyy').format(newDate);
+        sDate = DateTime.parse(DateFormat('yyyy-MM-dd').format(newDate));
+        _startDate.text = formattedDate;
+      });
+    }
+  
   }
 
 
- String _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
-   final form = DateFormat('MM/dd/yyyy');
-    setState(() {
-      if (args.value is PickerDateRange) {
-        _range = '${form.format(args.value.startDate)} -'
-            // ignore: lines_longer_than_80_chars
-            ' ${form.format(args.value.endDate ?? args.value.startDate)}';
-      } else if (args.value is DateTime) {
-        _selectedDate = form.format(args.value).toString();
-      } else if (args.value is List<DateTime>) {
-        _dateCount = args.value.length.toString();
-      } else {
-        _rangeCount = args.value.length.toString();
-      }
-    });
+   endDatePicker() async{ //start date picker
+     final DateTime? newDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900, 1),
+      lastDate: DateTime.now(),
+      helpText: 'Select a End Date',
+    );
 
-    return _selectedDate;
-  }
+   
+    if (newDate != null) {
+      setState(() {
+        String formattedDate = DateFormat('MM-dd-yyyy').format(newDate);
+        eDate = DateTime.parse(DateFormat('yyyy-MM-dd').format(newDate));
+        _endDate.text = formattedDate;
+      });
+    }
+    }
 
 
   Future pickImage() async {
@@ -303,12 +268,7 @@ class _EditMemoryPageState extends State<EditMemoryPage> {
                        foregroundColor: MaterialStateProperty.all<Color>(
                       ColorConstants.buttonColor)),
                     onPressed: () { 
-                    showDialog(
-                        context: context,
-                        barrierDismissible: false,
-                        builder: (BuildContext context) =>
-                            startDatePicker(context),
-                  );},
+                            startDatePicker();},
                   child:Text('Start Date', style: TextStyle(
                          fontSize: TextSizeConstants.getadaptiveTextSize(
                             context, TextSizeConstants.formField)),)
@@ -333,12 +293,8 @@ class _EditMemoryPageState extends State<EditMemoryPage> {
                        foregroundColor: MaterialStateProperty.all<Color>(
                       ColorConstants.buttonColor)),
                     onPressed: () { 
-                    showDialog(
-                        context: context,
-                        barrierDismissible: false,
-                        builder: (BuildContext context) =>
-                            endDatePicker(context),
-                  );},
+                            endDatePicker();
+                  },
                   child:Text('End Date', style: TextStyle(
                          fontSize: TextSizeConstants.getadaptiveTextSize(
                             context, TextSizeConstants.formField)),)
@@ -395,9 +351,19 @@ class _EditMemoryPageState extends State<EditMemoryPage> {
                       ),
                     ),
                     onPressed: () async {
-                      setState(() {
+                  
+                      if(sDate.isAfter(eDate) || eDate.isBefore(sDate)){ //Date check
+                        showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (BuildContext context) =>
+                            dateError(context),
+                      );
+                  } 
+                       if (_title != null && (sDate.isBefore(eDate) || sDate.isAtSameMomentAs(eDate))) {
+                        setState(() {
                         _loading = true;
-                      });
+                        });
                       await FirestoreService().editMemory(
                           title: _title.text,
                           startDate: _startDate.text,
@@ -407,7 +373,7 @@ class _EditMemoryPageState extends State<EditMemoryPage> {
                           memoryId: widget.memoryData['doc_id']);
 
                       Navigator.pop(context, true);
-                    },
+                    }},
                   ),
                 ),
               ],
