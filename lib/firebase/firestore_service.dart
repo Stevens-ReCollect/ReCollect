@@ -458,4 +458,104 @@ class FirestoreService {
     print('Maybe Count: $maybe');
     return (yes / (yes + no + maybe)) * 100;
   }
+
+  Future<num> getMemoryRememberanceRate(String memoryID) async {
+    CollectionReference moments = _firestore.collection('moments');
+    User? currentUser = AuthenticationService().getUser();
+    num yes = 0;
+    num no = 0;
+    num maybe = 0;
+    await moments
+        .where('memory_id', isEqualTo: memoryID)
+        .get()
+        .then((QuerySnapshot querySnapshot) => {
+              querySnapshot.docs.forEach((doc) {
+                yes = yes + doc['yes'];
+                no = no + doc['no'];
+                maybe = maybe + doc['maybe'];
+              })
+            });
+    print('Yes Count: $yes');
+    print('No Count: $no');
+    print('Maybe Count: $maybe');
+    return (yes / (yes + no + maybe)) * 100;
+  }
+
+  Future<num> getMomentRememberanceRate(String momentID) async {
+    CollectionReference moments = _firestore.collection('moments');
+    User? currentUser = AuthenticationService().getUser();
+    num yes = 0;
+    num no = 0;
+    num maybe = 0;
+    await moments
+        .where('doc_id', isEqualTo: momentID)
+        .get()
+        .then((QuerySnapshot querySnapshot) => {
+              querySnapshot.docs.forEach((doc) {
+                yes = yes + doc['yes'];
+                no = no + doc['no'];
+                maybe = maybe + doc['maybe'];
+              })
+            });
+    print('Yes Count: $yes');
+    print('No Count: $no');
+    print('Maybe Count: $maybe');
+    return (yes / (yes + no + maybe)) * 100;
+  }
+
+  Future<String> getBestMemory() async {
+    CollectionReference memories = _firestore.collection('memories');
+    User? currentUser = AuthenticationService().getUser();
+    Map<String, num> allmemories = {};
+
+    String bestMemory = "";
+    num bestMemoryRate = 0;
+
+    await memories
+        .where('user_email', isEqualTo: currentUser!.email)
+        .get()
+        .then((QuerySnapshot querySnapshot) => {
+              querySnapshot.docs.forEach((doc) {
+                allmemories[doc['title']] =
+                    getMemoryRememberanceRate(doc['doc_id']) as num;
+              })
+            });
+      
+    allmemories.forEach((key, value) {
+      if(value > bestMemoryRate) {
+        bestMemory = key;
+        bestMemoryRate = value;
+      }
+    });
+    
+    return bestMemory;
+  }
+
+  Future<String> getBestMoment() async {
+    CollectionReference moments = _firestore.collection('moments');
+    User? currentUser = AuthenticationService().getUser();
+    Map<String, num> allmoments = {};
+
+    String bestMoment = "";
+    num bestMomentRate = 0;
+
+    await moments
+        .where('user_email', isEqualTo: currentUser!.email)
+        .get()
+        .then((QuerySnapshot querySnapshot) => {
+              querySnapshot.docs.forEach((doc) {
+                allmoments[doc['name']] =
+                    getMomentRememberanceRate(doc['doc_id']) as num;
+              })
+            });
+      
+    allmoments.forEach((key, value) {
+      if(value > bestMomentRate) {
+        bestMoment = key;
+        bestMomentRate = value;
+      }
+    });
+    
+    return bestMoment;
+  }
 }
