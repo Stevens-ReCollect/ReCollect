@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/textSizeConstants.dart';
+import 'package:recollect_app/firebase/firestore_service.dart';
 import 'package:recollect_app/widgets/photowidget.dart';
 import 'package:recollect_app/widgets/videoplayer.dart';
 import 'package:recollect_app/widgets/audioplayer.dart';
@@ -19,7 +20,28 @@ class MemoryPage extends StatefulWidget {
 class _MemoryState extends State<MemoryPage> {
   int _currentPage = 0;
   int numOfMoments = 1;
+  List moments = [];
   final CarouselController _controller = CarouselController();
+
+  @override
+  void initState() {
+    getMoments();
+    super.initState();
+  }
+
+  void updatePostiton(double position) {
+    setState(() {
+      _currentPage = position.toInt();
+    });
+  }
+
+  getMoments() async {
+    moments = await FirestoreService()
+        .getMoments(memoryId: widget.memoryData['doc_id']);
+    // print(moments);
+    // print(moments.length);
+    numOfMoments = moments.length;
+  }
 
   memoryCarouselSlider() {
     MediaQueryData queryData = MediaQuery.of(context);
@@ -58,6 +80,7 @@ class _MemoryState extends State<MemoryPage> {
                       enableInfiniteScroll: false,
                       onPageChanged: (index, reason) {
                         _currentPage = index;
+                        // updatePostiton(index.toDouble());
                         print('Current Page: $index');
                       },
                     ),
@@ -97,7 +120,11 @@ class _MemoryState extends State<MemoryPage> {
                   activeColor: Colors.grey[850],
                   color: Colors.grey,
                 ),
-              )
+                onTap: (pos) {
+                  print(pos);
+                  // setState(() => _currentPage = pos.toInt());
+                },
+              ),
             ],
           );
         });
@@ -121,7 +148,71 @@ class _MemoryState extends State<MemoryPage> {
         ),
       ),
       body: SingleChildScrollView(
-        child: memoryCarouselSlider(),
+        child: Column(children: [
+          SizedBox(
+            width: deviceWidth,
+            height: 0.7 * deviceHeight,
+            child: CarouselSlider(
+              options: CarouselOptions(
+                autoPlay: false,
+                aspectRatio: 1 / 1,
+                height: deviceHeight,
+                viewportFraction: 1,
+                enableInfiniteScroll: false,
+                onPageChanged: (index, reason) {
+                  setState(() {
+                    _currentPage = index;
+                  });
+                  // updatePostiton(index.toDouble());
+                  print('Current Page: $index');
+                },
+              ),
+              items: moments.map((moment) {
+                print(moment);
+                return Builder(builder: (BuildContext context) {
+                  if (moment == null) {
+                    return const Text("This memory is empty.");
+                  } else {
+                    if (moment['type'] == 'Photo') {
+                      return PhotoWidget(
+                        moment['description'],
+                        moment['file_path'],
+                        moment['doc_id'],
+                      );
+                    } else if (moment['type'] == 'Video') {
+                      return VideoPlayerWidget(
+                        moment['description'],
+                        moment['file_path'],
+                        moment['doc_id'],
+                      );
+                    } else if (moment['type'] == 'Audio') {
+                      return AudioPlayerWidget(
+                        moment['description'],
+                        moment['name'],
+                        moment['file_path'],
+                        moment['doc_id'],
+                      );
+                    } else {
+                      return const SizedBox();
+                    }
+                  }
+                });
+              }).toList(),
+            ),
+          ),
+          DotsIndicator(
+            dotsCount: numOfMoments,
+            position: _currentPage.toDouble(),
+            decorator: DotsDecorator(
+              activeColor: Colors.grey[850],
+              color: Colors.grey,
+            ),
+            onTap: (pos) {
+              print(pos);
+              // setState(() => _currentPage = pos.toInt());
+            },
+          ),
+        ]),
         // child: Column(
         //   crossAxisAlignment: CrossAxisAlignment.center,
         //   mainAxisSize: MainAxisSize.max,

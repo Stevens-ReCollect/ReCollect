@@ -268,6 +268,16 @@ class FirestoreService {
         .catchError((error) => print("Failed to update memory: $error"));
   }
 
+  Future<List> getMoments({required String memoryId}) async {
+    CollectionReference momentsCollection = _firestore.collection('moments');
+    List moments = [];
+    await momentsCollection.where('memory_id', isEqualTo: memoryId).get().then(
+        (QuerySnapshot querySnapshot) => querySnapshot.docs.forEach((doc) => {
+              if (doc.exists) {moments.add(doc.data())}
+            }));
+    return moments;
+  }
+
   Future<void> addNewMoment(
       {required String memoryId,
       required String type,
