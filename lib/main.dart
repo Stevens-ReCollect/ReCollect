@@ -353,12 +353,14 @@ class MyHomePageState extends State<MyHomePage> {
               //print(pinResult);
               if (pinResult == "Success") {
                 accountMode = 0;
-
+                
                 Navigator.of(context).pop();
                 _pin.clear();
               } else {
                 _pin.clear();
               }
+              toggleColors(accountMode);
+              navDisplay(accountMode);
             },
             child: Text('Continue',
                 style: TextStyle(
@@ -409,17 +411,21 @@ class MyHomePageState extends State<MyHomePage> {
                   labels: const ['Edit Mode', 'Story Mode'],
                   onToggle: (value) {
                     //  print('switched to: $value');
-                    toggleColors(value!);
-                    navDisplay(value);
-                    accountMode = value;
-                    if (accountMode == 0) {
+                    
+                    // accountMode = value;
+                    if (value == 0) {
                       showDialog(
                         context: context,
                         barrierDismissible: false,
                         builder: (BuildContext context) =>
                             caregiverPin(context),
                       );
+                    } else {
+                      accountMode = value!;
+                      toggleColors(accountMode);
+                      navDisplay(accountMode);
                     }
+                      
                   },
                 ),
                 //   SizedBox(
