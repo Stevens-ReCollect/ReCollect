@@ -53,6 +53,7 @@ class _MemoryState extends State<MemoryPage> {
                 aspectRatio: 1 / 1,
                 height: deviceHeight,
                 viewportFraction: 1,
+                enableInfiniteScroll: false,
                 onPageChanged: (index, reason) {
                   // setState(() {
                   //   _current = index + 1;
@@ -69,14 +70,14 @@ class _MemoryState extends State<MemoryPage> {
                     return const Text("This memory is empty.");
                   } else {
                     if (data['type'] == 'Photo') {
-                      return PhotoWidget(
-                          data['description'], data['file_path'], data['doc_id']);
+                      return PhotoWidget(data['description'], data['file_path'],
+                          data['doc_id']);
                     } else if (data['type'] == 'Video') {
-                      return VideoPlayerWidget(
-                          data['description'], data['file_path'], data['doc_id']);
+                      return VideoPlayerWidget(data['description'],
+                          data['file_path'], data['doc_id']);
                     } else if (data['type'] == 'Audio') {
-                      return AudioPlayerWidget(
-                          data['description'], data['name'], data['file_path'], data['doc_id']);
+                      return AudioPlayerWidget(data['description'],
+                          data['name'], data['file_path'], data['doc_id']);
                     } else {
                       return const SizedBox();
                     }
@@ -88,34 +89,33 @@ class _MemoryState extends State<MemoryPage> {
     }
 
     return Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: true,
-          backgroundColor: ColorConstants.appBar,
-          title: Text(
-            widget.memoryData['title'],
-            style: TextStyle(
-                fontSize: TextSizeConstants.getadaptiveTextSize(
-                    context, TextSizeConstants.buttonText)),
-          ), //memory title
-        ),
-        body: SingleChildScrollView(
-          // child: AspectRatio(
-          //   aspectRatio: 100 / 100,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                
-                SizedBox(
-                  width: deviceWidth,
-                  height: 0.7*deviceHeight,
-                  child: Center(child: memoryCarouselSlider()),
-                ),
-              ],
+      appBar: AppBar(
+        automaticallyImplyLeading: true,
+        backgroundColor: ColorConstants.appBar,
+        title: Text(
+          widget.memoryData['title'],
+          style: TextStyle(
+              fontSize: TextSizeConstants.getadaptiveTextSize(
+                  context, TextSizeConstants.buttonText)),
+        ), //memory title
+      ),
+      body: SingleChildScrollView(
+        // child: AspectRatio(
+        //   aspectRatio: 100 / 100,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            SizedBox(
+              width: deviceWidth,
+              height: 0.7 * deviceHeight,
+              child: Center(child: memoryCarouselSlider()),
             ),
-          ),
-        // )
-        );
+          ],
+        ),
+      ),
+      // )
+    );
   }
 }
