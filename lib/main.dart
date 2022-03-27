@@ -141,69 +141,6 @@ class MyHomePageState extends State<MyHomePage> {
           children: snapshot.data!.docs.map((DocumentSnapshot document) {
             Map<String, dynamic> data =
                 document.data()! as Map<String, dynamic>;
-            // return Text(data['title']);
-            // if (data['file_path'] == null) {
-            //   return InkWell(
-            //     onTap: () {
-            //       if (accountMode == 0) {
-            //         // Navigator.pushNamed(
-            //         //     context, RouteConstants.memoryHomeRoute);
-            //         Navigator.push(
-            //             context,
-            //             MaterialPageRoute(
-            //                 builder: (context) =>
-            //                     MemoryHomePage(memoryData: data)));
-            //       }
-            //       // else {
-            //       //   Navigator.push(
-            //       //       context,
-            //       //       MaterialPageRoute(
-            //       //           builder: (context) =>
-            //       //               MemoryDetailsPage(memoryData: data)));
-            //       // }
-            //     },
-            //     child: Stack(
-            //       alignment: Alignment.center,
-            //       children: <Widget>[
-            //         Padding(
-            //           padding: EdgeInsets.all(10),
-            //           child: Container(
-            //             width: 0.8 * deviceWidth,
-            //             height: deviceHeight / 4,
-            //             decoration: const BoxDecoration(
-            //               borderRadius: BorderRadius.all(Radius.circular(20)),
-            //               image: DecorationImage(
-            //                 fit: BoxFit.cover,
-            //                 alignment: Alignment.center,
-            //                 image: AssetImage('lib/images/FallLeaves.jpg'),
-            //               ),
-            //             ),
-            //           ),
-            //         ),
-            //         Container(
-            //           alignment: Alignment.bottomLeft,
-            //           decoration: const BoxDecoration(
-            //             color: Colors.black26,
-            //             borderRadius: BorderRadius.all(Radius.circular(20)),
-            //           ),
-            //           width: 0.8 * deviceWidth,
-            //           height: deviceHeight / 4,
-            //           padding: const EdgeInsets.only(left: 20, bottom: 10),
-            //           child: Text(
-            //             data['title'],
-            //             style: TextStyle(
-            //                 color: ColorConstants.buttonText,
-            //                 fontSize: TextSizeConstants.getadaptiveTextSize(
-            //                     context, TextSizeConstants.buttonText),
-            //                 fontWeight: FontWeight.w900),
-            //             textAlign: TextAlign.left,
-            //           ),
-            //         ),
-            //       ],
-            //     ),
-            //   );
-            // }
-            // else {
             return InkWell(
               onTap: () async {
                 if (accountMode == 0) {

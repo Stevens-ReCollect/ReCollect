@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/textSizeConstants.dart';
+import 'package:recollect_app/memory.dart';
 
 class MemoryDetailsPage extends StatelessWidget {
   const MemoryDetailsPage({this.memoryData});
@@ -82,19 +83,68 @@ class MemoryDetailsPage extends StatelessWidget {
               ],
             ),
           ),
-          Row(
-            children: [
-              Container(
-                  padding: const EdgeInsets.only(
-                      left: 20, bottom: 10, top: 3, right: 10),
-                  child: Text(
-                    memoryData['views'].toString() + ' Views',
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: TextSizeConstants.getadaptiveTextSize(
-                            context, TextSizeConstants.tag)),
-                  ))
-            ],
+          Container(
+            alignment: Alignment.centerLeft,
+            padding:
+                const EdgeInsets.only(left: 20, bottom: 10, top: 3, right: 10),
+            child: Text(
+              memoryData['views'].toString() + ' Views',
+              style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: TextSizeConstants.getadaptiveTextSize(
+                      context, TextSizeConstants.tag)),
+            ),
+          ),
+          Container(
+            alignment: Alignment.centerLeft,
+            padding:
+                const EdgeInsets.only(left: 20, bottom: 10, top: 6, right: 10),
+            child: Text(
+              memoryData['description'],
+              style: TextStyle(
+                color: ColorConstants.bodyText,
+                fontSize: TextSizeConstants.getadaptiveTextSize(
+                    context, TextSizeConstants.bodyText),
+              ),
+            ),
+          ),
+          const Spacer(),
+          Container(
+            alignment: Alignment.bottomCenter,
+            padding: const EdgeInsets.only(bottom: 75),
+            child: SizedBox(
+              height: 2.5 * TextSizeConstants.bodyText,
+              width: 0.5 * deviceWidth,
+              child: TextButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              MemoryPage(memoryData: memoryData)));
+                },
+                child: Text(
+                  'View',
+                  style: TextStyle(
+                    fontSize: TextSizeConstants.getadaptiveTextSize(
+                        context, TextSizeConstants.buttonText),
+                    fontFamily: 'Roboto',
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      ColorConstants.buttonColor),
+                  foregroundColor: MaterialStateProperty.all<Color>(
+                      ColorConstants.buttonText),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                  ),
+                ),
+              ),
+            ),
           )
         ],
       ),
