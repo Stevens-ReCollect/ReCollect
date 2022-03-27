@@ -48,34 +48,52 @@ class MemoryDetailsPage extends StatelessWidget {
               ),
             ],
           ),
+          Container(
+            padding:
+                const EdgeInsets.only(left: 20, bottom: 3, top: 10, right: 10),
+            child: Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.only(right: 10),
+                  child: Icon(
+                    Icons.calendar_today_rounded,
+                    color: Colors.grey,
+                    size: TextSizeConstants.getadaptiveTextSize(
+                        context, TextSizeConstants.h2),
+                  ),
+                ),
+                Text(
+                  memoryData['start_date'],
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: TextSizeConstants.getadaptiveTextSize(
+                        context, TextSizeConstants.bodyText),
+                  ),
+                ),
+                if (memoryData['end_date'] != 'MM-DD-YYYY')
+                  Text(
+                    " - " + memoryData['end_date'],
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: TextSizeConstants.getadaptiveTextSize(
+                          context, TextSizeConstants.bodyText),
+                    ),
+                  ),
+              ],
+            ),
+          ),
           Row(
             children: [
               Container(
-                padding: const EdgeInsets.only(
-                    left: 20, bottom: 10, top: 10, right: 10),
-                child: Icon(
-                  Icons.calendar_today_rounded,
-                  color: Colors.grey,
-                  size: TextSizeConstants.getadaptiveTextSize(
-                      context, TextSizeConstants.h2),
-                ),
-              ),
-              Text(
-                memoryData['start_date'],
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: TextSizeConstants.getadaptiveTextSize(
-                      context, TextSizeConstants.bodyText),
-                ),
-              ),
-              Text(
-                " - " + memoryData['end_date'],
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: TextSizeConstants.getadaptiveTextSize(
-                      context, TextSizeConstants.bodyText),
-                ),
-              )
+                  padding: const EdgeInsets.only(
+                      left: 20, bottom: 10, top: 3, right: 10),
+                  child: Text(
+                    memoryData['views'].toString() + ' Views',
+                    style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: TextSizeConstants.getadaptiveTextSize(
+                            context, TextSizeConstants.tag)),
+                  ))
             ],
           )
         ],
