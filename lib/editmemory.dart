@@ -47,39 +47,46 @@ class _EditMemoryPageState extends State<EditMemoryPage> {
   DateTime sDate = DateTime.now();
   DateTime eDate = DateTime.now();
 
-   dateError(BuildContext context){ //Error message
+  dateError(BuildContext context) {
+    //Error message
     MediaQueryData queryData = MediaQuery.of(context);
     var deviceWidth = queryData.size.width;
     var deviceHeight = queryData.size.height;
     return AlertDialog(
       title: Text('Date Error!',
-            style: TextStyle(
-              fontSize: TextSizeConstants.getadaptiveTextSize(
-                  context, TextSizeConstants.bodyText), color: Colors.red,
-            )),
+          style: TextStyle(
+            fontSize: TextSizeConstants.getadaptiveTextSize(
+                context, TextSizeConstants.bodyText),
+            color: Colors.red,
+          )),
       actions: <Widget>[
         ElevatedButton(
-            style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.all(15),
-                primary: ColorConstants.buttonColor),
-            onPressed: () async {
-              Navigator.pop(context);
-            },
+          style: ElevatedButton.styleFrom(
+              padding: const EdgeInsets.all(15),
+              primary: ColorConstants.buttonColor),
+          onPressed: () async {
+            Navigator.pop(context);
+          },
           child: Text('Okay',
-                style: TextStyle(
-                    fontSize: 0.7 *
-                        TextSizeConstants.getadaptiveTextSize(
-                            context, TextSizeConstants.buttonText))),
-          )],
-          content: Text('Change the dates so that the start date is before or the same date as the end date!',
-            style: TextStyle(
-              fontSize: 0.8*TextSizeConstants.getadaptiveTextSize(
-                  context, TextSizeConstants.bodyText),
-            )),);       
+              style: TextStyle(
+                  fontSize: 0.7 *
+                      TextSizeConstants.getadaptiveTextSize(
+                          context, TextSizeConstants.buttonText))),
+        )
+      ],
+      content: Text(
+          'Change the dates so that the start date is before or the same date as the end date!',
+          style: TextStyle(
+            fontSize: 0.8 *
+                TextSizeConstants.getadaptiveTextSize(
+                    context, TextSizeConstants.bodyText),
+          )),
+    );
   }
 
-startDatePicker() async{ //start date picker
-     final DateTime? newDate = await showDatePicker(
+  startDatePicker() async {
+    //start date picker
+    final DateTime? newDate = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(1900, 1),
@@ -87,20 +94,18 @@ startDatePicker() async{ //start date picker
       helpText: 'Select a Start Date',
     );
 
-
     if (newDate != null) {
       setState(() {
-        String formattedDate = DateFormat('MM-dd-yyyy').format(newDate);
+        String formattedDate = DateFormat('MM/dd/yyyy').format(newDate);
         sDate = DateTime.parse(DateFormat('yyyy-MM-dd').format(newDate));
         _startDate.text = formattedDate;
       });
     }
-  
   }
 
-
-   endDatePicker() async{ //start date picker
-     final DateTime? newDate = await showDatePicker(
+  endDatePicker() async {
+    //start date picker
+    final DateTime? newDate = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(1900, 1),
@@ -108,16 +113,14 @@ startDatePicker() async{ //start date picker
       helpText: 'Select a End Date',
     );
 
-   
     if (newDate != null) {
       setState(() {
-        String formattedDate = DateFormat('MM-dd-yyyy').format(newDate);
+        String formattedDate = DateFormat('MM/dd/yyyy').format(newDate);
         eDate = DateTime.parse(DateFormat('yyyy-MM-dd').format(newDate));
         _endDate.text = formattedDate;
       });
     }
-    }
-
+  }
 
   Future pickImage() async {
     try {
@@ -255,54 +258,60 @@ startDatePicker() async{ //start date picker
                   ),
                 ),
                 Container(
-                width: 0.8 * deviceWidth,
-                margin: const EdgeInsets.only(top: 15.0, left: 0.0),
-                padding: const EdgeInsets.symmetric(horizontal:15),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: ColorConstants.hintText
-                  )),
-                child:Row(children: <Widget> [
-                  TextButton(
-                    style: ButtonStyle(
-                       foregroundColor: MaterialStateProperty.all<Color>(
-                      ColorConstants.buttonColor)),
-                    onPressed: () { 
-                            startDatePicker();},
-                  child:Text('Start Date', style: TextStyle(
-                         fontSize: TextSizeConstants.getadaptiveTextSize(
-                            context, TextSizeConstants.formField)),)
-                  ),
-                  Text(_startDate.text, style: TextStyle(
-                         fontSize: TextSizeConstants.getadaptiveTextSize(
-                            context, TextSizeConstants.formField)),),
+                  width: 0.8 * deviceWidth,
+                  margin: const EdgeInsets.only(top: 15.0, left: 0.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  decoration: BoxDecoration(
+                      border: Border.all(color: ColorConstants.hintText)),
+                  child: Row(children: <Widget>[
+                    TextButton(
+                        style: ButtonStyle(
+                            foregroundColor: MaterialStateProperty.all<Color>(
+                                ColorConstants.buttonColor)),
+                        onPressed: () {
+                          startDatePicker();
+                        },
+                        child: Text(
+                          'Start Date',
+                          style: TextStyle(
+                              fontSize: TextSizeConstants.getadaptiveTextSize(
+                                  context, TextSizeConstants.formField)),
+                        )),
+                    Text(
+                      _startDate.text,
+                      style: TextStyle(
+                          fontSize: TextSizeConstants.getadaptiveTextSize(
+                              context, TextSizeConstants.formField)),
+                    ),
                   ]),
-              ),
-
-              Container(
-                width: 0.8 * deviceWidth,
-                margin: const EdgeInsets.only(top: 15.0, left: 0.0),
-                padding: const EdgeInsets.symmetric(horizontal:15),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: ColorConstants.hintText
-                  )),
-                child:Row(children: <Widget> [
-                  TextButton(
-                    style: ButtonStyle(
-                       foregroundColor: MaterialStateProperty.all<Color>(
-                      ColorConstants.buttonColor)),
-                    onPressed: () { 
+                ),
+                Container(
+                    width: 0.8 * deviceWidth,
+                    margin: const EdgeInsets.only(top: 15.0, left: 0.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    decoration: BoxDecoration(
+                        border: Border.all(color: ColorConstants.hintText)),
+                    child: Row(children: <Widget>[
+                      TextButton(
+                          style: ButtonStyle(
+                              foregroundColor: MaterialStateProperty.all<Color>(
+                                  ColorConstants.buttonColor)),
+                          onPressed: () {
                             endDatePicker();
-                  },
-                  child:Text('End Date', style: TextStyle(
-                         fontSize: TextSizeConstants.getadaptiveTextSize(
-                            context, TextSizeConstants.formField)),)
-                  ),
-                  Text(_endDate.text, style: TextStyle(
-                         fontSize: TextSizeConstants.getadaptiveTextSize(
-                            context, TextSizeConstants.formField)),),
-                  ])),
+                          },
+                          child: Text(
+                            'End Date',
+                            style: TextStyle(
+                                fontSize: TextSizeConstants.getadaptiveTextSize(
+                                    context, TextSizeConstants.formField)),
+                          )),
+                      Text(
+                        _endDate.text,
+                        style: TextStyle(
+                            fontSize: TextSizeConstants.getadaptiveTextSize(
+                                context, TextSizeConstants.formField)),
+                      ),
+                    ])),
                 Container(
                   height: 0.21 * deviceHeight,
                   width: 0.8 * deviceWidth,
@@ -351,29 +360,31 @@ startDatePicker() async{ //start date picker
                       ),
                     ),
                     onPressed: () async {
-                  
-                      if(sDate.isAfter(eDate) || eDate.isBefore(sDate)){ //Date check
+                      if (sDate.isAfter(eDate) || eDate.isBefore(sDate)) {
+                        //Date check
                         showDialog(
-                        context: context,
-                        barrierDismissible: false,
-                        builder: (BuildContext context) =>
-                            dateError(context),
-                      );
-                  } 
-                       if (_title != null && (sDate.isBefore(eDate) || sDate.isAtSameMomentAs(eDate))) {
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (BuildContext context) => dateError(context),
+                        );
+                      }
+                      if (_title != null &&
+                          (sDate.isBefore(eDate) ||
+                              sDate.isAtSameMomentAs(eDate))) {
                         setState(() {
-                        _loading = true;
+                          _loading = true;
                         });
-                      await FirestoreService().editMemory(
-                          title: _title.text,
-                          startDate: _startDate.text,
-                          endDate: _endDate.text,
-                          description: _description.text,
-                          thumbnail: image,
-                          memoryId: widget.memoryData['doc_id']);
+                        await FirestoreService().editMemory(
+                            title: _title.text,
+                            startDate: _startDate.text,
+                            endDate: _endDate.text,
+                            description: _description.text,
+                            thumbnail: image,
+                            memoryId: widget.memoryData['doc_id']);
 
-                      Navigator.pop(context, true);
-                    }},
+                        Navigator.pop(context, true);
+                      }
+                    },
                   ),
                 ),
               ],

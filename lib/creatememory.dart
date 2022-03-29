@@ -80,7 +80,7 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
 
     if (newDate != null) {
       setState(() {
-        String formattedDate = DateFormat('MM-dd-yyyy').format(newDate);
+        String formattedDate = DateFormat('MM/dd/yyyy').format(newDate);
         sDate = DateTime.parse(DateFormat('yyyy-MM-dd').format(newDate));
         _startDate.text = formattedDate;
       });
@@ -99,7 +99,7 @@ class _CreateMemoryPageState extends State<CreateMemoryPage> {
 
     if (newDate != null) {
       setState(() {
-        String formattedDate = DateFormat('MM-dd-yyyy').format(newDate);
+        String formattedDate = DateFormat('MM/dd/yyyy').format(newDate);
         eDate = DateTime.parse(DateFormat('yyyy-MM-dd').format(newDate));
         _endDate.text = formattedDate;
       });
