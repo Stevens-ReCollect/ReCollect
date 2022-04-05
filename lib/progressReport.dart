@@ -25,6 +25,10 @@ class ProgressReport extends StatefulWidget {
 
 class ProgressReportState extends State<ProgressReport> {
   double overallRememberanceRate = 0;
+  String bestMemory = "";
+  double memoryRememberanceRate = 0;
+  String bestMoment = "";
+  double momentRememberanceRate = 0;
 
   Future getRates() async {
     try {
@@ -32,14 +36,57 @@ class ProgressReportState extends State<ProgressReport> {
       setState(() {
         overallRememberanceRate = double.parse((tempRate).toStringAsFixed(1));
       });
+      print(overallRememberanceRate);
     } on PlatformException catch (e) {
       print('Failed to get Overall Rememberance Rate: $e');
+    }
+  }
+
+  Future getMemoryRate() async {
+    num tempRate = 0;
+
+    try {
+      final allmemories = await FirestoreService().getBestMemory();
+
+      allmemories.forEach((key, value) {
+        if (value > tempRate) {
+          bestMemory = key;
+          tempRate = value;
+        }
+      });
+      setState(() {
+        memoryRememberanceRate = double.parse((tempRate).toStringAsFixed(1));
+      });
+    } on PlatformException catch (e) {
+      print('Failed to get Memory Rememberance Rate: $e');
+    }
+  }
+
+  Future getMomentRate() async {
+    num tempRate = 0;
+
+    try {
+      final allmemories = await FirestoreService().getBestMoment();
+
+      allmemories.forEach((key, value) {
+        if (value > tempRate) {
+          bestMoment = key;
+          tempRate = value;
+        }
+      });
+      setState(() {
+        momentRememberanceRate = double.parse((tempRate).toStringAsFixed(1));
+      });
+    } on PlatformException catch (e) {
+      print('Failed to get Moment Rememberance Rate: $e');
     }
   }
 
   @override
   void initState() {
     getRates();
+    getMemoryRate();
+    getMomentRate();
     super.initState();
   }
 
@@ -49,6 +96,16 @@ class ProgressReportState extends State<ProgressReport> {
       ChartData(
           'Remembrance Rate', overallRememberanceRate, ColorConstants.appBar),
       ChartData('Subtract', 100 - overallRememberanceRate, Colors.white),
+    ];
+    final List<ChartData> chartDataMemory = [
+      ChartData(
+          'Remembrance Rate', memoryRememberanceRate, ColorConstants.appBar),
+      ChartData('Subtract', 100 - memoryRememberanceRate, Colors.white),
+    ];
+    final List<ChartData> chartDataMoment = [
+      ChartData(
+          'Remembrance Rate', momentRememberanceRate, ColorConstants.appBar),
+      ChartData('Subtract', 100 - momentRememberanceRate, Colors.white),
     ];
     MediaQueryData queryData = MediaQuery.of(context);
     var deviceWidth = queryData.size.width;
@@ -130,14 +187,14 @@ class ProgressReportState extends State<ProgressReport> {
                                 ),
                               ),
                               Text(
-                                'Overall Rememberance Rate',
+                                'Memory Rememberance Rate: $memoryRememberanceRate, $momentRememberanceRate, $overallRememberanceRate',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: ColorConstants.bodyText,
                                   fontSize:
                                       TextSizeConstants.getadaptiveTextSize(
                                     context,
-                                    TextSizeConstants.bodyText,
+                                    TextSizeConstants.hint,
                                   ),
                                   fontWeight: FontWeight.w400,
                                 ),
@@ -169,7 +226,7 @@ class ProgressReportState extends State<ProgressReport> {
                   ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),

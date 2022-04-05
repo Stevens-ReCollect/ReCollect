@@ -503,13 +503,13 @@ class FirestoreService {
     return (yes / (yes + no + maybe)) * 100;
   }
 
-  Future<String> getBestMemory() async {
+  Future<Map> getBestMemory() async {
     CollectionReference memories = _firestore.collection('memories');
     User? currentUser = AuthenticationService().getUser();
     Map<String, num> allmemories = {};
 
-    String bestMemory = "";
-    num bestMemoryRate = 0;
+    // String bestMemory = "";
+    // num bestMemoryRate = 0;
 
     await memories
         .where('user_email', isEqualTo: currentUser!.email)
@@ -521,23 +521,23 @@ class FirestoreService {
               })
             });
       
-    allmemories.forEach((key, value) {
-      if(value > bestMemoryRate) {
-        bestMemory = key;
-        bestMemoryRate = value;
-      }
-    });
+    // allmemories.forEach((key, value) {
+    //   if(value > bestMemoryRate) {
+    //     bestMemory = key;
+    //     bestMemoryRate = value;
+    //   }
+    // });
     
-    return bestMemory;
+    return allmemories;
   }
 
-  Future<String> getBestMoment() async {
+  Future<Map> getBestMoment() async {
     CollectionReference moments = _firestore.collection('moments');
     User? currentUser = AuthenticationService().getUser();
     Map<String, num> allmoments = {};
 
-    String bestMoment = "";
-    num bestMomentRate = 0;
+    // String bestMoment = "";
+    // num bestMomentRate = 0;
 
     await moments
         .where('user_email', isEqualTo: currentUser!.email)
@@ -549,13 +549,13 @@ class FirestoreService {
               })
             });
       
-    allmoments.forEach((key, value) {
-      if(value > bestMomentRate) {
-        bestMoment = key;
-        bestMomentRate = value;
-      }
-    });
+    // allmoments.forEach((key, value) {
+    //   if(value > bestMomentRate) {
+    //     bestMoment = key;
+    //     bestMomentRate = value;
+    //   }
+    // });
     
-    return bestMoment;
+    return allmoments;
   }
 }
