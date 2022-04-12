@@ -94,6 +94,7 @@ class _AddAudioPageState extends State<AddAudioPage> {
         child: Stack(children: <Widget>[
       Container(
           child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         home: Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.white,

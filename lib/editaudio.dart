@@ -103,6 +103,7 @@ class _EditAudioPageState extends State<EditAudioPage> {
         child: Stack(children: <Widget>[
       Container(
           child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         home: Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.white,

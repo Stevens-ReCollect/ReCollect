@@ -9,6 +9,7 @@ void main() {
     Widget testWidget = MediaQuery(
       data: const MediaQueryData(),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         home: AddPhotoPage(),
       ),
     );

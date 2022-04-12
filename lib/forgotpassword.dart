@@ -32,6 +32,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     var deviceWidth = queryData.size.width;
     var deviceHeight = queryData.size.height;
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Form(
         key: _key,
         child: Scaffold(

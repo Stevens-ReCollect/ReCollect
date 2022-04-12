@@ -45,6 +45,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'ReCollect',
       highContrastTheme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -293,7 +294,7 @@ class MyHomePageState extends State<MyHomePage> {
               //print(pinResult);
               if (pinResult == "Success") {
                 accountMode = 0;
-                
+
                 Navigator.of(context).pop();
                 _pin.clear();
               } else {
@@ -351,7 +352,7 @@ class MyHomePageState extends State<MyHomePage> {
                   labels: const ['Edit Mode', 'Story Mode'],
                   onToggle: (value) {
                     //  print('switched to: $value');
-                    
+
                     // accountMode = value;
                     if (value == 0) {
                       showDialog(
@@ -365,7 +366,6 @@ class MyHomePageState extends State<MyHomePage> {
                       toggleColors(accountMode);
                       navDisplay(accountMode);
                     }
-                      
                   },
                 ),
                 //   SizedBox(

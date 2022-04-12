@@ -69,6 +69,7 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
         child: Stack(children: <Widget>[
       Container(
           child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         home: Scaffold(
           backgroundColor: Colors.white,
           body: SingleChildScrollView(

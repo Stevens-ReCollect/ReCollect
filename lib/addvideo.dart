@@ -80,6 +80,7 @@ class _AddVideoPageState extends State<AddVideoPage> {
         child: Stack(children: <Widget>[
       Container(
           child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         home: Scaffold(
           backgroundColor: Colors.white,
           body: SingleChildScrollView(

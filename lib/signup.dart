@@ -41,6 +41,7 @@ class _SignUpPageState extends State<SignUpPage> {
     var deviceWidth = queryData.size.width;
     var deviceHeight = queryData.size.height;
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Form(
         key: _key,
         child: Scaffold(

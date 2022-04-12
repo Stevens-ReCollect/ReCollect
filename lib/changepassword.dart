@@ -73,8 +73,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
     });
 
     if (errorMessage == "Success") {
-      setState(()
-        {});
+      setState(() {});
       return null;
     } else {
       return "Your password or email is incorrect.";
@@ -87,6 +86,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
     var deviceWidth = queryData.size.width;
     var deviceHeight = queryData.size.height;
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Form(
         key: _key,
         child: Scaffold(

@@ -27,6 +27,7 @@ class StartUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'ReCollect',
       theme: ThemeData(
         primarySwatch: Colors.green,
@@ -61,92 +62,94 @@ class StartUpPage extends StatelessWidget {
     var deviceHeight = queryData.size.height;
     return Scaffold(
       backgroundColor: Colors.white,
-      body:  Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(
-            height: 0.3*deviceWidth,
-            child:Center(child: Image.asset('lib/assets/recollect_logo.png', width: 0.3*deviceWidth,))),
-          
-            Container(
-              margin: const EdgeInsets.only(top: 40.0),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          SizedBox(
+              height: 0.3 * deviceWidth,
               child: Center(
-                child: Text(
-                  'ReCollect',
-                  style: TextStyle(
-                    fontSize: TextSizeConstants.getadaptiveTextSize(
-                        context, TextSizeConstants.h1),
-                    fontFamily: 'Roboto',
-                    fontWeight: FontWeight.w900,
-                  ),
+                  child: Image.asset(
+                'lib/assets/recollect_logo.png',
+                width: 0.3 * deviceWidth,
+              ))),
+          Container(
+            margin: const EdgeInsets.only(top: 40.0),
+            child: Center(
+              child: Text(
+                'ReCollect',
+                style: TextStyle(
+                  fontSize: TextSizeConstants.getadaptiveTextSize(
+                      context, TextSizeConstants.h1),
+                  fontFamily: 'Roboto',
+                  fontWeight: FontWeight.w900,
                 ),
               ),
             ),
-            Container(
-              margin: const EdgeInsets.only(top: 40.0),
-              height: 2.5 * TextSizeConstants.bodyText,
-              width: 0.6 * deviceWidth,
-              child: TextButton(
-                child: Text(
-                  'Sign Up',
-                  style: TextStyle(
-                    fontSize: TextSizeConstants.getadaptiveTextSize(
-                        context, TextSizeConstants.bodyText),
-                    fontFamily: 'Roboto',
-                    fontWeight: FontWeight.w400,
-                  ),
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 40.0),
+            height: 2.5 * TextSizeConstants.bodyText,
+            width: 0.6 * deviceWidth,
+            child: TextButton(
+              child: Text(
+                'Sign Up',
+                style: TextStyle(
+                  fontSize: TextSizeConstants.getadaptiveTextSize(
+                      context, TextSizeConstants.bodyText),
+                  fontFamily: 'Roboto',
+                  fontWeight: FontWeight.w400,
                 ),
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(
-                      ColorConstants.buttonColor),
-                  foregroundColor: MaterialStateProperty.all<Color>(
-                      ColorConstants.buttonText),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.pushNamed(context, RouteConstants.signupRoute);
-                },
               ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(top: 22.0),
-              height: 2.5 * TextSizeConstants.bodyText,
-              width: 0.6 * deviceWidth,
-              child: TextButton(
-                child: Text(
-                  'Log In',
-                  style: TextStyle(
-                    fontSize: TextSizeConstants.getadaptiveTextSize(
-                        context, TextSizeConstants.bodyText),
-                    fontFamily: 'Roboto',
-                    fontWeight: FontWeight.w400,
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(
+                    ColorConstants.buttonColor),
+                foregroundColor:
+                    MaterialStateProperty.all<Color>(ColorConstants.buttonText),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
                   ),
                 ),
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(
-                      ColorConstants.buttonColor),
-                  foregroundColor: MaterialStateProperty.all<Color>(
-                      ColorConstants.buttonText),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.pushNamed(context, RouteConstants.loginRoute);
-                },
               ),
+              onPressed: () {
+                Navigator.pushNamed(context, RouteConstants.signupRoute);
+              },
             ),
-          ],
-        ),
-      
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 22.0),
+            height: 2.5 * TextSizeConstants.bodyText,
+            width: 0.6 * deviceWidth,
+            child: TextButton(
+              child: Text(
+                'Log In',
+                style: TextStyle(
+                  fontSize: TextSizeConstants.getadaptiveTextSize(
+                      context, TextSizeConstants.bodyText),
+                  fontFamily: 'Roboto',
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(
+                    ColorConstants.buttonColor),
+                foregroundColor:
+                    MaterialStateProperty.all<Color>(ColorConstants.buttonText),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                ),
+              ),
+              onPressed: () {
+                Navigator.pushNamed(context, RouteConstants.loginRoute);
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
