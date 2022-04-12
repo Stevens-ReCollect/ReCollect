@@ -137,33 +137,33 @@ class _MemoryHomePageState extends State<MemoryHomePage> {
                                       momentData: data,
                                     ),
                                   ),
-                              );
-                            } else {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => EditAudioPage(
-                                    momentData: data,
+                                );
+                              } else {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => EditAudioPage(
+                                      momentData: data,
+                                    ),
                                   ),
-                                ),
-                              );
-                            }
-                          },
-                          icon: const Icon(Icons.edit),
-                        ),
-                        IconButton(
-                          onPressed: () {
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) =>
-                                    momentDeleteConfirmation(
-                                        data['doc_id'], data['memory_id']));
-                          },
-                          icon: const Icon(Icons.delete),
-                        )
-                      ],
+                                );
+                              }
+                            },
+                            icon: const Icon(Icons.edit),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      momentDeleteConfirmation(
+                                          data['doc_id'], data['memory_id']));
+                            },
+                            icon: const Icon(Icons.delete),
+                          )
+                        ],
+                      ),
                     ),
-                   ),
                   );
                 }
               },

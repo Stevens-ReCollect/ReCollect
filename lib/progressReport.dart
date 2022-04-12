@@ -33,60 +33,62 @@ class ProgressReportState extends State<ProgressReport> {
   Future getRates() async {
     try {
       final tempRate = await FirestoreService().getOverallRememberanceRate();
+      final allmemories = await FirestoreService().getBestMemory();
+      print(allmemories);
+      num maxMemRate = 0;
+      allmemories.forEach((key, value) {
+        print('Memory Rate: $value');
+        if (value > maxMemRate) {
+          bestMemory = key;
+          maxMemRate = value;
+        }
+      });
       setState(() {
         overallRememberanceRate = double.parse((tempRate).toStringAsFixed(1));
+        memoryRememberanceRate = double.parse((maxMemRate).toStringAsFixed(1));
       });
-      print(overallRememberanceRate);
+      // print(overallRememberanceRate);
     } on PlatformException catch (e) {
       print('Failed to get Overall Rememberance Rate: $e');
     }
+
+    // num tempRate = 0;
+    // try {
+    //   setState(() {
+    //     memoryRememberanceRate = double.parse((tempRate).toStringAsFixed(1));
+    //   });
+    // } on PlatformException catch (e) {
+    //   print('Failed to get Memory Rememberance Rate: $e');
+    // }
   }
 
-  Future getMemoryRate() async {
-    num tempRate = 0;
+  Future getMemoryRate() async {}
 
-    try {
-      final allmemories = await FirestoreService().getBestMemory();
+  // Future getMomentRate() async {
+  //   num tempRate = 0;
 
-      allmemories.forEach((key, value) {
-        if (value > tempRate) {
-          bestMemory = key;
-          tempRate = value;
-        }
-      });
-      setState(() {
-        memoryRememberanceRate = double.parse((tempRate).toStringAsFixed(1));
-      });
-    } on PlatformException catch (e) {
-      print('Failed to get Memory Rememberance Rate: $e');
-    }
-  }
+  //   try {
+  //     final allmemories = await FirestoreService().getBestMoment();
 
-  Future getMomentRate() async {
-    num tempRate = 0;
-
-    try {
-      final allmemories = await FirestoreService().getBestMoment();
-
-      allmemories.forEach((key, value) {
-        if (value > tempRate) {
-          bestMoment = key;
-          tempRate = value;
-        }
-      });
-      setState(() {
-        momentRememberanceRate = double.parse((tempRate).toStringAsFixed(1));
-      });
-    } on PlatformException catch (e) {
-      print('Failed to get Moment Rememberance Rate: $e');
-    }
-  }
+  //     allmemories.forEach((key, value) {
+  //       if (value > tempRate) {
+  //         bestMoment = key;
+  //         tempRate = value;
+  //       }
+  //     });
+  //     setState(() {
+  //       momentRememberanceRate = double.parse((tempRate).toStringAsFixed(1));
+  //     });
+  //   } on PlatformException catch (e) {
+  //     print('Failed to get Moment Rememberance Rate: $e');
+  //   }
+  // }
 
   @override
   void initState() {
     getRates();
-    getMemoryRate();
-    getMomentRate();
+    // getMemoryRate();
+    // getMomentRate();
     super.initState();
   }
 
@@ -187,7 +189,7 @@ class ProgressReportState extends State<ProgressReport> {
                                 ),
                               ),
                               Text(
-                                'Memory Rememberance Rate: $memoryRememberanceRate, $momentRememberanceRate, $overallRememberanceRate',
+                                'Memory Rememberance Rate: $memoryRememberanceRate, $overallRememberanceRate',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: ColorConstants.bodyText,

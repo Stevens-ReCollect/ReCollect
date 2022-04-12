@@ -453,9 +453,6 @@ class FirestoreService {
                 maybe = maybe + doc['maybe'];
               })
             });
-    print('Yes Count: $yes');
-    print('No Count: $no');
-    print('Maybe Count: $maybe');
     return (yes / (yes + no + maybe)) * 100;
   }
 
@@ -475,33 +472,33 @@ class FirestoreService {
                 maybe = maybe + doc['maybe'];
               })
             });
-    print('Yes Count: $yes');
-    print('No Count: $no');
-    print('Maybe Count: $maybe');
+    // print('Yes Count: $yes');
+    // print('No Count: $no');
+    // print('Maybe Count: $maybe');
     return (yes / (yes + no + maybe)) * 100;
   }
 
-  Future<num> getMomentRememberanceRate(String momentID) async {
-    CollectionReference moments = _firestore.collection('moments');
-    User? currentUser = AuthenticationService().getUser();
-    num yes = 0;
-    num no = 0;
-    num maybe = 0;
-    await moments
-        .where('doc_id', isEqualTo: momentID)
-        .get()
-        .then((QuerySnapshot querySnapshot) => {
-              querySnapshot.docs.forEach((doc) {
-                yes = yes + doc['yes'];
-                no = no + doc['no'];
-                maybe = maybe + doc['maybe'];
-              })
-            });
-    print('Yes Count: $yes');
-    print('No Count: $no');
-    print('Maybe Count: $maybe');
-    return (yes / (yes + no + maybe)) * 100;
-  }
+  // Future<num> getMomentRememberanceRate(String momentID) async {
+  //   CollectionReference moments = _firestore.collection('moments');
+  //   User? currentUser = AuthenticationService().getUser();
+  //   num yes = 0;
+  //   num no = 0;
+  //   num maybe = 0;
+  //   await moments
+  //       .where('doc_id', isEqualTo: momentID)
+  //       .get()
+  //       .then((QuerySnapshot querySnapshot) => {
+  //             querySnapshot.docs.forEach((doc) {
+  //               yes = yes + doc['yes'];
+  //               no = no + doc['no'];
+  //               maybe = maybe + doc['maybe'];
+  //             })
+  //           });
+  //   print('Yes Count: $yes');
+  //   print('No Count: $no');
+  //   print('Maybe Count: $maybe');
+  //   return (yes / (yes + no + maybe)) * 100;
+  // }
 
   Future<Map> getBestMemory() async {
     CollectionReference memories = _firestore.collection('memories');
@@ -515,47 +512,49 @@ class FirestoreService {
         .where('user_email', isEqualTo: currentUser!.email)
         .get()
         .then((QuerySnapshot querySnapshot) => {
-              querySnapshot.docs.forEach((doc) {
-                allmemories[doc['title']] =
-                    getMemoryRememberanceRate(doc['doc_id']) as num;
+              querySnapshot.docs.forEach((doc) async {
+                num memRate = await getMemoryRememberanceRate(doc['doc_id']);
+                allmemories[doc['title']] = memRate;
+                print(allmemories);
               })
             });
-      
+
     // allmemories.forEach((key, value) {
     //   if(value > bestMemoryRate) {
     //     bestMemory = key;
     //     bestMemoryRate = value;
     //   }
     // });
-    
+
     return allmemories;
   }
 
-  Future<Map> getBestMoment() async {
-    CollectionReference moments = _firestore.collection('moments');
-    User? currentUser = AuthenticationService().getUser();
-    Map<String, num> allmoments = {};
+  // Future<Map> getBestMoment() async {
+  //   CollectionReference moments = _firestore.collection('moments');
+  //   User? currentUser = AuthenticationService().getUser();
+  //   Map<String, num> allmoments = {};
 
-    // String bestMoment = "";
-    // num bestMomentRate = 0;
+  //   // String bestMoment = "";
+  //   // num bestMomentRate = 0;
 
-    await moments
-        .where('user_email', isEqualTo: currentUser!.email)
-        .get()
-        .then((QuerySnapshot querySnapshot) => {
-              querySnapshot.docs.forEach((doc) {
-                allmoments[doc['name']] =
-                    getMomentRememberanceRate(doc['doc_id']) as num;
-              })
-            });
-      
-    // allmoments.forEach((key, value) {
-    //   if(value > bestMomentRate) {
-    //     bestMoment = key;
-    //     bestMomentRate = value;
-    //   }
-    // });
-    
-    return allmoments;
-  }
+  //   await moments
+  //       .where('user_email', isEqualTo: currentUser!.email)
+  //       .get()
+  //       .then((QuerySnapshot querySnapshot) => {
+  //             querySnapshot.docs.forEach((doc) async {
+  //               num momRate = await getMomentRememberanceRate(doc['doc_id']);
+  //               // need to figure out name for photo and video files
+  //               allmoments[doc['doc_id']] = momRate;
+  //             })
+  //           });
+
+  // allmoments.forEach((key, value) {
+  //   if(value > bestMomentRate) {
+  //     bestMoment = key;
+  //     bestMomentRate = value;
+  //   }
+  // });
+
+  //   return allmoments;
+  // }
 }
