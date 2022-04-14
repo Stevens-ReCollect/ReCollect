@@ -16,8 +16,22 @@ class ChartData {
   final Color color;
 }
 
-class BarChartData {
-  BarChartData(this.type, this.remember, this.subtract);
+class PhotoBarChartData {
+  PhotoBarChartData(this.type, this.remember, this.subtract);
+  final String type;
+  final double remember;
+  final double subtract;
+}
+
+class VideoBarChartData {
+  VideoBarChartData(this.type, this.remember, this.subtract);
+  final String type;
+  final double remember;
+  final double subtract;
+}
+
+class AudioBarChartData {
+  AudioBarChartData(this.type, this.remember, this.subtract);
   final String type;
   final double remember;
   final double subtract;
@@ -88,10 +102,17 @@ class ProgressReportState extends State<ProgressReport> {
           'Remembrance Rate', overallRememberanceRate, ColorConstants.appBar),
       ChartData('Subtract', 100 - overallRememberanceRate, Colors.white),
     ];
-    final List<BarChartData> barChartData = [
-      BarChartData('Audio', audioRememberanceRate, 100 - audioRememberanceRate),
-      BarChartData('Video', videoRememberanceRate, 100 - videoRememberanceRate),
-      BarChartData('Photo', photoRememberanceRate, 100 - photoRememberanceRate),
+    final List<PhotoBarChartData> photoBarChartData = [
+      PhotoBarChartData(
+          'Photo', photoRememberanceRate, 100 - photoRememberanceRate),
+    ];
+    final List<VideoBarChartData> videoBarChartData = [
+      VideoBarChartData(
+          'Video', videoRememberanceRate, 100 - videoRememberanceRate),
+    ];
+    final List<AudioBarChartData> audioBarChartData = [
+      AudioBarChartData(
+          'Audio', audioRememberanceRate, 100 - audioRememberanceRate),
     ];
     MediaQueryData queryData = MediaQuery.of(context);
     var deviceWidth = queryData.size.width;
@@ -184,6 +205,41 @@ class ProgressReportState extends State<ProgressReport> {
                       ),
                       Container(
                         width: deviceWidth,
+                        height: deviceHeight * .1,
+                        child: SfCartesianChart(
+                          plotAreaBorderWidth: 0,
+                          primaryXAxis: CategoryAxis(
+                              isVisible: false, minimum: 0, maximum: 0
+                              // labelPlacement: LabelPlacement.onTicks,
+                              // labelPosition: ChartDataLabelPosition.inside
+                              ),
+                          primaryYAxis:
+                              CategoryAxis(minimum: 0, isVisible: false),
+                          series: <ChartSeries>[
+                            StackedBar100Series<PhotoBarChartData, String>(
+                              dataSource: photoBarChartData,
+                              width: 1,
+                              color: ColorConstants.appBar,
+                              xValueMapper: (PhotoBarChartData data, _) =>
+                                  data.type,
+                              yValueMapper: (PhotoBarChartData data, _) =>
+                                  data.remember,
+                            ),
+                            StackedBar100Series<PhotoBarChartData, String>(
+                                dataSource: photoBarChartData,
+                                width: 1,
+                                color: Color.fromARGB(255, 226, 226, 226),
+                                xValueMapper: (PhotoBarChartData data, _) =>
+                                    data.type,
+                                yValueMapper: (PhotoBarChartData data, _) =>
+                                    data.subtract)
+                          ],
+                        ),
+                      ),
+                      Container(),
+                      Container(
+                        width: deviceWidth,
+                        height: deviceHeight * .1,
                         child: SfCartesianChart(
                           plotAreaBorderWidth: 0,
                           primaryXAxis: CategoryAxis(
@@ -191,25 +247,62 @@ class ProgressReportState extends State<ProgressReport> {
                             // labelPlacement: LabelPlacement.onTicks,
                             // labelPosition: ChartDataLabelPosition.inside
                           ),
-                          primaryYAxis: CategoryAxis(isVisible: false),
+                          primaryYAxis:
+                              CategoryAxis(minimum: 0, isVisible: false),
                           series: <ChartSeries>[
-                            StackedBar100Series<BarChartData, String>(
-                              dataSource: barChartData,
+                            StackedBar100Series<VideoBarChartData, String>(
+                              dataSource: videoBarChartData,
+                              width: 1,
                               color: ColorConstants.appBar,
-                              xValueMapper: (BarChartData data, _) => data.type,
-                              yValueMapper: (BarChartData data, _) =>
+                              xValueMapper: (VideoBarChartData data, _) =>
+                                  data.type,
+                              yValueMapper: (VideoBarChartData data, _) =>
                                   data.remember,
                             ),
-                            StackedBar100Series<BarChartData, String>(
-                                dataSource: barChartData,
+                            StackedBar100Series<VideoBarChartData, String>(
+                                dataSource: videoBarChartData,
+                                width: 1,
                                 color: Color.fromARGB(255, 226, 226, 226),
-                                xValueMapper: (BarChartData data, _) =>
+                                xValueMapper: (VideoBarChartData data, _) =>
                                     data.type,
-                                yValueMapper: (BarChartData data, _) =>
+                                yValueMapper: (VideoBarChartData data, _) =>
                                     data.subtract)
                           ],
                         ),
-                      )
+                      ),
+                      Container(
+                        width: deviceWidth,
+                        height: deviceHeight * .1,
+                        child: SfCartesianChart(
+                          plotAreaBorderWidth: 0,
+                          primaryXAxis: CategoryAxis(
+                            isVisible: false,
+                            // labelPlacement: LabelPlacement.onTicks,
+                            // labelPosition: ChartDataLabelPosition.inside
+                          ),
+                          primaryYAxis:
+                              CategoryAxis(minimum: 0, isVisible: false),
+                          series: <ChartSeries>[
+                            StackedBar100Series<AudioBarChartData, String>(
+                              dataSource: audioBarChartData,
+                              width: 1,
+                              color: ColorConstants.appBar,
+                              xValueMapper: (AudioBarChartData data, _) =>
+                                  data.type,
+                              yValueMapper: (AudioBarChartData data, _) =>
+                                  data.remember,
+                            ),
+                            StackedBar100Series<AudioBarChartData, String>(
+                                dataSource: audioBarChartData,
+                                width: 1,
+                                color: Color.fromARGB(255, 226, 226, 226),
+                                xValueMapper: (AudioBarChartData data, _) =>
+                                    data.type,
+                                yValueMapper: (AudioBarChartData data, _) =>
+                                    data.subtract)
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),
