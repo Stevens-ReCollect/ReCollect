@@ -204,6 +204,21 @@ class ProgressReportState extends State<ProgressReport> {
                         ),
                       ),
                       Container(
+                        child: Row(children: <Widget>[
+                          Flexible(
+                              child: Text(
+                                  'Your loved one remembered Photos $photoRememberanceRate% of the time!',
+                                  style: TextStyle(
+                                      color: ColorConstants.bodyText,
+                                      fontSize:
+                                          TextSizeConstants.getadaptiveTextSize(
+                                        context,
+                                        TextSizeConstants.bodyText,
+                                      ),
+                                      fontWeight: FontWeight.w400)))
+                        ]),
+                      ),
+                      Container(
                         width: deviceWidth,
                         height: deviceHeight * .1,
                         child: SfCartesianChart(
@@ -236,7 +251,37 @@ class ProgressReportState extends State<ProgressReport> {
                           ],
                         ),
                       ),
-                      Container(),
+                      Container(
+                        child: Row(children: <Widget>[
+                          Text('Your loved one remembered ',
+                              style: TextStyle(
+                                  color: ColorConstants.bodyText,
+                                  fontSize:
+                                      TextSizeConstants.getadaptiveTextSize(
+                                    context,
+                                    TextSizeConstants.bodyText,
+                                  ),
+                                  fontWeight: FontWeight.w400)),
+                          Text('Videos $videoRememberanceRate%',
+                              style: TextStyle(
+                                  color: ColorConstants.bodyText,
+                                  fontSize:
+                                      TextSizeConstants.getadaptiveTextSize(
+                                    context,
+                                    TextSizeConstants.bodyText,
+                                  ),
+                                  fontWeight: FontWeight.bold)),
+                          Text('of the time!',
+                              style: TextStyle(
+                                  color: ColorConstants.bodyText,
+                                  fontSize:
+                                      TextSizeConstants.getadaptiveTextSize(
+                                    context,
+                                    TextSizeConstants.bodyText,
+                                  ),
+                                  fontWeight: FontWeight.w400))
+                        ]),
+                      ),
                       Container(
                         width: deviceWidth,
                         height: deviceHeight * .1,
