@@ -478,6 +478,28 @@ class FirestoreService {
     return (yes / (yes + no + maybe)) * 100;
   }
 
+  // Future<Map> getBestMemory() async {
+  //   CollectionReference memories = _firestore.collection('memories');
+  //   User? currentUser = AuthenticationService().getUser();
+  //   Map<String, num> allmemories = {};
+
+  //   // String bestMemory = "";
+  //   // num bestMemoryRate = 0;
+
+  //   await memories
+  //       .where('user_email', isEqualTo: currentUser!.email)
+  //       .get()
+  //       .then((QuerySnapshot querySnapshot) => {
+  //             querySnapshot.docs.forEach((doc) async {
+  //               num memRate = await getMemoryRememberanceRate(doc['doc_id']);
+  //               allmemories[doc['title']] = memRate;
+  //               print(allmemories);
+  //             })
+  //           });
+
+  //   return allmemories;
+  // }
+
   // Future<num> getMomentRememberanceRate(String momentID) async {
   //   CollectionReference moments = _firestore.collection('moments');
   //   User? currentUser = AuthenticationService().getUser();
@@ -499,35 +521,6 @@ class FirestoreService {
   //   print('Maybe Count: $maybe');
   //   return (yes / (yes + no + maybe)) * 100;
   // }
-
-  Future<Map> getBestMemory() async {
-    CollectionReference memories = _firestore.collection('memories');
-    User? currentUser = AuthenticationService().getUser();
-    Map<String, num> allmemories = {};
-
-    // String bestMemory = "";
-    // num bestMemoryRate = 0;
-
-    await memories
-        .where('user_email', isEqualTo: currentUser!.email)
-        .get()
-        .then((QuerySnapshot querySnapshot) => {
-              querySnapshot.docs.forEach((doc) async {
-                num memRate = await getMemoryRememberanceRate(doc['doc_id']);
-                allmemories[doc['title']] = memRate;
-                print(allmemories);
-              })
-            });
-
-    // allmemories.forEach((key, value) {
-    //   if(value > bestMemoryRate) {
-    //     bestMemory = key;
-    //     bestMemoryRate = value;
-    //   }
-    // });
-
-    return allmemories;
-  }
 
   // Future<Map> getBestMoment() async {
   //   CollectionReference moments = _firestore.collection('moments');

@@ -1,10 +1,13 @@
 // ignore_for_file: file_names
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:recollect_app/constants/colorConstants.dart';
 import 'package:recollect_app/constants/textSizeConstants.dart';
+import 'package:recollect_app/firebase/authentication_service.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 import 'firebase/firestore_service.dart';
@@ -29,67 +32,76 @@ class ProgressReportState extends State<ProgressReport> {
   double memoryRememberanceRate = 0;
   String bestMoment = "";
   double momentRememberanceRate = 0;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future getRates() async {
     try {
       final tempRate = await FirestoreService().getOverallRememberanceRate();
-      final allmemories = await FirestoreService().getBestMemory();
-      print(allmemories);
-      num maxMemRate = 0;
-      allmemories.forEach((key, value) {
-        print('Memory Rate: $value');
-        if (value > maxMemRate) {
-          bestMemory = key;
-          maxMemRate = value;
-        }
-      });
+      // final allmemories = await FirestoreService().getBestMemory();
+      // print(allmemories);
+      // num maxMemRate = 0;
+      // allmemories.forEach((key, value) {
+      //   print('Memory Rate: $value');
+      //   if (value > maxMemRate) {
+      //     bestMemory = key;
+      //     maxMemRate = value;
+      //   }
+      // });
       setState(() {
         overallRememberanceRate = double.parse((tempRate).toStringAsFixed(1));
-        memoryRememberanceRate = double.parse((maxMemRate).toStringAsFixed(1));
+        // memoryRememberanceRate = double.parse((maxMemRate).toStringAsFixed(1));
       });
       // print(overallRememberanceRate);
     } on PlatformException catch (e) {
       print('Failed to get Overall Rememberance Rate: $e');
     }
-
-    // num tempRate = 0;
-    // try {
-    //   setState(() {
-    //     memoryRememberanceRate = double.parse((tempRate).toStringAsFixed(1));
-    //   });
-    // } on PlatformException catch (e) {
-    //   print('Failed to get Memory Rememberance Rate: $e');
-    // }
   }
 
-  Future getMemoryRate() async {}
+  Future getMemoryRate() async {
+    try {
+      CollectionReference memories = _firestore.collection('memories');
+      User? currentUser = AuthenticationService().getUser();
+      Map<String, num> allmemories = {};
+      num tempRate = 0;
 
-  // Future getMomentRate() async {
-  //   num tempRate = 0;
+      // String bestMemory = "";
+      // num bestMemoryRate = 0;
 
-  //   try {
-  //     final allmemories = await FirestoreService().getBestMoment();
+      memories
+        .where('user_email', isEqualTo: currentUser!.email)
+        .get()
+        .then((QuerySnapshot querySnapshot) => {
+              querySnapshot.docs.forEach((doc) async {
+                num memRate = await FirestoreService().getMemoryRememberanceRate(doc['doc_id']);
+                allmemories[doc['title']] = memRate;
+                print(allmemories);
+              })
+            });
 
-  //     allmemories.forEach((key, value) {
-  //       if (value > tempRate) {
-  //         bestMoment = key;
-  //         tempRate = value;
-  //       }
-  //     });
-  //     setState(() {
-  //       momentRememberanceRate = double.parse((tempRate).toStringAsFixed(1));
-  //     });
-  //   } on PlatformException catch (e) {
-  //     print('Failed to get Moment Rememberance Rate: $e');
-  //   }
-  // }
+      print(allmemories);
+
+      allmemories.forEach((key, value) {
+        if (value >= tempRate) {
+          bestMemory = key;
+          tempRate = value;
+        }
+      });
+
+      setState(() {
+        memoryRememberanceRate = double.parse((tempRate).toStringAsFixed(1));
+        print('Memory Rate: $memoryRememberanceRate');
+      });
+
+    } on PlatformException catch (e) {
+      print('Failed to get Memory Rememberance Rate: $e');
+    }
+  }
 
   @override
   void initState() {
-    getRates();
-    // getMemoryRate();
-    // getMomentRate();
     super.initState();
+    getMemoryRate();
+    getRates();
   }
 
   @override
