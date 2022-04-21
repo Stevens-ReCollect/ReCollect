@@ -204,19 +204,50 @@ class ProgressReportState extends State<ProgressReport> {
                         ),
                       ),
                       Container(
-                        child: Row(children: <Widget>[
-                          Flexible(
-                              child: Text(
-                                  'Your loved one remembered Photos $photoRememberanceRate% of the time!',
-                                  style: TextStyle(
-                                      color: ColorConstants.bodyText,
-                                      fontSize:
-                                          TextSizeConstants.getadaptiveTextSize(
-                                        context,
-                                        TextSizeConstants.bodyText,
-                                      ),
-                                      fontWeight: FontWeight.w400)))
-                        ]),
+                        width: deviceWidth * .95,
+                        child: RichText(
+                          text: TextSpan(
+                              text: '',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: TextSizeConstants.getadaptiveTextSize(
+                                    context, TextSizeConstants.bodyText),
+                                fontFamily: 'Roboto',
+                                fontWeight: FontWeight.w400,
+                              ),
+                              children: <TextSpan>[
+                                TextSpan(
+                                    text: 'Your loved one remembered ',
+                                    style: TextStyle(
+                                        color: ColorConstants.bodyText,
+                                        fontSize: TextSizeConstants
+                                            .getadaptiveTextSize(
+                                          context,
+                                          TextSizeConstants.bodyText,
+                                        ),
+                                        fontWeight: FontWeight.w400)),
+                                TextSpan(
+                                    text: 'Photos $photoRememberanceRate% ',
+                                    style: TextStyle(
+                                        color: ColorConstants.bodyText,
+                                        fontSize: TextSizeConstants
+                                            .getadaptiveTextSize(
+                                          context,
+                                          TextSizeConstants.bodyText,
+                                        ),
+                                        fontWeight: FontWeight.bold)),
+                                TextSpan(
+                                    text: 'of the time!',
+                                    style: TextStyle(
+                                        color: ColorConstants.bodyText,
+                                        fontSize: TextSizeConstants
+                                            .getadaptiveTextSize(
+                                          context,
+                                          TextSizeConstants.bodyText,
+                                        ),
+                                        fontWeight: FontWeight.w400))
+                              ]),
+                        ),
                       ),
                       Container(
                         width: deviceWidth,
@@ -252,35 +283,50 @@ class ProgressReportState extends State<ProgressReport> {
                         ),
                       ),
                       Container(
-                        child: Row(children: <Widget>[
-                          Text('Your loved one remembered ',
+                        width: deviceWidth * .95,
+                        child: RichText(
+                          text: TextSpan(
+                              text: '',
                               style: TextStyle(
-                                  color: ColorConstants.bodyText,
-                                  fontSize:
-                                      TextSizeConstants.getadaptiveTextSize(
-                                    context,
-                                    TextSizeConstants.bodyText,
-                                  ),
-                                  fontWeight: FontWeight.w400)),
-                          Text('Videos $videoRememberanceRate%',
-                              style: TextStyle(
-                                  color: ColorConstants.bodyText,
-                                  fontSize:
-                                      TextSizeConstants.getadaptiveTextSize(
-                                    context,
-                                    TextSizeConstants.bodyText,
-                                  ),
-                                  fontWeight: FontWeight.bold)),
-                          Text('of the time!',
-                              style: TextStyle(
-                                  color: ColorConstants.bodyText,
-                                  fontSize:
-                                      TextSizeConstants.getadaptiveTextSize(
-                                    context,
-                                    TextSizeConstants.bodyText,
-                                  ),
-                                  fontWeight: FontWeight.w400))
-                        ]),
+                                color: Colors.black,
+                                fontSize: TextSizeConstants.getadaptiveTextSize(
+                                    context, TextSizeConstants.bodyText),
+                                fontFamily: 'Roboto',
+                                fontWeight: FontWeight.w400,
+                              ),
+                              children: <TextSpan>[
+                                TextSpan(
+                                    text: 'Your loved one remembered ',
+                                    style: TextStyle(
+                                        color: ColorConstants.bodyText,
+                                        fontSize: TextSizeConstants
+                                            .getadaptiveTextSize(
+                                          context,
+                                          TextSizeConstants.bodyText,
+                                        ),
+                                        fontWeight: FontWeight.w400)),
+                                TextSpan(
+                                    text: 'Videos $videoRememberanceRate% ',
+                                    style: TextStyle(
+                                        color: ColorConstants.bodyText,
+                                        fontSize: TextSizeConstants
+                                            .getadaptiveTextSize(
+                                          context,
+                                          TextSizeConstants.bodyText,
+                                        ),
+                                        fontWeight: FontWeight.bold)),
+                                TextSpan(
+                                    text: 'of the time!',
+                                    style: TextStyle(
+                                        color: ColorConstants.bodyText,
+                                        fontSize: TextSizeConstants
+                                            .getadaptiveTextSize(
+                                          context,
+                                          TextSizeConstants.bodyText,
+                                        ),
+                                        fontWeight: FontWeight.w400))
+                              ]),
+                        ),
                       ),
                       Container(
                         width: deviceWidth,
@@ -313,6 +359,52 @@ class ProgressReportState extends State<ProgressReport> {
                                 yValueMapper: (VideoBarChartData data, _) =>
                                     data.subtract)
                           ],
+                        ),
+                      ),
+                      Container(
+                        width: deviceWidth * .95,
+                        child: RichText(
+                          text: TextSpan(
+                              text: '',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: TextSizeConstants.getadaptiveTextSize(
+                                    context, TextSizeConstants.bodyText),
+                                fontFamily: 'Roboto',
+                                fontWeight: FontWeight.w400,
+                              ),
+                              children: <TextSpan>[
+                                TextSpan(
+                                    text: 'Your loved one remembered ',
+                                    style: TextStyle(
+                                        color: ColorConstants.bodyText,
+                                        fontSize: TextSizeConstants
+                                            .getadaptiveTextSize(
+                                          context,
+                                          TextSizeConstants.bodyText,
+                                        ),
+                                        fontWeight: FontWeight.w400)),
+                                TextSpan(
+                                    text: 'Audios $audioRememberanceRate% ',
+                                    style: TextStyle(
+                                        color: ColorConstants.bodyText,
+                                        fontSize: TextSizeConstants
+                                            .getadaptiveTextSize(
+                                          context,
+                                          TextSizeConstants.bodyText,
+                                        ),
+                                        fontWeight: FontWeight.bold)),
+                                TextSpan(
+                                    text: 'of the time!',
+                                    style: TextStyle(
+                                        color: ColorConstants.bodyText,
+                                        fontSize: TextSizeConstants
+                                            .getadaptiveTextSize(
+                                          context,
+                                          TextSizeConstants.bodyText,
+                                        ),
+                                        fontWeight: FontWeight.w400))
+                              ]),
                         ),
                       ),
                       Container(
