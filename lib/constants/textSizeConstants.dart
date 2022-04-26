@@ -14,6 +14,6 @@ class TextSizeConstants {
   static const double largeTextButtons = 20;
 
   static getadaptiveTextSize(BuildContext context, double value) {
-    return (value / 850) * MediaQuery.of(context).size.height;
+    return (value / 900) * MediaQuery.of(context).size.height;
   }
 }
