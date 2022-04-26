@@ -272,7 +272,7 @@ class _SignUpPageState extends State<SignUpPage> {
 emailVerification(BuildContext context) {
     //Caregiver Pin pop up
     return AlertDialog(
-        title: Text('Please verify your email with the ReCollect email sent to your email.',
+        title: Text('Please check your email for your email verification link.',
             style: TextStyle(
               fontSize: TextSizeConstants.getadaptiveTextSize(
                   context, TextSizeConstants.bodyText),
