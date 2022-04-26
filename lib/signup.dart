@@ -246,8 +246,12 @@ class _SignUpPageState extends State<SignUpPage> {
                             }
                             print(signUpResult);
                             if (signUpResult == "Success") {
-                              Navigator.pushNamed(
-                                  context, RouteConstants.loginRoute);
+                              showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (BuildContext context) =>
+                                    emailVerification(context),
+                              );
                             } else {
                               setState(() {
                                 _isButtonDisabled = false;
@@ -264,6 +268,51 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 }
+
+emailVerification(BuildContext context) {
+    //Caregiver Pin pop up
+    return AlertDialog(
+        title: Text('Please verify your email with the ReCollect email sent to your email.',
+            style: TextStyle(
+              fontSize: TextSizeConstants.getadaptiveTextSize(
+                  context, TextSizeConstants.bodyText),
+            )),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            TextField(
+              obscureText: true,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Enter pin',
+                labelStyle: TextStyle(
+                    fontSize: TextSizeConstants.getadaptiveTextSize(
+                        context, TextSizeConstants.formField)),
+                hintText: '####',
+                hintStyle: TextStyle(
+                    fontSize: TextSizeConstants.getadaptiveTextSize(
+                        context, TextSizeConstants.formField)),
+              ),
+            ),
+          ],
+        ),
+        actions: <Widget>[
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.all(15),
+                primary: ColorConstants.buttonColor),
+            onPressed: () {
+              Navigator.pushNamed(context, RouteConstants.loginRoute);
+            },
+            child: Text('Continue',
+                style: TextStyle(
+                    fontSize: 0.7 *
+                        TextSizeConstants.getadaptiveTextSize(
+                            context, TextSizeConstants.buttonText))),
+          )
+        ]);
+  }
 
 Widget _buildCaregiverPinPopop(BuildContext context) {
   MediaQueryData queryData = MediaQuery.of(context);
