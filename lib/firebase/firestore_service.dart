@@ -467,6 +467,9 @@ class FirestoreService {
     print('Yes Count: $yes');
     print('No Count: $no');
     print('Maybe Count: $maybe');
+    if (yes + no + maybe == 0) {
+      return 0;
+    }
     return (yes / (yes + no + maybe)) * 100;
   }
 
@@ -490,6 +493,9 @@ class FirestoreService {
     print('Yes Count: $yes');
     print('No Count: $no');
     print('Maybe Count: $maybe');
+    if (yes + no + maybe == 0) {
+      return 0;
+    }
     return (yes / (yes + no + maybe)) * 100;
   }
 
@@ -513,6 +519,9 @@ class FirestoreService {
     print('Yes Count: $yes');
     print('No Count: $no');
     print('Maybe Count: $maybe');
+    if (yes + no + maybe == 0) {
+      return 0;
+    }
     return (yes / (yes + no + maybe)) * 100;
   }
 
@@ -536,6 +545,9 @@ class FirestoreService {
     print('Yes Count: $yes');
     print('No Count: $no');
     print('Maybe Count: $maybe');
+    if (yes + no + maybe == 0) {
+      return 0;
+    }
     return (yes / (yes + no + maybe)) * 100;
   }
 }
