@@ -468,4 +468,73 @@ class FirestoreService {
     print('Maybe Count: $maybe');
     return (yes / (yes + no + maybe)) * 100;
   }
+
+  Future<num> getPhotoRememberanceRate() async {
+    CollectionReference moments = _firestore.collection('moments');
+    User? currentUser = AuthenticationService().getUser();
+    num yes = 0;
+    num no = 0;
+    num maybe = 0;
+    await moments
+        .where('user_email', isEqualTo: currentUser!.email)
+        .where('type', isEqualTo: 'Photo')
+        .get()
+        .then((QuerySnapshot querySnapshot) => {
+              querySnapshot.docs.forEach((doc) {
+                yes = yes + doc['yes'];
+                no = no + doc['no'];
+                maybe = maybe + doc['maybe'];
+              })
+            });
+    print('Yes Count: $yes');
+    print('No Count: $no');
+    print('Maybe Count: $maybe');
+    return (yes / (yes + no + maybe)) * 100;
+  }
+
+  Future<num> getVideoRememberanceRate() async {
+    CollectionReference moments = _firestore.collection('moments');
+    User? currentUser = AuthenticationService().getUser();
+    num yes = 0;
+    num no = 0;
+    num maybe = 0;
+    await moments
+        .where('user_email', isEqualTo: currentUser!.email)
+        .where('type', isEqualTo: 'Video')
+        .get()
+        .then((QuerySnapshot querySnapshot) => {
+              querySnapshot.docs.forEach((doc) {
+                yes = yes + doc['yes'];
+                no = no + doc['no'];
+                maybe = maybe + doc['maybe'];
+              })
+            });
+    print('Yes Count: $yes');
+    print('No Count: $no');
+    print('Maybe Count: $maybe');
+    return (yes / (yes + no + maybe)) * 100;
+  }
+
+  Future<num> getAudioRememberanceRate() async {
+    CollectionReference moments = _firestore.collection('moments');
+    User? currentUser = AuthenticationService().getUser();
+    num yes = 0;
+    num no = 0;
+    num maybe = 0;
+    await moments
+        .where('user_email', isEqualTo: currentUser!.email)
+        .where('type', isEqualTo: 'Audio')
+        .get()
+        .then((QuerySnapshot querySnapshot) => {
+              querySnapshot.docs.forEach((doc) {
+                yes = yes + doc['yes'];
+                no = no + doc['no'];
+                maybe = maybe + doc['maybe'];
+              })
+            });
+    print('Yes Count: $yes');
+    print('No Count: $no');
+    print('Maybe Count: $maybe');
+    return (yes / (yes + no + maybe)) * 100;
+  }
 }
