@@ -166,6 +166,7 @@ class FirestoreService {
       'end_date': endDate,
       'description': description,
       'file_path': '',
+      'views': 0
     }).then((value) {
       documentReference = value;
       print("Memory Added");

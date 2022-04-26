@@ -19,7 +19,7 @@ class MemoryPage extends StatefulWidget {
 
 class _MemoryState extends State<MemoryPage> {
   int _currentPage = 0;
-  int numOfMoments = 1;
+  int numOfMoments = 0;
   List moments = [];
   final CarouselController _controller = CarouselController();
 
@@ -58,66 +58,96 @@ class _MemoryState extends State<MemoryPage> {
         ),
       ),
       body: SingleChildScrollView(
-        child: Column(children: [
-          SizedBox(
-            width: deviceWidth,
-            height: 0.7 * deviceHeight,
-            child: CarouselSlider(
-              carouselController: _controller,
-              options: CarouselOptions(
-                autoPlay: false,
-                aspectRatio: 1 / 1,
-                height: deviceHeight,
-                viewportFraction: 1,
-                enableInfiniteScroll: false,
-                onPageChanged: (index, reason) {
-                  setState(() {
-                    _currentPage = index;
-                  });
-                },
+        child: numOfMoments > 0
+            ? Column(children: [
+                SizedBox(
+                  width: deviceWidth,
+                  height: 0.7 * deviceHeight,
+                  child: CarouselSlider(
+                    carouselController: _controller,
+                    options: CarouselOptions(
+                      autoPlay: false,
+                      aspectRatio: 1 / 1,
+                      height: deviceHeight,
+                      viewportFraction: 1,
+                      enableInfiniteScroll: false,
+                      onPageChanged: (index, reason) {
+                        setState(() {
+                          _currentPage = index;
+                        });
+                      },
+                    ),
+                    items: moments.map((moment) {
+                      // print(moment);
+                      return Builder(builder: (BuildContext context) {
+                        if (moment == null) {
+                          return const Text("This memory is empty.");
+                        } else {
+                          if (moment['type'] == 'Photo') {
+                            return PhotoWidget(
+                              moment['description'],
+                              moment['file_path'],
+                              moment['doc_id'],
+                            );
+                          } else if (moment['type'] == 'Video') {
+                            return VideoPlayerWidget(
+                              moment['description'],
+                              moment['file_path'],
+                              moment['doc_id'],
+                            );
+                          } else if (moment['type'] == 'Audio') {
+                            return AudioPlayerWidget(
+                              moment['description'],
+                              moment['name'],
+                              moment['file_path'],
+                              moment['doc_id'],
+                            );
+                          } else {
+                            return const SizedBox();
+                          }
+                        }
+                      });
+                    }).toList(),
+                  ),
+                ),
+                DotsIndicator(
+                  dotsCount: numOfMoments,
+                  position: _currentPage.toDouble(),
+                  decorator: DotsDecorator(
+                    activeColor: Colors.grey[850],
+                    color: Colors.grey,
+                  ),
+                ),
+              ])
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Image.asset(
+                    'lib/assets/polaroid_camera.png',
+                    width: deviceWidth * 0.9,
+                  ),
+                  Text(
+                    'No moments',
+                    style: TextStyle(
+                      fontFamily: 'Roboto',
+                      fontWeight: FontWeight.w500,
+                      fontSize: TextSizeConstants.getadaptiveTextSize(
+                          context, TextSizeConstants.bodyText),
+                    ),
+                  ),
+                  Text(
+                    'Sorry, there are no moments in this memory',
+                    style: TextStyle(
+                      fontFamily: 'Roboto',
+                      fontWeight: FontWeight.w400,
+                      fontSize: TextSizeConstants.getadaptiveTextSize(
+                          context, TextSizeConstants.formField),
+                      color: Colors.black54,
+                    ),
+                  ),
+                ],
               ),
-              items: moments.map((moment) {
-                // print(moment);
-                return Builder(builder: (BuildContext context) {
-                  if (moment == null) {
-                    return const Text("This memory is empty.");
-                  } else {
-                    if (moment['type'] == 'Photo') {
-                      return PhotoWidget(
-                        moment['description'],
-                        moment['file_path'],
-                        moment['doc_id'],
-                      );
-                    } else if (moment['type'] == 'Video') {
-                      return VideoPlayerWidget(
-                        moment['description'],
-                        moment['file_path'],
-                        moment['doc_id'],
-                      );
-                    } else if (moment['type'] == 'Audio') {
-                      return AudioPlayerWidget(
-                        moment['description'],
-                        moment['name'],
-                        moment['file_path'],
-                        moment['doc_id'],
-                      );
-                    } else {
-                      return const SizedBox();
-                    }
-                  }
-                });
-              }).toList(),
-            ),
-          ),
-          DotsIndicator(
-            dotsCount: numOfMoments,
-            position: _currentPage.toDouble(),
-            decorator: DotsDecorator(
-              activeColor: Colors.grey[850],
-              color: Colors.grey,
-            ),
-          ),
-        ]),
       ),
     );
   }
