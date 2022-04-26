@@ -280,22 +280,6 @@ emailVerification(BuildContext context) {
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            TextField(
-              obscureText: true,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Enter pin',
-                labelStyle: TextStyle(
-                    fontSize: TextSizeConstants.getadaptiveTextSize(
-                        context, TextSizeConstants.formField)),
-                hintText: '####',
-                hintStyle: TextStyle(
-                    fontSize: TextSizeConstants.getadaptiveTextSize(
-                        context, TextSizeConstants.formField)),
-              ),
-            ),
-          ],
         ),
         actions: <Widget>[
           ElevatedButton(
