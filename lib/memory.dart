@@ -119,34 +119,36 @@ class _MemoryState extends State<MemoryPage> {
                   ),
                 ),
               ])
-            : Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Image.asset(
-                    'lib/assets/polaroid_camera.png',
-                    width: deviceWidth * 0.9,
-                  ),
-                  Text(
-                    'No moments',
-                    style: TextStyle(
-                      fontFamily: 'Roboto',
-                      fontWeight: FontWeight.w500,
-                      fontSize: TextSizeConstants.getadaptiveTextSize(
-                          context, TextSizeConstants.bodyText),
+            : Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Image.asset(
+                      'lib/assets/polaroid_camera.png',
+                      width: deviceWidth * 0.9,
                     ),
-                  ),
-                  Text(
-                    'Sorry, there are no moments in this memory',
-                    style: TextStyle(
-                      fontFamily: 'Roboto',
-                      fontWeight: FontWeight.w400,
-                      fontSize: TextSizeConstants.getadaptiveTextSize(
-                          context, TextSizeConstants.formField),
-                      color: Colors.black54,
+                    Text(
+                      'No moments',
+                      style: TextStyle(
+                        fontFamily: 'Roboto',
+                        fontWeight: FontWeight.w500,
+                        fontSize: TextSizeConstants.getadaptiveTextSize(
+                            context, TextSizeConstants.bodyText),
+                      ),
                     ),
-                  ),
-                ],
+                    Text(
+                      'Sorry, there are no moments in this memory',
+                      style: TextStyle(
+                        fontFamily: 'Roboto',
+                        fontWeight: FontWeight.w400,
+                        fontSize: TextSizeConstants.getadaptiveTextSize(
+                            context, TextSizeConstants.formField),
+                        color: Colors.black54,
+                      ),
+                    ),
+                  ],
+                ),
               ),
       ),
     );
