@@ -166,6 +166,7 @@ class FirestoreService {
       'end_date': endDate,
       'description': description,
       'file_path': '',
+      'views': 0
     }).then((value) {
       documentReference = value;
       print("Memory Added");
@@ -466,6 +467,9 @@ class FirestoreService {
     print('Yes Count: $yes');
     print('No Count: $no');
     print('Maybe Count: $maybe');
+    if (yes + no + maybe == 0) {
+      return 0;
+    }
     return (yes / (yes + no + maybe)) * 100;
   }
 
@@ -489,6 +493,9 @@ class FirestoreService {
     print('Yes Count: $yes');
     print('No Count: $no');
     print('Maybe Count: $maybe');
+    if (yes + no + maybe == 0) {
+      return 0;
+    }
     return (yes / (yes + no + maybe)) * 100;
   }
 
@@ -512,6 +519,9 @@ class FirestoreService {
     print('Yes Count: $yes');
     print('No Count: $no');
     print('Maybe Count: $maybe');
+    if (yes + no + maybe == 0) {
+      return 0;
+    }
     return (yes / (yes + no + maybe)) * 100;
   }
 
@@ -535,6 +545,9 @@ class FirestoreService {
     print('Yes Count: $yes');
     print('No Count: $no');
     print('Maybe Count: $maybe');
+    if (yes + no + maybe == 0) {
+      return 0;
+    }
     return (yes / (yes + no + maybe)) * 100;
   }
 }

@@ -192,7 +192,7 @@ class ProgressReportState extends State<ProgressReport> {
                                       fontSize:
                                           TextSizeConstants.getadaptiveTextSize(
                                         context,
-                                        TextSizeConstants.bodyText,
+                                        TextSizeConstants.tag,
                                       ),
                                       fontWeight: FontWeight.w400,
                                     ),
